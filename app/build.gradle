@@ -68,5 +68,3 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
-setProperty("FirebaseServiceAccountFilePath", rootProject.rootDir.absolutePath + "/" +
-        rootProject.ext.firebaseServiceAccountFileName)
