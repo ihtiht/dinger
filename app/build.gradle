@@ -1,0 +1,72 @@
+import java.nio.file.Paths
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jmailen.kotlinter'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jetbrains.dokka-android'
+apply plugin: 'com.google.firebase.firebase-crash'
+
+android {
+    compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    buildToolsVersion rootProject.ext.androidBuildToolsVersion
+    signingConfigs {
+        dummy1 {
+            storeFile new File("dummy1.keystore")
+            storePassword("dummy1")
+            keyAlias("dummy1")
+            keyPassword("dummy1")
+        }
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug" // Do not change as Firebase depends on this
+        }
+        release {
+            signingConfig signingConfigs.dummy1
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 
+                'proguard/dont-obfuscate.pro',
+                'proguard/rules.pro'
+            shrinkResources true
+        }
+    }
+    defaultConfig {
+        versionCode rootProject.ext.androidVersionCode
+        versionName rootProject.ext.androidVersionName
+        minSdkVersion rootProject.ext.androidMinSdkVersion
+        targetSdkVersion rootProject.ext.androidTargetSdkVersion
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    dexOptions {
+        preDexLibraries false
+        javaMaxHeapSize "8g"
+    }
+    lintOptions {
+        abortOnError true
+        absolutePaths true
+        checkAllWarnings true
+        htmlOutput = new File("$rootProject.ext.staticAnalysisReportTarget/$project.name/lint.html")
+        quiet false
+        warningsAsErrors true
+    }
+    sourceSets.forEach {
+        it.java.srcDirs = ["src/$it.name/kotlin"]
+    }
+}
+
+repositories {
+    jcenter()
+}
+dependencies {
+    compile rootProject.ext.compileDependencies
+    compile rootProject.ext.compileAppDependencies
+}
+
+apply plugin: 'com.google.gms.google-services'
+setProperty("FirebaseServiceAccountFilePath", rootProject.rootDir.absolutePath + "/" +
+        rootProject.ext.firebaseServiceAccountFileName)

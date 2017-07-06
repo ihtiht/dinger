@@ -1,0 +1,11 @@
+final def firebaseVersion = "11.0.1"
+final def kotlinVersion = rootProject.ext.kotlinVersion
+
+ext {
+    compileDependencies = [
+        "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    ]
+    compileAppDependencies = [
+        "com.google.firebase:firebase-crash:$firebaseVersion"
+    ]
+}
