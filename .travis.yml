@@ -34,8 +34,6 @@ after_success:
   if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ] && [[ "$TRAVIS_JOB_NUMBER" == *.1 ]]; then
     echo "CI on master succeded. Executing release tasks..."
     ./ci/release.sh
-    echo "Uploading mapping to Firebase..."
-    ./gradlew :app:firebaseUploadReleaseProguardMapping
   fi
 notifications:
   email:
