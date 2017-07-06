@@ -1,0 +1,45 @@
+language: android
+jdk: oraclejdk8
+sudo: required
+git:
+  depth: 9999
+android:
+  components:
+  - tools
+  - platform-tools
+  - android-25
+  - build-tools-26.0.0
+  - extra-android-m2repository
+  - extra-google-m2repository
+branches:
+  except:
+  - "/^[0-9]/"
+before_install:
+  - openssl aes-256-cbc -K $encrypted_13d4b12ffe60_key -iv $encrypted_13d4b12ffe60_iv -in secrets.tar.enc -out secrets.tar -d
+  - tar xvf secrets.tar
+  - mv google-services-debug.json app/src/debug/google-services.json
+  - mv google-services-release.json app/src/release/google-services.json
+  - mv firebase-crashreporting-private-key.json app/
+before_script:
+- export ARTIFACT_VERSION=$(git rev-list --count HEAD)
+- |
+  if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then
+    echo "Do not open PRs against master; merge dev into master locally and push instead."
+    exit 1
+  fi
+script:
+- ./gradlew clean build check dokka --stacktrace --info
+after_success:
+- |
+  if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ] && [[ "$TRAVIS_JOB_NUMBER" == *.1 ]]; then
+    echo "CI on master succeded. Executing release tasks..."
+    ./ci/release.sh
+    echo "Uploading mapping to Firebase..."
+    ./gradlew :app:firebaseUploadReleaseProguardMapping
+  fi
+notifications:
+  email:
+    recipients:
+    - jorge.diazbenitosoriano@gmail.com
+    on_success: change
+    on_failure: always
