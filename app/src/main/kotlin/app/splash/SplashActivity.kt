@@ -1,7 +1,6 @@
 package app.splash
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Handler
 
 /**
@@ -32,9 +31,9 @@ class SplashActivity : Activity() {
      */
     private fun openContent() {
 //      TODO  val intent = create intent to either the loginactivity or the logged-in activity
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-        finishAfterTransition()
+//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+//        startActivity(intent)
+//        finishAfterTransition()
     }
 
     override fun onPause() {
