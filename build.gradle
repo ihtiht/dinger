@@ -31,8 +31,8 @@ final def inducedVersion = System.getenv("ARTIFACT_VERSION")
 final def staticAnalysisReportFolderTarget = project.rootDir.absolutePath + "/staticAnalysisReport"
 
 rootProject.ext {
-    androidCompileSdkVersion = 25
-    androidMinSdkVersion = 25
+    androidCompileSdkVersion = 26
+    androidMinSdkVersion = 26
     androidTargetSdkVersion = 26
     androidBuildToolsVersion = '26.0.0'
 	androidVersionCode = inducedVersion != null ? Integer.parseInt(inducedVersion) : 1 // Depending on the git method locally causes IDE issues
