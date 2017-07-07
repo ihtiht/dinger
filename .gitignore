@@ -8,3 +8,4 @@ dependencyReport
 staticAnalysisReport/
 google-services.json
 firebase-crashreporting-private-key.json
+local.properties
