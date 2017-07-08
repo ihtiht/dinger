@@ -43,7 +43,7 @@ internal class SplashActivity : Activity() {
                 startActivity(this)
             }
             finishAfterTransition()
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+            overridePendingTransition(R.anim.fade_in, 0)
         }
     }
 
