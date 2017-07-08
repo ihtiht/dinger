@@ -1,10 +1,13 @@
 package app.splash
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Handler
+import app.login.LoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import org.stoyicker.dinger.BuildConfig
+import org.stoyicker.dinger.R
 
 /**
  * A simple activity that acts as a splash screen.
@@ -13,7 +16,7 @@ import org.stoyicker.dinger.BuildConfig
  * background in the theme. This allows it to be shown without having to wait for the content view
  * to be drawn.
  */
-class SplashActivity : Activity() {
+internal class SplashActivity : Activity() {
     private lateinit var handler: Handler
 
     override fun onResume() {
@@ -34,10 +37,14 @@ class SplashActivity : Activity() {
      */
     private fun openContent() {
         assertGooglePlayServicesAvailable()
-//      TODO  val intent = create intent to either the loginactivity or the logged-in activity
-//        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-//        startActivity(intent)
-//        finishAfterTransition()
+        if (true) { // TODO !isLoggedIn
+            LoginActivity.getCallingIntent(this).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(this)
+            }
+            finishAfterTransition()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+        }
     }
 
     override fun onPause() {
