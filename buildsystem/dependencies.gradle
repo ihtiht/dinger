@@ -1,4 +1,4 @@
-final def firebaseVersion = "11.0.1"
+final def googlePlayServicesVersion = "11.0.1"
 final def kotlinVersion = rootProject.ext.kotlinVersion
 
 ext {
@@ -6,6 +6,7 @@ ext {
         "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     ]
     compileAppDependencies = [
-        "com.google.firebase:firebase-crash:$firebaseVersion"
+        "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
+        "com.google.android.gms:play-services-auth-base:$googlePlayServicesVersion"
     ]
 }
