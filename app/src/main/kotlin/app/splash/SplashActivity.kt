@@ -6,7 +6,6 @@ import android.os.Handler
 import app.login.LoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import org.stoyicker.dinger.BuildConfig
 import org.stoyicker.dinger.R
 
 /**
@@ -36,7 +35,9 @@ internal class SplashActivity : Activity() {
      * Closes the splash and introduces the actual content of the app.
      */
     private fun openContent() {
-        assertGooglePlayServicesAvailable()
+        if (!assertGooglePlayServicesAvailable()) {
+            return
+        }
         if (true) { // TODO !isLoggedIn
             LoginActivity.getCallingIntent(this).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -54,19 +55,23 @@ internal class SplashActivity : Activity() {
 
     /**
      * Checks for Play Services availability (required for Firebase). On failure, shows a dialog
-     * and closes the app.
+     * that closes the app when dismissed.
+     * @return <code>true</code> if Google Play Services are all nice and good, <code>false</code>
+     *         otherwise.
      */
-    private fun assertGooglePlayServicesAvailable() {
+    private fun assertGooglePlayServicesAvailable(): Boolean {
         GoogleApiAvailability.getInstance().also {
             val status = it.isGooglePlayServicesAvailable(this)
-            if (!BuildConfig.DEBUG && status != ConnectionResult.SUCCESS) {
+            if (status != ConnectionResult.SUCCESS) {
                 it.getErrorDialog(this, status, 0).apply {
                     setCancelable(false)
                     setOnDismissListener { System.exit(status) }
                     show()
+                    return false
                 }
             }
         }
+        return true
     }
 
     private companion object {
