@@ -19,5 +19,8 @@
         <activity
             android:name="app.login.LoginActivity"
             android:theme="@style/AppTheme.SplashTheme" />
+        <meta-data
+            android:name="com.facebook.sdk.AutoLogAppEventsEnabled"
+            android:value="false"/>
     </application>
 </manifest>
