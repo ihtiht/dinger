@@ -8,4 +8,6 @@
     </issue>
     <!-- This check is broken when using Kotlin -->
     <issue id="UnusedResources" severity="ignore" />
+    <!-- This check is broken when using KotlinX -->
+    <issue id="UnusedIds" severity="ignore" />
 </lint>
