@@ -1,6 +1,8 @@
 final def facebookSdkVersion = "4.24.0"
 final def googlePlayServicesVersion = "11.0.1"
+final def jsr250Version = "1.0"
 final def kotlinVersion = rootProject.ext.kotlinVersion
+final def rxJava2Version = "2.0.7"
 
 ext {
     compileDependencies = [
@@ -10,5 +12,11 @@ ext {
         "com.facebook.android:facebook-android-sdk:$facebookSdkVersion",
         "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
         "com.google.android.gms:play-services-auth-base:$googlePlayServicesVersion"
+    ]
+    compileOnlyDomainDependencies = [
+            "javax.annotation:jsr250-api:$jsr250Version"
+    ]
+    compileDomainDependencies = [
+            "io.reactivex.rxjava2:rxjava:$rxJava2Version"
     ]
 }
