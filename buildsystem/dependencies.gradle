@@ -1,8 +1,11 @@
+final def daggerVersion = "2.11"
 final def facebookSdkVersion = "4.24.0"
 final def googlePlayServicesVersion = "11.0.1"
 final def jsr250Version = "1.0"
 final def kotlinVersion = rootProject.ext.kotlinVersion
+final def retrofitVersion = "2.3.0"
 final def rxJava2Version = "2.0.7"
+final def storeVersion = "3.0.0-alpha"
 
 ext {
     compileDependencies = [
@@ -18,5 +21,16 @@ ext {
     ]
     compileDomainDependencies = [
             "io.reactivex.rxjava2:rxjava:$rxJava2Version"
+    ]
+    annotationProcessorDataDependencies = [
+            "com.google.dagger:dagger-compiler:$daggerVersion"
+    ]
+    compileDataDependencies = [
+            "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion",
+            "com.nytimes.android:store3:$storeVersion",
+            "com.nytimes.android:middleware-moshi:$storeVersion",
+            "com.nytimes.android:filesystem:$storeVersion",
+            "com.google.dagger:dagger-android:$daggerVersion"
     ]
 }
