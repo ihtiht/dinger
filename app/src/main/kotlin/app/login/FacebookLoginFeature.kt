@@ -14,7 +14,7 @@ import com.google.firebase.crash.FirebaseCrash
 import org.stoyicker.dinger.R
 
 internal class FacebookLoginFeature(context: Context, loginButton: LoginButton) {
-    private val callbackManager = CallbackManager.Factory.create()
+    private val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     init {
         loginButton.apply {

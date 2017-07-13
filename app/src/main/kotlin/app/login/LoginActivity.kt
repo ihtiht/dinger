@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.facebook.login.widget.LoginButton
 import kotlinx.android.synthetic.main.activity_login.*
 import org.stoyicker.dinger.R
 
@@ -15,7 +14,7 @@ internal class LoginActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        bindFacebookLoginFeature(login_button)
+        bindFacebookLoginFeature()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -24,13 +23,15 @@ internal class LoginActivity : Activity() {
     }
 
     override fun onDestroy() {
-        facebookLoginFeature.release(login_button)
+        unbindFacebookLoginFeature()
         super.onDestroy()
     }
 
-    private fun bindFacebookLoginFeature(loginButton: LoginButton) {
-        facebookLoginFeature = FacebookLoginFeature(this, loginButton)
+    private fun bindFacebookLoginFeature() {
+        facebookLoginFeature = FacebookLoginFeature(this, login_button)
     }
+
+    private fun unbindFacebookLoginFeature() = facebookLoginFeature.release(login_button)
 
     companion object {
         fun getCallingIntent(context: Context) = Intent(context, LoginActivity::class.java)
