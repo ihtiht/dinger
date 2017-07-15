@@ -6,7 +6,6 @@ import android.os.Handler
 import app.login.LoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import org.stoyicker.dinger.BuildConfig
 import org.stoyicker.dinger.R
 
 /**
@@ -63,7 +62,7 @@ internal class SplashActivity : Activity() {
     private fun assertGooglePlayServicesAvailable(): Boolean {
         GoogleApiAvailability.getInstance().also {
             val status = it.isGooglePlayServicesAvailable(this)
-            if (!BuildConfig.DEBUG && status != ConnectionResult.SUCCESS) {
+            if (status != ConnectionResult.SUCCESS) {
                 it.getErrorDialog(this, status, 0).apply {
                     setCancelable(false)
                     setOnDismissListener { System.exit(status) }
