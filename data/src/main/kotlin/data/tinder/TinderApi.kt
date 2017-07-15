@@ -4,18 +4,20 @@ import data.tinder.auth.AuthResponse
 import data.tinder.auth.AuthenticationRequest
 import data.tinder.like.LikeResponse
 import data.tinder.recommendations.RecommendationResponse
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import retrofit2.http.*
 
 internal interface TinderApi {
 
-    @GET("/like/{targetId}")
-    fun like(@Path("targetId") targetId: String): Observable<LikeResponse>
-
-    @GET("/user/recs?locale=en") fun getRecommendations(): Observable<RecommendationResponse>
-
     @Headers("Content-Type: application/json")
-    @POST("/auth") fun login(@Body request: AuthenticationRequest): Observable<AuthResponse>
+    @POST("/auth")
+    fun login(@Body request: AuthenticationRequest): Flowable<AuthResponse>
+
+    @GET("/user/recs?locale=en")
+    fun getRecommendations(): Flowable<RecommendationResponse>
+
+    @GET("/like/{targetId}")
+    fun like(@Path("targetId") targetId: String): Flowable<LikeResponse>
 
     companion object {
         const val BASE_URL = "https://api.gotinder.com"
