@@ -2,8 +2,18 @@ package data.tinder.auth
 
 import com.squareup.moshi.Json
 
-internal data class AuthResponse(
+internal class AuthResponse private constructor(
+        @Json(name = "meta")
+        private val meta: Meta,
         @Json(name = "something")
-        val token: String,
-        @Json(name = "something")
-        val userJson: String)
+        private val userJson: String)
+
+private class Meta(
+        @Json(name = "status")
+        private val status: Int)
+
+private class Payload(
+        @Json(name = "is_new_user")
+        private val isNewUser: Boolean,
+        @Json(name = "api_token")
+        private val apiToken: String)

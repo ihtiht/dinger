@@ -2,10 +2,10 @@ package data.tinder.auth
 
 import com.squareup.moshi.Json
 
-internal data class AuthenticationRequest(
-        @Json(name = "something")
+internal class AuthenticationRequest(
+        @Json(name = "id")
         private val facebookId: String,
-        @Json(name = "something")
-        private val facebookToken: String,
-        @Json(name = "something")
-        private val locale: String = "en")
+        @Json(name = "token")
+        private val facebookVersion: String,
+        @Json(name = "client_version")
+        private val clientVersion: String = "7.3.0") // TODO have this be dynamic
