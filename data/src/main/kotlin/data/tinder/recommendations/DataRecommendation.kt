@@ -1,9 +1,11 @@
 package data.tinder.recommendations
 
-internal data class DataRecommendation(val something: Int) {
-    private constructor() : this(0)
+import com.squareup.moshi.Json
 
-    companion object {
-        val EMPTY = DataRecommendation()
-    }
-}
+internal class DataRecommendation private constructor(
+        @Json(name = "type")
+        private val type: String,
+        @Json(name = "group_matched")
+        private val groupMatched: Boolean,
+        @Json(name = "user")
+        private val user: DataRecommendationUser)
