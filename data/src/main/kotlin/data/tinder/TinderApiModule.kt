@@ -3,7 +3,7 @@ package data.tinder
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
-import org.stoyicker.dinger.BuildConfig
+import org.stoyicker.dinger.data.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import javax.inject.Singleton
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 internal class TinderApiModule {
     @Provides
     @Singleton
-    fun retrofit() = Retrofit.Builder()
+    fun retrofit(): Retrofit = Retrofit.Builder()
             .baseUrl(TinderApi.BASE_URL)
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .validateEagerly(BuildConfig.DEBUG)

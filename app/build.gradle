@@ -61,6 +61,7 @@ repositories {
     jcenter()
 }
 dependencies {
+    compile project(':data')
     compile project(':domain')
     compile rootProject.ext.compileDependencies
     compile rootProject.ext.compileAppDependencies

@@ -1,6 +1,7 @@
 package app
 
 import android.app.Application
+import data.Data
 import domain.Domain
 
 /**
@@ -9,6 +10,6 @@ import domain.Domain
 internal open class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        Domain.facadeProvider(data.Data.facadeProvider())
+        Domain.facadeProvider(Data.facadeProvider())
     }
 }
