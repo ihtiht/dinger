@@ -1,10 +1,8 @@
 package data.tinder
 
-import data.tinder.auth.AuthResponse
-import data.tinder.auth.AuthenticationRequest
-import data.tinder.like.LikeResponse
-import data.tinder.recommendations.RecommendationResponse
+import data.tinder.auth.AuthRequest
 import io.reactivex.Single
+import okhttp3.ResponseBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -15,13 +13,13 @@ internal interface TinderApi {
 
     @Headers("Content-Type: application/json")
     @POST("/v2/auth/login/facebook")
-    fun login(@Body request: AuthenticationRequest): Single<AuthResponse>
+    fun login(@Body request: AuthRequest): Single<ResponseBody>
 
     @GET("/recs/core?locale=en")
-    fun getRecommendations(): Single<RecommendationResponse>
+    fun getRecommendations(): Single<ResponseBody>
 
     @GET("/like/{targetId}")
-    fun like(@Path("targetId") targetId: String): Single<LikeResponse>
+    fun like(@Path("targetId") targetId: String): Single<ResponseBody>
 
     companion object {
         const val BASE_URL = "https://api.gotinder.com"

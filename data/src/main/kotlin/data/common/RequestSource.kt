@@ -21,5 +21,5 @@ internal abstract class RequestSource<in RequestModel, ResponseModel>(
      * Do whatever operations you want on the data at this level.
      * @param sourceStream The stream whose items are to be mapped.
      */
-    abstract fun operate(sourceStream: Single<ResponseModel>): Single<ResponseModel>
+    open fun operate(sourceStream: Single<ResponseModel>) = sourceStream
 }
