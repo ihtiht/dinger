@@ -6,6 +6,7 @@ import android.os.Handler
 import app.login.LoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import data.InAppAccountManager
 import org.stoyicker.dinger.R
 
 /**
@@ -38,13 +39,15 @@ internal class SplashActivity : Activity() {
         if (!assertGooglePlayServicesAvailable()) {
             return
         }
-        if (true) { // TODO !isLoggedIn
+        if (InAppAccountManager.getAccountToken() == null) {
             LoginActivity.getCallingIntent(this).apply {
                 flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(this)
             }
             finishAfterTransition()
             overridePendingTransition(R.anim.fade_in, 0)
+        } else {
+            // TODO Logged in, open a new activity
         }
     }
 
