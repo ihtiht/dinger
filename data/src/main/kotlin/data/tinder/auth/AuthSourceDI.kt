@@ -1,6 +1,6 @@
 package data.tinder.auth
 
-import com.nytimes.android.external.store.middleware.moshi.MoshiParserFactory
+import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory
 import com.nytimes.android.external.store3.base.impl.StoreBuilder
 import dagger.Component
 import dagger.Module

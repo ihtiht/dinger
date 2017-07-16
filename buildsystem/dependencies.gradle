@@ -30,8 +30,8 @@ ext {
             "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion",
             "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
             "com.nytimes.android:store3:$storeVersion",
-            "com.nytimes.android:middleware-moshi:$storeVersion",
-            "com.nytimes.android:filesystem:$storeVersion",
+            "com.nytimes.android:middleware-moshi3:$storeVersion",
+            "com.nytimes.android:filesystem3:$storeVersion",
             "com.google.dagger:dagger-android:$daggerVersion"
     ]
 }
