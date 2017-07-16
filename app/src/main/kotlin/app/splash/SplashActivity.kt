@@ -3,11 +3,13 @@ package app.splash
 import android.app.Activity
 import android.content.Intent
 import android.os.Handler
+import android.view.View
 import app.login.LoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import data.InAppAccountManager
 import org.stoyicker.dinger.R
+
 
 /**
  * A simple activity that acts as a splash screen.
@@ -40,20 +42,27 @@ internal class SplashActivity : Activity() {
             return
         }
         if (InAppAccountManager.getAccountToken() == null) {
-            LoginActivity.getCallingIntent(this).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(this)
-            }
-            finishAfterTransition()
-            overridePendingTransition(R.anim.fade_in, 0)
+            requestToken()
         } else {
-            // TODO Logged in, open a new activity
+            doLogin()
         }
     }
 
     override fun onPause() {
         handler.removeCallbacksAndMessages(null)
         super.onPause()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
+                    View.SYSTEM_UI_FLAG_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        }
     }
 
     /**
@@ -75,6 +84,20 @@ internal class SplashActivity : Activity() {
             }
         }
         return true
+    }
+
+    private fun requestToken() {
+        // This should be start for result
+        LoginActivity.getCallingIntent(this).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(this)
+        }
+        finishAfterTransition()
+        overridePendingTransition(R.anim.fade_in, 0)
+    }
+
+    private fun doLogin() {
+        // TODO Logged in, open a new activity
     }
 
     private companion object {
