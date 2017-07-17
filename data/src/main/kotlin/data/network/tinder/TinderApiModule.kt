@@ -2,7 +2,9 @@ package data.network.tinder
 
 import dagger.Module
 import dagger.Provides
+import data.InAppAccountManager
 import data.network.NetworkModule
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -10,5 +12,15 @@ import javax.inject.Singleton
 internal class TinderApiModule {
     @Provides
     @Singleton
-    fun retrofit(retrofit: Retrofit) = retrofit.create(TinderApi::class.java)
+    fun tinderApi(retrofitBuilder: Retrofit.Builder) = retrofitBuilder
+        .client(OkHttpClient.Builder()
+        .addInterceptor {
+            it.proceed(it.request().newBuilder()
+                 .apply {
+                     addHeader(TinderApi.HEADER_AUTH, InAppAccountManager.getAccountToken())
+                 }.build())
+        }.build())
+            .baseUrl(TinderApi.BASE_URL)
+            .build()
+            .create(TinderApi::class.java)
 }
