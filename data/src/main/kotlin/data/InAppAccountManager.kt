@@ -8,9 +8,9 @@ object InAppAccountManager {
     lateinit var context: Context
     private val delegate by lazy { AccountManager.get(context) }
 
-    fun addAccount(token: String) =
-        Account(token, Companion.ACCOUNT_TYPE).let {
-            if (delegate.addAccountExplicitly(it, null, null)) {
+    fun addAccount(id: String, token: String) =
+        Account(id, Companion.ACCOUNT_TYPE).let {
+            if (delegate.addAccountExplicitly(it, token, null)) {
                 delegate.notifyAccountAuthenticated(it)
                 true
             } else {
@@ -27,6 +27,6 @@ object InAppAccountManager {
             }
 
     private object Companion {
-        const val ACCOUNT_TYPE = "DINGER"
+        val ACCOUNT_TYPE: String = context.packageName
     }
 }
