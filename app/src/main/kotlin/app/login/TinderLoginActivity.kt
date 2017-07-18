@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_login.login_button
+import kotlinx.android.synthetic.main.activity_login.progress
 import org.stoyicker.dinger.R
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        bindFacebookLoginFeature()
+        inject()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -48,8 +49,11 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
         requestTinderLogin(facebookId, facebookToken)
     }
 
-    private fun bindFacebookLoginFeature() {
-        tinderFacebookLoginFeature = TinderFacebookLoginFeature(login_button, this)
+    private fun inject() {
+        DaggerTinderFacebookLoginComponent
+                .builder()
+                .tinderFacebookLoginModule(TinderFacebookLoginModule(progress, login_button, this)
+                .build()
     }
 
     private fun unbindFacebookLoginFeature() = tinderFacebookLoginFeature.release(login_button)

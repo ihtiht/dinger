@@ -1,7 +1,7 @@
 package app.login
 
 internal interface TinderLoginView {
-    fun show()
+    fun setRunning()
 
-    fun hide()
+    fun setStale()
 }

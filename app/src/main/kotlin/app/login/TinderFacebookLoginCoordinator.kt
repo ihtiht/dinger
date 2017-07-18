@@ -10,23 +10,23 @@ internal class TinderFacebookLoginCoordinator(private val view: TinderLoginView)
     private lateinit var useCase: DisposableUseCase
 
     fun actionDoLogin(facebookId: String, facebookToken: String) {
-        view.show()
+        view.setRunning()
         TinderLoginUseCase(facebookId, facebookToken, UIPostExecutionSchedulerProvider)
                 .execute(object : DisposableCompletableObserver() {
                     override fun onError(e: Throwable?) {
                         e.takeIf { it != null }.also { FirebaseCrash.report(e) }
-                        view.hide()
+                        view.setStale()
                     }
 
                     override fun onComplete() {
                         // TODO dologin
-                        view.hide()
+                        view.setStale()
                     }
                 })
     }
 
     fun actionCancelLogin() {
-        view.show()
+        view.setStale()
         useCase.dispose()
         // TODO cancelLogin
     }
