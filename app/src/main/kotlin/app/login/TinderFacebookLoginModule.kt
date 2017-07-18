@@ -1,21 +1,23 @@
 package app.login
 
 import android.support.v4.widget.ContentLoadingProgressBar
+import app.ApplicationComponent
 import com.facebook.login.widget.LoginButton
 import dagger.Module
 import dagger.Provides
 
-@Module
+@Module(includes = arrayOf(ApplicationComponent::class))
 internal class TinderFacebookLoginModule(
-        private val contentLoadingProgressBar: ContentLoadingProgressBar,
         private val loginButton: LoginButton,
+        private val contentLoadingProgressBar: ContentLoadingProgressBar,
         private val resultCallback: TinderFacebookLoginFeature.ResultCallback) {
     @Provides
     fun feature() = TinderFacebookLoginFeature(loginButton, resultCallback)
 
     @Provides
-    fun view() = TinderLoginViewImpl(contentLoadingProgressBar)
+    fun view() = TinderFacebookLoginView(loginButton, contentLoadingProgressBar)
 
     @Provides
-    fun coordinator(view: TinderLoginViewImpl) = TinderFacebookLoginCoordinator(view)
+    fun coordinator(view: TinderLoginView, applicationComponent: ApplicationComponent) =
+            TinderFacebookLoginCoordinator(view, applicationComponent)
 }
