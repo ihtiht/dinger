@@ -52,7 +52,7 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
     private fun inject() {
         DaggerTinderFacebookLoginComponent
                 .builder()
-                .tinderFacebookLoginModule(TinderFacebookLoginModule(progress, login_button, this)
+                .tinderFacebookLoginModule(TinderFacebookLoginModule(progress, login_button, this))
                 .build()
     }
 
