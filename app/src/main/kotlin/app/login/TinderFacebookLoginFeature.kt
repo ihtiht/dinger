@@ -1,6 +1,5 @@
 package app.login
 
-import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import com.facebook.AccessToken
@@ -13,7 +12,7 @@ import com.facebook.login.widget.LoginButton
 import com.google.firebase.crash.FirebaseCrash
 import org.stoyicker.dinger.R
 
-internal class FacebookLoginFeature(context: Context, loginButton: LoginButton) {
+internal class TinderFacebookLoginFeature(loginButton: LoginButton, callback: ResultCallback) {
     private val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     init {
@@ -34,15 +33,16 @@ internal class FacebookLoginFeature(context: Context, loginButton: LoginButton) 
                                     .show()
                         }
 
-                        override fun onSuccess(loginResult: LoginResult) {
-                            val token = AccessToken.getCurrentAccessToken()
-                            Toast.makeText(context,
-                                    "Token: ${token.token}\nId: ${token.userId}",
-                                    Toast.LENGTH_LONG)
-                                    .show()
+                        override fun onSuccess(loginResult: LoginResult) =
+                                AccessToken.getCurrentAccessToken().let {
+                                    callback.onSuccess(it.userId, it.token)
                         }
                     })
         }
+    }
+
+    internal interface ResultCallback {
+        fun onSuccess(facebookId: String, facebookToken: String)
     }
 
     /**

@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="app.login.LoginActivity"
+            android:name="app.login.TinderLoginActivity"
             android:theme="@style/AppTheme.SplashTheme" />
 
         <!-- Facebook -->

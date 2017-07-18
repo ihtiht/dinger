@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Handler
 import android.view.View
-import app.login.LoginActivity
+import app.login.TinderLoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import data.InAppAccountManager
@@ -88,7 +88,7 @@ internal class SplashActivity : Activity() {
 
     private fun requestToken() {
         // This should be start for result
-        LoginActivity.getCallingIntent(this).apply {
+        TinderLoginActivity.getCallingIntent(this).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(this)
         }
