@@ -1,12 +1,15 @@
 package app.login
 
 import android.support.v4.widget.ContentLoadingProgressBar
-import app.ApplicationComponent
+import app.ApplicationModule
 import com.facebook.login.widget.LoginButton
 import dagger.Module
 import dagger.Provides
+import domain.exec.PostExecutionSchedulerProvider
+import javax.inject.Singleton
 
-@Module(includes = arrayOf(ApplicationComponent::class))
+@Module(includes = arrayOf(ApplicationModule::class))
+@Singleton
 internal class TinderFacebookLoginModule(
         private val loginButton: LoginButton,
         private val contentLoadingProgressBar: ContentLoadingProgressBar,
@@ -15,9 +18,11 @@ internal class TinderFacebookLoginModule(
     fun feature() = TinderFacebookLoginFeature(loginButton, resultCallback)
 
     @Provides
-    fun view() = TinderFacebookLoginView(loginButton, contentLoadingProgressBar)
+    fun view(): TinderLoginView = TinderFacebookLoginView(loginButton, contentLoadingProgressBar)
 
     @Provides
-    fun coordinator(view: TinderLoginView, applicationComponent: ApplicationComponent) =
-            TinderFacebookLoginCoordinator(view, applicationComponent)
+    fun coordinator(
+            view: TinderLoginView,
+            postExecutionSchedulerProvider: PostExecutionSchedulerProvider) =
+            TinderFacebookLoginCoordinator(view, postExecutionSchedulerProvider)
 }

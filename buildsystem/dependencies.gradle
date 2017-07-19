@@ -12,6 +12,9 @@ ext {
     compileDependencies = [
         "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     ]
+    annotationProcessorAppDependencies = [
+            "com.google.dagger:dagger-compiler:$daggerVersion"
+    ]
     compileAppDependencies = [
         "com.facebook.android:facebook-android-sdk:$facebookSdkVersion",
         "com.google.firebase:firebase-crash:$googlePlayServicesVersion",

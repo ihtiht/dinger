@@ -1,9 +1,10 @@
-package domain.interactor
+package domain.auth
 
 import domain.exec.PostExecutionSchedulerProvider
+import domain.interactor.CompletableUseCase
 import io.reactivex.Completable
 
-class TinderLoginUseCase(
+class TinderFacebookLoginUseCase(
         facebookId: String,
         facebookToken: String,
         postExecutionSchedulerProvider: PostExecutionSchedulerProvider)

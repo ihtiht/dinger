@@ -1,7 +1,7 @@
 package data.network.tinder.auth
 
-import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory
 import com.nytimes.android.external.store3.base.impl.StoreBuilder
+import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory
 import dagger.Component
 import dagger.Module
 import dagger.Provides
@@ -13,7 +13,6 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(TinderApiModule::class, AuthSourceModule::class))
 @Singleton
 internal interface AuthSourceComponent
-// TODO Maybe remove AuthSource/FacadeComponents
 
 /**
  * Module used to provide stuff required by TopRequestSource objects.

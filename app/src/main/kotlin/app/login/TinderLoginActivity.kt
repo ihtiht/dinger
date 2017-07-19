@@ -6,12 +6,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_login.login_button
+import kotlinx.android.synthetic.main.activity_login.progress
 import org.stoyicker.dinger.R
 import javax.inject.Inject
 
 internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.ResultCallback {
     @Inject
-    private lateinit var tinderFacebookLoginFeature: TinderFacebookLoginFeature
+    lateinit var tinderFacebookLoginFeature: TinderFacebookLoginFeature
     @Inject
     lateinit var coordinatorFacebook: TinderFacebookLoginCoordinator
 
@@ -49,10 +50,10 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
     }
 
     private fun inject() {
-//        DaggerTinderFacebookLoginComponent
-//                .builder()
-//                .tinderFacebookLoginModule(TinderFacebookLoginModule(progress, login_button, this))
-//                .build()
+        DaggerTinderFacebookLoginComponent
+                .builder()
+                .tinderFacebookLoginModule(TinderFacebookLoginModule(login_button, progress, this))
+                .build()
     }
 
     private fun unbindFacebookLoginFeature() = tinderFacebookLoginFeature.release(login_button)

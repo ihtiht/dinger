@@ -2,6 +2,7 @@ package app
 
 import dagger.Module
 import dagger.Provides
+import domain.exec.PostExecutionSchedulerProvider
 import javax.inject.Singleton
 
 @Module
@@ -9,5 +10,5 @@ import javax.inject.Singleton
 internal class ApplicationModule {
     @Provides
     @Singleton
-    fun uiSchedulerProvider() = UiPostExecutionSchedulerProvider()
+    fun uiSchedulerProvider(): PostExecutionSchedulerProvider = UiPostExecutionSchedulerProvider()
 }
