@@ -3,9 +3,6 @@ package data.network.common
 import com.nytimes.android.external.store3.base.impl.Store
 import io.reactivex.Single
 
-/**
- * Defines how a typical request looks.
- */
 internal abstract class RequestSource<in RequestModel, ResponseModel>(
         private val store: Store<ResponseModel, RequestModel>)
     : Gettable<RequestModel, ResponseModel> {

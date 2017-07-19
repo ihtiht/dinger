@@ -2,9 +2,6 @@ package data.network.common
 
 import io.reactivex.Single
 
-/**
- * Defines how a typical request looks.
- */
 internal abstract class RequestFacade<in RequestModel, ResponseModel, MappedModel>(
         val source: RequestSource<RequestModel, ResponseModel>,
         val entityMapper: EntityMapper<ResponseModel, MappedModel>)
