@@ -27,7 +27,7 @@ uploadReleaseToGitHub() {
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
             --header "Content-Type: application/json; charset=utf-8" \
-            --request POST \
+            --requestParameters POST \
             --data "${BODY}" \
             https://api.github.com/repos/"${TRAVIS_REPO_SLUG}"/releases)
 
@@ -47,7 +47,7 @@ uploadReleaseToGitHub() {
     --header "Accept: application/vnd.github.v3+json" \
     --header "Content-Type: application/zip" \
     --data-binary "@app-release.apk" \
-    --request POST \
+    --requestParameters POST \
     ${UPLOAD_URL}
 
     echo "Release complete."

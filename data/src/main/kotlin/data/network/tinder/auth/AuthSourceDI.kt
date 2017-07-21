@@ -22,13 +22,13 @@ internal class AuthSourceModule {
     @Provides
     @Singleton
     fun store(api: TinderApi) =
-            StoreBuilder.parsedWithKey<AuthRequest, BufferedSource, AuthResponse>()
+            StoreBuilder.parsedWithKey<AuthRequestParameters, BufferedSource, AuthResponse>()
                     .fetcher({ fetcher(it, api) })
                     .parser(MoshiParserFactory.createSourceParser<AuthResponse>(
                             AuthResponse::class.java))
                     .networkBeforeStale()
                     .open()
 
-    private fun fetcher(request: AuthRequest, api: TinderApi) =
-            api.login(request).map { it.source() }
+    private fun fetcher(requestParameters: AuthRequestParameters, api: TinderApi) =
+            api.login(requestParameters).map { it.source() }
 }

@@ -22,5 +22,5 @@ internal class AuthFacadeModule {
 
     @Provides
     @Singleton
-    fun topRequestSource(store: DaggerLazy<Store<AuthResponse, AuthRequest>>) = AuthSource(store)
+    fun topRequestSource(store: DaggerLazy<Store<AuthResponse, AuthRequestParameters>>) = AuthSource(store)
 }

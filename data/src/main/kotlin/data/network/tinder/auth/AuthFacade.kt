@@ -7,6 +7,6 @@ import domain.auth.DomainAuthedUser
 import javax.inject.Inject
 
 internal class AuthFacade @Inject constructor(
-        source: RequestSource<AuthRequest, AuthResponse>,
+        source: RequestSource<AuthRequestParameters, AuthResponse>,
         entityMapper: EntityMapper<AuthResponse, DomainAuthedUser>)
-    : RequestFacade<AuthRequest, AuthResponse, DomainAuthedUser>(source, entityMapper)
+    : RequestFacade<AuthRequestParameters, AuthResponse, DomainAuthedUser>(source, entityMapper)

@@ -1,6 +1,7 @@
 package domain
 
-import domain.repository.DomainFacadeProvider
+import domain.auth.AccountManager
+import domain.repository.FacadeProvider
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -10,14 +11,15 @@ import io.reactivex.schedulers.Schedulers
  * myself instead.
  */
 object Domain {
-    internal lateinit var facadeProvider: DomainFacadeProvider
+    internal lateinit var facadeProvider: FacadeProvider
+    internal lateinit var accountManager: AccountManager
     internal val useCaseScheduler = Schedulers.io()
 
-    /**
-     * Set a facade provider.
-     * @param facade The facadeProvider to set.
-     */
-    fun facadeProvider(facade: DomainFacadeProvider) {
-        this.facadeProvider = facade
+    fun facadeProvider(facadeProvider: FacadeProvider) {
+        this.facadeProvider = facadeProvider
+    }
+
+    fun accountManager(accountManager: AccountManager){
+        this.accountManager = accountManager
     }
 }

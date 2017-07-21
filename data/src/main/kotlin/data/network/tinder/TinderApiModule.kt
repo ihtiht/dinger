@@ -2,7 +2,7 @@ package data.network.tinder
 
 import dagger.Module
 import dagger.Provides
-import data.InAppAccountManager
+import data.auth.DingerAccountManager
 import data.network.NetworkModule
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -17,7 +17,7 @@ internal class TinderApiModule {
         .addInterceptor {
             it.proceed(it.request().newBuilder()
                  .apply {
-                     addHeader(TinderApi.HEADER_AUTH, InAppAccountManager.getAccountToken())
+                     addHeader(TinderApi.HEADER_AUTH, DingerAccountManager.getAccountToken())
                  }.build())
         }.build())
             .baseUrl(TinderApi.BASE_URL)

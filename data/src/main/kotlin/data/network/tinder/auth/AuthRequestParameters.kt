@@ -2,7 +2,7 @@ package data.network.tinder.auth
 
 import com.squareup.moshi.Json
 
-internal class AuthRequest(
+internal data class AuthRequestParameters(
         @Json(name = "id")
         private val facebookId: String,
         @Json(name = "token")

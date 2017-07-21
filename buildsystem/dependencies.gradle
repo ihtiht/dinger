@@ -19,7 +19,8 @@ ext {
         "com.facebook.android:facebook-android-sdk:$facebookSdkVersion",
         "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
         "com.google.android.gms:play-services-auth-base:$googlePlayServicesVersion",
-        "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version"
+        "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
+        "com.google.dagger:dagger-android:$daggerVersion"
     ]
     compileOnlyDomainDependencies = [
             "javax.annotation:jsr250-api:$jsr250Version"

@@ -6,5 +6,5 @@ import javax.inject.Inject
 import dagger.Lazy as DaggerLazy
 
 internal class AuthSource @Inject constructor(
-        storeAccessor: DaggerLazy<Store<AuthResponse, AuthRequest>>)
-    : RequestSource<AuthRequest, AuthResponse>(storeAccessor.get())
+        storeAccessor: DaggerLazy<Store<AuthResponse, AuthRequestParameters>>)
+    : RequestSource<AuthRequestParameters, AuthResponse>(storeAccessor.get())

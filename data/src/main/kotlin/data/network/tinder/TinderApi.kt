@@ -1,6 +1,6 @@
 package data.network.tinder
 
-import data.network.tinder.auth.AuthRequest
+import data.network.tinder.auth.AuthRequestParameters
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import retrofit2.http.Body
@@ -13,7 +13,7 @@ internal interface TinderApi {
 
     @Headers("Content-Type: application/json")
     @POST("/v2/auth/login/facebook")
-    fun login(@Body request: AuthRequest): Single<ResponseBody>
+    fun login(@Body requestParameters: AuthRequestParameters): Single<ResponseBody>
 
     @GET("/recs/core?locale=en")
     fun getRecommendations(): Single<ResponseBody>

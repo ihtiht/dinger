@@ -7,7 +7,6 @@ import android.view.View
 import app.login.TinderLoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import data.InAppAccountManager
 import org.stoyicker.dinger.R
 
 
@@ -41,7 +40,7 @@ internal class SplashActivity : Activity() {
         if (!assertGooglePlayServicesAvailable()) {
             return
         }
-        if (InAppAccountManager.getAccountToken() == null) {
+        if (true) { // TODO Use case for login status check
             requestToken()
         } else {
             doLogin()

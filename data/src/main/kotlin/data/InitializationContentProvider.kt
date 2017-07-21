@@ -3,7 +3,9 @@ package data
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.net.Uri
-import data.auth.InAppAccountManager
+import data.auth.DingerAccountManager
+import data.network.FacadeProviderImpl
+import domain.Domain
 
 /**
  * Used to tie to the app lifecycle, for things like obtaining a Context reference or initializing
@@ -13,7 +15,11 @@ import data.auth.InAppAccountManager
  */
 internal class InitializationContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        InAppAccountManager.context = context
+        DingerAccountManager.context = context
+        Domain.apply {
+            facadeProvider(FacadeProviderImpl)
+            accountManager(DingerAccountManager)
+        }
         return true
     }
 
