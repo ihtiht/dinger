@@ -62,7 +62,6 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
 
     private fun cancelOngoingTinderLogin() = tinderFacebookLoginCoordinator.actionCancelLogin()
 
-
     companion object {
         fun getCallingIntent(context: Context) = Intent(context, TinderLoginActivity::class.java)
     }
