@@ -14,7 +14,7 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
     @Inject
     lateinit var tinderFacebookLoginFeature: TinderFacebookLoginFeature
     @Inject
-    lateinit var coordinatorFacebook: TinderFacebookLoginCoordinator
+    lateinit var tinderFacebookLoginCoordinator: TinderFacebookLoginCoordinator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +59,9 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
     private fun unbindFacebookLoginFeature() = tinderFacebookLoginFeature.release(login_button)
 
     private fun requestTinderLogin(facebookId: String, facebookToken: String) =
-            coordinatorFacebook.actionDoLogin(facebookId, facebookToken)
+            tinderFacebookLoginCoordinator.actionDoLogin(facebookId, facebookToken)
 
-    private fun cancelOngoingTinderLogin() = coordinatorFacebook.actionCancelLogin()
+    private fun cancelOngoingTinderLogin() = tinderFacebookLoginCoordinator.actionCancelLogin()
 
     companion object {
         fun getCallingIntent(context: Context) = Intent(context, TinderLoginActivity::class.java)
