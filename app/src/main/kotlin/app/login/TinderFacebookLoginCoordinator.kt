@@ -21,7 +21,7 @@ internal class TinderFacebookLoginCoordinator(
                     }
 
                     override fun onComplete() {
-                        // TODO dologin
+                        // TODO Tell the activity to route to a new activity
                         view.setStale()
                     }
                 })
@@ -30,6 +30,5 @@ internal class TinderFacebookLoginCoordinator(
     fun actionCancelLogin() {
         view.setStale()
         useCase.dispose()
-        // TODO cancelLogin
     }
 }
