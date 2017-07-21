@@ -1,10 +1,10 @@
 package app.login
 
-import dagger.Component
-import javax.inject.Singleton
+import app.di.PerFeature
+import dagger.Subcomponent
 
-@Component(modules = arrayOf(TinderFacebookLoginModule::class))
-@Singleton
+@Subcomponent(modules = arrayOf(TinderFacebookLoginModule::class))
+@PerFeature
 internal interface TinderFacebookLoginComponent {
     fun inject(target: TinderLoginActivity)
 }

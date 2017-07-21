@@ -9,6 +9,8 @@ import domain.Domain
  * Custom application.
  */
 internal open class MainApplication : Application() {
+    val applicationComponent: ApplicationComponent by lazy { DaggerApplicationComponent.create() }
+
     override fun onCreate() {
         super.onCreate()
         InAppAccountManager.context = applicationContext

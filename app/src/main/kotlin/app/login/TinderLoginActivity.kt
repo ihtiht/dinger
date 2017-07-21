@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import app.MainApplication
 import kotlinx.android.synthetic.main.activity_login.login_button
 import kotlinx.android.synthetic.main.activity_login.progress
 import org.stoyicker.dinger.R
@@ -49,12 +50,10 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
         requestTinderLogin(facebookId, facebookToken)
     }
 
-    private fun inject() {
-        DaggerTinderFacebookLoginComponent
-                .builder()
-                .tinderFacebookLoginModule(TinderFacebookLoginModule(login_button, progress, this))
-                .build()
-    }
+    private fun inject() =
+            (application as MainApplication).applicationComponent.newTinderFacebookLoginComponent(
+                    TinderFacebookLoginModule(login_button, progress, this@TinderLoginActivity))
+                    .inject(this@TinderLoginActivity)
 
     private fun unbindFacebookLoginFeature() = tinderFacebookLoginFeature.release(login_button)
 
@@ -62,6 +61,7 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
             tinderFacebookLoginCoordinator.actionDoLogin(facebookId, facebookToken)
 
     private fun cancelOngoingTinderLogin() = tinderFacebookLoginCoordinator.actionCancelLogin()
+
 
     companion object {
         fun getCallingIntent(context: Context) = Intent(context, TinderLoginActivity::class.java)

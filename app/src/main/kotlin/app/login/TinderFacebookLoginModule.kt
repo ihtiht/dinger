@@ -2,14 +2,14 @@ package app.login
 
 import android.support.v4.widget.ContentLoadingProgressBar
 import app.ApplicationModule
+import app.di.PerFeature
 import com.facebook.login.widget.LoginButton
 import dagger.Module
 import dagger.Provides
 import domain.exec.PostExecutionSchedulerProvider
-import javax.inject.Singleton
 
-@Module(includes = arrayOf(ApplicationModule::class))
-@Singleton
+@Module
+@PerFeature
 internal class TinderFacebookLoginModule(
         private val loginButton: LoginButton,
         private val contentLoadingProgressBar: ContentLoadingProgressBar,
