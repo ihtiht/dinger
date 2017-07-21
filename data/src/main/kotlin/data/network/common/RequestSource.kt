@@ -7,7 +7,9 @@ internal abstract class RequestSource<in RequestModel, ResponseModel>(
         private val store: Store<ResponseModel, RequestModel>)
     : Gettable<RequestModel, ResponseModel> {
     override fun fetch(parameters: RequestModel): Single<ResponseModel> {
-        return operate(store.fetch(parameters))
+        return operate(store.fetch(parameters).onErrorResumeNext { error ->
+            get(parameters).onErrorResumeNext(Single.error(error))
+        })
     }
 
     override fun get(parameters: RequestModel): Single<ResponseModel> {
