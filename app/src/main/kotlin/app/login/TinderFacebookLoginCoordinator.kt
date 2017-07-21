@@ -15,13 +15,13 @@ internal class TinderFacebookLoginCoordinator(
         view.setRunning()
         TinderFacebookLoginUseCase(facebookId, facebookToken, postExecutionSchedulerProvider)
                 .execute(object : DisposableCompletableObserver() {
-                    override fun onError(e: Throwable?) {
-                        e.takeIf { it != null }.also { FirebaseCrash.report(e) }
+                    override fun onError(exception: Throwable?) {
+                        exception?.let { FirebaseCrash.report(exception) }
                         view.setStale()
                     }
 
                     override fun onComplete() {
-                        // TODO Tell the activity to route to a new activity
+                        // TODO Tell the activity (via a LoginCallback) to route to a new activity
                         view.setStale()
                     }
                 })

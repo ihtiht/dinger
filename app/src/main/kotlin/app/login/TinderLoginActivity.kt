@@ -50,10 +50,10 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
         requestTinderLogin(facebookId, facebookToken)
     }
 
-    private fun inject() =
-            (application as MainApplication).applicationComponent.newTinderFacebookLoginComponent(
-                    TinderFacebookLoginModule(login_button, progress, this@TinderLoginActivity))
-                    .inject(this@TinderLoginActivity)
+    private fun inject() = (application as MainApplication).applicationComponent
+            .newTinderFacebookLoginComponent(
+                    TinderFacebookLoginModule(login_button, progress, this))
+            .inject(this)
 
     private fun unbindFacebookLoginFeature() = tinderFacebookLoginFeature.release(login_button)
 

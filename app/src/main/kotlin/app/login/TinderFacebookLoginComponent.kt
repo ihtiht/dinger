@@ -1,10 +1,10 @@
 package app.login
 
-import app.di.PerFeature
+import app.di.PerActivity
 import dagger.Subcomponent
 
 @Subcomponent(modules = arrayOf(TinderFacebookLoginModule::class))
-@PerFeature
+@PerActivity
 internal interface TinderFacebookLoginComponent {
     fun inject(target: TinderLoginActivity)
 }

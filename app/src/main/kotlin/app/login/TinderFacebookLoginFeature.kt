@@ -26,8 +26,8 @@ internal class TinderFacebookLoginFeature(loginButton: LoginButton, callback: Re
                                     .show()
                         }
 
-                        override fun onError(exception: FacebookException) {
-                            FirebaseCrash.report(exception)
+                        override fun onError(exception: FacebookException?) {
+                            exception?.let { FirebaseCrash.report(it) }
                             Toast.makeText(context, R.string.login_failed,
                                     Toast.LENGTH_LONG)
                                     .show()
@@ -41,10 +41,6 @@ internal class TinderFacebookLoginFeature(loginButton: LoginButton, callback: Re
         }
     }
 
-    internal interface ResultCallback {
-        fun onSuccess(facebookId: String, facebookToken: String)
-    }
-
     /**
      * Call from Activity#onActivityResult(Int, Int, Intent?).
      */
@@ -54,5 +50,9 @@ internal class TinderFacebookLoginFeature(loginButton: LoginButton, callback: Re
 
     fun release(loginButton: LoginButton) {
         loginButton.unregisterCallback(callbackManager)
+    }
+
+    internal interface ResultCallback {
+        fun onSuccess(facebookId: String, facebookToken: String)
     }
 }

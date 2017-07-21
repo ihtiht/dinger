@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Handler
 import android.view.View
+import app.MainApplication
 import app.login.TinderLoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import org.stoyicker.dinger.R
+import javax.inject.Inject
 
 /**
  * A simple activity that acts as a splash screen.
@@ -16,11 +18,15 @@ import org.stoyicker.dinger.R
  * background in the theme. This allows it to be shown without having to wait for the content view
  * to be drawn.
  */
-internal class SplashActivity : Activity() {
+internal class SplashActivity : Activity(), LoggedInCheckCoordinator.ResultCallback {
+    @Inject
+    lateinit var loggedInCheckCoordinator: LoggedInCheckCoordinator
+
     private lateinit var handler: Handler
 
     override fun onResume() {
         super.onResume()
+        inject()
         scheduleContentOpening()
     }
 
@@ -29,21 +35,17 @@ internal class SplashActivity : Activity() {
      */
     private fun scheduleContentOpening() {
         handler = Handler()
-        handler.postDelayed({ openContent() }, SHOW_TIME_MILLIS)
+        handler.postDelayed({ fetchUserAccount() }, SHOW_TIME_MILLIS)
     }
 
     /**
      * Closes the splash and introduces the actual content of the app.
      */
-    private fun openContent() {
+    private fun fetchUserAccount() {
         if (!assertGooglePlayServicesAvailable()) {
             return
         }
-        if (true) { // TODO Use case for login status check
-            requestToken()
-        } else {
-            doLogin()
-        }
+        loggedInCheckCoordinator.actionDoCheck()
     }
 
     override fun onPause() {
@@ -62,6 +64,18 @@ internal class SplashActivity : Activity() {
                     View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         }
     }
+
+    override fun onLoggedInUserFound() {
+        doLogin()
+    }
+
+    override fun onLoggedInUserNotFound() {
+        requestToken()
+    }
+
+    private fun inject() = (application as MainApplication).applicationComponent
+            .newSplashComponent(LoggedInCheckModule(this))
+            .inject(this)
 
     /**
      * Checks for Play Services availability (required for Firebase). On failure, shows a dialog
@@ -85,7 +99,6 @@ internal class SplashActivity : Activity() {
     }
 
     private fun requestToken() {
-        // This should be start for result
         TinderLoginActivity.getCallingIntent(this).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(this)
