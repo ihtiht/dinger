@@ -61,7 +61,6 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile project(':data')
     compile project(':domain')
     compile rootProject.ext.compileDependencies
     kapt rootProject.ext.annotationProcessorAppDependencies
