@@ -17,7 +17,9 @@ internal object DingerAccountManager : domain.auth.AccountManager {
         }
     }
 
-    override fun getAccountToken() = delegate.getAccountsByType(Companion.ACCOUNT_TYPE).let {
+    override fun isThereALoggedInUser() = getAccountToken() != null
+
+    internal fun getAccountToken() = delegate.getAccountsByType(Companion.ACCOUNT_TYPE).let {
         when (it.size) {
             0 -> null
             else -> delegate.getPassword(it.first())
