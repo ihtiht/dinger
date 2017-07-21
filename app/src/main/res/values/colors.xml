@@ -4,7 +4,7 @@
     <color name="primary">#263238</color>
     <color name="primary_dark">#000A12</color>
     <color name="secondary">#FFAB40</color>
-    <color name="splash_background">#273339</color>
+    <color name="window_background">#273339</color>
     <color name="text_primary">#FFAB40</color>
     <color name="text_secondary">#263238</color>
 </resources>

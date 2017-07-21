@@ -5,10 +5,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_launcher_big"
+        android:scaleType="fitCenter" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <android.support.v4.widget.ContentLoadingProgressBar
         android:id="@+id/progress"
@@ -18,4 +32,9 @@
         android:layout_gravity="bottom"
         android:visibility="invisible"
         style="?android:attr/android:progressBarStyleHorizontal" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>
