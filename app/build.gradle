@@ -31,6 +31,7 @@ android {
         }
     }
     defaultConfig {
+        applicationId rootProject.ext.androidApplicationIdBase
         versionCode rootProject.ext.androidVersionCode
         versionName rootProject.ext.androidVersionName
         minSdkVersion rootProject.ext.androidMinSdkVersion
