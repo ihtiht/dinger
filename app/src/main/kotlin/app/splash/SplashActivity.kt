@@ -9,7 +9,6 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import org.stoyicker.dinger.R
 
-
 /**
  * A simple activity that acts as a splash screen.
  *
