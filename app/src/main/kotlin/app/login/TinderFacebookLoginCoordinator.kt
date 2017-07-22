@@ -17,7 +17,7 @@ internal class TinderFacebookLoginCoordinator(
                 .execute(object : DisposableCompletableObserver() {
                     override fun onError(exception: Throwable?) {
                         exception?.let { FirebaseCrash.report(exception) }
-                        view.setStale()
+                        view.setError()
                     }
 
                     override fun onComplete() {

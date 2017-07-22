@@ -15,8 +15,6 @@ import domain.Domain
 import javax.inject.Inject
 
 /**
- * Used to tie to the app lifecycle, for things like obtaining a Context reference or initializing
- * DI.
  * @see <a href="https://firebase.googleblog.com/2016/12/how-does-firebase-initialize-on-android.html">
  *     The Firebase Blog: How does Firebase initialize on Android</a>
  */

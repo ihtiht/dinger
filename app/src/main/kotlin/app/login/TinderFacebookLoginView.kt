@@ -1,8 +1,11 @@
 package app.login
 
 import android.view.View
+import android.widget.Toast
+import org.stoyicker.dinger.R
 
 internal class TinderFacebookLoginView(
+        private val activity: TinderLoginActivity,
         private val loginButton: View,
         private val progress: View)
     : TinderLoginView {
@@ -14,5 +17,10 @@ internal class TinderFacebookLoginView(
     override fun setStale() {
         loginButton.visibility = View.VISIBLE
         progress.visibility = View.INVISIBLE
+    }
+
+    override fun setError() {
+        setStale()
+        Toast.makeText(activity, R.string.login_failed, Toast.LENGTH_LONG).show()
     }
 }

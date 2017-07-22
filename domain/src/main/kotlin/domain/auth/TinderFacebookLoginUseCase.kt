@@ -14,7 +14,7 @@ class TinderFacebookLoginUseCase(
             .login(DomainAuthRequestParameters(facebookId, facebookToken))
             .doOnSuccess({
                 if (!Domain.accountManager.addAccount(facebookId, it.apiKey)) {
-                throw FailedLoginException(
+                    throw FailedLoginException(
                         "Failed to add account $facebookId with token $facebookToken")
             } })
             .toCompletable()

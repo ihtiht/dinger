@@ -40,13 +40,14 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
 
     private fun inject() = (application as MainApplication).applicationComponent
             .newTinderFacebookLoginComponent(
-                    TinderFacebookLoginModule(login_button, progress, this))
+                    TinderFacebookLoginModule(this, login_button, progress, this))
             .inject(this)
 
     private fun unbindFacebookLoginFeature() = tinderFacebookLoginFeature.release(login_button)
 
-    private fun requestTinderLogin(facebookId: String, facebookToken: String) =
-            tinderFacebookLoginCoordinator.actionDoLogin(facebookId, facebookToken)
+    private fun requestTinderLogin(facebookId: String, facebookToken: String) {
+        tinderFacebookLoginCoordinator.actionDoLogin(facebookId, facebookToken)
+    }
 
     private fun cancelOngoingTinderLogin() = tinderFacebookLoginCoordinator.actionCancelLogin()
 

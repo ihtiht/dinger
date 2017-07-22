@@ -10,6 +10,7 @@ import domain.exec.PostExecutionSchedulerProvider
 @Module
 @PerActivity
 internal class TinderFacebookLoginModule(
+        private val activity: TinderLoginActivity,
         private val loginButton: LoginButton,
         private val contentLoadingProgressBar: ContentLoadingProgressBar,
         private val callback: TinderFacebookLoginFeature.ResultCallback) {
@@ -17,7 +18,8 @@ internal class TinderFacebookLoginModule(
     fun feature() = TinderFacebookLoginFeature(loginButton, callback)
 
     @Provides
-    fun view(): TinderLoginView = TinderFacebookLoginView(loginButton, contentLoadingProgressBar)
+    fun view(): TinderLoginView
+            = TinderFacebookLoginView(activity, loginButton, contentLoadingProgressBar)
 
     @Provides
     fun coordinator(
