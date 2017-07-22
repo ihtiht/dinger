@@ -1,4 +1,4 @@
-package data.auth
+package data.account
 
 import android.accounts.AbstractAccountAuthenticator
 import android.accounts.Account
@@ -16,10 +16,6 @@ internal class DingerAccountManager @Inject constructor(context: Context)
         ACCOUNT_TYPE = context.getString(R.string.account_type)
     }
 
-    companion object {
-        lateinit var INSTANCE: DingerAccountManager
-        private lateinit var ACCOUNT_TYPE: String
-    }
     private val delegate by lazy { AccountManager.get(context) }
 
     override fun addAccount(
@@ -74,5 +70,9 @@ internal class DingerAccountManager @Inject constructor(context: Context)
             0 -> null
             else -> delegate.getPassword(it.first())
         }
+    }
+
+    private companion object {
+        lateinit var ACCOUNT_TYPE: String
     }
 }

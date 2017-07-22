@@ -10,7 +10,7 @@
             android:exported="false"
             android:syncable="false" />
         <service
-            android:name="data.auth.DingerAccountManagerService"
+            android:name="data.account.DingerAccountManagerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
