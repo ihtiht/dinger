@@ -5,7 +5,7 @@ import domain.auth.DomainAuthRequestParameters
 
 internal class AuthRequestEntityMapper
     : EntityMapper<DomainAuthRequestParameters, AuthRequestParameters> {
-    override fun map(source: DomainAuthRequestParameters) =
+    override fun transform(source: DomainAuthRequestParameters) =
             source.let {
                 AuthRequestParameters(it.facebookId, it.facebookToken)
             }

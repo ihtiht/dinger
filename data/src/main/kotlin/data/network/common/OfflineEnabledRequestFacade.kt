@@ -11,5 +11,5 @@ internal abstract class OfflineEnabledRequestFacade<
     : Gettable<RequestModel, MappedModel>,
         RequestFacade<RequestModel, MappedRequestModel, ResponseModel, MappedModel>(
         source, requestMapper, responseMapper) {
-    override fun get(parameters: RequestModel) = map(source.get(requestMapper.map(parameters)))
+    override fun get(parameters: RequestModel) = map(source.get(requestMapper.transform(parameters)))
 }
