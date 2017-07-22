@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import app.MainApplication
 import kotlinx.android.synthetic.main.activity_login.login_button
 import kotlinx.android.synthetic.main.activity_login.progress
@@ -33,18 +32,6 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
         unbindFacebookLoginFeature()
         cancelOngoingTinderLogin()
         super.onDestroy()
-    }
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or
-                    View.SYSTEM_UI_FLAG_FULLSCREEN or
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        }
     }
 
     override fun onSuccess(facebookId: String, facebookToken: String) {
