@@ -12,7 +12,7 @@ import javax.inject.Singleton
 internal class TinderApiModule {
     @Provides
     @Singleton
-    fun tinderApi(retrofitBuilder: Retrofit.Builder) = retrofitBuilder
+    fun tinderApi(retrofitBuilder: Retrofit.Builder): TinderApi = retrofitBuilder
         .client(OkHttpClient.Builder()
         .addInterceptor {
             it.proceed(it.request().newBuilder()
