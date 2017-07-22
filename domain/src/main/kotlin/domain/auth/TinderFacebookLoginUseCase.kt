@@ -4,7 +4,6 @@ import domain.Domain
 import domain.exec.PostExecutionSchedulerProvider
 import domain.interactor.CompletableUseCase
 import io.reactivex.Completable
-import javax.security.auth.login.FailedLoginException
 
 class TinderFacebookLoginUseCase(
         private val facebookId: String,
