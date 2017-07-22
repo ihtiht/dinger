@@ -8,22 +8,27 @@ import io.reactivex.observers.DisposableSingleObserver
 internal class LoggedInCheckCoordinator(
         private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider,
         private val callback: ResultCallback) {
+    private lateinit var useCase: LoggedInUserCheckUseCase
 
     fun actionDoCheck() {
-        LoggedInUserCheckUseCase(postExecutionSchedulerProvider).execute(
-                object : DisposableSingleObserver<Boolean>() {
-                    override fun onSuccess(t: Boolean) {
-                        when (t) {
-                            true -> callback.onLoggedInUserFound()
-                            false -> callback.onLoggedInUserNotFound()
-                        }
-                    }
+        useCase = LoggedInUserCheckUseCase(postExecutionSchedulerProvider)
+        useCase.execute(object : DisposableSingleObserver<Boolean>() {
+            override fun onSuccess(t: Boolean) {
+                when (t) {
+                    true -> callback.onLoggedInUserFound()
+                    false -> callback.onLoggedInUserNotFound()
+                }
+            }
 
-                    override fun onError(throwable: Throwable?) {
-                        throwable?.let { FirebaseCrash.report(it) }
-                        callback.onLoggedInUserNotFound()
-                    }
-                })
+            override fun onError(throwable: Throwable?) {
+                throwable?.let { FirebaseCrash.report(it) }
+                callback.onLoggedInUserNotFound()
+            }
+        })
+    }
+
+    fun actionCancelCheck() {
+        useCase.dispose()
     }
 
     interface ResultCallback {

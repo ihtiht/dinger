@@ -29,27 +29,19 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
     }
 
     override fun onDestroy() {
-        unbindFacebookLoginFeature()
-        cancelOngoingTinderLogin()
+        tinderFacebookLoginFeature.release(login_button)
+        tinderFacebookLoginCoordinator.actionCancelLogin()
         super.onDestroy()
     }
 
     override fun onSuccess(facebookId: String, facebookToken: String) {
-        requestTinderLogin(facebookId, facebookToken)
+        tinderFacebookLoginCoordinator.actionDoLogin(facebookId, facebookToken)
     }
 
     private fun inject() = (application as MainApplication).applicationComponent
             .newTinderFacebookLoginComponent(
                     TinderFacebookLoginModule(this, login_button, progress, this))
             .inject(this)
-
-    private fun unbindFacebookLoginFeature() = tinderFacebookLoginFeature.release(login_button)
-
-    private fun requestTinderLogin(facebookId: String, facebookToken: String) {
-        tinderFacebookLoginCoordinator.actionDoLogin(facebookId, facebookToken)
-    }
-
-    private fun cancelOngoingTinderLogin() = tinderFacebookLoginCoordinator.actionCancelLogin()
 
     companion object {
         fun getCallingIntent(context: Context) = Intent(context, TinderLoginActivity::class.java)

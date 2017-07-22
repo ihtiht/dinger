@@ -52,6 +52,11 @@ internal class SplashActivity : Activity(), LoggedInCheckCoordinator.ResultCallb
         super.onPause()
     }
 
+    override fun onDestroy() {
+        loggedInCheckCoordinator.actionCancelCheck()
+        super.onDestroy()
+    }
+
     override fun onLoggedInUserFound() {
         doLogin()
     }
