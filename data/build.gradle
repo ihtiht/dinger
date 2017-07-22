@@ -12,6 +12,7 @@ android {
         versionName rootProject.ext.androidVersionName
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
+        buildConfigField "String", "CLIENT_VERSION", "\"7.3.1\""
     }
     dexOptions {
         preDexLibraries false
