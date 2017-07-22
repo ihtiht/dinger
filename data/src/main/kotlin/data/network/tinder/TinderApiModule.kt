@@ -17,7 +17,9 @@ internal class TinderApiModule {
         .addInterceptor {
             it.proceed(it.request().newBuilder()
                  .apply {
-                     addHeader(TinderApi.HEADER_AUTH, DingerAccountManager.getAccountToken())
+                     DingerAccountManager.getAccountToken()?.let {
+                        addHeader(TinderApi.HEADER_AUTH, it)
+                     }
                  }.build())
         }.build())
             .baseUrl(TinderApi.BASE_URL)

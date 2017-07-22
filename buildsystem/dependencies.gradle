@@ -33,7 +33,7 @@ ext {
     ]
     compileDataDependencies = [
             "com.squareup.retrofit2:retrofit:$retrofitVersion",
-            "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion",
+            "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
             "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
             "com.nytimes.android:store3:$storeVersion",
             "com.nytimes.android:middleware-moshi3:$storeVersion",

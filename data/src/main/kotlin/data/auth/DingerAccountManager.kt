@@ -3,7 +3,7 @@ package data.auth
 import android.accounts.Account
 import android.accounts.AccountManager
 import android.content.Context
-import org.stoyicker.dinger.data.BuildConfig.APPLICATION_ID
+import org.stoyicker.dinger.data.BuildConfig
 import domain.auth.AccountManager as AppAccountManager
 
 internal object DingerAccountManager : AppAccountManager {
@@ -29,6 +29,6 @@ internal object DingerAccountManager : AppAccountManager {
     }
 
     private object Companion {
-        const val ACCOUNT_TYPE: String = APPLICATION_ID
+        const val ACCOUNT_TYPE: String = BuildConfig.APPLICATION_ID
     }
 }
