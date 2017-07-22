@@ -8,4 +8,4 @@ internal data class AuthRequestParameters(
         @Json(name = "token")
         private val facebookVersion: String,
         @Json(name = "client_version")
-        private val clientVersion: String = "7.3.0") // TODO have this be dynamic
+        private val clientVersion: String = "7.3.1") // TODO have this be dynamic
