@@ -62,7 +62,8 @@ repositories {
     jcenter()
 }
 dependencies {
-    compile project(':data') // This is only for the ContentProvider. Don't import data in src!
+    debugCompile project(path: ':data', configuration: 'debug') // This is only for the ContentProvider. Don't import data in src!
+    releaseCompile project(path: ':data', configuration: 'release') // This is only for the ContentProvider. Don't import data in src!
     compile project(':domain')
     compile rootProject.ext.compileDependencies
     kapt rootProject.ext.annotationProcessorAppDependencies

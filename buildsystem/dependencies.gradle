@@ -3,6 +3,7 @@ final def facebookSdkVersion = "4.24.0"
 final def googlePlayServicesVersion = "11.0.1"
 final def jsr250Version = "1.0"
 final def kotlinVersion = rootProject.ext.kotlinVersion
+final def okHttp3Version = "3.8.0"
 final def retrofitVersion = "2.3.0"
 final def rxAndroid2Version = "2.0.1"
 final def rxJava2Version = "2.0.7"
@@ -30,6 +31,9 @@ ext {
     ]
     annotationProcessorDataDependencies = [
             "com.google.dagger:dagger-compiler:$daggerVersion"
+    ]
+    debugCompileDataDependencies = [
+            "com.squareup.okhttp3:logging-interceptor:$okHttp3Version"
     ]
     compileDataDependencies = [
             "com.squareup.retrofit2:retrofit:$retrofitVersion",

@@ -28,6 +28,7 @@ android {
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
+    publishNonDefault true
     sourceSets.forEach {
         it.java.srcDirs += ["src/$it.name/kotlin"]
     }
@@ -40,6 +41,7 @@ repositories {
 dependencies {
     compile project(':domain')
     kapt rootProject.ext.annotationProcessorDataDependencies
+    debugCompile rootProject.ext.debugCompileDataDependencies
     compile rootProject.ext.compileDependencies
     rootProject.ext.compileDataDependencies.forEach {
         compile(it) {
