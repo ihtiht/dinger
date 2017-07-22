@@ -21,6 +21,7 @@ internal class TinderLoginActivity : Activity(), TinderFacebookLoginFeature.Resu
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         inject()
+        tinderFacebookLoginFeature.bind()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

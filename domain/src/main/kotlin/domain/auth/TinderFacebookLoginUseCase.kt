@@ -12,7 +12,8 @@ class TinderFacebookLoginUseCase(
     : CompletableUseCase(postExecutionSchedulerProvider) {
     override fun buildUseCase(): Completable = Domain.facadeProvider.tinderApiRepository()
             .login(DomainAuthRequestParameters(facebookId, facebookToken))
-            .doOnSuccess({ if (!Domain.accountManager.addAccount(facebookId, it.apiKey)) {
+            .doOnSuccess({
+                if (!Domain.accountManager.addAccount(facebookId, it.apiKey)) {
                 throw FailedLoginException(
                         "Failed to add account $facebookId with token $facebookToken")
             } })

@@ -12,7 +12,9 @@ import com.facebook.login.widget.LoginButton
 import com.google.firebase.crash.FirebaseCrash
 import org.stoyicker.dinger.R
 
-internal class TinderFacebookLoginFeature(loginButton: LoginButton, callback: ResultCallback) {
+internal class TinderFacebookLoginFeature(
+        loginButton: LoginButton,
+        private val callback: ResultCallback) {
     private val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     init {
@@ -33,13 +35,13 @@ internal class TinderFacebookLoginFeature(loginButton: LoginButton, callback: Re
                                     .show()
                         }
 
-                        override fun onSuccess(loginResult: LoginResult) =
-                                AccessToken.getCurrentAccessToken().let {
-                                    callback.onSuccess(it.userId, it.token)
-                        }
+                        override fun onSuccess(loginResult: LoginResult)
+                                = reportSuccess(AccessToken.getCurrentAccessToken())
                     })
         }
     }
+
+    fun bind() = AccessToken.getCurrentAccessToken()?.also { reportSuccess(it) }
 
     /**
      * Call from Activity#onActivityResult(Int, Int, Intent?).
@@ -50,6 +52,10 @@ internal class TinderFacebookLoginFeature(loginButton: LoginButton, callback: Re
 
     fun release(loginButton: LoginButton) {
         loginButton.unregisterCallback(callbackManager)
+    }
+
+    private fun reportSuccess(accessToken: AccessToken) = accessToken.let {
+        callback.onSuccess(it.userId, it.token)
     }
 
     internal interface ResultCallback {

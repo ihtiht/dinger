@@ -20,10 +20,17 @@ internal interface AuthFacadeComponent {
 internal class AuthFacadeModule {
     @Provides
     @Singleton
-    fun entityMapper() = AuthEntityMapper()
+    fun requestEntityMapper() = AuthRequestEntityMapper()
 
     @Provides
     @Singleton
-    fun facade(source: AuthSource, entityMapper: AuthEntityMapper)
-            = AuthFacade(source, entityMapper)
+    fun responseEntityMapper() = AuthResponseEntityMapper()
+
+    @Provides
+    @Singleton
+    fun facade(
+            source: AuthSource,
+            requestEntityMapper: AuthRequestEntityMapper,
+            responseEntityMapper: AuthResponseEntityMapper)
+            = AuthFacade(source, requestEntityMapper, responseEntityMapper)
 }

@@ -1,7 +1,6 @@
 package data.network.tinder
 
 import data.network.tinder.auth.AuthFacade
-import data.network.tinder.auth.AuthRequestParameters
 import data.network.tinder.auth.DaggerAuthFacadeComponent
 import domain.auth.DomainAuthRequestParameters
 import domain.auth.DomainAuthedUser
@@ -17,6 +16,5 @@ internal class TinderApiRepositoryImpl : TinderApiRepository {
         DaggerAuthFacadeComponent.create().inject(this)
     }
 
-    override fun login(parameters: DomainAuthRequestParameters): Single<DomainAuthedUser>
-        = loginFacade.fetch(AuthRequestParameters(parameters.facebookId, parameters.facebookToken))
+    override fun login(parameters: DomainAuthRequestParameters) = loginFacade.fetch(parameters)
 }
