@@ -4,6 +4,9 @@
 -dontnote okhttp3.**
 -dontwarn okio.**
 -dontnote okio.**
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
 -dontwarn retrofit2.**
 -keepattributes Signature
 -keepattributes Exceptions
