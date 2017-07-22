@@ -4,6 +4,7 @@ import domain.Domain
 import domain.exec.PostExecutionSchedulerProvider
 import domain.interactor.CompletableUseCase
 import io.reactivex.Completable
+import javax.security.auth.login.FailedLoginException
 
 class TinderFacebookLoginUseCase(
         private val facebookId: String,
@@ -12,6 +13,9 @@ class TinderFacebookLoginUseCase(
     : CompletableUseCase(postExecutionSchedulerProvider) {
     override fun buildUseCase(): Completable = Domain.facadeProvider.tinderApiRepository()
             .login(DomainAuthRequestParameters(facebookId, facebookToken))
-            .doOnSuccess({ Domain.accountManager.addAccount(facebookId, it.apiKey) })
+            .doOnSuccess({ if (!Domain.accountManager.addAccount(facebookId, it.apiKey)) {
+                throw FailedLoginException(
+                        "Failed to add account $facebookId with token $facebookToken")
+            } })
             .toCompletable()
 }
