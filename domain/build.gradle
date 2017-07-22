@@ -1,5 +1,5 @@
 apply plugin: 'kotlin'
-apply plugin: 'org.jmailen.kotlinter'
+//apply plugin: 'org.jmailen.kotlinter' TODO Enable when the crash is fixed
 apply plugin: 'org.jetbrains.dokka'
 
 repositories {
