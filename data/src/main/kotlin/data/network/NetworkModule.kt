@@ -18,4 +18,8 @@ internal class NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create())
             .client(client)
             .validateEagerly(BuildConfig.DEBUG)
+
+    @Provides
+    @Singleton
+    fun facadeProvider(): FacadeProviderImpl = FacadeProviderImpl()
 }

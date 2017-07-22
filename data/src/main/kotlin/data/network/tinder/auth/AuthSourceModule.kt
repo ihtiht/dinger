@@ -12,10 +12,6 @@ import okio.BufferedSource
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
-@Component(modules = arrayOf(TinderApiModule::class, AuthSourceModule::class))
-@Singleton
-internal interface AuthSourceComponent
-
 /**
  * Module used to provide stuff required by TopRequestSource objects.
  */
