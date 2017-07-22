@@ -1,5 +1,6 @@
 package data.network.tinder.auth
 
+import com.nytimes.android.external.store3.base.impl.Store
 import com.nytimes.android.external.store3.base.impl.StoreBuilder
 import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory
 import dagger.Component
@@ -9,6 +10,7 @@ import data.network.tinder.TinderApi
 import data.network.tinder.TinderApiModule
 import okio.BufferedSource
 import javax.inject.Singleton
+import dagger.Lazy as DaggerLazy
 
 @Component(modules = arrayOf(TinderApiModule::class, AuthSourceModule::class))
 @Singleton
@@ -28,6 +30,11 @@ internal class AuthSourceModule {
                             AuthResponse::class.java))
                     .networkBeforeStale()
                     .open()
+
+    @Provides
+    @Singleton
+    fun source(store: DaggerLazy<Store<AuthResponse, AuthRequestParameters>>)
+            = AuthSource(store)
 
     private fun fetcher(requestParameters: AuthRequestParameters, api: TinderApi) =
             api.login(requestParameters).map { it.source() }

@@ -3,8 +3,8 @@ package data.network.common
 import io.reactivex.Single
 
 internal abstract class RequestFacade<in RequestModel, ResponseModel, MappedModel>(
-        val source: RequestSource<RequestModel, ResponseModel>,
-        val entityMapper: EntityMapper<ResponseModel, MappedModel>)
+        internal val source: RequestSource<RequestModel, ResponseModel>,
+        private val entityMapper: EntityMapper<ResponseModel, MappedModel>)
     : Fetchable<RequestModel, MappedModel> {
     override fun fetch(parameters: RequestModel) = map(source.fetch(parameters))
 

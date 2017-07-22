@@ -12,7 +12,7 @@ import javax.inject.Singleton
 internal class NetworkModule {
     @Provides
     @Singleton
-    fun retrofitBuilder() = Retrofit.Builder()
+    fun retrofitBuilder(): Retrofit.Builder = Retrofit.Builder()
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create())
             .validateEagerly(BuildConfig.DEBUG)

@@ -1,15 +1,17 @@
 package data.network.tinder.auth
 
-import com.nytimes.android.external.store3.base.impl.Store
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import data.network.tinder.TinderApiRepositoryImpl
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
 @Component(modules = arrayOf(AuthSourceModule::class, AuthFacadeModule::class))
 @Singleton
-internal interface AuthFacadeComponent
+internal interface AuthFacadeComponent {
+    fun inject(tinderApiRepositoryImpl: TinderApiRepositoryImpl)
+}
 
 /**
  * Module used to provide stuff required by TopRequestFacade objects.
@@ -22,5 +24,6 @@ internal class AuthFacadeModule {
 
     @Provides
     @Singleton
-    fun topRequestSource(store: DaggerLazy<Store<AuthResponse, AuthRequestParameters>>) = AuthSource(store)
+    fun facade(source: AuthSource, entityMapper: AuthEntityMapper)
+            = AuthFacade(source, entityMapper)
 }
