@@ -5,7 +5,7 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.SOURCE)
 @IntDef({
         DataRecommendationUser.GENDER_MALE,
         DataRecommendationUser.GENDER_FEMALE })
