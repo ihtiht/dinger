@@ -15,7 +15,6 @@ import domain.Domain
  */
 internal class InitializationContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        throw IllegalAccessError("I'm where I should be")
         DingerAccountManager.context = context
         Domain.apply {
             facadeProvider(FacadeProviderImpl)
