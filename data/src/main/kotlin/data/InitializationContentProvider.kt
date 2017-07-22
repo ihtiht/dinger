@@ -15,10 +15,10 @@ import domain.Domain
  */
 internal class InitializationContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        DingerAccountManager.context = context
+        DingerAccountManager.INSTANCE = DingerAccountManager(context)
         Domain.apply {
             facadeProvider(FacadeProviderImpl)
-            accountManager(DingerAccountManager)
+            accountManager(DingerAccountManager.INSTANCE)
         }
         return true
     }

@@ -1,14 +1,62 @@
 package data.auth
 
+import android.accounts.AbstractAccountAuthenticator
 import android.accounts.Account
+import android.accounts.AccountAuthenticatorResponse
 import android.accounts.AccountManager
 import android.content.Context
-import org.stoyicker.dinger.data.BuildConfig
+import android.os.Bundle
+import org.stoyicker.dinger.data.R
+import javax.inject.Inject
 import domain.auth.AccountManager as AppAccountManager
 
-internal object DingerAccountManager : AppAccountManager {
-    lateinit var context: Context
+internal class DingerAccountManager @Inject constructor(context: Context)
+    : AppAccountManager, AbstractAccountAuthenticator(context) {
+    init {
+        ACCOUNT_TYPE = context.getString(R.string.account_type)
+    }
+
+    companion object {
+        lateinit var INSTANCE: DingerAccountManager
+        private lateinit var ACCOUNT_TYPE: String
+    }
     private val delegate by lazy { AccountManager.get(context) }
+
+    override fun addAccount(
+            p0: AccountAuthenticatorResponse?,
+            p1: String?,
+            p2: String?,
+            p3: Array<out String>?,
+            p4: Bundle?) = throw UnsupportedOperationException("Not supported")
+
+    override fun getAuthTokenLabel(p0: String?)
+                = throw UnsupportedOperationException("Not supported")
+
+    override fun confirmCredentials(
+            p0: AccountAuthenticatorResponse?,
+            p1: Account?,
+            p2: Bundle?) = throw UnsupportedOperationException("Not supported")
+
+    override fun updateCredentials(
+            p0: AccountAuthenticatorResponse?,
+            p1: Account?,
+            p2: String?,
+            p3: Bundle?) = throw UnsupportedOperationException("Not supported")
+
+    override fun getAuthToken(
+            p0: AccountAuthenticatorResponse?,
+            p1: Account?,
+            p2: String?,
+            p3: Bundle?)
+            = throw UnsupportedOperationException("Not supported")
+
+    override fun hasFeatures(
+            p0: AccountAuthenticatorResponse?,
+            p1: Account?,
+            p2: Array<out String>?) = throw UnsupportedOperationException("Not supported")
+
+    override fun editProperties(p0: AccountAuthenticatorResponse?, p1: String?)
+            = throw UnsupportedOperationException("Not supported")
 
     override fun addAccount(id: String, token: String) = Account(id, Companion.ACCOUNT_TYPE).let {
         if (delegate.addAccountExplicitly(it, token, null)) {
@@ -26,9 +74,5 @@ internal object DingerAccountManager : AppAccountManager {
             0 -> null
             else -> delegate.getPassword(it.first())
         }
-    }
-
-    private object Companion {
-        const val ACCOUNT_TYPE: String = BuildConfig.APPLICATION_ID
     }
 }

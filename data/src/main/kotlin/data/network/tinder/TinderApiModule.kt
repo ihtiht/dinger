@@ -17,7 +17,7 @@ internal class TinderApiModule {
         .addInterceptor {
             it.proceed(it.request().newBuilder()
                  .apply {
-                     DingerAccountManager.getAccountToken()?.let {
+                     DingerAccountManager.INSTANCE.getAccountToken()?.let {
                         addHeader(TinderApi.HEADER_AUTH, it)
                      }
                  }.build())

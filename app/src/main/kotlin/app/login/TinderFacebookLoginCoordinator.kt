@@ -16,14 +16,11 @@ internal class TinderFacebookLoginCoordinator(
         TinderFacebookLoginUseCase(facebookId, facebookToken, postExecutionSchedulerProvider)
                 .execute(object : DisposableCompletableObserver() {
                     override fun onError(exception: Throwable?) {
-                        exception?.let {
-                            throw it
-                            FirebaseCrash.report(exception) }
+                        exception?.let { FirebaseCrash.report(exception) }
                         view.setStale()
                     }
 
                     override fun onComplete() {
-                        throw IllegalStateException("Operation completed")
                         view.setStale()
                     }
                 })

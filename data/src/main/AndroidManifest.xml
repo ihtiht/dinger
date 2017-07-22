@@ -9,5 +9,15 @@
             android:name="data.InitializationContentProvider"
             android:exported="false"
             android:syncable="false" />
+        <service
+            android:name="data.auth.DingerAccountManagerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator_dinger"/>
+        </service>
     </application>
 </manifest>
