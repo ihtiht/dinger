@@ -50,4 +50,5 @@ dependencies {
             exclude group: 'io.reactivex'
         }
     }
+    provided rootProject.ext.providedDataDependencies
 }

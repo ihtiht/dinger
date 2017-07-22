@@ -6,7 +6,6 @@ import android.net.Uri
 import data.account.AccountModule
 import data.account.DaggerAccountComponent
 import data.account.DingerAccountManager
-import data.network.DaggerInitializationComponent
 import data.network.FacadeProviderImpl
 import data.network.NetworkModule
 import data.network.tinder.auth.AuthFacadeModule

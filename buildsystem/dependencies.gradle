@@ -8,20 +8,21 @@ final def retrofitVersion = "2.3.0"
 final def rxAndroid2Version = "2.0.1"
 final def rxJava2Version = "2.0.7"
 final def storeVersion = "3.0.0-alpha"
+final def supportLibraryVersion = "25.3.1"
 
 ext {
     compileDependencies = [
-        "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+            "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     ]
     annotationProcessorAppDependencies = [
             "com.google.dagger:dagger-compiler:$daggerVersion"
     ]
     compileAppDependencies = [
-        "com.facebook.android:facebook-android-sdk:$facebookSdkVersion",
-        "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
-        "com.google.android.gms:play-services-auth-base:$googlePlayServicesVersion",
-        "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
-        "com.google.dagger:dagger-android:$daggerVersion"
+            "com.facebook.android:facebook-android-sdk:$facebookSdkVersion",
+            "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
+            "com.google.android.gms:play-services-auth-base:$googlePlayServicesVersion",
+            "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
+            "com.google.dagger:dagger:$daggerVersion"
     ]
     compileOnlyDomainDependencies = [
             "javax.annotation:jsr250-api:$jsr250Version"
@@ -42,6 +43,9 @@ ext {
             "com.nytimes.android:store3:$storeVersion",
             "com.nytimes.android:middleware-moshi3:$storeVersion",
             "com.nytimes.android:filesystem3:$storeVersion",
-            "com.google.dagger:dagger-android:$daggerVersion"
+            "com.google.dagger:dagger:$daggerVersion"
+    ]
+    providedDataDependencies = [
+            "com.android.support:support-annotations:$supportLibraryVersion"
     ]
 }
