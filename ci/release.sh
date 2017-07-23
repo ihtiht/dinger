@@ -22,12 +22,12 @@ uploadReleaseToGitHub() {
         \"body\": \"$RELEASE_NOTES\"
     }"
 
-    # Create the release in GitHub and extract its id from the data.network.response
+    # Create the release in GitHub and extract its id from the response
     RESPONSE_BODY=$(curl \
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
             --header "Content-Type: application/json; charset=utf-8" \
-            --requestParameters POST \
+            --request POST \
             --data "${BODY}" \
             https://api.github.com/repos/"${TRAVIS_REPO_SLUG}"/releases)
 
@@ -47,7 +47,7 @@ uploadReleaseToGitHub() {
     --header "Accept: application/vnd.github.v3+json" \
     --header "Content-Type: application/zip" \
     --data-binary "@app-release.apk" \
-    --requestParameters POST \
+    --request POST \
     ${UPLOAD_URL}
 
     echo "Release complete."
