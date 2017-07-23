@@ -8,11 +8,11 @@ import io.reactivex.observers.DisposableSingleObserver
 internal class LoggedInCheckCoordinator(
         private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider,
         private val callback: ResultCallback) {
-    private lateinit var useCase: LoggedInUserCheckUseCase
+    private var useCase: LoggedInUserCheckUseCase? = null
 
     fun actionDoCheck() {
         useCase = LoggedInUserCheckUseCase(postExecutionSchedulerProvider)
-        useCase.execute(object : DisposableSingleObserver<Boolean>() {
+        useCase?.execute(object : DisposableSingleObserver<Boolean>() {
             override fun onSuccess(t: Boolean) {
                 when (t) {
                     true -> callback.onLoggedInUserFound()
@@ -28,7 +28,7 @@ internal class LoggedInCheckCoordinator(
     }
 
     fun actionCancelCheck() {
-        useCase.dispose()
+        useCase?.dispose()
     }
 
     interface ResultCallback {
