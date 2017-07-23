@@ -42,7 +42,6 @@ rootProject.ext {
     javaVersion = JavaVersion.VERSION_1_7
     firebaseServiceAccountFileName = "firebase-crashreporting-private-key.json"
 }
-
 task clean(type: Delete, overwrite: true) {
     group "Verification"
     description "Deletes the build directories of the whole project and the static analysis result."
@@ -51,7 +50,6 @@ task clean(type: Delete, overwrite: true) {
   	    delete Paths.get(it.projectDir.absolutePath, staticAnalysisReportFolderTarget).toAbsolutePath().toString()
   }
 }
-
 subprojects {
     configurations.all {
         resolutionStrategy {

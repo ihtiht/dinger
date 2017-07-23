@@ -34,11 +34,9 @@ android {
         it.java.srcDirs += ["src/$it.name/kotlin"]
     }
 }
-
 repositories {
     jcenter()
 }
-
 dependencies {
     compile project(':domain')
     kapt rootProject.ext.annotationProcessorDataDependencies

@@ -57,7 +57,6 @@ android {
         it.java.srcDirs = ["src/$it.name/kotlin"]
     }
 }
-
 repositories {
     jcenter()
 }
