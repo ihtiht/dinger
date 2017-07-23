@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<lint>
+    <issue id="IconLauncherFormat,IconExpectedSize">
+        <!-- Not a launcher icon -->
+        <ignore regexp="ic_launcher_big" />
+    </issue>
+</lint>

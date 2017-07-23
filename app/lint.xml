@@ -10,13 +10,12 @@
     <issue id="UnusedResources" severity="ignore" />
     <!-- This check is broken when using KotlinX -->
     <issue id="UnusedIds" severity="ignore" />
-    <issue id="IconLauncherFormat">
+    <issue id="IconLauncherFormat,IconExpectedSize">
         <!-- Not a launcher icon -->
         <ignore regexp="ic_launcher_big" />
     </issue>
-    <issue id="IconExpectedSize">
-        <!-- Expects 0x0, sounds like a bug to me -->
-        <ignore regexp="ic_launcher_big" />
+    <issue id="IconLauncherFormat,IconExpectedSize,IconDuplicates">
+        <!-- Lint does not seem to work too well with adaptive icons just yet -->
+        <ignore regexp="ic_launcher_adaptive" />
     </issue>
-
 </lint>
