@@ -3,6 +3,7 @@ final def facebookSdkVersion = "4.24.0"
 final def googlePlayServicesVersion = "11.0.1"
 final def jsr250Version = "1.0"
 final def kotlinVersion = rootProject.ext.kotlinVersion
+final def lottieVersion = "2.1.0"
 final def okHttp3Version = "3.8.0"
 final def retrofitVersion = "2.3.0"
 final def rxAndroid2Version = "2.0.1"
@@ -22,7 +23,8 @@ ext {
             "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
             "com.google.android.gms:play-services-auth-base:$googlePlayServicesVersion",
             "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
-            "com.google.dagger:dagger:$daggerVersion"
+            "com.google.dagger:dagger:$daggerVersion",
+            "com.airbnb.android:lottie:$lottieVersion"
     ]
     compileOnlyDomainDependencies = [
             "javax.annotation:jsr250-api:$jsr250Version"
