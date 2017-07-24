@@ -66,7 +66,7 @@ internal class SplashActivity : Activity(), LoggedInCheckCoordinator.ResultCallb
     }
 
     private fun inject() = (application as MainApplication).applicationComponent
-            .newSplashComponent(LoggedInCheckModule(this))
+            .newSplashComponent(LoggedInCheckModule(this, this))
             .inject(this)
 
     /**

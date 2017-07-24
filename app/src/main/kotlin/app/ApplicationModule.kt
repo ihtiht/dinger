@@ -7,7 +7,7 @@ import javax.inject.Singleton
 
 @Module
 @Singleton
-internal class ApplicationModule {
+internal class ApplicationModule() {
     @Provides
     @Singleton
     fun uiSchedulerProvider(): PostExecutionSchedulerProvider = UiPostExecutionSchedulerProvider()

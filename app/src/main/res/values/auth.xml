@@ -5,4 +5,5 @@
     <string name="fb_login_protocol_scheme">fb464891386855067</string>
     <string name="login_cancelled">Login cancelled</string>
     <string name="login_failed">Login failed</string>
+    <string name="account_check_should_always_succeed">Account check should always succeed</string>>
 </resources>

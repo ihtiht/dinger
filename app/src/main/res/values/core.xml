@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_label">Dinger</string>
+
     <integer name="anim_duration">@android:integer/config_mediumAnimTime</integer>
 </resources>
