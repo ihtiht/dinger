@@ -7,11 +7,12 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher_adaptive"
         android:roundIcon="@mipmap/ic_launcher_adaptive_round"
-        android:label="@string/app_label"
-        android:launchMode="singleTask">
+        android:label="@string/app_label">
         <activity
             android:name="app.splash.SplashActivity"
-            android:theme="@style/AppTheme.SplashTheme">
+            android:theme="@style/AppTheme.SplashTheme"
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -19,7 +20,14 @@
         </activity>
         <activity
             android:name="app.login.TinderLoginActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTask" />
+        <activity
+            android:name="app.alarm.AlarmBannerActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTask" />
 
         <!-- Facebook -->
         <meta-data android:name="com.facebook.sdk.ApplicationId"
