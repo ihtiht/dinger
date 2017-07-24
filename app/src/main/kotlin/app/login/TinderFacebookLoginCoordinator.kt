@@ -7,7 +7,8 @@ import io.reactivex.observers.DisposableCompletableObserver
 
 internal class TinderFacebookLoginCoordinator(
         private val view: TinderLoginView,
-        private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider) {
+        private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider,
+        private val resultCallback: ResultCallback) {
     private var useCase: TinderFacebookLoginUseCase? = null
 
     fun actionDoLogin(facebookId: String, facebookToken: String) {
@@ -21,7 +22,7 @@ internal class TinderFacebookLoginCoordinator(
             }
 
             override fun onComplete() {
-                // TODO Tell the activity you're done through a callback
+                resultCallback.onTinderLoginSuccess()
                 view.setStale()
             }
         })
@@ -30,5 +31,9 @@ internal class TinderFacebookLoginCoordinator(
     fun actionCancelLogin() {
         view.setStale()
         useCase?.dispose()
+    }
+
+    interface ResultCallback {
+        fun onTinderLoginSuccess()
     }
 }

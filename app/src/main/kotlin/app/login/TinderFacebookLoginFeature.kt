@@ -14,11 +14,12 @@ import org.stoyicker.dinger.R
 
 internal class TinderFacebookLoginFeature(
         loginButton: LoginButton,
-        private val callback: ResultCallback) {
+        private val resultCallback: ResultCallback) {
     private val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     init {
         loginButton.apply {
+            // This hack is required to pretend we are Tinder
             loginBehavior = LoginBehavior.WEB_ONLY
             registerCallback(callbackManager,
                     object : FacebookCallback<LoginResult> {
@@ -55,7 +56,7 @@ internal class TinderFacebookLoginFeature(
     }
 
     private fun reportSuccess(accessToken: AccessToken) = accessToken.let {
-        callback.onSuccess(it.userId, it.token)
+        resultCallback.onSuccess(it.userId, it.token)
     }
 
     internal interface ResultCallback {

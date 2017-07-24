@@ -10,8 +10,8 @@ import domain.exec.PostExecutionSchedulerProvider
 @PerActivity
 internal class LoggedInCheckModule(
         private val context: Context,
-        private val callback: LoggedInCheckCoordinator.ResultCallback) {
+        private val resultCallback: LoggedInCheckCoordinator.ResultCallback) {
     @Provides
     fun coordinator(postExecutionSchedulerProvider: PostExecutionSchedulerProvider)
-            = LoggedInCheckCoordinator(context, postExecutionSchedulerProvider, callback)
+            = LoggedInCheckCoordinator(context, postExecutionSchedulerProvider, resultCallback)
 }

@@ -10,7 +10,7 @@ import org.stoyicker.dinger.R
 internal class LoggedInCheckCoordinator(
         private val context: Context,
         private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider,
-        private val callback: ResultCallback) {
+        private val resultCallback: ResultCallback) {
     private var useCase: LoggedInUserCheckUseCase? = null
 
     fun actionDoCheck() {
@@ -18,8 +18,8 @@ internal class LoggedInCheckCoordinator(
         useCase?.execute(object : DisposableSingleObserver<Boolean>() {
             override fun onSuccess(t: Boolean) {
                 when (t) {
-                    true -> callback.onLoggedInUserFound()
-                    false -> callback.onLoggedInUserNotFound()
+                    true -> resultCallback.onLoggedInUserFound()
+                    false -> resultCallback.onLoggedInUserNotFound()
                 }
             }
 
@@ -27,7 +27,7 @@ internal class LoggedInCheckCoordinator(
                 throwable?.let { FirebaseCrash.report(IllegalStateException(
                         context.getString(R.string.account_check_should_always_succeed)
                 )) }
-                callback.onLoggedInUserNotFound()
+                resultCallback.onLoggedInUserNotFound()
             }
         })
     }

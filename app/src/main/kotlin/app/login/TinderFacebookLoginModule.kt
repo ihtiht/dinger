@@ -13,9 +13,11 @@ internal class TinderFacebookLoginModule(
         private val activity: TinderLoginActivity,
         private val loginButton: LoginButton,
         private val contentLoadingProgressBar: ContentLoadingProgressBar,
-        private val callback: TinderFacebookLoginFeature.ResultCallback) {
+        private val tinderFacebookLoginResultCallback: TinderFacebookLoginFeature.ResultCallback,
+        private val tinderFacebookLoginCoordinatorResultCallback
+        : TinderFacebookLoginCoordinator.ResultCallback) {
     @Provides
-    fun feature() = TinderFacebookLoginFeature(loginButton, callback)
+    fun feature() = TinderFacebookLoginFeature(loginButton, tinderFacebookLoginResultCallback)
 
     @Provides
     fun view(): TinderLoginView
@@ -24,6 +26,9 @@ internal class TinderFacebookLoginModule(
     @Provides
     fun coordinator(
             view: TinderLoginView,
-            postExecutionSchedulerProvider: PostExecutionSchedulerProvider) =
-            TinderFacebookLoginCoordinator(view, postExecutionSchedulerProvider)
+            postExecutionSchedulerProvider: PostExecutionSchedulerProvider)
+            = TinderFacebookLoginCoordinator(
+            view,
+            postExecutionSchedulerProvider,
+            tinderFacebookLoginCoordinatorResultCallback)
 }

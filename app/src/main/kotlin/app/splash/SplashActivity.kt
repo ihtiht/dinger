@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Handler
 import app.MainApplication
+import app.alarm.AlarmBannerActivity
 import app.login.TinderLoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -58,7 +59,7 @@ internal class SplashActivity : Activity(), LoggedInCheckCoordinator.ResultCallb
     }
 
     override fun onLoggedInUserFound() {
-        doLogin()
+        continueLoggedIn()
     }
 
     override fun onLoggedInUserNotFound() {
@@ -99,8 +100,12 @@ internal class SplashActivity : Activity(), LoggedInCheckCoordinator.ResultCallb
         overridePendingTransition(R.anim.fade_in, 0)
     }
 
-    private fun doLogin() {
-        // TODO Logged in, open a new activity
+    private fun continueLoggedIn() {
+        AlarmBannerActivity.getCallingIntent(this).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(this)
+        }
+        finishAfterTransition()
     }
 
     private companion object {
