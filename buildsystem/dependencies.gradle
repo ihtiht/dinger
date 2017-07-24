@@ -43,7 +43,8 @@ ext {
             "com.nytimes.android:store3:$storeVersion",
             "com.nytimes.android:middleware-moshi3:$storeVersion",
             "com.nytimes.android:filesystem3:$storeVersion",
-            "com.google.dagger:dagger:$daggerVersion"
+            "com.google.dagger:dagger:$daggerVersion",
+            "com.google.firebase:firebase-crash:$googlePlayServicesVersion"
     ]
     providedDataDependencies = [
             "com.android.support:support-annotations:$supportLibraryVersion"
