@@ -2,6 +2,7 @@ package app
 
 import android.app.Application
 import app.di.ApplicationComponent
+import app.di.DaggerApplicationComponent
 
 /**
  * Custom application.
