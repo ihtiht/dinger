@@ -1,6 +1,7 @@
 package app
 
 import android.app.Application
+import app.di.ApplicationComponent
 
 /**
  * Custom application.

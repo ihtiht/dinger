@@ -1,4 +1,4 @@
-package app
+package app.di
 
 import app.login.TinderFacebookLoginComponent
 import app.login.TinderFacebookLoginModule

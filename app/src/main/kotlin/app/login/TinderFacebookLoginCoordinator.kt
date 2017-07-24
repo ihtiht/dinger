@@ -21,6 +21,7 @@ internal class TinderFacebookLoginCoordinator(
             }
 
             override fun onComplete() {
+                // TODO Tell the activity you're done through a callback
                 view.setStale()
             }
         })

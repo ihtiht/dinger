@@ -1,5 +1,6 @@
-package app
+package app.di
 
+import app.UiPostExecutionSchedulerProvider
 import dagger.Module
 import dagger.Provides
 import domain.exec.PostExecutionSchedulerProvider
