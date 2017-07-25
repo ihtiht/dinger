@@ -63,7 +63,8 @@ repositories {
 dependencies {
     debugCompile project(path: ':data', configuration: 'debug') // This is only for the ContentProvider. Don't import data in src!
     releaseCompile project(path: ':data', configuration: 'release') // This is only for the ContentProvider. Don't import data in src!
-    compile project(':domain')
+    debugCompile project(path: ':domain', configuration: 'debug')
+    releaseCompile project(path: ':domain', configuration: 'release')
     compile rootProject.ext.compileDependencies
     kapt rootProject.ext.annotationProcessorAppDependencies
     compile rootProject.ext.compileAppDependencies

@@ -7,9 +7,9 @@ import android.content.Intent
 import domain.alarm.AppAlarmManager
 import javax.inject.Inject
 
-internal class ServiceAlarmManager @Inject constructor(private val context: Context)
-    : AppAlarmManager<Intent>() {
-    override fun delayOneShot(requestCode: Int, delayMillis: Long, task: Intent) =
-        context.getSystemService(AlarmManager::class.java).set(requestCode, delayMillis,
+internal class AppAlarmManagerImpl @Inject constructor(private val context: Context)
+    : AppAlarmManager() {
+    override fun delayServiceOneShot(requestCode: Int, delayMillis: Long, task: Intent) =
+        context.getSystemService(AlarmManager::class.java).set(AlarmManager.RTC_WAKEUP, delayMillis,
                 PendingIntent.getService(context, requestCode, task, PendingIntent.FLAG_ONE_SHOT))
 }

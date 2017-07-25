@@ -6,13 +6,17 @@ import android.net.Uri
 import data.account.AccountModule
 import data.account.AppAccountManagerImpl
 import data.account.DaggerAccountComponent
-import data.alarm.ServiceAlarmManager
+import data.alarm.AppAlarmManagerImpl
+import data.autoswipe.AutoSwipeIntentFactoryImpl
 import data.network.FacadeProviderImpl
 import data.network.NetworkModule
 import data.network.tinder.auth.AuthFacadeModule
 import data.network.tinder.auth.AuthSourceModule
 import data.network.tinder.auth.DaggerAuthFacadeComponent
-import domain.Domain
+import domain.DomainHolder
+import domain.alarm.AlarmHolder
+import domain.auth.AuthHolder
+import domain.autoswipe.AutoSwipeHolder
 import javax.inject.Inject
 
 /**
@@ -25,16 +29,18 @@ internal class InitializationContentProvider : ContentProvider() {
     @Inject
     lateinit var accountManagerImpl: AppAccountManagerImpl
     @Inject
-    lateinit var serviceAlarmManager: ServiceAlarmManager
+    lateinit var alarmManagerImpl: AppAlarmManagerImpl
+    @Inject
+    lateinit var autoSwipeIntentFactoryImpl: AutoSwipeIntentFactoryImpl
 
     override fun onCreate(): Boolean {
         val rootModule = RootModule(context)
         val accountModule = AccountModule()
-        ComponentHolder.accountComponent = DaggerAccountComponent.builder()
+        data.ComponentHolder.accountComponent = DaggerAccountComponent.builder()
                 .rootModule(rootModule)
                 .accountModule(accountModule)
                 .build()
-        ComponentHolder.authFacadeComponent = DaggerAuthFacadeComponent.builder()
+        data.ComponentHolder.authFacadeComponent = DaggerAuthFacadeComponent.builder()
                 .rootModule(rootModule)
                 .accountModule(accountModule)
                 .authSourceModule(AuthSourceModule())
@@ -45,11 +51,12 @@ internal class InitializationContentProvider : ContentProvider() {
                 .accountModule(accountModule)
                 .networkModule(NetworkModule())
                 .build().inject(this)
-        Domain.apply {
+        DomainHolder.apply {
             facadeProvider(facadeProviderImpl)
-            accountManager(accountManagerImpl)
-            serviceAlarmManager(serviceAlarmManager)
         }
+        AuthHolder.accountManager(accountManagerImpl)
+        AlarmHolder.alarmManager(alarmManagerImpl)
+        AutoSwipeHolder.autoSwipeIntentFactory(autoSwipeIntentFactoryImpl)
         return true
     }
 

@@ -1,6 +1,6 @@
 package domain.interactor
 
-import domain.Domain
+import domain.DomainHolder
 import domain.exec.PostExecutionSchedulerProvider
 import io.reactivex.Completable
 import io.reactivex.observers.DisposableCompletableObserver
@@ -10,7 +10,7 @@ abstract class CompletableUseCase(
     : DisposableUseCase(), UseCase<Completable> {
     fun execute(subscriber: DisposableCompletableObserver) {
         assembledSubscriber = buildUseCase()
-                .subscribeOn(Domain.useCaseScheduler)
+                .subscribeOn(DomainHolder.useCaseScheduler)
                 .observeOn(postExecutionSchedulerProvider.provideScheduler())
                 .subscribeWith(subscriber)
     }

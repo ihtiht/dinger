@@ -39,7 +39,8 @@ repositories {
     maven { url "https://maven.google.com" }
 }
 dependencies {
-    compile project(':domain')
+    debugCompile project(path: ':domain', configuration: 'debug')
+    releaseCompile project(path: ':domain', configuration: 'release')
     kapt rootProject.ext.annotationProcessorDataDependencies
     debugCompile rootProject.ext.debugCompileDataDependencies
     compile rootProject.ext.compileDependencies
