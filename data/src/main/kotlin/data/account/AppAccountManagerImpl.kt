@@ -9,7 +9,7 @@ import android.os.Bundle
 import org.stoyicker.dinger.data.R
 import domain.auth.AccountManager as AppAccountManager
 
-internal class DingerAccountManager constructor(context: Context)
+internal class AppAccountManagerImpl constructor(context: Context)
     : AppAccountManager, AbstractAccountAuthenticator(context) {
     init {
         ACCOUNT_TYPE = context.getString(R.string.account_type)

@@ -8,10 +8,10 @@ import javax.inject.Inject
 
 internal class DingerAccountManagerService : Service() {
     @Inject
-    lateinit var accountManager: DingerAccountManager
+    lateinit var accountManagerImpl: AppAccountManagerImpl
 
     override fun onBind(intent: Intent): IBinder {
         ComponentHolder.accountComponent.inject(this)
-        return accountManager.iBinder
+        return accountManagerImpl.iBinder
     }
 }

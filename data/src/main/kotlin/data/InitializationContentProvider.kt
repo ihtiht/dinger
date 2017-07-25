@@ -4,8 +4,9 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.net.Uri
 import data.account.AccountModule
+import data.account.AppAccountManagerImpl
 import data.account.DaggerAccountComponent
-import data.account.DingerAccountManager
+import data.alarm.ServiceAlarmManager
 import data.network.FacadeProviderImpl
 import data.network.NetworkModule
 import data.network.tinder.auth.AuthFacadeModule
@@ -20,9 +21,11 @@ import javax.inject.Inject
  */
 internal class InitializationContentProvider : ContentProvider() {
     @Inject
-    lateinit var accountManager: DingerAccountManager
+    lateinit var facadeProviderImpl: FacadeProviderImpl
     @Inject
-    lateinit var facadeProvider: FacadeProviderImpl
+    lateinit var accountManagerImpl: AppAccountManagerImpl
+    @Inject
+    lateinit var serviceAlarmManager: ServiceAlarmManager
 
     override fun onCreate(): Boolean {
         val rootModule = RootModule(context)
@@ -43,8 +46,9 @@ internal class InitializationContentProvider : ContentProvider() {
                 .networkModule(NetworkModule())
                 .build().inject(this)
         Domain.apply {
-            facadeProvider(facadeProvider)
-            accountManager(accountManager)
+            facadeProvider(facadeProviderImpl)
+            accountManager(accountManagerImpl)
+            serviceAlarmManager(serviceAlarmManager)
         }
         return true
     }

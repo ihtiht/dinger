@@ -1,5 +1,6 @@
 package domain
 
+import domain.alarm.AppAlarmManager
 import domain.auth.AccountManager
 import domain.repository.FacadeProvider
 import io.reactivex.schedulers.Schedulers
@@ -13,6 +14,7 @@ import io.reactivex.schedulers.Schedulers
 object Domain {
     internal lateinit var facadeProvider: FacadeProvider
     internal lateinit var accountManager: AccountManager
+    internal lateinit var serviceAlarmManager: AppAlarmManager<*>
     internal val useCaseScheduler = Schedulers.io()
 
     fun facadeProvider(facadeProvider: FacadeProvider) {
@@ -21,5 +23,9 @@ object Domain {
 
     fun accountManager(accountManager: AccountManager){
         this.accountManager = accountManager
+    }
+
+    fun serviceAlarmManager(serviceAlarmManager: AppAlarmManager<*>) {
+        this.serviceAlarmManager = serviceAlarmManager
     }
 }
