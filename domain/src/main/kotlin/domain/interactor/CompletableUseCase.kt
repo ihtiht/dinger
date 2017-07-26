@@ -3,12 +3,12 @@ package domain.interactor
 import domain.DomainHolder
 import domain.exec.PostExecutionSchedulerProvider
 import io.reactivex.Completable
-import io.reactivex.observers.DisposableCompletableObserver
+import io.reactivex.CompletableObserver
 
 abstract class CompletableUseCase(
         private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider)
     : UseCase<Completable> {
-    fun execute(subscriber: DisposableCompletableObserver) {
+    fun execute(subscriber: CompletableObserver) {
         buildUseCase()
                 .subscribeOn(DomainHolder.useCaseScheduler)
                 .observeOn(postExecutionSchedulerProvider.provideScheduler())

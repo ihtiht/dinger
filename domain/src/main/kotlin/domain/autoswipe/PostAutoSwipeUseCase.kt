@@ -13,10 +13,10 @@ abstract class PostAutoSwipeUseCase internal constructor(internal val context: C
     internal abstract fun provideDelayMillis(): Long
 
     override fun buildUseCase(): Completable = Completable.fromCallable {
-        AlarmHolder.alarmManager.delayServiceOneShot(
+        AlarmHolder.alarmManager.delayBroadcastOneShot(
                 REQUEST_CODE,
                 provideDelayMillis(),
-                AutoSwipeHolder.autoSwipeIntentFactory.newIntent(context))
+                AutoSwipeHolder.autoSwipeIntentServiceStarterFactory.newBroadcast(context))
     }
 
     private companion object {

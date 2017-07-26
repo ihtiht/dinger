@@ -8,5 +8,5 @@ import javax.inject.Singleton
 internal class AutoSwipeModule {
     @Provides
     @Singleton
-    fun autoSwipeIntentFactory() = AutoSwipeIntentFactoryImpl()
+    fun autoSwipeIntentFactory() = AutoSwipeIntentServiceStarterFactoryImpl()
 }

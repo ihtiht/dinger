@@ -6,7 +6,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.google.firebase.crash.FirebaseCrash
 import domain.autoswipe.ImmediatePostAutoSwipeUseCase
-import io.reactivex.observers.DisposableCompletableObserver
+import io.reactivex.CompletableObserver
+import io.reactivex.disposables.Disposable
 import org.stoyicker.dinger.R
 
 internal class AlarmBannerActivity : Activity() {
@@ -17,8 +18,10 @@ internal class AlarmBannerActivity : Activity() {
     }
 
     private fun executeImmediateSwipeSession() = ImmediatePostAutoSwipeUseCase(this).execute(
-            object : DisposableCompletableObserver() {
+            object : CompletableObserver {
                 override fun onComplete() { }
+
+                override fun onSubscribe(d: Disposable?) { }
 
                 override fun onError(error: Throwable?)
                         = error?.let { FirebaseCrash.report(it) } ?: Unit

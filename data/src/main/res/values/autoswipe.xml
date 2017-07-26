@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="autoswipe_receiver_description">Swiping for you!</string>
+    <string name="autoswipe_receiver_label">Dinger</string>
+</resources>

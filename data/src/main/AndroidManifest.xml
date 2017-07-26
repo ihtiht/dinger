@@ -19,5 +19,21 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator_dinger"/>
         </service>
+        <service
+            android:name="data.autoswipe.AutoSwipeIntentService"
+            android:description="@string/autoswipe_receiver_description"
+            android:directBootAware="true"
+            android:icon="@drawable/ic_launcher_big"
+            android:label="@string/autoswipe_receiver_label" />
+        <receiver
+            android:name="data.autoswipe.AutoSwipeBroadcastReceiver"
+            android:description="@string/autoswipe_receiver_description"
+            android:directBootAware="true"
+            android:icon="@drawable/ic_launcher_big"
+            android:label="@string/autoswipe_receiver_label">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

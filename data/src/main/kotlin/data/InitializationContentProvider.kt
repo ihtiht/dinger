@@ -7,7 +7,7 @@ import data.account.AccountModule
 import data.account.AppAccountManagerImpl
 import data.account.DaggerAccountComponent
 import data.alarm.AppAlarmManagerImpl
-import data.autoswipe.AutoSwipeIntentFactoryImpl
+import data.autoswipe.AutoSwipeIntentServiceStarterFactoryImpl
 import data.network.FacadeProviderImpl
 import data.network.NetworkModule
 import data.network.tinder.auth.AuthFacadeModule
@@ -31,7 +31,7 @@ internal class InitializationContentProvider : ContentProvider() {
     @Inject
     lateinit var alarmManagerImpl: AppAlarmManagerImpl
     @Inject
-    lateinit var autoSwipeIntentFactoryImpl: AutoSwipeIntentFactoryImpl
+    lateinit var autoSwipeIntentFactoryImpl: AutoSwipeIntentServiceStarterFactoryImpl
 
     override fun onCreate(): Boolean {
         val rootModule = RootModule(context)

@@ -9,7 +9,14 @@ import javax.inject.Inject
 
 internal class AppAlarmManagerImpl @Inject constructor(private val context: Context)
     : AppAlarmManager() {
-    override fun delayServiceOneShot(requestCode: Int, delayMillis: Long, task: Intent) =
-        context.getSystemService(AlarmManager::class.java).set(AlarmManager.RTC_WAKEUP, delayMillis,
-                PendingIntent.getService(context, requestCode, task, PendingIntent.FLAG_ONE_SHOT))
+    override fun delayBroadcastOneShot(requestCode: Int, delayMillis: Long, task: Intent) {
+        context.getSystemService(AlarmManager::class.java).set(
+                AlarmManager.RTC_WAKEUP,
+                System.currentTimeMillis() + delayMillis,
+                PendingIntent.getBroadcast(
+                        context,
+                        requestCode,
+                        task,
+                        PendingIntent.FLAG_UPDATE_CURRENT))
+    }
 }
