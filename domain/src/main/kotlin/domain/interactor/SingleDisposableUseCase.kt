@@ -5,7 +5,7 @@ import domain.exec.PostExecutionSchedulerProvider
 import io.reactivex.Single
 import io.reactivex.observers.DisposableSingleObserver
 
-abstract class SingleUseCase<T>(
+abstract class SingleDisposableUseCase<T>(
         private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider)
     : DisposableUseCase(), UseCase<Single<T>> {
     fun execute(subscriber: DisposableSingleObserver<T>) {

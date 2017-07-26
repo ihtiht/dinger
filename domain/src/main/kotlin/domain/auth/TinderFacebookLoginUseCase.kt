@@ -2,14 +2,14 @@ package domain.auth
 
 import domain.DomainHolder
 import domain.exec.PostExecutionSchedulerProvider
-import domain.interactor.CompletableUseCase
+import domain.interactor.CompletableDisposableUseCase
 import io.reactivex.Completable
 
 class TinderFacebookLoginUseCase(
         private val facebookId: String,
         private val facebookToken: String,
         postExecutionSchedulerProvider: PostExecutionSchedulerProvider)
-    : CompletableUseCase(postExecutionSchedulerProvider) {
+    : CompletableDisposableUseCase(postExecutionSchedulerProvider) {
     override fun buildUseCase(): Completable = DomainHolder.facadeProvider.tinderApiRepository()
             .login(DomainAuthRequestParameters(facebookId, facebookToken))
             .doOnSuccess({
