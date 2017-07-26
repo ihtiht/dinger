@@ -14,12 +14,15 @@ internal class AutoSwipeIntentService : IntentService(AutoSwipeIntentService::cl
         val format = DateFormat.getPatternInstance(DateFormat.HOUR24_MINUTE_SECOND, Locale.ENGLISH)
         FirebaseCrash.report(RuntimeException(
                 "AutoSwipe reporting in ${(format as SimpleDateFormat).toLocalizedPattern()}"))
-        DelayedPostAutoSwipeUseCase(this).execute(object : DisposableCompletableObserver() {
-            override fun onComplete() { }
-
-            override fun onError(error: Throwable?) {
-                error?.let { FirebaseCrash.report(it) }
-            }
-        })
+        scheduleHappyPath()
     }
+
+    private fun scheduleHappyPath() =
+            DelayedPostAutoSwipeUseCase(this).execute(object : DisposableCompletableObserver() {
+                override fun onComplete() { }
+
+                override fun onError(error: Throwable?) {
+                    error?.let { FirebaseCrash.report(it) }
+                }
+            })
 }
