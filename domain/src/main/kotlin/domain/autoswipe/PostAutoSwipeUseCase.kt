@@ -7,15 +7,15 @@ import domain.exec.IoPostExecutionSchedulerProvider
 import domain.interactor.CompletableUseCase
 import io.reactivex.Completable
 
-abstract class PostAutoSwipeUseCase internal constructor(internal val context: Context)
+abstract class PostAutoSwipeUseCase internal constructor(private val context: Context)
     : CompletableUseCase(IoPostExecutionSchedulerProvider) {
     @IntRange(from = 0, to = Long.MAX_VALUE)
-    internal abstract fun provideDelayMillis(): Long
+    internal abstract fun provideDelayMillis(context: Context): Long
 
     override fun buildUseCase(): Completable = Completable.fromCallable {
         AlarmHolder.alarmManager.delayBroadcastOneShot(
                 REQUEST_CODE,
-                provideDelayMillis(),
+                provideDelayMillis(context),
                 AutoSwipeHolder.autoSwipeIntentServiceStarterFactory.newBroadcast(context))
     }
 
