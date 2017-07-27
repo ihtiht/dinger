@@ -1,6 +1,7 @@
 package data.autoswipe
 
 import android.app.IntentService
+import android.content.Context
 import android.content.Intent
 import android.icu.text.DateFormat
 import android.icu.text.SimpleDateFormat
@@ -28,4 +29,8 @@ internal class AutoSwipeIntentService : IntentService(AutoSwipeIntentService::cl
                     error?.let { FirebaseCrash.report(it) }
                 }
             })
+
+    companion object {
+        fun getCallingIntent(context: Context) = Intent(context, AutoSwipeIntentService::class.java)
+    }
 }

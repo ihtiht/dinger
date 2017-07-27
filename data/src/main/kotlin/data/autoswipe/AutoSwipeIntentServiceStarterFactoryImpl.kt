@@ -5,7 +5,6 @@ import android.content.Intent
 import domain.autoswipe.AutoSwipeIntentServiceStarterFactory
 
 internal class AutoSwipeIntentServiceStarterFactoryImpl : AutoSwipeIntentServiceStarterFactory {
-    override fun newBroadcast(context: Context): Intent {
-        return Intent(context, AutoSwipeBroadcastReceiver::class.java)
-    }
+    override fun newBroadcast(context: Context)
+            = AutoSwipeBroadcastReceiver.getCallingIntent(context)
 }
