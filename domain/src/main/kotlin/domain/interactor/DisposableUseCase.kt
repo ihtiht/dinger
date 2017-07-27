@@ -2,7 +2,7 @@ package domain.interactor
 
 import io.reactivex.disposables.Disposable
 
-abstract class DisposableUseCase {
+abstract class DisposableUseCase internal constructor() {
     internal lateinit var assembledSubscriber: Disposable
 
     /**

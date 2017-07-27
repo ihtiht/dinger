@@ -5,7 +5,7 @@ import domain.exec.PostExecutionSchedulerProvider
 import io.reactivex.Completable
 import io.reactivex.observers.DisposableCompletableObserver
 
-abstract class CompletableDisposableUseCase(
+abstract class CompletableDisposableUseCase internal constructor(
         private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider)
     : DisposableUseCase(), UseCase<Completable> {
     fun execute(subscriber: DisposableCompletableObserver) {
