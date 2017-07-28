@@ -13,7 +13,6 @@ import java.util.*
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
     override fun onHandleWork(intent: Intent) {
-        throw IllegalStateException("I am where I should be")
         val format = DateFormat.getPatternInstance(DateFormat.HOUR24_MINUTE_SECOND, Locale.ENGLISH)
         FirebaseCrash.report(RuntimeException(
                 "AutoSwipe reporting in: ${(format as SimpleDateFormat).format(Date())}"))
@@ -24,7 +23,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
             object : CompletableObserver {
                 override fun onComplete() {}
 
-                override fun onSubscribe(disposable: Disposable) { }
+                override fun onSubscribe(disposable: Disposable?) { }
 
                 override fun onError(error: Throwable) = FirebaseCrash.report(error)
             })
