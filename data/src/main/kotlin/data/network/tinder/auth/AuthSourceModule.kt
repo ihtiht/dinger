@@ -1,9 +1,10 @@
 package data.network.tinder.auth
 
+import com.nytimes.android.external.store3.base.Fetcher
+import com.nytimes.android.external.store3.base.impl.FluentStoreBuilder
+import com.nytimes.android.external.store3.base.impl.StalePolicy
 import com.nytimes.android.external.store3.base.impl.Store
-import com.nytimes.android.external.store3.base.impl.StoreBuilder
 import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory
-import dagger.Component
 import dagger.Module
 import dagger.Provides
 import data.network.tinder.TinderApi
@@ -20,17 +21,15 @@ internal class AuthSourceModule {
     @Provides
     @Singleton
     fun store(api: TinderApi) =
-            StoreBuilder.parsedWithKey<AuthRequestParameters, BufferedSource, AuthResponse>()
-                    .fetcher({ fetcher(it, api) })
-                    .parser(MoshiParserFactory.createSourceParser<AuthResponse>(
-                            AuthResponse::class.java))
-                    .networkBeforeStale()
-                    .open()
+            FluentStoreBuilder.parsedWithKey<AuthRequestParameters, BufferedSource, AuthResponse>(
+                    Fetcher { fetcher(it, api) }) {
+                parsers = listOf(MoshiParserFactory.createSourceParser(AuthResponse::class.java))
+                stalePolicy = StalePolicy.NETWORK_BEFORE_STALE
+            }
 
     @Provides
     @Singleton
-    fun source(store: DaggerLazy<Store<AuthResponse, AuthRequestParameters>>)
-            = AuthSource(store)
+    fun source(store: DaggerLazy<Store<AuthResponse, AuthRequestParameters>>) = AuthSource(store)
 
     private fun fetcher(requestParameters: AuthRequestParameters, api: TinderApi) =
             api.login(requestParameters).map { it.source() }
