@@ -9,7 +9,6 @@ final def retrofitVersion = "2.3.0"
 final def rxAndroid2Version = "2.0.1"
 final def rxJava2Version = "2.1.2"
 final def storeVersion = "3.0.0-alpha"
-final def supportLibraryVersion = "26.0.0"
 
 ext {
     compileDependencies = [
