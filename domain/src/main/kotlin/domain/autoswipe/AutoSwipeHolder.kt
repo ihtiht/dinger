@@ -1,10 +1,10 @@
 package domain.autoswipe
 
 object AutoSwipeHolder {
-    internal lateinit var autoSwipeIntentServiceStarterFactory: AutoSwipeIntentServiceStarterFactory
+    internal lateinit var autoSwipeLauncherFactory: AutoSwipeLauncherFactory
 
     fun autoSwipeIntentFactory(
-            autoSwipeIntentServiceStarterFactory: AutoSwipeIntentServiceStarterFactory) {
-        this.autoSwipeIntentServiceStarterFactory = autoSwipeIntentServiceStarterFactory
+            autoSwipeLauncherFactory: AutoSwipeLauncherFactory) {
+        this.autoSwipeLauncherFactory = autoSwipeLauncherFactory
     }
 }

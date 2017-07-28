@@ -11,7 +11,6 @@ internal class NetworkClientModule {
     @Provides
     @Singleton
     fun client(): OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
 }

@@ -59,6 +59,7 @@ android {
 }
 repositories {
     jcenter()
+    maven { url "https://maven.google.com" }
 }
 dependencies {
     debugCompile project(path: ':data', configuration: 'debug') // This is only for the ContentProvider. Don't import data in src!

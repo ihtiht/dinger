@@ -16,7 +16,7 @@ abstract class PostAutoSwipeUseCase internal constructor(private val context: Co
         AlarmHolder.alarmManager.delayBroadcastOneShot(
                 REQUEST_CODE,
                 provideDelayMillis(context),
-                AutoSwipeHolder.autoSwipeIntentServiceStarterFactory.newBroadcast(context))
+                AutoSwipeHolder.autoSwipeLauncherFactory.newFromBroadcast(context))
     }
 
     private companion object {

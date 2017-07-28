@@ -19,7 +19,12 @@ internal class DebugApplication : MainApplication() {
      */
     private fun enforceThreadStrictMode() {
         StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                .detectAll()
+                .detectCustomSlowCalls()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()
+                .detectResourceMismatches()
+                .detectUnbufferedIo()
                 .penaltyLog()
                 .penaltyDialog()
                 .build())
@@ -32,7 +37,13 @@ internal class DebugApplication : MainApplication() {
      */
     private fun enforceVMStrictMode() {
         StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                .detectAll()
+                .detectActivityLeaks()
+                .detectCleartextNetwork()
+                .detectContentUriWithoutPermission()
+                .detectFileUriExposure()
+                .detectLeakedClosableObjects()
+                .detectLeakedRegistrationObjects()
+                .detectLeakedSqlLiteObjects()
                 .penaltyLog()
                 .build())
     }
