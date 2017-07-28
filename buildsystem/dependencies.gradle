@@ -8,7 +8,7 @@ final def okHttp3Version = "3.8.0"
 final def retrofitVersion = "2.3.0"
 final def rxAndroid2Version = "2.0.1"
 final def rxJava2Version = "2.1.2"
-final def storeVersion = "3.0.0-beta"
+final def storeVersion = "3.0.0-alpha"
 final def supportLibraryVersion = "26.0.0"
 
 ext {
