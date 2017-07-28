@@ -21,10 +21,9 @@ internal class AlarmBannerActivity : Activity() {
             object : CompletableObserver {
                 override fun onComplete() { }
 
-                override fun onSubscribe(d: Disposable?) { }
+                override fun onSubscribe(disposable: Disposable) { }
 
-                override fun onError(error: Throwable?)
-                        = error?.let { FirebaseCrash.report(it) } ?: Unit
+                override fun onError(error: Throwable) = FirebaseCrash.report(error)
             }
     )
 

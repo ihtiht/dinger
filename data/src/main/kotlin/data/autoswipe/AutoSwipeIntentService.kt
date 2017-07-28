@@ -23,11 +23,9 @@ internal class AutoSwipeIntentService : IntentService(AutoSwipeIntentService::cl
             object : CompletableObserver {
                 override fun onComplete() { }
 
-                override fun onSubscribe(d: Disposable?) { }
+                override fun onSubscribe(disposable: Disposable) { }
 
-                override fun onError(error: Throwable?) {
-                    error?.let { FirebaseCrash.report(it) }
-                }
+                override fun onError(error: Throwable)  = FirebaseCrash.report(error)
             })
 
     companion object {

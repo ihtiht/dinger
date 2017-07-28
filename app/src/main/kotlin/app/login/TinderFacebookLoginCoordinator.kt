@@ -16,8 +16,8 @@ internal class TinderFacebookLoginCoordinator(
         useCase = TinderFacebookLoginUseCase(
                 facebookId, facebookToken, postExecutionSchedulerProvider)
         useCase?.execute(object : DisposableCompletableObserver() {
-            override fun onError(exception: Throwable?) {
-                exception?.let { FirebaseCrash.report(exception) }
+            override fun onError(exception: Throwable) {
+                FirebaseCrash.report(exception)
                 view.setError()
             }
 

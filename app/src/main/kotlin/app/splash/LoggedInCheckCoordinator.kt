@@ -23,10 +23,9 @@ internal class LoggedInCheckCoordinator(
                 }
             }
 
-            override fun onError(throwable: Throwable?) {
-                throwable?.let { FirebaseCrash.report(IllegalStateException(
-                        context.getString(R.string.account_check_should_always_succeed)
-                )) }
+            override fun onError(throwable: Throwable) {
+                FirebaseCrash.report(IllegalStateException(context.getString(
+                        R.string.account_check_should_always_succeed)))
                 resultCallback.onLoggedInUserNotFound()
             }
         })
