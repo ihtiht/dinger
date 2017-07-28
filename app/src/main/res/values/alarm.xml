@@ -2,8 +2,6 @@
 <resources>
     <string name="alarm_set_announcement">Your device will now swipe everyone right for you,
         whenever possible, whether you are free or premium, and regardless of app and/or system
-        updates and device shutdown and/or reboots.\nYour device does not need to be unlocked or
-        even have a SIM card, but if the device is turned off auto-swiping will be delayed until it
-        is turned back on.
+        updates and device shutdown and/or reboots.
     </string>
 </resources>
