@@ -21,11 +21,11 @@ internal class AutoSwipeIntentService : IntentService(AutoSwipeIntentService::cl
 
     private fun scheduleHappyPath() = DelayedPostAutoSwipeUseCase(this).execute(
             object : CompletableObserver {
-                override fun onComplete() { }
+                override fun onComplete() {}
 
                 override fun onSubscribe(disposable: Disposable) { }
 
-                override fun onError(error: Throwable)  = FirebaseCrash.report(error)
+                override fun onError(error: Throwable) = FirebaseCrash.report(error)
             })
 
     companion object {

@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Handler
 import app.MainApplication
-import app.alarm.AlarmBannerActivity
+import app.home.HomeActivity
 import app.login.TinderLoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -101,7 +101,7 @@ internal class SplashActivity : Activity(), LoggedInCheckCoordinator.ResultCallb
     }
 
     private fun continueLoggedIn() {
-        AlarmBannerActivity.getCallingIntent(this).apply {
+        HomeActivity.getCallingIntent(this).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(this)
         }
