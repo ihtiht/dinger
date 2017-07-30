@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-//apply plugin: 'org.jmailen.kotlinter' TODO Enable when the crash is fixed
+apply plugin: 'org.jmailen.kotlinter'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.jetbrains.dokka-android'
 apply plugin: 'com.google.firebase.firebase-crash'
