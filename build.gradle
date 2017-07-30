@@ -14,13 +14,13 @@ buildscript {
     final def firebasePluginsVersion = "1.1.0"
     final def kotlinterPluginVersion = "1.2.0"
     final def classpathDependencies = [
-        "com.android.tools.build:gradle:$androidPluginVersion",
-        "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinPluginVersion",
-        "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokkaPluginVersion",
-        "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaPluginVersion",
-        "com.google.gms:google-services:$googleServicesPluginVersion",
-        "com.google.firebase:firebase-plugins:$firebasePluginsVersion",
-        "gradle.plugin.org.jmailen.gradle:kotlinter-gradle:$kotlinterPluginVersion"
+            "com.android.tools.build:gradle:$androidPluginVersion",
+            "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinPluginVersion",
+            "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokkaPluginVersion",
+            "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaPluginVersion",
+            "com.google.gms:google-services:$googleServicesPluginVersion",
+            "com.google.firebase:firebase-plugins:$firebasePluginsVersion",
+            "gradle.plugin.org.jmailen.gradle:kotlinter-gradle:$kotlinterPluginVersion"
     ]
     dependencies {
         classpath classpathDependencies
