@@ -28,7 +28,7 @@ before_script:
     exit 1
   fi
 script:
-- ./gradlew clean build check dokka --stacktrace
+- ./gradlew clean build dokka :app:check :domain:check :data:check --stacktrace
 after_success:
 - |
   if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ] && [[ "$TRAVIS_JOB_NUMBER" == *.1 ]]; then
