@@ -1,14 +1,14 @@
-package data.network.tinder.recommendations
+package data.network.tinder.recommendation
 
 import android.support.annotation.Px
 import com.squareup.moshi.Json
 
-internal class DataRecommendationUserSpotifyThemeTrackAlbumImage private constructor(
+internal class RecommendationUserPhotoProcessedFile(
         @Json(name = "width")
         @Px
-        private val width: Int,
+        private val widthPx: Int,
         @Json(name = "url")
         private val url: String,
         @Json(name = "height")
         @Px
-        private val height: Int)
+        private val heightPx: Int)

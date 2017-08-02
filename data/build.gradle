@@ -12,7 +12,8 @@ android {
         versionName rootProject.ext.androidVersionName
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
-        buildConfigField "String", "CLIENT_VERSION", "\"7.3.1\""
+        buildConfigField "String", "TINDER_CLIENT_VERSION", "\"7.3.1\""
+        buildConfigField "String", "TINDER_API_LOCALE", "\"en\""
     }
     dexOptions {
         preDexLibraries false

@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 internal data class LikeResponse(
         @Json(name = "something")
-        val match: DataMatch,
+        val match: Match,
         @Json(name = "something")
         val likesRemaining: Int
 )

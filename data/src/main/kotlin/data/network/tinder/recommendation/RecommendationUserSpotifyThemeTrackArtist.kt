@@ -1,8 +1,8 @@
-package data.network.tinder.recommendations
+package data.network.tinder.recommendation
 
 import com.squareup.moshi.Json
 
-internal class DataRecommendationUserSpotifyThemeTrackArtist private constructor(
+internal class RecommendationUserSpotifyThemeTrackArtist private constructor(
         @Json(name = "name")
         private val name: String,
         @Json(name = "id")

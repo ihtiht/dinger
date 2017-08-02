@@ -9,4 +9,4 @@ internal data class AuthRequestParameters(
         @Json(name = "token")
         private val facebookVersion: String,
         @Json(name = "client_version")
-        private val clientVersion: String = BuildConfig.CLIENT_VERSION)
+        private val clientVersion: String = BuildConfig.TINDER_CLIENT_VERSION)

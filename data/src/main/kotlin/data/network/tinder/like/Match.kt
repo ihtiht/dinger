@@ -1,9 +1,9 @@
 package data.network.tinder.like
 
-internal data class DataMatch(val something: Int) {
+internal data class Match(val something: Int) {
     private constructor() : this(0)
 
     companion object {
-        val NO_MATCH = DataMatch()
+        val NO_MATCH = Match()
     }
 }
