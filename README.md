@@ -13,6 +13,6 @@ This repo is here to show that these and other pain points are easily mitigable 
 ## Distribution
 
 At some point, I would love to distribute this app through some channel like Google Play or F-Droid, but at the time of writing there is little reason for anyone to use this app, although I intend that to change soon.
-Until that happens, you are encourage to try out the app by checking out the repo and running `./gradlew assembleRelease` to build the apk.
+Until that happens, you are encouraged to try out the app by checking out the repo and running `./gradlew assembleRelease` to build the apk (or by getting it yourself from the 'Releases' tab, which you can find above the file explorer in this page).
 
 [1]: Dear Android developers at Tinder, I have nothing against you, your intentions nor your skillsets. I understand there are many factors outside of your control preventing you from being able to deliver as good a product as you would like it to be.
