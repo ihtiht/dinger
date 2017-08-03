@@ -10,9 +10,11 @@ import data.alarm.AppAlarmManagerImpl
 import data.autoswipe.AutoSwipeLauncherFactoryImpl
 import data.network.FacadeProviderImpl
 import data.network.NetworkModule
+import data.network.tinder.DaggerTinderRepositoryComponent
 import data.network.tinder.auth.AuthFacadeModule
 import data.network.tinder.auth.AuthSourceModule
-import data.network.tinder.auth.DaggerAuthFacadeComponent
+import data.network.tinder.recommendation.RecommendationFacadeModule
+import data.network.tinder.recommendation.RecommendationSourceModule
 import domain.DomainHolder
 import domain.alarm.AlarmHolder
 import domain.auth.AuthHolder
@@ -40,11 +42,13 @@ internal class InitializationContentProvider : ContentProvider() {
                 .rootModule(rootModule)
                 .accountModule(accountModule)
                 .build()
-        data.ComponentHolder.authFacadeComponent = DaggerAuthFacadeComponent.builder()
+        data.ComponentHolder.tinderRepositoryComponent = DaggerTinderRepositoryComponent.builder()
                 .rootModule(rootModule)
                 .accountModule(accountModule)
                 .authSourceModule(AuthSourceModule())
                 .authFacadeModule(AuthFacadeModule())
+                .recommendationSourceModule(RecommendationSourceModule())
+                .recommendationFacadeModule(RecommendationFacadeModule())
                 .build()
         DaggerInitializationComponent.builder()
                 .rootModule(rootModule)

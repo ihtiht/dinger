@@ -4,6 +4,7 @@ final def googlePlayServicesVersion = "11.0.1"
 final def jsr250Version = "1.0"
 final def kotlinVersion = rootProject.ext.kotlinVersion
 final def lottieVersion = "2.1.0"
+final def moshiVersion = "1.5.0"
 final def okHttp3Version = "3.8.0"
 final def retrofitVersion = "2.3.0"
 final def rxAndroid2Version = "2.0.1"
@@ -50,7 +51,8 @@ ext {
             "com.nytimes.android:filesystem3:$storeVersion",
             "com.google.dagger:dagger:$daggerVersion",
             "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
-            "com.android.support:support-v4:$supportLibraryVersion"
+            "com.android.support:support-v4:$supportLibraryVersion",
+            "com.squareup.moshi:moshi-adapters:$moshiVersion"
     ]
     providedDataDependencies = [
             "com.android.support:support-annotations:$supportLibraryVersion"

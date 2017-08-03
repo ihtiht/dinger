@@ -3,13 +3,14 @@ package data.network.tinder.recommendation
 import com.nytimes.android.external.store3.base.impl.Store
 import com.nytimes.android.external.store3.base.impl.StoreBuilder
 import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Rfc3339DateJsonAdapter
 import dagger.Module
 import dagger.Provides
 import data.network.tinder.TinderApi
 import data.network.tinder.TinderApiModule
-import data.network.tinder.auth.AuthRequestParameters
-import data.network.tinder.auth.AuthResponse
 import okio.BufferedSource
+import java.util.*
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
@@ -24,7 +25,11 @@ internal class RecommendationSourceModule {
             StoreBuilder.parsedWithKey<RecommendationRequestParameters, BufferedSource, RecommendationResponse>()
                     .fetcher({ fetcher(it, api) })
                     .parser(MoshiParserFactory
-                            .createSourceParser(RecommendationResponse::class.java))
+                            .createSourceParser(
+                                    Moshi.Builder()
+                                            .add(Date::class.java, Rfc3339DateJsonAdapter())
+                                            .build(),
+                                    RecommendationResponse::class.java))
                     .networkBeforeStale()
                     .open()
 

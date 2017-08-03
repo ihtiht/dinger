@@ -7,12 +7,11 @@ import okhttp3.ResponseBody
 import retrofit2.http.*
 
 internal interface TinderApi {
-
     @Headers("Content-Type: application/json")
     @POST("/v2/auth/login/facebook")
     fun login(@Body requestParameters: AuthRequestParameters): Single<ResponseBody>
 
-    @GET("/recs/core?locale=en")
+    @POST("/recs/core?locale=en")
     fun getRecommendations(@Body requestParameters: RecommendationRequestParameters)
             : Single<ResponseBody>
 

@@ -6,7 +6,7 @@ abstract class DisposableUseCase internal constructor() {
     internal lateinit var assembledSubscriber: Disposable
 
     /**
-     * Tears down the use case.
+     * Tears down the use case if required.
      */
       fun dispose() {
           if (!assembledSubscriber.isDisposed) {

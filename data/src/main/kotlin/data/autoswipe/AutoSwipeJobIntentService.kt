@@ -2,35 +2,65 @@ package data.autoswipe
 
 import android.content.Context
 import android.content.Intent
-import android.icu.text.DateFormat
-import android.icu.text.SimpleDateFormat
 import android.support.v4.app.JobIntentService
 import com.google.firebase.crash.FirebaseCrash
+import domain.TrampolinePostExecutionSchedulerProvider
 import domain.autoswipe.DelayedPostAutoSwipeUseCase
-import io.reactivex.CompletableObserver
-import io.reactivex.disposables.Disposable
-import java.util.*
+import domain.interactor.DisposableUseCase
+import domain.recommendation.DomainRecommendationCollection
+import domain.recommendation.GetRecommendationsUseCase
+import io.reactivex.observers.DisposableCompletableObserver
+import io.reactivex.observers.DisposableSingleObserver
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
+    private val disposableUseCases = mutableSetOf<DisposableUseCase>()
+
     override fun onHandleWork(intent: Intent) {
-        val format = DateFormat.getPatternInstance(DateFormat.HOUR24_MINUTE_SECOND, Locale.ENGLISH)
-        FirebaseCrash.report(RuntimeException(
-                "AutoSwipe reporting in: ${(format as SimpleDateFormat).format(Date())}"))
+        GetRecommendationsUseCase(TrampolinePostExecutionSchedulerProvider).apply {
+            disposableUseCases.add(this)
+            execute(object : DisposableSingleObserver<DomainRecommendationCollection>() {
+                override fun onSuccess(payload: DomainRecommendationCollection) {
+                    FirebaseCrash.report(IllegalStateException("$payload"))
+                    clearUseCase(this@apply)
+                }
+
+                override fun onError(error: Throwable) {
+                    FirebaseCrash.report(error)
+                    clearUseCase(this@apply)
+                }
+            })
+        }
         scheduleHappyPath()
     }
 
-    private fun scheduleHappyPath() = DelayedPostAutoSwipeUseCase(this).execute(
-            object : CompletableObserver {
-                override fun onComplete() { }
+    override fun onDestroy() {
+        super.onDestroy()
+        disposableUseCases.map { clearUseCase(it) }
+    }
 
-                override fun onSubscribe(disposable: Disposable) { }
+    private fun scheduleHappyPath() = DelayedPostAutoSwipeUseCase(
+            this, TrampolinePostExecutionSchedulerProvider).apply {
+        disposableUseCases.add(this)
+        execute(object : DisposableCompletableObserver() {
+            override fun onComplete() {
+                clearUseCase(this@apply)
+            }
 
-                override fun onError(error: Throwable) = FirebaseCrash.report(error)
-            })
+            override fun onError(error: Throwable) {
+                FirebaseCrash.report(error)
+                clearUseCase(this@apply)
+            }
+        })
+    }
+
+    private fun clearUseCase(useCase: DisposableUseCase) = useCase.apply {
+        dispose()
+        disposableUseCases.remove(this)
+    }
 
     companion object {
-        private const val JOB_ID = 1000
-        fun trigger(context: Context) = enqueueWork(
-                context, AutoSwipeJobIntentService::class.java, JOB_ID, Intent())
+    private const val JOB_ID = 1000
+    fun trigger(context: Context) = enqueueWork(
+            context, AutoSwipeJobIntentService::class.java, JOB_ID, Intent())
     }
 }
