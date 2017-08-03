@@ -1,5 +1,7 @@
 package app.di
 
+import app.alarmbanner.AlarmBannerComponent
+import app.alarmbanner.AlarmBannerModule
 import app.login.TinderFacebookLoginComponent
 import app.login.TinderFacebookLoginModule
 import app.splash.LoggedInCheckComponent
@@ -10,7 +12,9 @@ import javax.inject.Singleton
 @Component(modules = arrayOf(ApplicationModule::class))
 @Singleton
 internal interface ApplicationComponent {
+    fun newSplashComponent(loggedInCheckModule: LoggedInCheckModule): LoggedInCheckComponent
     fun newTinderFacebookLoginComponent(tinderFacebookLoginModule: TinderFacebookLoginModule)
             : TinderFacebookLoginComponent
-    fun newSplashComponent(loggedInCheckModule: LoggedInCheckModule): LoggedInCheckComponent
+    fun newAlarmBannerComponent(alarmBannerModule: AlarmBannerModule)
+            : AlarmBannerComponent
 }
