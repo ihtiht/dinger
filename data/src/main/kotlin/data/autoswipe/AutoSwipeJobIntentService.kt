@@ -35,7 +35,10 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
 
     override fun onDestroy() {
         super.onDestroy()
-        disposableUseCases.map { clearUseCase(it) }
+        disposableUseCases.apply {
+            map { it.dispose() }
+            clear()
+        }
     }
 
     private fun scheduleHappyPath() = DelayedPostAutoSwipeUseCase(
