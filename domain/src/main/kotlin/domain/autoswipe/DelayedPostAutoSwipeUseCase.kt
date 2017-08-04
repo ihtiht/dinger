@@ -1,13 +1,14 @@
 package domain.autoswipe
 
 import android.content.Context
-import domain.exec.PostExecutionSchedulerProvider
+import io.reactivex.Scheduler
 import org.stoyicker.dinger.domain.R
 
 class DelayedPostAutoSwipeUseCase(
         context: Context,
-        postExecutionSchedulerProvider: PostExecutionSchedulerProvider)
-    : PostAutoSwipeUseCase(context, postExecutionSchedulerProvider) {
+        preExecutionScheduler: Scheduler,
+        postExecutionScheduler: Scheduler)
+    : PostAutoSwipeUseCase(context, preExecutionScheduler, postExecutionScheduler) {
     override fun provideDelayMillis(context: Context) = context.resources.getInteger(
             R.integer.sweep_delayed_delay_ms).toLong()
 }

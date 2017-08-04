@@ -1,15 +1,15 @@
 package app.di
 
-import app.UiPostExecutionSchedulerProvider
 import dagger.Module
 import dagger.Provides
-import domain.exec.PostExecutionSchedulerProvider
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Singleton
 
 @Module
 @Singleton
-internal class ApplicationModule() {
+internal class ApplicationModule {
     @Provides
     @Singleton
-    fun uiSchedulerProvider(): PostExecutionSchedulerProvider = UiPostExecutionSchedulerProvider()
+    fun mainThreadScheduler(): Scheduler = AndroidSchedulers.mainThread()
 }

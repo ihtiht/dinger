@@ -3,18 +3,18 @@ package app.splash
 import android.content.Context
 import com.google.firebase.crash.FirebaseCrash
 import domain.auth.LoggedInUserCheckUseCase
-import domain.exec.PostExecutionSchedulerProvider
+import io.reactivex.Scheduler
 import io.reactivex.observers.DisposableSingleObserver
 import org.stoyicker.dinger.R
 
 internal class LoggedInCheckCoordinator(
         private val context: Context,
-        private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider,
+        private val postExecutionScheduler: Scheduler,
         private val resultCallback: ResultCallback) {
     private var useCase: LoggedInUserCheckUseCase? = null
 
     fun actionDoCheck() {
-        useCase = LoggedInUserCheckUseCase(postExecutionSchedulerProvider)
+        useCase = LoggedInUserCheckUseCase(postExecutionScheduler)
         useCase?.execute(object : DisposableSingleObserver<Boolean>() {
             override fun onSuccess(t: Boolean) {
                 when (t) {

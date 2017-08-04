@@ -1,17 +1,17 @@
 package domain.interactor
 
-import domain.DomainHolder
-import domain.exec.PostExecutionSchedulerProvider
 import io.reactivex.Completable
+import io.reactivex.Scheduler
 import io.reactivex.observers.DisposableCompletableObserver
 
 abstract class CompletableDisposableUseCase internal constructor(
-        private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider)
+        private val executionScheduler: Scheduler? = null,
+        private val postExecutionScheduler: Scheduler)
     : DisposableUseCase(), UseCase<Completable> {
     fun execute(subscriber: DisposableCompletableObserver) {
         assembledSubscriber = buildUseCase()
-                .subscribeOn(DomainHolder.useCaseScheduler)
-                .observeOn(postExecutionSchedulerProvider.provideScheduler())
+                .subscribeOn(executionScheduler ?: UseCase.defaultUseCaseScheduler)
+                .observeOn(postExecutionScheduler)
                 .subscribeWith(subscriber)
     }
 }

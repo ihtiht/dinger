@@ -3,14 +3,15 @@ package domain.autoswipe
 import android.content.Context
 import android.support.annotation.IntRange
 import domain.alarm.AlarmHolder
-import domain.exec.PostExecutionSchedulerProvider
 import domain.interactor.CompletableDisposableUseCase
 import io.reactivex.Completable
+import io.reactivex.Scheduler
 
 abstract class PostAutoSwipeUseCase internal constructor(
         private val context: Context,
-        postExecutionSchedulerProvider: PostExecutionSchedulerProvider)
-    : CompletableDisposableUseCase(postExecutionSchedulerProvider) {
+        preExecutionScheduler: Scheduler? = null,
+        postExecutionScheduler: Scheduler)
+    : CompletableDisposableUseCase(preExecutionScheduler, postExecutionScheduler) {
     @IntRange(from = 0, to = Long.MAX_VALUE)
     internal abstract fun provideDelayMillis(context: Context): Long
 

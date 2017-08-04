@@ -7,7 +7,6 @@ import org.stoyicker.dinger.data.BuildConfig
 import retrofit2.http.*
 
 internal interface TinderApi {
-    @Headers("Content-Type: application/json; charset=UTF-8")
     @POST("/v2/auth/login/facebook")
     fun login(@Body requestParameters: AuthRequestParameters): Single<ResponseBody>
 

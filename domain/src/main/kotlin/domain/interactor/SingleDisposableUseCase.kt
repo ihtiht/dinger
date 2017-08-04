@@ -1,17 +1,16 @@
 package domain.interactor
 
-import domain.DomainHolder
-import domain.exec.PostExecutionSchedulerProvider
+import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.observers.DisposableSingleObserver
 
 abstract class SingleDisposableUseCase<T> internal constructor(
-        private val postExecutionSchedulerProvider: PostExecutionSchedulerProvider)
+        private val postExecutionScheduler: Scheduler)
     : DisposableUseCase(), UseCase<Single<T>> {
     fun execute(subscriber: DisposableSingleObserver<T>) {
         assembledSubscriber = buildUseCase()
-                .subscribeOn(DomainHolder.useCaseScheduler)
-                .observeOn(postExecutionSchedulerProvider.provideScheduler())
+                .subscribeOn(UseCase.defaultUseCaseScheduler)
+                .observeOn(postExecutionScheduler)
                 .subscribeWith(subscriber)
     }
 }
