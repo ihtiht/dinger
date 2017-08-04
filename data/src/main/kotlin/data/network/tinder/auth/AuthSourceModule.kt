@@ -3,8 +3,10 @@ package data.network.tinder.auth
 import com.nytimes.android.external.store3.base.impl.Store
 import com.nytimes.android.external.store3.base.impl.StoreBuilder
 import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
+import data.network.ParserModule
 import data.network.tinder.TinderApi
 import data.network.tinder.TinderApiModule
 import okio.BufferedSource
@@ -14,14 +16,16 @@ import dagger.Lazy as DaggerLazy
 /**
  * Module used to provide stuff required by TopRequestSource objects.
  */
-@Module(includes = arrayOf(TinderApiModule::class))
+@Module(includes = arrayOf(ParserModule::class, TinderApiModule::class))
 internal class AuthSourceModule {
     @Provides
     @Singleton
-    fun store(api: TinderApi) =
+    fun store(moshiBuilder: Moshi.Builder, api: TinderApi) =
             StoreBuilder.parsedWithKey<AuthRequestParameters, BufferedSource, AuthResponse>()
                     .fetcher({ fetcher(it, api) })
-                    .parser(MoshiParserFactory.createSourceParser(AuthResponse::class.java))
+                    .parser(MoshiParserFactory.createSourceParser(
+                            moshiBuilder.build(),
+                            AuthResponse::class.java))
                     .networkBeforeStale()
                     .open()
 

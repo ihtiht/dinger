@@ -25,7 +25,8 @@ internal class TinderApiModule {
                             appAccountManagerImpl.getAccountToken()?.let {
                                 addHeader(TinderApi.HEADER_AUTH, it)
                             }
-                        }.build())
+                        }
+                        .build())
             }.build())
             .baseUrl(TinderApi.BASE_URL)
             .build()

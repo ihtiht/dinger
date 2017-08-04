@@ -7,6 +7,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Rfc3339DateJsonAdapter
 import dagger.Module
 import dagger.Provides
+import data.network.ParserModule
 import data.network.tinder.TinderApi
 import data.network.tinder.TinderApiModule
 import okio.BufferedSource
@@ -17,18 +18,17 @@ import dagger.Lazy as DaggerLazy
 /**
  * Module used to provide stuff required by TopRequestSource objects.
  */
-@Module(includes = arrayOf(TinderApiModule::class))
+@Module(includes = arrayOf(ParserModule::class, TinderApiModule::class))
 internal class RecommendationSourceModule {
     @Provides
     @Singleton
-    fun store(api: TinderApi) =
+    fun store(moshiBuilder: Moshi.Builder, api: TinderApi) =
             StoreBuilder.parsedWithKey<Unit, BufferedSource, RecommendationResponse>()
                     .fetcher({ fetcher(api) })
                     .parser(MoshiParserFactory
-                            .createSourceParser(
-                                    Moshi.Builder()
-                                            .add(Date::class.java, Rfc3339DateJsonAdapter())
-                                            .build(),
+                            .createSourceParser(moshiBuilder
+                                    .add(Date::class.java, Rfc3339DateJsonAdapter())
+                                    .build(),
                                     RecommendationResponse::class.java))
                     .networkBeforeStale()
                     .open()
