@@ -22,8 +22,8 @@ internal class RecommendationSourceModule {
     @Provides
     @Singleton
     fun store(api: TinderApi) =
-            StoreBuilder.parsedWithKey<RecommendationRequestParameters, BufferedSource, RecommendationResponse>()
-                    .fetcher({ fetcher(it, api) })
+            StoreBuilder.parsedWithKey<Unit, BufferedSource, RecommendationResponse>()
+                    .fetcher({ fetcher(api) })
                     .parser(MoshiParserFactory
                             .createSourceParser(
                                     Moshi.Builder()
@@ -35,9 +35,8 @@ internal class RecommendationSourceModule {
 
     @Provides
     @Singleton
-    fun source(store: DaggerLazy<Store<RecommendationResponse, RecommendationRequestParameters>>)
+    fun source(store: DaggerLazy<Store<RecommendationResponse, Unit>>)
             = RecommendationSource(store)
 
-    private fun fetcher(requestParameters: RecommendationRequestParameters, api: TinderApi) =
-            api.getRecommendations(requestParameters).map { it.source() }
+    private fun fetcher(api: TinderApi) = api.getRecommendations().map { it.source() }
 }

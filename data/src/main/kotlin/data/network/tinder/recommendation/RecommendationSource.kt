@@ -5,5 +5,5 @@ import data.network.common.RequestSource
 import dagger.Lazy as DaggerLazy
 
 internal class RecommendationSource(
-        storeAccessor: DaggerLazy<Store<RecommendationResponse, RecommendationRequestParameters>>)
-    : RequestSource<RecommendationRequestParameters, RecommendationResponse>(storeAccessor.get())
+        storeAccessor: DaggerLazy<Store<RecommendationResponse, Unit>>)
+    : RequestSource<Unit, RecommendationResponse>(storeAccessor.get())

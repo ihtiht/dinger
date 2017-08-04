@@ -7,7 +7,6 @@ import data.network.tinder.recommendation.RecommendationFacade
 import domain.auth.DomainAuthRequestParameters
 import domain.auth.DomainAuthedUser
 import domain.recommendation.DomainRecommendationCollection
-import domain.recommendation.DomainRecommendationRequestParameters
 import domain.repository.TinderApiRepository
 import io.reactivex.Single
 import javax.inject.Inject
@@ -25,7 +24,7 @@ internal class TinderApiRepositoryImpl : TinderApiRepository {
     override fun login(parameters: DomainAuthRequestParameters): Single<DomainAuthedUser>
             = loginFacade.fetch(parameters).doOnError { FirebaseCrash.report(it) }
 
-    override fun getRecommendations(parameters: DomainRecommendationRequestParameters)
+    override fun getRecommendations()
             : Single<DomainRecommendationCollection>
-            = recommendationFacade.fetch(parameters).doOnError { FirebaseCrash.report(it) }
+            = recommendationFacade.fetch(Unit).doOnError { FirebaseCrash.report(it) }
 }

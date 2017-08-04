@@ -1,3 +1,0 @@
-package domain.recommendation
-
-class DomainRecommendationRequestParameters
