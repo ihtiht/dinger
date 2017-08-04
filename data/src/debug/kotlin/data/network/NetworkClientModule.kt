@@ -10,7 +10,6 @@ import javax.inject.Singleton
 internal class NetworkClientModule {
     @Provides
     @Singleton
-    fun client(): OkHttpClient = OkHttpClient.Builder()
+    fun client(): OkHttpClient.Builder = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .build()
 }

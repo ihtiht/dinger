@@ -9,5 +9,5 @@ import javax.inject.Singleton
 internal class NetworkClientModule {
     @Provides
     @Singleton
-    fun client() = OkHttpClient()
+    fun client() = OkHttpClient.Builder()
 }
