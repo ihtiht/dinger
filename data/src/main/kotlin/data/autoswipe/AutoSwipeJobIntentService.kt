@@ -15,9 +15,10 @@ import io.reactivex.schedulers.Schedulers
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
     private val disposableUseCases = mutableSetOf<DisposableUseCase>()
+    private val trampolineScheduler by lazy { Schedulers.trampoline() }
 
     override fun onHandleWork(intent: Intent) {
-        GetRecommendationsUseCase(Schedulers.trampoline(), Schedulers.trampoline()).apply {
+        GetRecommendationsUseCase(trampolineScheduler, trampolineScheduler).apply {
             disposableUseCases.add(this)
             execute(object : DisposableSingleObserver<DomainRecommendationCollection>() {
                 override fun onSuccess(payload: DomainRecommendationCollection) {
@@ -44,7 +45,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     private fun scheduleHappyPath() = DelayedPostAutoSwipeUseCase(
-            this, Schedulers.trampoline(), Schedulers.trampoline()).apply {
+            this, trampolineScheduler, trampolineScheduler).apply {
         disposableUseCases.add(this)
         execute(object : DisposableCompletableObserver() {
             override fun onComplete() {
@@ -59,7 +60,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     private fun scheduleFromErrorPath() = FromErrorPostAutoSwipeUseCase(
-            this, Schedulers.trampoline(), Schedulers.trampoline()).apply {
+            this, trampolineScheduler, trampolineScheduler).apply {
         disposableUseCases.add(this)
         execute(object : DisposableCompletableObserver() {
             override fun onComplete() {
