@@ -12,10 +12,12 @@ import domain.recommendation.GetRecommendationsUseCase
 import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.CountDownLatch
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
     private val disposableUseCases = mutableSetOf<DisposableUseCase>()
     private val trampolineScheduler by lazy { Schedulers.trampoline() }
+    private val countDownLatch = CountDownLatch(1)
 
     override fun onHandleWork(intent: Intent) {
         GetRecommendationsUseCase(trampolineScheduler, trampolineScheduler).apply {
@@ -37,6 +39,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     override fun onDestroy() {
+        countDownLatch.await()
         super.onDestroy()
         disposableUseCases.apply {
             map { it.dispose() }
@@ -50,11 +53,13 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         execute(object : DisposableCompletableObserver() {
             override fun onComplete() {
                 clearUseCase(this@apply)
+                countDownLatch.countDown()
             }
 
             override fun onError(error: Throwable) {
                 FirebaseCrash.report(error)
                 clearUseCase(this@apply)
+                countDownLatch.countDown()
             }
         })
     }
@@ -65,11 +70,13 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         execute(object : DisposableCompletableObserver() {
             override fun onComplete() {
                 clearUseCase(this@apply)
+                countDownLatch.countDown()
             }
 
             override fun onError(error: Throwable) {
                 FirebaseCrash.report(error)
                 clearUseCase(this@apply)
+                countDownLatch.countDown()
             }
         })
     }
