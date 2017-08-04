@@ -7,6 +7,7 @@ import io.reactivex.observers.DisposableCompletableObserver
 
 internal class TinderFacebookLoginCoordinator(
         private val view: TinderLoginView,
+        private val asyncExecutionScheduler: Scheduler,
         private val postExecutionScheduler: Scheduler,
         private val resultCallback: ResultCallback) {
     private var useCase: TinderFacebookLoginUseCase? = null
@@ -14,7 +15,7 @@ internal class TinderFacebookLoginCoordinator(
     fun actionDoLogin(facebookId: String, facebookToken: String) {
         view.setRunning()
         useCase = TinderFacebookLoginUseCase(
-                facebookId, facebookToken, postExecutionScheduler)
+                facebookId, facebookToken, asyncExecutionScheduler, postExecutionScheduler)
         useCase?.execute(object : DisposableCompletableObserver() {
             override fun onError(error: Throwable) {
                 FirebaseCrash.report(error)

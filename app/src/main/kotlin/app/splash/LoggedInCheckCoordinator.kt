@@ -9,12 +9,13 @@ import org.stoyicker.dinger.R
 
 internal class LoggedInCheckCoordinator(
         private val context: Context,
+        private val asyncExecutionScheduler: Scheduler,
         private val postExecutionScheduler: Scheduler,
         private val resultCallback: ResultCallback) {
     private var useCase: LoggedInUserCheckUseCase? = null
 
     fun actionDoCheck() {
-        useCase = LoggedInUserCheckUseCase(postExecutionScheduler)
+        useCase = LoggedInUserCheckUseCase(asyncExecutionScheduler, postExecutionScheduler)
         useCase?.execute(object : DisposableSingleObserver<Boolean>() {
             override fun onSuccess(t: Boolean) {
                 when (t) {

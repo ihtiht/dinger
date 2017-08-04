@@ -9,8 +9,9 @@ import io.reactivex.Scheduler
 class TinderFacebookLoginUseCase(
         private val facebookId: String,
         private val facebookToken: String,
+        asyncExecutionScheduler: Scheduler,
         postExecutionScheduler: Scheduler)
-    : CompletableDisposableUseCase(postExecutionScheduler = postExecutionScheduler) {
+    : CompletableDisposableUseCase(asyncExecutionScheduler, postExecutionScheduler) {
     override fun buildUseCase(): Completable = DomainHolder.facadeProvider.tinderApiRepository()
             .login(DomainAuthRequestParameters(facebookId, facebookToken))
             .doOnSuccess {

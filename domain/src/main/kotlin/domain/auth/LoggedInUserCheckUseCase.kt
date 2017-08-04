@@ -5,8 +5,9 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 
 class LoggedInUserCheckUseCase(
+        asyncExecutionScheduler: Scheduler,
         postExecutionScheduler: Scheduler)
-    : SingleDisposableUseCase<Boolean>(postExecutionScheduler) {
+    : SingleDisposableUseCase<Boolean>(asyncExecutionScheduler, postExecutionScheduler) {
     override fun buildUseCase(): Single<Boolean>
             = Single.just(AuthHolder.accountManager.isThereALoggedInUser())
 }

@@ -6,6 +6,7 @@ import com.facebook.login.widget.LoginButton
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
+import javax.inject.Named
 
 @Module
 @PerActivity
@@ -26,9 +27,11 @@ internal class TinderFacebookLoginModule(
     @Provides
     fun coordinator(
             view: TinderLoginView,
-            postExecutionScheduler: Scheduler)
+            @Named("io") asyncExecutionScheduler: Scheduler,
+            @Named("main") postExecutionScheduler: Scheduler)
             = TinderFacebookLoginCoordinator(
             view,
+            asyncExecutionScheduler,
             postExecutionScheduler,
             tinderFacebookLoginCoordinatorResultCallback)
 }

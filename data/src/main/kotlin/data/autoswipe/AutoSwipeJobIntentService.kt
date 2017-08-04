@@ -12,15 +12,13 @@ import domain.recommendation.GetRecommendationsUseCase
 import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.CountDownLatch
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
     private val disposableUseCases = mutableSetOf<DisposableUseCase>()
     private val trampolineScheduler by lazy { Schedulers.trampoline() }
-    private val countDownLatch = CountDownLatch(1)
 
     override fun onHandleWork(intent: Intent) {
-        GetRecommendationsUseCase(trampolineScheduler, trampolineScheduler).apply {
+        GetRecommendationsUseCase(trampolineScheduler).apply {
             disposableUseCases.add(this)
             execute(object : DisposableSingleObserver<DomainRecommendationCollection>() {
                 override fun onSuccess(payload: DomainRecommendationCollection) {
@@ -39,7 +37,6 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     override fun onDestroy() {
-        countDownLatch.await()
         super.onDestroy()
         disposableUseCases.apply {
             map { it.dispose() }
@@ -48,35 +45,31 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     private fun scheduleHappyPath() = DelayedPostAutoSwipeUseCase(
-            this, trampolineScheduler, trampolineScheduler).apply {
+            this, trampolineScheduler).apply {
         disposableUseCases.add(this)
         execute(object : DisposableCompletableObserver() {
             override fun onComplete() {
                 clearUseCase(this@apply)
-                countDownLatch.countDown()
             }
 
             override fun onError(error: Throwable) {
                 FirebaseCrash.report(error)
                 clearUseCase(this@apply)
-                countDownLatch.countDown()
             }
         })
     }
 
     private fun scheduleFromErrorPath() = FromErrorPostAutoSwipeUseCase(
-            this, trampolineScheduler, trampolineScheduler).apply {
+            this, trampolineScheduler).apply {
         disposableUseCases.add(this)
         execute(object : DisposableCompletableObserver() {
             override fun onComplete() {
                 clearUseCase(this@apply)
-                countDownLatch.countDown()
             }
 
             override fun onError(error: Throwable) {
                 FirebaseCrash.report(error)
                 clearUseCase(this@apply)
-                countDownLatch.countDown()
             }
         })
     }

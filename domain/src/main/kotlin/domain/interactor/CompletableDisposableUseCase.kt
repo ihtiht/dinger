@@ -5,13 +5,22 @@ import io.reactivex.Scheduler
 import io.reactivex.observers.DisposableCompletableObserver
 
 abstract class CompletableDisposableUseCase internal constructor(
-        private val executionScheduler: Scheduler? = null,
+        /**
+         * Send null for in-place synchronous execution
+         */
+        private val asyncExecutionScheduler: Scheduler? = null,
         private val postExecutionScheduler: Scheduler)
     : DisposableUseCase(), UseCase<Completable> {
     fun execute(subscriber: DisposableCompletableObserver) {
-        assembledSubscriber = buildUseCase()
-                .subscribeOn(executionScheduler ?: UseCase.defaultUseCaseScheduler)
-                .observeOn(postExecutionScheduler)
-                .subscribeWith(subscriber)
+        assembledSubscriber = buildUseCase().let {
+            val completeSetup = { x: Completable ->
+                x.observeOn(postExecutionScheduler).subscribeWith(subscriber)
+            }
+            if (asyncExecutionScheduler != null) {
+                completeSetup(it.subscribeOn(asyncExecutionScheduler))
+            } else {
+                completeSetup(it)
+            }
+        }
     }
 }

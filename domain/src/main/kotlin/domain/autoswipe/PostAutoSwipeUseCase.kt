@@ -9,9 +9,8 @@ import io.reactivex.Scheduler
 
 abstract class PostAutoSwipeUseCase internal constructor(
         private val context: Context,
-        preExecutionScheduler: Scheduler? = null,
         postExecutionScheduler: Scheduler)
-    : CompletableDisposableUseCase(preExecutionScheduler, postExecutionScheduler) {
+    : CompletableDisposableUseCase(postExecutionScheduler = postExecutionScheduler) {
     @IntRange(from = 0, to = Long.MAX_VALUE)
     internal abstract fun provideDelayMillis(context: Context): Long
 
