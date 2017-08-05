@@ -28,8 +28,7 @@
             android:name="app.alarmbanner.AlarmBannerActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden"
-            android:launchMode="singleTask"
-            android:noHistory="true" />
+            android:launchMode="singleTask" />
         <activity
             android:name="app.home.HomeActivity"
             android:theme="@style/AppTheme"
