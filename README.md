@@ -5,7 +5,7 @@ Tinder is a very trendy thing; you can like people without revealing anything un
 
 From a technical standpoint however, it is an awful piece of software, at least the Android app [1]:
 * It requires you to periodically perform a monkey task (swiping), which is cumbersome and inefficient, and could be easily automated.
-* It performs a very aggressive polling to check for changes that may affect your experience (in other words, it continuously asks the server 'did anyone message me?' instead of letting the server notify the device when a message came). This results in unnecessary battery consumption and, when implemented poorly, results in buggy behaviors.
+* It performs a very aggressive polling to check for changes that may affect your experience (in other words, it continuously asks the server 'did anyone message me?' instead of letting the server notify the device when a message came). This results in unnecessary battery consumption and, when implemented poorly, buggy behavior too.
 * It does not support landscape mode.
 
 This repo is here to show that these and other pain points are easily mitigable nowadays if things are done correctly and, while at it, I'll take the chance to demonstrate how well-built modern Android apps are made, and that this is something very feasible to achieve even if your team just consists of a single developer and instead of having the backend guy sitting next to him, you only have Charles Proxy.
