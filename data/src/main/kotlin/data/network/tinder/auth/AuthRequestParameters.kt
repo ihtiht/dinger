@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 import org.stoyicker.dinger.data.BuildConfig
 
 internal data class AuthRequestParameters(
-        @Json(name = "id")
+        @field:Json(name = "id")
         private val facebookId: String,
-        @Json(name = "token")
+        @field:Json(name = "token")
         private val token: String,
-        @Json(name = "client_version")
+        @field:Json(name = "client_version")
         private val clientVersion: String = BuildConfig.TINDER_CLIENT_VERSION)

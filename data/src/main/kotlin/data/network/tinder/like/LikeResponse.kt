@@ -3,8 +3,8 @@ package data.network.tinder.like
 import com.squareup.moshi.Json
 
 internal data class LikeResponse(
-        @Json(name = "something")
+        @field:Json(name = "something")
         val match: Match,
-        @Json(name = "something")
+        @field:Json(name = "something")
         val likesRemaining: Int
 )
