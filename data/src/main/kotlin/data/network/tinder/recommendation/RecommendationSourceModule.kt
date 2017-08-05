@@ -1,7 +1,9 @@
 package data.network.tinder.recommendation
 
+import com.nytimes.android.external.store3.base.Fetcher
+import com.nytimes.android.external.store3.base.impl.FluentStoreBuilder
+import com.nytimes.android.external.store3.base.impl.StalePolicy
 import com.nytimes.android.external.store3.base.impl.Store
-import com.nytimes.android.external.store3.base.impl.StoreBuilder
 import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Rfc3339DateJsonAdapter
@@ -23,20 +25,19 @@ internal class RecommendationSourceModule {
     @Provides
     @Singleton
     fun store(moshiBuilder: Moshi.Builder, api: TinderApi) =
-            StoreBuilder.parsedWithKey<Unit, BufferedSource, RecommendationResponse>()
-                    .fetcher({ fetcher(api) })
-                    .parser(MoshiParserFactory
-                            .createSourceParser(moshiBuilder
-                                    .add(Date::class.java, Rfc3339DateJsonAdapter())
-                                    .build(),
-                                    RecommendationResponse::class.java))
-                    .networkBeforeStale()
-                    .open()
+            FluentStoreBuilder.parsedWithKey<Unit, BufferedSource, RecommendationResponse>(
+                    Fetcher { _ -> fetch(api) }) {
+                parsers = listOf(MoshiParserFactory.createSourceParser(moshiBuilder
+                                .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
+                                .build(),
+                                RecommendationResponse::class.java))
+                stalePolicy = StalePolicy.NETWORK_BEFORE_STALE
+            }
 
     @Provides
     @Singleton
     fun source(store: DaggerLazy<Store<RecommendationResponse, Unit>>)
             = RecommendationSource(store)
 
-    private fun fetcher(api: TinderApi) = api.getRecommendations().map { it.source() }
+    private fun fetch(api: TinderApi) = api.getRecommendations().map { it.source() }
 }
