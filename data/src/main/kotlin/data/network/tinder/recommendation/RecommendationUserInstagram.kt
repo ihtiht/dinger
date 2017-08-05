@@ -1,18 +1,18 @@
 package data.network.tinder.recommendation
 
 import com.squareup.moshi.Json
-import java.util.Date
+import java.util.*
 
 internal class RecommendationUserInstagram private constructor(
         @field:Json(name = "profile_picture")
-        private val profilePictureUrl: String,
+        val profilePictureUrl: String,
         @field:Json(name = "last_fetch_time")
-        private val lastFetchTime: Date,
+        val lastFetchTime: Date,
         @field:Json(name = "media_count")
-        private val mediaCount: Int,
+        val mediaCount: Int,
         @field:Json(name = "photos")
-        private val photos: Array<RecommendationUserInstagramPhoto>,
+        val photos: Array<RecommendationUserInstagramPhoto>,
         @field:Json(name = "completed_initial_fetch")
-        private val completedInitialFetch: Boolean,
+        val completedInitialFetch: Boolean,
         @field:Json(name = "username")
-        private val username: String)
+        val username: String)

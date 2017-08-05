@@ -4,8 +4,8 @@ import com.squareup.moshi.Json
 
 internal class RecommendationUserPhoto private constructor(
         @field:Json(name = "id")
-        private val id: String,
+        val id: String,
         @field:Json(name = "url")
-        private val url: String,
+        val url: String,
         @field:Json(name = "processedFiles")
-        private val processedFiles: Array<RecommendationUserPhotoProcessedFile>)
+        val processedFiles: Array<RecommendationUserPhotoProcessedFile>)

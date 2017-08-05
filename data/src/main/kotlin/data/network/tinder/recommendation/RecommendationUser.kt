@@ -3,48 +3,48 @@ package data.network.tinder.recommendation
 import com.squareup.moshi.Json
 import java.util.*
 
-internal class RecommendationUser(
+internal class RecommendationUser private constructor(
         @field:Json(name = "distance_mi")
-        private val distanceMiles: Int,
+        val distanceMiles: Int,
         @field:Json(name = "common_connections")
-        private val commonConnections: Array<Any>, // TODO Support common connections
+        val commonConnections: Array<Any?>, // TODO Support common connections
         @field:Json(name = "connection_count")
-        private val connectionCount: Int,
+        val connectionCount: Int,
         @field:Json(name = "common_interests")
-        private val commonInterests: Array<RecommendationInterest>,
+        val commonInterests: Array<RecommendationInterest>,
         @field:Json(name = "content_hash")
-        private val contentHash: String,
+        val contentHash: String,
         @field:Json(name = "_id")
-        private val id: String,
+        val id: String,
         @field:Json(name = "birth_date")
-        private val birthDate: Date,
+        val birthDate: Date,
         @field:Json(name = "name")
-        private val name: String,
+        val name: String,
         @field:Json(name = "ping_time")
-        private val pingTime: Date,
+        val pingTime: Date,
         @field:Json(name = "photos")
-        private val photos: Array<RecommendationUserPhoto>,
+        val photos: Array<RecommendationUserPhoto>,
         @field:Json(name = "instagram")
-        private val instagram: RecommendationUserInstagram,
+        val instagram: RecommendationUserInstagram,
         @field:Json(name = "jobs")
-        private val jobs: Array<RecommendationUserJob>,
+        val jobs: Array<RecommendationUserJob>,
         @field:Json(name = "schools")
-        private val schools: Array<RecommendationUserSchool>,
+        val schools: Array<RecommendationUserSchool>,
         @field:Json(name = "teaser")
-        private val teaser: RecommendationUserTeaser,
+        val teaser: RecommendationUserTeaser,
         @field:Json(name = "teasers")
-        private val teasers: Array<RecommendationUserTeaser>,
+        val teasers: Array<RecommendationUserTeaser>,
         @field:Json(name = "s_number")
-        private val sNumber: Int,
+        val sNumber: Int,
         @field:Json(name = "spotify_theme_track")
-        private val spotifyThemeTrack: RecommendationUserSpotifyThemeTrack,
+        val spotifyThemeTrack: RecommendationUserSpotifyThemeTrack,
         @Gender
         @field:Json(name = "gender")
-        private val gender: Int,
+        val gender: Int,
         @field:Json(name = "birth_date_info")
-        private val birthDateInfo: String,
+        val birthDateInfo: String,
         @field:Json(name = "group_matched")
-        private val groupMatched: Boolean) {
+        val groupMatched: Boolean) {
     companion object {
         const val GENDER_MALE = 0
         const val GENDER_FEMALE = 1

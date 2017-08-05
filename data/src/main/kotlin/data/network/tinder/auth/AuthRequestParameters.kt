@@ -9,4 +9,4 @@ internal data class AuthRequestParameters(
         @field:Json(name = "token")
         private val token: String,
         @field:Json(name = "client_version")
-        private val clientVersion: String = BuildConfig.TINDER_CLIENT_VERSION)
+        private val clientVersion: String = BuildConfig.TINDER_VERSION_NAME)

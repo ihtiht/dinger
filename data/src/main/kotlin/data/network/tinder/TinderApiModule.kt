@@ -7,6 +7,7 @@ import data.account.AppAccountManagerImpl
 import data.network.NetworkClientModule
 import data.network.NetworkModule
 import okhttp3.OkHttpClient
+import org.stoyicker.dinger.data.BuildConfig
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -24,6 +25,9 @@ internal class TinderApiModule {
                         .apply {
                             appAccountManagerImpl.getAccountToken()?.let {
                                 addHeader(TinderApi.HEADER_AUTH, it)
+                                addHeader(TinderApi.HEADER_APP_VERSION,
+                                        BuildConfig.TINDER_VERSION_CODE)
+                                addHeader(TinderApi.HEADER_PLATFORM, BuildConfig.PLATFORM_ANDROID)
                             }
                         }
                         .build())
