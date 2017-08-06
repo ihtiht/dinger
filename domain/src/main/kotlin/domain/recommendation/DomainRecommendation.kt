@@ -1,3 +1,5 @@
 package domain.recommendation
 
-data class DomainRecommendation(private val dummyField: Int)
+data class DomainRecommendation(
+        private val id: String,
+        private val name: String)
