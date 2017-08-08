@@ -80,8 +80,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     companion object {
-    private const val JOB_ID = 1000
-    fun trigger(context: Context) = enqueueWork(
-            context, AutoSwipeJobIntentService::class.java, JOB_ID, Intent())
-    }
+        private const val JOB_ID = 1000
+        fun trigger(context: Context) = enqueueWork(
+                context, AutoSwipeJobIntentService::class.java, JOB_ID, Intent())
+        }
 }
