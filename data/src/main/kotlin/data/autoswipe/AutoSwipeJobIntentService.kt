@@ -5,9 +5,10 @@ import android.content.Intent
 import android.support.annotation.CallSuper
 import android.support.v4.app.JobIntentService
 import com.google.firebase.crash.FirebaseCrash
+import domain.recommendation.DomainRecommendationCollection
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
-    private val actions = mutableSetOf<Action>()
+    private val ongoingActions = mutableSetOf<Action<*>>()
 
     override fun onHandleWork(intent: Intent) {
         requestRecommendations()
@@ -15,35 +16,19 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
 
     override fun onDestroy() {
         super.onDestroy()
-        actions.apply {
+        ongoingActions.apply {
             map { it.dispose() }
             clear()
         }
     }
 
-    private fun requestRecommendations() = GetRecommendationsAction(this).apply {
-        actions.add(this)
-        execute()
-    }
-
-    // TODO This needs to be called after getting rate-limit on swiping, not on recommend
-    private fun scheduleHappySuccess() = DelayedPostAutoSwipeAction(this).apply {
-        actions.add(this)
-        execute()
-    }
-
-    private fun scheduleFromError() = FromErrorPostAutoSwipeAction(this).apply {
-        actions.add(this)
-        execute()
-    }
-
-    interface Action {
-        fun execute()
+    interface Action<in T> {
+        fun execute(owner: AutoSwipeJobIntentService, callback: T)
 
         fun dispose()
     }
 
-    class CommonResultDelegate(private val action: Action) {
+    class CommonResultDelegate(private val action: Action<*>) {
         @CallSuper
         fun onComplete(autoSwipeJobIntentService: AutoSwipeJobIntentService) {
             autoSwipeJobIntentService.clearAction(action)
@@ -57,9 +42,32 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         }
     }
 
-    private fun clearAction(action: Action) = action.apply {
+    private fun requestRecommendations() = GetRecommendationsAction().apply {
+        ongoingActions.add(this)
+        execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
+            override fun onRecommendationsReceived(
+                    recommendationCollection: DomainRecommendationCollection) {
+                recommendationCollection.recommendations.stream().parallel().map {
+                    // TODO Save the recommendation and then try to like it
+                }
+            }
+        })
+    }
+
+    // TODO This needs to be called after getting rate-limit on swiping, not on recommend
+    private fun scheduleHappySuccess() = DelayedPostAutoSwipeAction().apply {
+        ongoingActions.add(this)
+        execute(this@AutoSwipeJobIntentService, Unit)
+    }
+
+    private fun scheduleFromError() = FromErrorPostAutoSwipeAction().apply {
+        ongoingActions.add(this)
+        execute(this@AutoSwipeJobIntentService, Unit)
+    }
+
+    private fun clearAction(action: Action<*>) = action.apply {
         dispose()
-        actions.remove(this)
+        ongoingActions.remove(this)
     }
 
     companion object {

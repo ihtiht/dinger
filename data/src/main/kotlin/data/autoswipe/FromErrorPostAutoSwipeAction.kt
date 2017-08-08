@@ -6,24 +6,23 @@ import domain.interactor.DisposableUseCase
 import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.schedulers.Schedulers
 
-internal class FromErrorPostAutoSwipeAction(private val owner: AutoSwipeJobIntentService)
-    : AutoSwipeJobIntentService.Action  {
+internal class FromErrorPostAutoSwipeAction : AutoSwipeJobIntentService.Action<Unit>  {
     private var useCaseDelegate: DisposableUseCase? = null
     private val resultDelegate = CommonResultDelegate(this)
 
-    override fun execute() {
-        FromErrorPostAutoSwipeUseCase(owner, Schedulers.trampoline()).apply {
-            useCaseDelegate = this
-            execute(object : DisposableCompletableObserver() {
-                override fun onComplete() {
-                    resultDelegate.onComplete(owner)
-                }
-                override fun onError(error: Throwable) {
-                    resultDelegate.onError(owner, error)
-                }
-            })
-        }
-    }
+    override fun execute(owner: AutoSwipeJobIntentService, callback: Unit) =
+            FromErrorPostAutoSwipeUseCase(owner, Schedulers.trampoline()).let {
+                useCaseDelegate = it
+                it.execute(object : DisposableCompletableObserver() {
+                    override fun onComplete() {
+                        resultDelegate.onComplete(owner)
+                    }
+
+                    override fun onError(error: Throwable) {
+                        resultDelegate.onError(owner, error)
+                    }
+                })
+            }
 
     override fun dispose() {
         useCaseDelegate?.dispose()

@@ -7,28 +7,31 @@ import domain.recommendation.GetRecommendationsUseCase
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
-internal class GetRecommendationsAction(private val owner: AutoSwipeJobIntentService)
-    : AutoSwipeJobIntentService.Action  {
+internal class GetRecommendationsAction
+    : AutoSwipeJobIntentService.Action<GetRecommendationsAction.Callback>  {
     private var useCaseDelegate: DisposableUseCase? = null
     private val resultDelegate = CommonResultDelegate(this)
 
-    override fun execute() {
-        GetRecommendationsUseCase(Schedulers.trampoline()).apply {
-            useCaseDelegate = this
-            execute(object : DisposableSingleObserver<DomainRecommendationCollection>() {
-                override fun onSuccess(payload: DomainRecommendationCollection) {
-                    // TODO Have a callback to tell the service to move on (it will start liking)
-                    resultDelegate.onComplete(owner)
-                }
+    override fun execute(owner: AutoSwipeJobIntentService, callback: Callback) =
+            GetRecommendationsUseCase(Schedulers.trampoline()).let {
+                useCaseDelegate = it
+                it.execute(object : DisposableSingleObserver<DomainRecommendationCollection>() {
+                    override fun onSuccess(payload: DomainRecommendationCollection) {
+                        resultDelegate.onComplete(owner)
+                        callback.onRecommendationsReceived(payload)
+                    }
 
-                override fun onError(error: Throwable) {
-                    resultDelegate.onError(owner, error)
-                }
-            })
-        }
-    }
+                    override fun onError(error: Throwable) {
+                        resultDelegate.onError(owner, error)
+                    }
+                })
+            }
 
     override fun dispose() {
         useCaseDelegate?.dispose()
+    }
+
+    interface Callback {
+        fun onRecommendationsReceived(recommendationCollection: DomainRecommendationCollection)
     }
 }

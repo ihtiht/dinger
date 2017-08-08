@@ -6,15 +6,14 @@ import domain.interactor.DisposableUseCase
 import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.schedulers.Schedulers
 
-internal class DelayedPostAutoSwipeAction(private val owner: AutoSwipeJobIntentService)
-    : AutoSwipeJobIntentService.Action  {
+internal class DelayedPostAutoSwipeAction : AutoSwipeJobIntentService.Action<Unit>  {
     private var useCaseDelegate: DisposableUseCase? = null
     private val resultDelegate = CommonResultDelegate(this)
 
-    override fun execute() {
-        DelayedPostAutoSwipeUseCase(owner, Schedulers.trampoline()).apply {
-            useCaseDelegate = this
-            execute(object : DisposableCompletableObserver() {
+    override fun execute(owner: AutoSwipeJobIntentService, callback: Unit) =
+        DelayedPostAutoSwipeUseCase(owner, Schedulers.trampoline()).let {
+            useCaseDelegate = it
+            it.execute(object : DisposableCompletableObserver() {
                 override fun onComplete() {
                     resultDelegate.onComplete(owner)
                 }
@@ -23,7 +22,6 @@ internal class DelayedPostAutoSwipeAction(private val owner: AutoSwipeJobIntentS
                 }
             })
         }
-    }
 
     override fun dispose() {
         useCaseDelegate?.dispose()

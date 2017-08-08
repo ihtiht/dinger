@@ -1,4 +1,4 @@
 package domain.recommendation
 
 data class DomainRecommendationCollection(
-        private val recommendations: Collection<DomainRecommendation>)
+        val recommendations: Collection<DomainRecommendation>)

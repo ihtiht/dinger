@@ -2,6 +2,7 @@ package data.network.tinder.recommendation
 
 import com.google.firebase.crash.FirebaseCrash
 import data.network.common.EntityMapper
+import domain.DomainException
 import domain.recommendation.DomainRecommendation
 import domain.recommendation.DomainRecommendationCollection
 
@@ -10,8 +11,11 @@ internal class RecommendationResponseEntityMapper
     override fun transform(source: RecommendationResponse) = DomainRecommendationCollection(
             source.recommendations.let {
                 when (it) {
-                    null -> throw IllegalStateException(source.message ?:
-                            "Unexpected 2xx recommendation response without message: $source")
+                    null -> throw when (source.message) {
+                        null -> IllegalStateException(
+                                "Unexpected 2xx recommendation response without message: $source")
+                        else -> DomainException(source.message)
+                    }
                     else -> it.map { transformRecommendation(it) }
                             .filterNotNull()
                 }
