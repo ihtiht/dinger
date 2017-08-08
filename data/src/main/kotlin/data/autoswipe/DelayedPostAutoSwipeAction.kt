@@ -8,17 +8,17 @@ import io.reactivex.schedulers.Schedulers
 
 internal class DelayedPostAutoSwipeAction : AutoSwipeJobIntentService.Action<Unit>  {
     private var useCaseDelegate: DisposableUseCase? = null
-    private val resultDelegate = CommonResultDelegate(this)
+    private val commonDelegate = CommonResultDelegate(this)
 
     override fun execute(owner: AutoSwipeJobIntentService, callback: Unit) =
         DelayedPostAutoSwipeUseCase(owner, Schedulers.trampoline()).let {
             useCaseDelegate = it
             it.execute(object : DisposableCompletableObserver() {
                 override fun onComplete() {
-                    resultDelegate.onComplete(owner)
+                    commonDelegate.onComplete(owner)
                 }
                 override fun onError(error: Throwable) {
-                    resultDelegate.onError(owner, error)
+                    commonDelegate.onError(owner, error)
                 }
             })
         }

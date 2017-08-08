@@ -5,7 +5,7 @@ import android.content.Intent
 import android.support.annotation.CallSuper
 import android.support.v4.app.JobIntentService
 import com.google.firebase.crash.FirebaseCrash
-import domain.recommendation.DomainRecommendationCollection
+import domain.recommendation.DomainRecommendation
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
     private val ongoingActions = mutableSetOf<Action<*>>()
@@ -46,8 +46,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         ongoingActions.add(this)
         execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
             override fun onRecommendationsReceived(
-                    recommendationCollection: DomainRecommendationCollection) {
-                recommendationCollection.recommendations.stream().parallel().map {
+                    recommendations: Collection<DomainRecommendation>) {
+                recommendations.stream().parallel().map {
                     // TODO Save the recommendation and then try to like it
                 }
             }

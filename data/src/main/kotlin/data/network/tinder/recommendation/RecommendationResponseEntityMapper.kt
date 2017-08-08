@@ -4,22 +4,19 @@ import com.google.firebase.crash.FirebaseCrash
 import data.network.common.EntityMapper
 import domain.DomainException
 import domain.recommendation.DomainRecommendation
-import domain.recommendation.DomainRecommendationCollection
 
 internal class RecommendationResponseEntityMapper
-    : EntityMapper<RecommendationResponse, DomainRecommendationCollection> {
-    override fun transform(source: RecommendationResponse) = DomainRecommendationCollection(
-            source.recommendations.let {
-                when (it) {
-                    null -> throw when (source.message) {
-                        null -> IllegalStateException(
-                                "Unexpected 2xx recommendation response without message: $source")
-                        else -> DomainException(source.message)
-                    }
-                    else -> it.map { transformRecommendation(it) }
-                            .filterNotNull()
-                }
-            })
+    : EntityMapper<RecommendationResponse, Collection<DomainRecommendation>> {
+    override fun transform(source: RecommendationResponse) = source.recommendations.let {
+        when (it) {
+            null -> throw when (source.message) {
+                null -> IllegalStateException(
+                        "Unexpected 2xx recommendation response without message: $source")
+                else -> DomainException(source.message)
+            }
+            else -> it.map { transformRecommendation(it) }.filterNotNull()
+        }
+    }.toHashSet()
 
     private fun transformRecommendation(source: Recommendation) =
             when (source.type) {

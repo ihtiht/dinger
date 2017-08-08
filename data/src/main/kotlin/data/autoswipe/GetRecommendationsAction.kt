@@ -2,7 +2,7 @@ package data.autoswipe
 
 import data.autoswipe.AutoSwipeJobIntentService.CommonResultDelegate
 import domain.interactor.DisposableUseCase
-import domain.recommendation.DomainRecommendationCollection
+import domain.recommendation.DomainRecommendation
 import domain.recommendation.GetRecommendationsUseCase
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
@@ -10,19 +10,19 @@ import io.reactivex.schedulers.Schedulers
 internal class GetRecommendationsAction
     : AutoSwipeJobIntentService.Action<GetRecommendationsAction.Callback>  {
     private var useCaseDelegate: DisposableUseCase? = null
-    private val resultDelegate = CommonResultDelegate(this)
+    private val commonDelegate = CommonResultDelegate(this)
 
     override fun execute(owner: AutoSwipeJobIntentService, callback: Callback) =
             GetRecommendationsUseCase(Schedulers.trampoline()).let {
                 useCaseDelegate = it
-                it.execute(object : DisposableSingleObserver<DomainRecommendationCollection>() {
-                    override fun onSuccess(payload: DomainRecommendationCollection) {
-                        resultDelegate.onComplete(owner)
+                it.execute(object : DisposableSingleObserver<Collection<DomainRecommendation>>() {
+                    override fun onSuccess(payload: Collection<DomainRecommendation>) {
+                        commonDelegate.onComplete(owner)
                         callback.onRecommendationsReceived(payload)
                     }
 
                     override fun onError(error: Throwable) {
-                        resultDelegate.onError(owner, error)
+                        commonDelegate.onError(owner, error)
                     }
                 })
             }
@@ -32,6 +32,6 @@ internal class GetRecommendationsAction
     }
 
     interface Callback {
-        fun onRecommendationsReceived(recommendationCollection: DomainRecommendationCollection)
+        fun onRecommendationsReceived(recommendations: Collection<DomainRecommendation>)
     }
 }
