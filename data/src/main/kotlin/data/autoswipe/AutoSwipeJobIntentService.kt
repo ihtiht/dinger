@@ -2,81 +2,64 @@ package data.autoswipe
 
 import android.content.Context
 import android.content.Intent
+import android.support.annotation.CallSuper
 import android.support.v4.app.JobIntentService
 import com.google.firebase.crash.FirebaseCrash
-import domain.autoswipe.DelayedPostAutoSwipeUseCase
-import domain.autoswipe.FromErrorPostAutoSwipeUseCase
-import domain.interactor.DisposableUseCase
-import domain.recommendation.DomainRecommendationCollection
-import domain.recommendation.GetRecommendationsUseCase
-import io.reactivex.observers.DisposableCompletableObserver
-import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
-    private val disposableUseCases = mutableSetOf<DisposableUseCase>()
-    private val trampolineScheduler by lazy { Schedulers.trampoline() }
+    private val actions = mutableSetOf<Action>()
 
     override fun onHandleWork(intent: Intent) {
-        GetRecommendationsUseCase(trampolineScheduler).apply {
-            disposableUseCases.add(this)
-            execute(object : DisposableSingleObserver<DomainRecommendationCollection>() {
-                override fun onSuccess(payload: DomainRecommendationCollection) {
-                    FirebaseCrash.report(IllegalStateException("$payload"))
-                    clearUseCase(this@apply)
-                    scheduleHappyPath()
-                }
-
-                override fun onError(error: Throwable) {
-                    FirebaseCrash.report(error)
-                    clearUseCase(this@apply)
-                    scheduleFromErrorPath()
-                }
-            })
-        }
+        requestRecommendations()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        disposableUseCases.apply {
+        actions.apply {
             map { it.dispose() }
             clear()
         }
     }
 
-    private fun scheduleHappyPath() = DelayedPostAutoSwipeUseCase(
-            this, trampolineScheduler).apply {
-        disposableUseCases.add(this)
-        execute(object : DisposableCompletableObserver() {
-            override fun onComplete() {
-                clearUseCase(this@apply)
-            }
-
-            override fun onError(error: Throwable) {
-                FirebaseCrash.report(error)
-                clearUseCase(this@apply)
-            }
-        })
+    private fun requestRecommendations() = GetRecommendationsAction(this).apply {
+        actions.add(this)
+        execute()
     }
 
-    private fun scheduleFromErrorPath() = FromErrorPostAutoSwipeUseCase(
-            this, trampolineScheduler).apply {
-        disposableUseCases.add(this)
-        execute(object : DisposableCompletableObserver() {
-            override fun onComplete() {
-                clearUseCase(this@apply)
-            }
-
-            override fun onError(error: Throwable) {
-                FirebaseCrash.report(error)
-                clearUseCase(this@apply)
-            }
-        })
+    // TODO This needs to be called after getting rate-limit on swiping, not on recommend
+    private fun scheduleHappySuccess() = DelayedPostAutoSwipeAction(this).apply {
+        actions.add(this)
+        execute()
     }
 
-    private fun clearUseCase(useCase: DisposableUseCase) = useCase.apply {
+    private fun scheduleFromError() = FromErrorPostAutoSwipeAction(this).apply {
+        actions.add(this)
+        execute()
+    }
+
+    interface Action {
+        fun execute()
+
+        fun dispose()
+    }
+
+    class CommonResultDelegate(private val action: Action) {
+        @CallSuper
+        fun onComplete(autoSwipeJobIntentService: AutoSwipeJobIntentService) {
+            autoSwipeJobIntentService.clearAction(action)
+        }
+
+        @CallSuper
+        fun onError(autoSwipeJobIntentService: AutoSwipeJobIntentService, error: Throwable) {
+            FirebaseCrash.report(error)
+            autoSwipeJobIntentService.clearAction(action)
+            autoSwipeJobIntentService.scheduleFromError()
+        }
+    }
+
+    private fun clearAction(action: Action) = action.apply {
         dispose()
-        disposableUseCases.remove(this)
+        actions.remove(this)
     }
 
     companion object {
