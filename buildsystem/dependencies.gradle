@@ -1,3 +1,4 @@
+final def architectureComponentsVersion = "1.0.0-alpha5"
 final def daggerVersion = "2.11"
 final def facebookSdkVersion = "4.24.0"
 final def googlePlayServicesVersion = "11.0.1"
@@ -37,7 +38,8 @@ ext {
             "com.android.support:support-annotations:$supportLibraryVersion"
     ]
     annotationProcessorDataDependencies = [
-            "com.google.dagger:dagger-compiler:$daggerVersion"
+            "com.google.dagger:dagger-compiler:$daggerVersion",
+            "android.arch.persistence.room:compiler:$architectureComponentsVersion"
     ]
     debugCompileDataDependencies = [
             "com.squareup.okhttp3:logging-interceptor:$okHttp3Version"
@@ -52,7 +54,8 @@ ext {
             "com.google.dagger:dagger:$daggerVersion",
             "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
             "com.android.support:support-v4:$supportLibraryVersion",
-            "com.squareup.moshi:moshi-adapters:$moshiVersion"
+            "com.squareup.moshi:moshi-adapters:$moshiVersion",
+            "android.arch.persistence.room:runtime:$architectureComponentsVersion"
     ]
     providedDataDependencies = [
             "com.android.support:support-annotations:$supportLibraryVersion"
