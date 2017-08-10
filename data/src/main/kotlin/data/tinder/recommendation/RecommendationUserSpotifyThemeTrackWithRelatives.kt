@@ -6,5 +6,15 @@ import android.arch.persistence.room.Relation
 internal class RecommendationUserSpotifyThemeTrackWithRelatives(
         @Embedded
         var recommendationUserSpotifyThemeTrackEntity: RecommendationUserSpotifyThemeTrackEntity,
-        @Relation(parentColumn = "id", entityColumn = "id")
-        var artists: Set<RecommendationUserSpotifyThemeTrackArtistEntity>)
+        @Relation(parentColumn = "id", entityColumn = "recommendationUserSpotifyThemeTrackEntityId",
+                entity
+                = RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity::class,
+                projection = arrayOf("recommendationUserSpotifyThemeTrackArtistEntityId"))
+        var artists: Set<String>) {
+    constructor() : this(RecommendationUserSpotifyThemeTrackEntity(album = "",
+            previewUrl = "",
+            name = "",
+            id = "",
+            uri = ""),
+            emptySet())
+}

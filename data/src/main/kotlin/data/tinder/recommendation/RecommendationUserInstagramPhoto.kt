@@ -2,12 +2,12 @@ package data.tinder.recommendation
 
 import com.squareup.moshi.Json
 
-internal class RecommendationUserInstagramPhoto private constructor(
+internal class RecommendationUserInstagramPhoto(
         @field:Json(name = "link")
-        private val link: String,
+        val link: String,
         @field:Json(name = "image")
-        private val imageUrl: String,
+        val imageUrl: String,
         @field:Json(name = "thumbnail")
-        private val thumbnailUrl: String,
+        val thumbnailUrl: String,
         @field:Json(name = "ts")
-        private val ts: String)
+        val ts: String)

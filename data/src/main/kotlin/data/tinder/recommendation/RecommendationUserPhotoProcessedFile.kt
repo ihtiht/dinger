@@ -6,9 +6,9 @@ import com.squareup.moshi.Json
 internal class RecommendationUserPhotoProcessedFile(
         @field:Json(name = "width")
         @Px
-        private val widthPx: Int,
+        val widthPx: Int,
         @field:Json(name = "url")
-        private val url: String,
+        val url: String,
         @field:Json(name = "height")
         @Px
-        private val heightPx: Int)
+        val heightPx: Int)

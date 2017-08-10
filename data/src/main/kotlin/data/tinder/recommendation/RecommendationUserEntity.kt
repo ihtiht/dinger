@@ -18,7 +18,7 @@ import java.util.*
                 ForeignKey(entity = RecommendationUserSpotifyThemeTrackEntity::class,
                         parentColumns = arrayOf("id"),
                         childColumns = arrayOf("spotifyThemeTrack"))))
-internal class RecommendationUserEntity(
+internal open class RecommendationUserEntity(
         var distanceMiles: Int,
         var connectionCount: Int,
         var contentHash: String,
@@ -33,7 +33,6 @@ internal class RecommendationUserEntity(
         var teaser: String,
         var sNumber: Int,
         var spotifyThemeTrack: String,
-        @Gender
         var gender: Int,
         var birthDateInfo: String,
         var groupMatched: Boolean,

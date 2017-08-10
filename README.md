@@ -8,7 +8,12 @@ From a technical standpoint however, it is an awful piece of software, at least 
 * It performs a very aggressive polling to check for changes that may affect your experience (in other words, it continuously asks the server 'did anyone message me?' instead of letting the server notify the device when a message came). This results in unnecessary battery consumption and, when implemented poorly, buggy behavior too.
 * It does not support landscape mode.
 
-This repo is here to show that these and other pain points are easily mitigable nowadays if things are done correctly and, while at it, I'll take the chance to demonstrate how well-built modern Android apps are made, and that this is something very feasible to achieve even if your team just consists of a single developer and instead of having the backend guy sitting next to him, you only have Charles Proxy.
+This repo is here to show that these and other pain points are easily addressed nowadays if things are done correctly and, while at it, I'll take the chance to demonstrate how well-built modern Android apps are made, and that this is something very feasible to achieve even if your team just consists of a single developer and instead of having the backend guy sitting next to him, you only have Charles Proxy.
+
+## Database
+
+Below can be found the database structure for the relevant parts of the app.
+* [Recommendations](assets/db/data.AppDatabase/1.json "Database Schema: Recommendations")
 
 ## Distribution
 

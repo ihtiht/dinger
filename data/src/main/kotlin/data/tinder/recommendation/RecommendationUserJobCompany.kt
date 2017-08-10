@@ -2,6 +2,6 @@ package data.tinder.recommendation
 
 import com.squareup.moshi.Json
 
-internal class RecommendationUserJobCompany private constructor(
+internal class RecommendationUserJobCompany(
         @field:Json(name = "name")
-        private val name: String)
+        val name: String)

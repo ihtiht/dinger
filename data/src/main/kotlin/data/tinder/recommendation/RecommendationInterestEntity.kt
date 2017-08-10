@@ -5,7 +5,7 @@ import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(indices = arrayOf(Index("id")))
-internal class RecommendationInterestEntity private constructor(
+internal class RecommendationInterestEntity(
         @PrimaryKey
-        private var id: String,
-        private var name: String)
+        var id: String,
+        var name: String)
