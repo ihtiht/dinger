@@ -1,6 +1,6 @@
 package data.network
 
-import data.network.tinder.TinderApiRepositoryImpl
+import data.tinder.TinderApiRepositoryImpl
 import domain.repository.FacadeProvider
 
 internal class FacadeProviderImpl : FacadeProvider {

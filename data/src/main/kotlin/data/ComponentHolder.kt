@@ -1,7 +1,7 @@
 package data
 
 import data.account.AccountComponent
-import data.network.tinder.TinderRepositoryComponent
+import data.tinder.TinderRepositoryComponent
 
 internal object ComponentHolder {
     lateinit var accountComponent: AccountComponent

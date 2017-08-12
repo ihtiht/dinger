@@ -10,11 +10,11 @@ import data.alarm.AppAlarmManagerImpl
 import data.autoswipe.AutoSwipeLauncherFactoryImpl
 import data.network.FacadeProviderImpl
 import data.network.NetworkModule
-import data.network.tinder.DaggerTinderRepositoryComponent
-import data.network.tinder.auth.AuthFacadeModule
-import data.network.tinder.auth.AuthSourceModule
-import data.network.tinder.recommendation.RecommendationFacadeModule
-import data.network.tinder.recommendation.RecommendationSourceModule
+import data.tinder.DaggerTinderRepositoryComponent
+import data.tinder.auth.AuthFacadeModule
+import data.tinder.auth.AuthSourceModule
+import data.tinder.recommendation.RecommendationFacadeModule
+import data.tinder.recommendation.RecommendationSourceModule
 import domain.DomainHolder
 import domain.alarm.AlarmHolder
 import domain.auth.AuthHolder
