@@ -1,7 +1,7 @@
 final def architectureComponentsVersion = "1.0.0-alpha6"
 final def daggerVersion = "2.11"
 final def facebookSdkVersion = "4.24.0"
-final def googlePlayServicesVersion = "11.0.1"
+final def googlePlayServicesVersion = "11.2.0"
 final def jsr250Version = "1.0"
 final def kotlinVersion = rootProject.ext.kotlinVersion
 final def lottieVersion = "2.1.0"
