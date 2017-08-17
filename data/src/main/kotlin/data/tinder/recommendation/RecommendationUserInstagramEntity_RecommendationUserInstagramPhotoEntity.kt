@@ -2,11 +2,10 @@ package data.tinder.recommendation
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
-import android.arch.persistence.room.PrimaryKey
 
-@Entity(indices = arrayOf(Index("recommendationUserInstagramEntityId")))
+@Entity(indices = arrayOf(Index("recommendationUserInstagramEntityUsername")),
+        primaryKeys = arrayOf("recommendationUserInstagramEntityUsername",
+                "recommendationUserInstagramPhotoEntityLink"))
 internal class RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity(
-    @PrimaryKey(autoGenerate = true)
-    var id: Long,
-    var recommendationUserInstagramEntityId: String,
-    var recommendationUserInstagramPhotoEntityId: String)
+    var recommendationUserInstagramEntityUsername: String,
+    var recommendationUserInstagramPhotoEntityLink: String)

@@ -9,8 +9,9 @@ import android.arch.persistence.room.Query
 @Dao
 internal interface RecommendationUserInstagramDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: RecommendationUserInstagramEntity): Long
+    fun insertInstagram(instagram: RecommendationUserInstagramEntity)
 
     @Query("SELECT * from RecommendationUserInstagramEntity WHERE username=:username")
-    fun selectByUsername(username: String): LiveData<List<RecommendationUserInstagramWithRelatives>>
+    fun selectInstagramByUsername(username: String)
+            : LiveData<List<RecommendationUserInstagramWithRelatives>>
 }

@@ -9,8 +9,8 @@ import android.arch.persistence.room.Query
 @Dao
 internal interface RecommendationUserSpotifyThemeTrackAlbumDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: RecommendationUserSpotifyThemeTrackAlbumEntity): Long
+    fun insertAlbum(album: RecommendationUserSpotifyThemeTrackAlbumEntity)
 
     @Query("SELECT * from RecommendationUserSpotifyThemeTrackAlbumEntity WHERE id=:id")
-    fun selectById(id: String): LiveData<List<RecommendationUserSpotifyThemeTrackAlbumWithRelatives>>
+    fun selectAlbumById(id: String): LiveData<List<RecommendationUserSpotifyThemeTrackAlbumWithRelatives>>
 }

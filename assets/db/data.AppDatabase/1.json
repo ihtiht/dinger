@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "960deb4bea0ae50d25ab87a0a979ce11",
+    "identityHash": "37dfc393962ff5f4cc0bcdd4e44230f5",
     "entities": [
       {
         "tableName": "RecommendationUserEntity",
@@ -202,13 +202,56 @@
         "foreignKeys": []
       },
       {
+        "tableName": "RecommendationUserInstagramPhotoEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`link` TEXT, `imageUrl` TEXT, `thumbnailUrl` TEXT, `ts` TEXT, PRIMARY KEY(`link`))",
+        "fields": [
+          {
+            "fieldPath": "link",
+            "columnName": "link",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "thumbnailUrl",
+            "columnName": "thumbnailUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "ts",
+            "columnName": "ts",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "link"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_RecommendationUserInstagramPhotoEntity_link",
+            "unique": false,
+            "columnNames": [
+              "link"
+            ],
+            "createSql": "CREATE  INDEX `index_RecommendationUserInstagramPhotoEntity_link` ON `${TABLE_NAME}` (`link`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
         "tableName": "RecommendationUserTeaserEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `description` TEXT, `type` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `description` TEXT, `type` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "INTEGER"
+            "affinity": "TEXT"
           },
           {
             "fieldPath": "description",
@@ -225,7 +268,7 @@
           "columnNames": [
             "id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -342,13 +385,8 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationInterestEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `recommendationUserEntityId` TEXT, `recommendationInterestEntityId` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationInterestEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationInterestEntityId`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER"
-          },
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
@@ -362,9 +400,10 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "recommendationUserEntityId",
+            "recommendationInterestEntityId"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -380,13 +419,8 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationUserPhotoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `recommendationUserEntityId` TEXT, `recommendationUserPhotoEntityId` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationUserPhotoEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserPhotoEntityId`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER"
-          },
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
@@ -400,9 +434,10 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "recommendationUserEntityId",
+            "recommendationUserPhotoEntityId"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -418,13 +453,8 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationUserJobEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `recommendationUserEntityId` TEXT, `recommendationUserJobEntityId` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationUserJobEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserJobEntityId`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER"
-          },
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
@@ -438,9 +468,10 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "recommendationUserEntityId",
+            "recommendationUserJobEntityId"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -456,13 +487,8 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationUserSchoolEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `recommendationUserEntityId` TEXT, `recommendationUserSchoolEntityId` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationUserSchoolEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserSchoolEntityId`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER"
-          },
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
@@ -476,9 +502,10 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "recommendationUserEntityId",
+            "recommendationUserSchoolEntityId"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -494,13 +521,8 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationUserTeaserEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `recommendationUserEntityId` TEXT, `recommendationUserTeaserEntityId` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationUserTeaserEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserTeaserEntityId`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER"
-          },
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
@@ -514,9 +536,10 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "recommendationUserEntityId",
+            "recommendationUserTeaserEntityId"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -532,38 +555,72 @@
       },
       {
         "tableName": "RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `recommendationUserInstagramEntityId` TEXT, `recommendationUserInstagramPhotoEntityId` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserInstagramEntityUsername` TEXT, `recommendationUserInstagramPhotoEntityLink` TEXT, PRIMARY KEY(`recommendationUserInstagramEntityUsername`, `recommendationUserInstagramPhotoEntityLink`))",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER"
-          },
-          {
-            "fieldPath": "recommendationUserInstagramEntityId",
-            "columnName": "recommendationUserInstagramEntityId",
+            "fieldPath": "recommendationUserInstagramEntityUsername",
+            "columnName": "recommendationUserInstagramEntityUsername",
             "affinity": "TEXT"
           },
           {
-            "fieldPath": "recommendationUserInstagramPhotoEntityId",
-            "columnName": "recommendationUserInstagramPhotoEntityId",
+            "fieldPath": "recommendationUserInstagramPhotoEntityLink",
+            "columnName": "recommendationUserInstagramPhotoEntityLink",
             "affinity": "TEXT"
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "recommendationUserInstagramEntityUsername",
+            "recommendationUserInstagramPhotoEntityLink"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
-            "name": "index_RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity_recommendationUserInstagramEntityId",
+            "name": "index_RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity_recommendationUserInstagramEntityUsername",
             "unique": false,
             "columnNames": [
-              "recommendationUserInstagramEntityId"
+              "recommendationUserInstagramEntityUsername"
             ],
-            "createSql": "CREATE  INDEX `index_RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity_recommendationUserInstagramEntityId` ON `${TABLE_NAME}` (`recommendationUserInstagramEntityId`)"
+            "createSql": "CREATE  INDEX `index_RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity_recommendationUserInstagramEntityUsername` ON `${TABLE_NAME}` (`recommendationUserInstagramEntityUsername`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "RecommendationUserPhotoProcessedFileEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`widthPx` INTEGER, `url` TEXT, `heightPx` INTEGER, PRIMARY KEY(`url`))",
+        "fields": [
+          {
+            "fieldPath": "widthPx",
+            "columnName": "widthPx",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "url",
+            "columnName": "url",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "heightPx",
+            "columnName": "heightPx",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "url"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_RecommendationUserPhotoProcessedFileEntity_url",
+            "unique": false,
+            "columnNames": [
+              "url"
+            ],
+            "createSql": "CREATE  INDEX `index_RecommendationUserPhotoProcessedFileEntity_url` ON `${TABLE_NAME}` (`url`)"
           }
         ],
         "foreignKeys": []
@@ -602,22 +659,51 @@
         "foreignKeys": []
       },
       {
-        "tableName": "RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFile",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `recommendationUserPhotoEntityId` TEXT, `recommendationUserPhotoProcessedFileEntityId` TEXT)",
+        "tableName": "RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserPhotoEntityId` TEXT, `recommendationUserPhotoProcessedFileEntityUrl` TEXT, PRIMARY KEY(`recommendationUserPhotoEntityId`, `recommendationUserPhotoProcessedFileEntityUrl`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER"
-          },
           {
             "fieldPath": "recommendationUserPhotoEntityId",
             "columnName": "recommendationUserPhotoEntityId",
             "affinity": "TEXT"
           },
           {
-            "fieldPath": "recommendationUserPhotoProcessedFileEntityId",
-            "columnName": "recommendationUserPhotoProcessedFileEntityId",
+            "fieldPath": "recommendationUserPhotoProcessedFileEntityUrl",
+            "columnName": "recommendationUserPhotoProcessedFileEntityUrl",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "recommendationUserPhotoEntityId",
+            "recommendationUserPhotoProcessedFileEntityUrl"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity_recommendationUserPhotoEntityId",
+            "unique": false,
+            "columnNames": [
+              "recommendationUserPhotoEntityId"
+            ],
+            "createSql": "CREATE  INDEX `index_RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity_recommendationUserPhotoEntityId` ON `${TABLE_NAME}` (`recommendationUserPhotoEntityId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "RecommendationUserSpotifyThemeTrackArtistEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `id` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
             "affinity": "TEXT"
           }
         ],
@@ -625,29 +711,24 @@
           "columnNames": [
             "id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
-            "name": "index_RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFile_recommendationUserPhotoEntityId",
+            "name": "index_RecommendationUserSpotifyThemeTrackArtistEntity_id",
             "unique": false,
             "columnNames": [
-              "recommendationUserPhotoEntityId"
+              "id"
             ],
-            "createSql": "CREATE  INDEX `index_RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFile_recommendationUserPhotoEntityId` ON `${TABLE_NAME}` (`recommendationUserPhotoEntityId`)"
+            "createSql": "CREATE  INDEX `index_RecommendationUserSpotifyThemeTrackArtistEntity_id` ON `${TABLE_NAME}` (`id`)"
           }
         ],
         "foreignKeys": []
       },
       {
         "tableName": "RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `recommendationUserSpotifyThemeTrackEntityId` TEXT, `recommendationUserSpotifyThemeTrackArtistEntityId` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserSpotifyThemeTrackEntityId` TEXT, `recommendationUserSpotifyThemeTrackArtistEntityId` TEXT, PRIMARY KEY(`recommendationUserSpotifyThemeTrackEntityId`, `recommendationUserSpotifyThemeTrackArtistEntityId`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER"
-          },
           {
             "fieldPath": "recommendationUserSpotifyThemeTrackEntityId",
             "columnName": "recommendationUserSpotifyThemeTrackEntityId",
@@ -661,9 +742,10 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "recommendationUserSpotifyThemeTrackEntityId",
+            "recommendationUserSpotifyThemeTrackArtistEntityId"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
@@ -678,22 +760,51 @@
         "foreignKeys": []
       },
       {
-        "tableName": "RecommendationUserSpotifyThemeTrackAlbum_RecommendationUserPhotoProcessedFileEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `recommendationUserSpotifyThemeTrackAlbumEntityId` TEXT, `recommendationUserPhotoProcessedFileEntity` TEXT)",
+        "tableName": "RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserSpotifyThemeTrackAlbumEntityId` TEXT, `recommendationUserPhotoProcessedFileEntityUrl` TEXT, PRIMARY KEY(`recommendationUserSpotifyThemeTrackAlbumEntityId`, `recommendationUserPhotoProcessedFileEntityUrl`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER"
-          },
           {
             "fieldPath": "recommendationUserSpotifyThemeTrackAlbumEntityId",
             "columnName": "recommendationUserSpotifyThemeTrackAlbumEntityId",
             "affinity": "TEXT"
           },
           {
-            "fieldPath": "recommendationUserPhotoProcessedFileEntity",
-            "columnName": "recommendationUserPhotoProcessedFileEntity",
+            "fieldPath": "recommendationUserPhotoProcessedFileEntityUrl",
+            "columnName": "recommendationUserPhotoProcessedFileEntityUrl",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "recommendationUserSpotifyThemeTrackAlbumEntityId",
+            "recommendationUserPhotoProcessedFileEntityUrl"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity_recommendationUserSpotifyThemeTrackAlbumEntityId",
+            "unique": false,
+            "columnNames": [
+              "recommendationUserSpotifyThemeTrackAlbumEntityId"
+            ],
+            "createSql": "CREATE  INDEX `index_RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity_recommendationUserSpotifyThemeTrackAlbumEntityId` ON `${TABLE_NAME}` (`recommendationUserSpotifyThemeTrackAlbumEntityId`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "RecommendationInterestEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `name` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
             "affinity": "TEXT"
           }
         ],
@@ -701,24 +812,86 @@
           "columnNames": [
             "id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [
           {
-            "name": "index_RecommendationUserSpotifyThemeTrackAlbum_RecommendationUserPhotoProcessedFileEntity_recommendationUserSpotifyThemeTrackAlbumEntityId",
+            "name": "index_RecommendationInterestEntity_id",
             "unique": false,
             "columnNames": [
-              "recommendationUserSpotifyThemeTrackAlbumEntityId"
+              "id"
             ],
-            "createSql": "CREATE  INDEX `index_RecommendationUserSpotifyThemeTrackAlbum_RecommendationUserPhotoProcessedFileEntity_recommendationUserSpotifyThemeTrackAlbumEntityId` ON `${TABLE_NAME}` (`recommendationUserSpotifyThemeTrackAlbumEntityId`)"
+            "createSql": "CREATE  INDEX `index_RecommendationInterestEntity_id` ON `${TABLE_NAME}` (`id`)"
           }
         ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "RecommendationUserJobEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `company_name` TEXT, `title_name` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "company.name",
+            "columnName": "company_name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "title.name",
+            "columnName": "title_name",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_RecommendationUserJobEntity_id",
+            "unique": false,
+            "columnNames": [
+              "id"
+            ],
+            "createSql": "CREATE  INDEX `index_RecommendationUserJobEntity_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "RecommendationUserSchoolEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `id` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
         "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"960deb4bea0ae50d25ab87a0a979ce11\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"37dfc393962ff5f4cc0bcdd4e44230f5\")"
     ]
   }
 }

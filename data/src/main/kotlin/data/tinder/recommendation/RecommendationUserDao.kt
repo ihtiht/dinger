@@ -9,11 +9,11 @@ import android.arch.persistence.room.Query
 @Dao
 internal interface RecommendationUserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: RecommendationUserEntity): Long
+    fun insertUser(user: RecommendationUserEntity)
 
     @Query("SELECT * from RecommendationUserEntity WHERE id=:id")
-    fun selectById(id: String): LiveData<List<RecommendationUserWithRelatives>>
+    fun selectUserById(id: String): LiveData<List<RecommendationUserWithRelatives>>
 
     @Query("SELECT * from RecommendationUserEntity WHERE instr(name, :filter) > 0")
-    fun selectByFilterOnName(filter: String): LiveData<List<RecommendationUserWithRelatives>>
+    fun selectUsersByFilterOnName(filter: String): LiveData<List<RecommendationUserWithRelatives>>
 }

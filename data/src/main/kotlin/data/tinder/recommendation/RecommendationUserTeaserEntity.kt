@@ -6,7 +6,7 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(indices = arrayOf(Index("id")))
 internal class RecommendationUserTeaserEntity(
-        @PrimaryKey(autoGenerate = true)
-        var id: Long,
+        @PrimaryKey
+        var id: String,
         var description: String,
         var type: String)

@@ -7,8 +7,8 @@ internal class RecommendationUserPhotoWithRelatives(
         @Embedded
         var recommendationUserPhotoEntity: RecommendationUserPhotoEntity,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserPhotoEntityId",
-                entity = RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFile::class,
-                projection = arrayOf("recommendationUserPhotoProcessedFileEntityId"))
+                entity = RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity::class,
+                projection = arrayOf("recommendationUserPhotoProcessedFileEntityUrl"))
         var processedFiles: Set<String>) {
     constructor() : this(RecommendationUserPhotoEntity(id = "", url = ""), emptySet())
 }

@@ -7,14 +7,14 @@ import domain.recommendation.DomainRecommendation
 
 internal class RecommendationResponseEntityMapper
     : EntityMapper<RecommendationResponse, Collection<DomainRecommendation>> {
-    override fun transform(source: RecommendationResponse) = source.recommendations.let {
+    override fun from(source: RecommendationResponse) = source.recommendations.let {
         when (it) {
             null -> throw when (source.message) {
-                null -> IllegalStateException(
+                is String -> DomainException(source.message)
+                else -> IllegalStateException(
                         "Unexpected 2xx recommendation response without message: $source")
-                else -> DomainException(source.message)
             }
-            else -> it.map { transformRecommendation(it) }.filterNotNull()
+            else -> it.mapNotNull { transformRecommendation(it) }
         }
     }.toHashSet()
 

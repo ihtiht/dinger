@@ -1,5 +1,9 @@
 package data.network
 
-internal interface EntityMapper<in From, out To> {
-    fun transform(source: From): To
+internal interface EntityMapper<From, To> {
+    fun from(source: From): To
+
+    fun to(source: To): From {
+        throw NotImplementedError("to(To) not implemented")
+    }
 }

@@ -7,5 +7,4 @@ import android.arch.persistence.room.PrimaryKey
 internal class RecommendationUserSchoolEntity(
         var name: String,
         @PrimaryKey
-        var id: String
-)
+        var id: String)

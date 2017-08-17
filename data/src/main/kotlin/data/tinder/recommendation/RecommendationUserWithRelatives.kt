@@ -2,7 +2,7 @@ package data.tinder.recommendation
 
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Relation
-import java.util.*
+import java.util.Date
 
 internal class RecommendationUserWithRelatives(
         @Embedded

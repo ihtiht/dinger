@@ -7,10 +7,10 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 
 @Dao
-internal interface RecommendationUserPhotoDao {
+internal interface RecommendationInterestDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPhoto(photo: RecommendationUserPhotoEntity)
+    fun insertInterest(interest: RecommendationInterestEntity)
 
-    @Query("SELECT * from RecommendationUserPhotoEntity WHERE id=:id")
-    fun selectPhotoById(id: String): LiveData<List<RecommendationUserPhotoWithRelatives>>
+    @Query("SELECT * from RecommendationInterestEntity WHERE id=:id")
+    fun selectInterestById(id: String): LiveData<List<RecommendationInterestEntity>>
 }

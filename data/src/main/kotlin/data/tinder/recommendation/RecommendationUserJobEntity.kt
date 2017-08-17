@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(indices = arrayOf(Index("id")))
 internal class RecommendationUserJobEntity(
-        @PrimaryKey(autoGenerate = true)
+        @PrimaryKey
         var id: String,
         @Embedded(prefix = "company_")
         var company: RecommendationUserJobCompany,
