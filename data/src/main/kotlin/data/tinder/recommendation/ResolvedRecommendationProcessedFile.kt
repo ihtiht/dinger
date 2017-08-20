@@ -1,8 +1,8 @@
-package domain.recommendation
+package data.tinder.recommendation
 
 import android.support.annotation.Px
 
-class DomainRecommendationProcessedFile(
+internal class ResolvedRecommendationProcessedFile(
         @Px
         val widthPx: Int,
         val url: String,

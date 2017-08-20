@@ -1,11 +1,11 @@
-package domain.recommendation
+package data.tinder.recommendation
 
 import java.util.Date
 
-data class DomainRecommendationInstagram(
+internal class ResolvedRecommendationInstagram(
         val profilePictureUrl: String,
         val lastFetchTime: Date,
         val mediaCount: Int,
         val completedInitialFetch: Boolean,
         val username: String,
-        val photos: Set<DomainRecommendationInstagramPhoto>)
+        val photos: Set<ResolvedRecommendationInstagramPhoto>)

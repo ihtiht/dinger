@@ -2,42 +2,30 @@ package data.tinder.recommendation
 
 import data.AppDatabase
 import data.network.EntityMapper
-import domain.recommendation.DomainRecommendationInstagram
-import domain.recommendation.DomainRecommendationInstagramPhoto
-import domain.recommendation.DomainRecommendationInterest
-import domain.recommendation.DomainRecommendationJob
-import domain.recommendation.DomainRecommendationPhoto
-import domain.recommendation.DomainRecommendationProcessedFile
-import domain.recommendation.DomainRecommendationSchool
-import domain.recommendation.DomainRecommendationSpotifyAlbum
-import domain.recommendation.DomainRecommendationSpotifyArtist
-import domain.recommendation.DomainRecommendationSpotifyThemeTrack
-import domain.recommendation.DomainRecommendationTeaser
-import domain.recommendation.DomainRecommendationUser
 
 internal class TopLevelRecommendationDao(
         appDatabase: AppDatabase,
-        private val userMapper: EntityMapper<DomainRecommendationUser, RecommendationUserEntity>,
-        private val instagramMapper: EntityMapper<DomainRecommendationInstagram,
+        private val userMapper: EntityMapper<ResolvedRecommendationUser, RecommendationUserEntity>,
+        private val instagramMapper: EntityMapper<ResolvedRecommendationInstagram,
                 RecommendationUserInstagramEntity>,
-        private val instagramPhotoMapper: EntityMapper<DomainRecommendationInstagramPhoto,
+        private val instagramPhotoMapper: EntityMapper<ResolvedRecommendationInstagramPhoto,
                 RecommendationUserInstagramPhotoEntity>,
-        private val processedFileMapper: EntityMapper<DomainRecommendationProcessedFile,
+        private val processedFileMapper: EntityMapper<ResolvedRecommendationProcessedFile,
                 RecommendationUserPhotoProcessedFileEntity>,
-        private val artistMapper: EntityMapper<DomainRecommendationSpotifyArtist,
+        private val artistMapper: EntityMapper<ResolvedRecommendationSpotifyArtist,
                 RecommendationUserSpotifyThemeTrackArtistEntity>,
-        private val spotifyThemeTrackMapper: EntityMapper<DomainRecommendationSpotifyThemeTrack,
+        private val spotifyThemeTrackMapper: EntityMapper<ResolvedRecommendationSpotifyThemeTrack,
                 RecommendationUserSpotifyThemeTrackEntity>,
-        private val albumMapper: EntityMapper<DomainRecommendationSpotifyAlbum,
+        private val albumMapper: EntityMapper<ResolvedRecommendationSpotifyAlbum,
                 RecommendationUserSpotifyThemeTrackAlbumEntity>,
-        private val photoMapper: EntityMapper<DomainRecommendationPhoto,
+        private val photoMapper: EntityMapper<ResolvedRecommendationPhoto,
                 RecommendationUserPhotoEntity>,
-        private val interestMapper: EntityMapper<DomainRecommendationInterest,
+        private val interestMapper: EntityMapper<ResolvedRecommendationInterest,
                 RecommendationInterestEntity>,
-        private val jobMapper: EntityMapper<DomainRecommendationJob, RecommendationUserJobEntity>,
-        private val schoolMapper: EntityMapper<DomainRecommendationSchool,
+        private val jobMapper: EntityMapper<ResolvedRecommendationJob, RecommendationUserJobEntity>,
+        private val schoolMapper: EntityMapper<ResolvedRecommendationSchool,
                 RecommendationUserSchoolEntity>,
-        private val teaserMapper: EntityMapper<DomainRecommendationTeaser,
+        private val teaserMapper: EntityMapper<ResolvedRecommendationTeaser,
                 RecommendationUserTeaserEntity>)
     : RecommendationUserDao by RecommendationUserDao_Impl(appDatabase),
         RecommendationUserInstagramDao by RecommendationUserInstagramDao_Impl(appDatabase),
@@ -67,13 +55,7 @@ internal class TopLevelRecommendationDao(
         RecommendationUser_SchoolDao by RecommendationUser_SchoolDao_Impl(appDatabase),
         RecommendationUserTeaserDao by RecommendationUserTeaserDao_Impl(appDatabase),
         RecommendationUser_TeaserDao by RecommendationUser_TeaserDao_Impl(appDatabase) {
-    // TODO This parameter and its used classes should be of an INTERNAL type something like a RecommendationUserWithResolvedRelatives
-    // and live in data since inserts can only be performed by the data module. Then in domain we
-    // have a different one that only has the properties demanded by domain (including id). That
-    // way we can refer to a user by an id without carrying all of its info around. Also this class
-    // is for internal use only, which means this type can (and btw, should) be used by all methods
-    // here
-    fun insert(user: DomainRecommendationUser) {
+    fun insert(user: ResolvedRecommendationUser) {
         user.apply {
             instagram.let {
                 insertInstagram(instagramMapper.from(it))
@@ -148,11 +130,11 @@ internal class TopLevelRecommendationDao(
         }
     }
 
-//    fun selectById(id: String): LiveData<List<DomainRecommendationUser>> {
+//    fun selectById(id: String): LiveData<List<ResolvedRecommendationUser>> {
 //        throw NotImplementedError("Not yet done.")
 //    }
 //
-//    fun selectByFilterOnName(filter: String): LiveData<List<DomainRecommendationUser>> {
+//    fun selectByFilterOnName(filter: String): LiveData<List<ResolvedRecommendationUser>> {
 //        throw NotImplementedError("Not yet done.")
 //    }
 }

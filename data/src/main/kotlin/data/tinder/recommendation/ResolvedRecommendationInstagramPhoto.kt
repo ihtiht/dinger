@@ -1,6 +1,6 @@
-package domain.recommendation
+package data.tinder.recommendation
 
-data class DomainRecommendationInstagramPhoto(
+internal class ResolvedRecommendationInstagramPhoto(
         val link: String,
         val imageUrl: String,
         val thumbnailUrl: String,
