@@ -1,6 +1,5 @@
 package data.tinder.recommendation
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -12,6 +11,5 @@ internal interface RecommendationProcessedFileDao {
     fun insertProcessedFile(file: RecommendationUserPhotoProcessedFileEntity)
 
     @Query("SELECT * from RecommendationUserPhotoProcessedFileEntity WHERE url=:url")
-    fun selectProcessedFileByUrl(url: String)
-            : LiveData<List<RecommendationUserPhotoProcessedFileEntity>>
+    fun selectProcessedFileByUrl(url: String): List<RecommendationUserPhotoProcessedFileEntity>
 }

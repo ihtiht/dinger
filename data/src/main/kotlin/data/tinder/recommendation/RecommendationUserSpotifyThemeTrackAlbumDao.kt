@@ -1,6 +1,5 @@
 package data.tinder.recommendation
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -12,5 +11,6 @@ internal interface RecommendationUserSpotifyThemeTrackAlbumDao {
     fun insertAlbum(album: RecommendationUserSpotifyThemeTrackAlbumEntity)
 
     @Query("SELECT * from RecommendationUserSpotifyThemeTrackAlbumEntity WHERE id=:id")
-    fun selectAlbumById(id: String): LiveData<List<RecommendationUserSpotifyThemeTrackAlbumWithRelatives>>
+    fun selectAlbumById(id: String)
+            : List<RecommendationUserSpotifyThemeTrackAlbumWithRelatives>
 }

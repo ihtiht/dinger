@@ -1,6 +1,5 @@
 package data.tinder.recommendation
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -12,5 +11,5 @@ internal interface RecommendationUserPhotoDao {
     fun insertPhoto(photo: RecommendationUserPhotoEntity)
 
     @Query("SELECT * from RecommendationUserPhotoEntity WHERE id=:id")
-    fun selectPhotoById(id: String): LiveData<List<RecommendationUserPhotoWithRelatives>>
+    fun selectPhotoById(id: String): List<RecommendationUserPhotoWithRelatives>
 }

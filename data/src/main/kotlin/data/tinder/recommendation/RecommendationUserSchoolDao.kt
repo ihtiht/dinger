@@ -1,6 +1,5 @@
 package data.tinder.recommendation
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -12,5 +11,5 @@ internal interface RecommendationUserSchoolDao {
     fun insertSchool(school: RecommendationUserSchoolEntity)
 
     @Query("SELECT * from RecommendationUserSchoolEntity WHERE id=:id")
-    fun selectSchoolById(id: String): LiveData<List<RecommendationUserSchoolEntity>>
+    fun selectSchoolById(id: String): List<RecommendationUserSchoolEntity>
 }

@@ -1,6 +1,5 @@
 package data.tinder.recommendation
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -12,5 +11,5 @@ internal interface RecommendationUserJobDao {
     fun insertJob(job: RecommendationUserJobEntity)
 
     @Query("SELECT * from RecommendationUserJobEntity WHERE id=:id")
-    fun selectJobById(id: String): LiveData<List<RecommendationUserJobEntity>>
+    fun selectJobById(id: String): List<RecommendationUserJobEntity>
 }

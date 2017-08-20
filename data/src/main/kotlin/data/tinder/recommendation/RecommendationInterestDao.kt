@@ -1,6 +1,5 @@
 package data.tinder.recommendation
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
@@ -12,5 +11,5 @@ internal interface RecommendationInterestDao {
     fun insertInterest(interest: RecommendationInterestEntity)
 
     @Query("SELECT * from RecommendationInterestEntity WHERE id=:id")
-    fun selectInterestById(id: String): LiveData<List<RecommendationInterestEntity>>
+    fun selectInterestById(id: String): List<RecommendationInterestEntity>
 }

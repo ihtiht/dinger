@@ -1,8 +1,12 @@
 package data.tinder.recommendation
 
+import android.arch.lifecycle.Transformations
+import android.support.annotation.WorkerThread
 import data.AppDatabase
 import data.network.EntityMapper
+import java.util.Date
 
+@WorkerThread
 internal class TopLevelRecommendationDao(
         appDatabase: AppDatabase,
         private val userMapper: EntityMapper<ResolvedRecommendationUser, RecommendationUserEntity>,
@@ -128,13 +132,256 @@ internal class TopLevelRecommendationDao(
                         recommendationUserTeaserEntityId = it.id))
             }
         }
+        user.photos.forEach {
+            insertPhoto(photoMapper.from(it))
+            insertUser_Photo(RecommendationUserEntity_RecommendationUserPhotoEntity(
+                    recommendationUserEntityId = user.id,
+                    recommendationUserPhotoEntityId = it.id
+            ))
+        }
     }
 
-//    fun selectById(id: String): LiveData<List<ResolvedRecommendationUser>> {
-//        throw NotImplementedError("Not yet done.")
-//    }
-//
-//    fun selectByFilterOnName(filter: String): LiveData<List<ResolvedRecommendationUser>> {
-//        throw NotImplementedError("Not yet done.")
-//    }
+    fun selectById(id: String) =
+            Transformations.map(selectUserById(id)) { it.map { resolveUser(it) } }
+
+    fun selectByFilterOnName(filter: String) =
+            Transformations.map(selectUsersByFilterOnName(filter)) { it.map { resolveUser(it) } }
+
+    private fun resolveUser(source: RecommendationUserWithRelatives): ResolvedRecommendationUser {
+        var distanceMiles = 0
+        var connectionCount = 0
+        var id = ""
+        var birthDate = Date()
+        var name = ""
+        var instagram = ResolvedRecommendationInstagram(
+                profilePictureUrl = "",
+                lastFetchTime = Date(),
+                mediaCount = 0,
+                completedInitialFetch = false,
+                username = "",
+                photos = emptySet())
+        var teaser = ResolvedRecommendationTeaser(
+                id = "",
+                description = "",
+                type = "")
+        var spotifyThemeTrack = ResolvedRecommendationSpotifyThemeTrack(
+                artists = emptySet(),
+                album = ResolvedRecommendationSpotifyAlbum(
+                        id = "",
+                        name = "",
+                        images = emptySet()),
+                previewUrl = "",
+                name = "",
+                id = "",
+                uri = "")
+        var gender = 0
+        var birthDateInfo = ""
+        var contentHash = ""
+        var groupMatched = false
+        var pingTime = Date()
+        var sNumber = 0
+        var liked = false
+        var photos = emptySet<ResolvedRecommendationPhoto>()
+        var commonInterests = emptySet<ResolvedRecommendationInterest>()
+        var jobs = emptySet<ResolvedRecommendationJob>()
+        var schools = emptySet<ResolvedRecommendationSchool>()
+        var teasers = emptySet<ResolvedRecommendationTeaser>()
+        source.recommendationUserEntity.let {
+            distanceMiles = it.distanceMiles
+            connectionCount = it.connectionCount
+            id = it.id
+            birthDate = it.birthDate
+            name = it.name
+            selectInstagramByUsername(it.instagram).firstOrNull()?.let {
+                var profilePictureUrl = ""
+                var lastFetchTime = Date()
+                var mediaCount = 0
+                var completedInitialFetch = false
+                var username = ""
+                var photos = emptySet<ResolvedRecommendationInstagramPhoto>()
+                it.recommendationUserInstagram.let {
+                    profilePictureUrl = it.profilePictureUrl
+                    lastFetchTime = it.lastFetchTime
+                    mediaCount = it.mediaCount
+                    completedInitialFetch = it.completedInitialFetch
+                    username = it.username
+                }
+                it.photos.forEach {
+                    selectInstagram_PhotosByInstagramUsername(it).forEach {
+                        selectInstagramPhotoByLink(
+                                it.recommendationUserInstagramPhotoEntityLink).firstOrNull()?.let {
+                            photos += ResolvedRecommendationInstagramPhoto(
+                                    link = it.link,
+                                    imageUrl = it.imageUrl,
+                                    thumbnailUrl = it.thumbnailUrl,
+                                    ts = it.ts)
+                        }
+                    }
+                }
+                instagram = ResolvedRecommendationInstagram(
+                        profilePictureUrl = profilePictureUrl,
+                        lastFetchTime = lastFetchTime,
+                        mediaCount = mediaCount,
+                        completedInitialFetch = completedInitialFetch,
+                        username = username,
+                        photos = photos)
+            }
+            selectTeaserById(it.teaser).firstOrNull()?.let {
+                teaser = ResolvedRecommendationTeaser(
+                        id = it.id,
+                        description = it.description,
+                        type = it.type)
+            }
+            selectSpotifyThemeTrackById(it.spotifyThemeTrack).firstOrNull()?.let {
+                var artists = emptySet<ResolvedRecommendationSpotifyArtist>()
+                var album = ResolvedRecommendationSpotifyAlbum(
+                        id = "",
+                        name = "",
+                        images = emptySet())
+                var previewUrl = ""
+                var name = ""
+                var id = ""
+                var uri = ""
+                it.recommendationUserSpotifyThemeTrackEntity.let {
+                    previewUrl = it.previewUrl
+                    name = it.name
+                    id = it.id
+                    uri = it.id
+                    selectAlbumById(it.album).firstOrNull()?.let {
+                        var id = ""
+                        var name = ""
+                        var images = emptySet<ResolvedRecommendationProcessedFile>()
+                        it.recommendationUserSpotifyThemeTrackAlbum.let {
+                            id = it.id
+                            name = it.name
+                        }
+                        it.images.forEach {
+                            selectSpotifyAlbum_ProcessedFilesBySpotifyAlbumId(it).forEach {
+                                selectProcessedFileByUrl(
+                                        it.recommendationUserPhotoProcessedFileEntityUrl)
+                                        .firstOrNull()?.let {
+                                    images += ResolvedRecommendationProcessedFile(
+                                            widthPx = it.widthPx,
+                                            url = it.url,
+                                            heightPx = it.heightPx)
+                                }
+                            }
+                        }
+                        album = ResolvedRecommendationSpotifyAlbum(
+                                id = id,
+                                name = name,
+                                images = images)
+                    }
+                }
+                it.artists.forEach {
+                    selectSpotifyThemeTrack_ArtistsBySpotifyThemeTrackId(it).forEach {
+                        selectArtistById(it.recommendationUserSpotifyThemeTrackArtistEntityId)
+                                .firstOrNull()?.let {
+                            artists += ResolvedRecommendationSpotifyArtist(
+                                    id = it.id,
+                                    name = it.name)
+                        }
+                    }
+                }
+                spotifyThemeTrack = ResolvedRecommendationSpotifyThemeTrack(
+                        artists = artists,
+                        album = album,
+                        previewUrl = previewUrl,
+                        name = name,
+                        id = id,
+                        uri = uri)
+            }
+            gender = it.gender
+            birthDateInfo = it.birthDateInfo
+            contentHash = it.contentHash
+            groupMatched = it.groupMatched
+            pingTime = it.pingTime
+            sNumber = it.sNumber
+            liked = it.liked
+        }
+        source.photos.forEach {
+            selectUser_PhotosByUserId(it).forEach {
+                selectPhotoById(it.recommendationUserPhotoEntityId).firstOrNull()?.let {
+                    var id = ""
+                    var url = ""
+                    var processedFiles = emptySet<ResolvedRecommendationProcessedFile>()
+                    it.recommendationUserPhotoEntity.let {
+                        id = it.id
+                        url = it.url
+                    }
+                    it.processedFiles.forEach {
+                        selectPhoto_ProcessedFilesByPhotoId(it).forEach {
+                            selectProcessedFileByUrl(
+                                    it.recommendationUserPhotoProcessedFileEntityUrl)
+                                    .firstOrNull()?.let {
+                                processedFiles += ResolvedRecommendationProcessedFile(
+                                        widthPx = it.widthPx,
+                                        url = it.url,
+                                        heightPx = it.heightPx)
+                            }
+                        }
+                    }
+                    photos += ResolvedRecommendationPhoto(
+                            id = id,
+                            url = url,
+                            processedFiles = processedFiles)
+                }
+            }
+        }
+        source.commonInterests.forEach {
+            selectUser_InterestsByUserId(it).forEach {
+                selectInterestById(it.recommendationInterestEntityId).forEach {
+                    commonInterests += ResolvedRecommendationInterest(id = it.id, name = it.name)
+                }
+            }
+        }
+        source.jobs.forEach {
+            selectUser_JobsByUserId(it).forEach {
+                selectJobById(it.recommendationUserJobEntityId).forEach {
+                    jobs += ResolvedRecommendationJob(
+                            id = it.id,
+                            company = ResolvedRecommendationCompany(it.company.name),
+                            title = ResolvedRecommendationTitle(it.title.name))
+                }
+            }
+        }
+        source.schools.forEach {
+            selectUser_SchoolsByUserId(it).forEach {
+                selectSchoolById(it.recommendationUserSchoolEntityId).forEach {
+                    schools += ResolvedRecommendationSchool(id = it.id, name = it.name)
+                }
+            }
+        }
+        source.teasers.forEach {
+            selectUser_TeasersByUserId(it).forEach {
+                selectTeaserById(it.recommendationUserTeaserEntityId).forEach {
+                    teasers += ResolvedRecommendationTeaser(
+                            id = it.id,
+                            description = it.description,
+                            type = it.type)
+                }
+            }
+        }
+        return ResolvedRecommendationUser(
+                distanceMiles = distanceMiles,
+                connectionCount = connectionCount,
+                id = id,
+                birthDate = birthDate,
+                name = name,
+                instagram = instagram,
+                teaser = teaser,
+                spotifyThemeTrack = spotifyThemeTrack,
+                gender = gender,
+                birthDateInfo = birthDateInfo,
+                contentHash = contentHash,
+                groupMatched = groupMatched,
+                pingTime = pingTime,
+                sNumber = sNumber,
+                liked = liked,
+                photos = photos,
+                commonInterests = commonInterests,
+                jobs = jobs,
+                schools = schools,
+                teasers = teasers)
+    }
 }

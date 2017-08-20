@@ -16,7 +16,7 @@ internal class ResolvedRecommendationUser(
         val contentHash: String,
         val groupMatched: Boolean,
         val pingTime: Date,
-        val sNumber: Long,
+        val sNumber: Int,
         val liked: Boolean,
         val commonInterests: Set<ResolvedRecommendationInterest>,
         val photos: Set<ResolvedRecommendationPhoto>,
