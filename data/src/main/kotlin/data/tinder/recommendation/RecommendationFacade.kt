@@ -1,6 +1,6 @@
 package data.tinder.recommendation
 
-import data.network.EntityMapper
+import data.EntityMapper
 import data.network.RequestFacade
 import domain.recommendation.DomainRecommendation
 

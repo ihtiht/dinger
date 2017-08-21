@@ -1,8 +1,9 @@
 package data.network
 
+import data.EntityMapper
 import io.reactivex.Single
 
-internal abstract class RequestFacade<RequestModel, MappedRequestModel, ResponseModel, MappedModel>(
+internal abstract class RequestFacade<in RequestModel, MappedRequestModel, ResponseModel, MappedModel>(
         internal val source: RequestSource<MappedRequestModel, ResponseModel>,
         internal val requestMapper: EntityMapper<RequestModel, MappedRequestModel>,
         private val responseMapper: EntityMapper<ResponseModel, MappedModel>)

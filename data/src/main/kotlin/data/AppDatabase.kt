@@ -21,7 +21,7 @@ import data.tinder.recommendation.RecommendationUserInstagramEntity
 import data.tinder.recommendation.RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity
 import data.tinder.recommendation.RecommendationUserInstagramPhotoDao
 import data.tinder.recommendation.RecommendationUserInstagramPhotoEntity
-import data.tinder.recommendation.RecommendationUserInstagram_PhotoDao
+import data.tinder.recommendation.RecommendationUserInstagram_InstagramPhotoDao
 import data.tinder.recommendation.RecommendationUserJobDao
 import data.tinder.recommendation.RecommendationUserJobEntity
 import data.tinder.recommendation.RecommendationUserPhotoDao
@@ -83,7 +83,7 @@ internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun recommendationUserInstagramPhotoDao(): RecommendationUserInstagramPhotoDao
 
-    abstract fun recommendationUserInstagram_PhotoDao(): RecommendationUserInstagram_PhotoDao
+    abstract fun recommendationUserInstagram_PhotoDao(): RecommendationUserInstagram_InstagramPhotoDao
 
     abstract fun recommendationProcessedFileDao(): RecommendationProcessedFileDao
 

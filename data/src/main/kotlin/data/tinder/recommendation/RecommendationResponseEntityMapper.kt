@@ -1,7 +1,7 @@
 package data.tinder.recommendation
 
 import com.google.firebase.crash.FirebaseCrash
-import data.network.EntityMapper
+import data.EntityMapper
 import domain.DomainException
 import domain.recommendation.DomainRecommendation
 

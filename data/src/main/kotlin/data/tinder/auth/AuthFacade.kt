@@ -1,6 +1,6 @@
 package data.tinder.auth
 
-import data.network.EntityMapper
+import data.EntityMapper
 import data.network.RequestFacade
 import domain.auth.DomainAuthRequestParameters
 import domain.auth.DomainAuthedUser

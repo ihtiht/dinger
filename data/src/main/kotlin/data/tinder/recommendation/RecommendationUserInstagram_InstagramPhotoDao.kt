@@ -6,7 +6,7 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 
 @Dao
-internal interface RecommendationUserInstagram_PhotoDao {
+internal interface RecommendationUserInstagram_InstagramPhotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertInstagram_Photo(
             binding: RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity)

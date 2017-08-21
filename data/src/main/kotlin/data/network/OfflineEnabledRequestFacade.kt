@@ -1,5 +1,7 @@
 package data.network
 
+import data.EntityMapper
+
 /**
  * Defines how a typical request looks.
  */

@@ -1,6 +1,6 @@
 package data.tinder.auth
 
-import data.network.EntityMapper
+import data.EntityMapper
 import domain.auth.DomainAuthedUser
 
 internal class AuthResponseEntityMapper : EntityMapper<AuthResponse, DomainAuthedUser> {

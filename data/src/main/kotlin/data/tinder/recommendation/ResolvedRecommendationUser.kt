@@ -18,8 +18,8 @@ internal class ResolvedRecommendationUser(
         val pingTime: Date,
         val sNumber: Int,
         val liked: Boolean,
-        val commonInterests: Set<ResolvedRecommendationInterest>,
-        val photos: Set<ResolvedRecommendationPhoto>,
-        val jobs: Set<ResolvedRecommendationJob>,
-        val schools: Set<ResolvedRecommendationSchool>,
-        val teasers: Set<ResolvedRecommendationTeaser>)
+        val commonInterests: Iterable<ResolvedRecommendationInterest>,
+        val photos: Iterable<ResolvedRecommendationPhoto>,
+        val jobs: Iterable<ResolvedRecommendationJob>,
+        val schools: Iterable<ResolvedRecommendationSchool>,
+        val teasers: Iterable<ResolvedRecommendationTeaser>)

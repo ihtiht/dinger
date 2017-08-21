@@ -8,4 +8,4 @@ internal class ResolvedRecommendationInstagram(
         val mediaCount: Int,
         val completedInitialFetch: Boolean,
         val username: String,
-        val photos: Set<ResolvedRecommendationInstagramPhoto>)
+        val photos: Iterable<ResolvedRecommendationInstagramPhoto>)
