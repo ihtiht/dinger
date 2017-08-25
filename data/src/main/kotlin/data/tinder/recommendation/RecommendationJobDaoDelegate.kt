@@ -13,10 +13,7 @@ internal class RecommendationJobDaoDelegate(appDatabase: RoomDatabase)
                         id = it.id,
                         company = ResolvedRecommendationCompany(name = it.company.name),
                         title = ResolvedRecommendationTitle(name = it.title.name))
-            } ?: ResolvedRecommendationJob(
-                    id = "",
-                    company = ResolvedRecommendationCompany(""),
-                    title = ResolvedRecommendationTitle(""))
+            } ?: ResolvedRecommendationJob.NONE
 
     override fun insertResolved(source: ResolvedRecommendationJob) = insertJob(
             RecommendationUserJobEntity(

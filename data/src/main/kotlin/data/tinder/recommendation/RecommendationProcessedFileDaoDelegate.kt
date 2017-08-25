@@ -16,7 +16,7 @@ internal class RecommendationProcessedFileDaoDelegate(appDatabase: RoomDatabase)
                         widthPx = it.widthPx,
                         url = it.url,
                         heightPx = it.heightPx)
-            } ?: ResolvedRecommendationProcessedFile(widthPx = 0, url = "", heightPx = 0)
+            } ?: ResolvedRecommendationProcessedFile.NONE
 
     override fun insertResolved(source: ResolvedRecommendationProcessedFile) = insertProcessedFile(
             RecommendationUserPhotoProcessedFileEntity(

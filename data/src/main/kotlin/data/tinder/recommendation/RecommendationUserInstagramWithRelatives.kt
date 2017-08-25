@@ -13,11 +13,5 @@ internal class RecommendationUserInstagramWithRelatives(
                 = RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity::class,
                 projection = arrayOf("recommendationUserInstagramPhotoEntityLink"))
         var photos: Set<String>) {
-    constructor() : this(RecommendationUserInstagramEntity(
-            profilePictureUrl = "",
-            lastFetchTime = Date(),
-            mediaCount = 0,
-            completedInitialFetch = false,
-            username = ""),
-            emptySet())
+    constructor() : this(RecommendationUserInstagramEntity.NONE, emptySet())
 }

@@ -8,4 +8,8 @@ import android.arch.persistence.room.PrimaryKey
 internal class RecommendationUserSpotifyThemeTrackAlbumEntity(
         var name: String,
         @PrimaryKey
-        var id: String)
+        var id: String) {
+    companion object {
+        val NONE = RecommendationUserSpotifyThemeTrackAlbumEntity(name = "", id = "")
+    }
+}

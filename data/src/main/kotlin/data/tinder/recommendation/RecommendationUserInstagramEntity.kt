@@ -4,7 +4,7 @@ import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
-import java.util.*
+import java.util.Date
 
 @Entity(indices = arrayOf(Index("username")))
 internal open class RecommendationUserInstagramEntity(
@@ -14,4 +14,13 @@ internal open class RecommendationUserInstagramEntity(
         var mediaCount: Int,
         var completedInitialFetch: Boolean,
         @PrimaryKey
-        var username: String)
+        var username: String) {
+    companion object {
+        val NONE = RecommendationUserInstagramEntity(
+                profilePictureUrl = "",
+                lastFetchTime = Date(),
+                mediaCount = 0,
+                completedInitialFetch = false,
+                username = "")
+    }
+}

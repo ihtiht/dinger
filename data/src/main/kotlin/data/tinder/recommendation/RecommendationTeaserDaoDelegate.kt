@@ -13,7 +13,7 @@ internal class RecommendationTeaserDaoDelegate(appDatabase: RoomDatabase)
                         id = it.id,
                         description = it.description,
                         type = it.type)
-            } ?: ResolvedRecommendationTeaser(id = "", description = "", type = "")
+            } ?: ResolvedRecommendationTeaser.NONE
 
     override fun insertResolved(source: ResolvedRecommendationTeaser) = insertTeaser(
             RecommendationUserTeaserEntity(

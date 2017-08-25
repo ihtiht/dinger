@@ -16,11 +16,7 @@ internal class RecommendationInstagramPhotoDaoDelegate(appDatabase: RoomDatabase
                             imageUrl = it.imageUrl,
                             thumbnailUrl = it.thumbnailUrl,
                             ts = it.ts)
-                } ?: ResolvedRecommendationInstagramPhoto(
-                        link = "",
-                        imageUrl = "",
-                        thumbnailUrl = "",
-                        ts = "")
+                } ?: ResolvedRecommendationInstagramPhoto.NONE
 
     override fun insertResolved(source: ResolvedRecommendationInstagramPhoto) =
             insertInstagramPhoto(RecommendationUserInstagramPhotoEntity(

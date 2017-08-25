@@ -11,10 +11,5 @@ internal class RecommendationUserSpotifyThemeTrackWithRelatives(
                 = RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity::class,
                 projection = arrayOf("recommendationUserSpotifyThemeTrackArtistEntityId"))
         var artists: Set<String>) {
-    constructor() : this(RecommendationUserSpotifyThemeTrackEntity(album = "",
-            previewUrl = "",
-            name = "",
-            id = "",
-            uri = ""),
-            emptySet())
+    constructor() : this(RecommendationUserSpotifyThemeTrackEntity.NONE, emptySet())
 }

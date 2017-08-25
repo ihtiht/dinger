@@ -10,5 +10,5 @@ internal class RecommendationUserPhotoWithRelatives(
                 entity = RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity::class,
                 projection = arrayOf("recommendationUserPhotoProcessedFileEntityUrl"))
         var processedFiles: Set<String>) {
-    constructor() : this(RecommendationUserPhotoEntity(id = "", url = ""), emptySet())
+    constructor() : this(RecommendationUserPhotoEntity.NONE, emptySet())
 }

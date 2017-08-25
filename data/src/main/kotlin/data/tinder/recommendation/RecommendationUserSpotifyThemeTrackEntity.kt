@@ -16,4 +16,12 @@ internal class RecommendationUserSpotifyThemeTrackEntity(
         var name: String,
         @PrimaryKey
         var id: String,
-        var uri: String)
+        var uri: String) {
+    companion object {
+        val NONE = RecommendationUserSpotifyThemeTrackEntity(album = "",
+                previewUrl = "",
+                name = "",
+                id = "",
+                uri = "")
+    }
+}

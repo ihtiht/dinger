@@ -10,7 +10,7 @@ internal class RecommendationSchoolDaoDelegate(appDatabase: RoomDatabase)
     override fun selectByPrimaryKey(primaryKey: String) =
             selectSchoolById(primaryKey).firstOrNull()?.let {
                 return@let ResolvedRecommendationSchool(id = it.id, name = it.name)
-            } ?: ResolvedRecommendationSchool(id = "", name = "")
+            } ?: ResolvedRecommendationSchool.NONE
 
     override fun insertResolved(source: ResolvedRecommendationSchool) = insertSchool(
             RecommendationUserSchoolEntity(id = source.id, name = source.name))

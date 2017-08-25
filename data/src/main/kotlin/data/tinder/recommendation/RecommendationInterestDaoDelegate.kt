@@ -10,7 +10,7 @@ internal class RecommendationInterestDaoDelegate(appDatabase: RoomDatabase)
     override fun selectByPrimaryKey(primaryKey: String) =
             selectInterestById(primaryKey).firstOrNull()?.let {
                 return@let ResolvedRecommendationInterest(id = it.id, name = it.name)
-            } ?: ResolvedRecommendationInterest(id = "", name = "")
+            } ?: ResolvedRecommendationInterest.NONE
 
     override fun insertResolved(source: ResolvedRecommendationInterest) = insertInterest(
             RecommendationInterestEntity(id = source.id, name = source.name))

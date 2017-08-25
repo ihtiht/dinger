@@ -2,7 +2,6 @@ package data.tinder.recommendation
 
 import android.arch.persistence.room.RoomDatabase
 import data.DaoDelegate
-import java.util.Date
 
 internal class RecommendationInstagramDaoDelegate(
         appDatabase: RoomDatabase,
@@ -21,13 +20,7 @@ internal class RecommendationInstagramDaoDelegate(
                             username = it.username,
                             photos = photos)
                 }
-            } ?: ResolvedRecommendationInstagram(
-                    profilePictureUrl = "",
-                    lastFetchTime = Date(),
-                    mediaCount = 0,
-                    completedInitialFetch = false,
-                    username = "",
-                    photos = emptySet())
+            } ?: ResolvedRecommendationInstagram.NONE
 
     override fun insertResolved(source: ResolvedRecommendationInstagram) {
         instagramPhotoDaoDelegate.insertResolvedForInstagramUsername(source.username, source.photos)

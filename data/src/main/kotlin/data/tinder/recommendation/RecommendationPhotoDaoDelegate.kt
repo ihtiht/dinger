@@ -19,7 +19,7 @@ internal class RecommendationPhotoDaoDelegate(
                             url = it.url,
                             processedFiles = processedFiles)
                 }
-            } ?: ResolvedRecommendationPhoto(id = "", url = "", processedFiles = emptySet())
+            } ?: ResolvedRecommendationPhoto.NONE
 
     override fun insertResolved(source: ResolvedRecommendationPhoto) {
         processedFileDaoDelegate.insertResolvedForPhotoId(source.id, source.processedFiles)

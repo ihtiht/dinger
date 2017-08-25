@@ -11,7 +11,7 @@ internal class RecommendationSpotifyArtistDaoDelegate(appDatabase: RoomDatabase)
     override fun selectByPrimaryKey(primaryKey: String) =
             selectArtistById(primaryKey).firstOrNull()?.let {
                 return@let ResolvedRecommendationSpotifyArtist(id = it.id, name = it.name)
-            } ?: ResolvedRecommendationSpotifyArtist(id = "", name = "")
+            } ?: ResolvedRecommendationSpotifyArtist.NONE
 
     override fun insertResolved(source: ResolvedRecommendationSpotifyArtist) = insertArtist(
             RecommendationUserSpotifyThemeTrackArtistEntity(id = source.id, name = source.name))

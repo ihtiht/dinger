@@ -11,6 +11,5 @@ internal class RecommendationUserSpotifyThemeTrackAlbumWithRelatives(
                 entity = RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity::class,
                 projection = arrayOf("recommendationUserPhotoProcessedFileEntityUrl"))
         var images: Set<String>) {
-    constructor() : this(RecommendationUserSpotifyThemeTrackAlbumEntity(name = "", id = ""),
-            emptySet())
+    constructor() : this(RecommendationUserSpotifyThemeTrackAlbumEntity.NONE, emptySet())
 }

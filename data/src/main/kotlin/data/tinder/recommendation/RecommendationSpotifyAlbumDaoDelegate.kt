@@ -18,7 +18,7 @@ internal class RecommendationSpotifyAlbumDaoDelegate(
                         id = it.recommendationUserSpotifyThemeTrackAlbum.id,
                         name = it.recommendationUserSpotifyThemeTrackAlbum.name,
                         images = images)
-            } ?: ResolvedRecommendationSpotifyAlbum(id = "", name = "", images = emptySet())
+            } ?: ResolvedRecommendationSpotifyAlbum.NONE
 
     override fun insertResolved(source: ResolvedRecommendationSpotifyAlbum) {
         processedFileDaoDelegate.insertResolvedForAlbumId(source.id, source.images)

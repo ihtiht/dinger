@@ -22,16 +22,7 @@ internal class RecommendationSpotifyThemeTrackDaoDelegate(
                             id = it.id,
                             uri = it.uri)
                 }
-            } ?: ResolvedRecommendationSpotifyThemeTrack(
-                    artists = emptySet(),
-                    album = ResolvedRecommendationSpotifyAlbum(
-                            id = "",
-                            name = "",
-                            images = emptySet()),
-                    previewUrl = "",
-                    name = "",
-                    id = "",
-                    uri = "")
+            } ?: ResolvedRecommendationSpotifyThemeTrack.NONE
 
     override fun insertResolved(source: ResolvedRecommendationSpotifyThemeTrack) {
         spotifyArtistDaoDelegate.insertResolvedForTrackId(source.id, source.artists)

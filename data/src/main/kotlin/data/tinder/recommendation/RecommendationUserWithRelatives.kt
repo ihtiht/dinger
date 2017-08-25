@@ -2,7 +2,6 @@ package data.tinder.recommendation
 
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Relation
-import java.util.Date
 
 internal class RecommendationUserWithRelatives(
         @Embedded
@@ -29,21 +28,8 @@ internal class RecommendationUserWithRelatives(
                 entity = RecommendationUserEntity_RecommendationUserTeaserEntity::class,
                 projection = arrayOf("recommendationUserTeaserEntityId"))
         var teasers: Set<String>) {
-    constructor() : this(RecommendationUserEntity(distanceMiles = 0,
-            connectionCount = 0,
-            contentHash = "",
-            id = "",
-            birthDate = Date(),
-            name = "",
-            pingTime = Date(),
-            instagram = "",
-            teaser = "",
-            sNumber = 0,
-            spotifyThemeTrack = "",
-            gender = 0,
-            birthDateInfo = "",
-            groupMatched = false,
-            liked = false),
+    constructor() : this(
+            RecommendationUserEntity.NONE,
             commonInterests = emptySet(),
             photos = emptySet(),
             jobs = emptySet(),

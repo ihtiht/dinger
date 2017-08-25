@@ -8,4 +8,8 @@ import android.arch.persistence.room.PrimaryKey
 internal class RecommendationUserPhotoEntity(
         @PrimaryKey
         var id: String,
-        var url: String)
+        var url: String) {
+    companion object {
+        val NONE = RecommendationUserPhotoEntity(id = "", url = "")
+    }
+}
