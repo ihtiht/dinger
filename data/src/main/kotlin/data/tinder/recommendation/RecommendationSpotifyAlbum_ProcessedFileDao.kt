@@ -8,5 +8,5 @@ import android.arch.persistence.room.OnConflictStrategy
 internal interface RecommendationSpotifyAlbum_ProcessedFileDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSpotifyAlbum_ProcessedFile(
-            binding: RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity)
+            bond: RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity)
 }

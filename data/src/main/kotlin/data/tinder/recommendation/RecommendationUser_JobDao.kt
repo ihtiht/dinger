@@ -7,5 +7,5 @@ import android.arch.persistence.room.OnConflictStrategy
 @Dao
 internal interface RecommendationUser_JobDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser_Job(binding: RecommendationUserEntity_RecommendationUserJobEntity)
+    fun insertUser_Job(bond: RecommendationUserEntity_RecommendationUserJobEntity)
 }

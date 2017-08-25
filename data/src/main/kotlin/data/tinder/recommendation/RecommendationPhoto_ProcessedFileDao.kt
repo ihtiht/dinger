@@ -8,5 +8,5 @@ import android.arch.persistence.room.OnConflictStrategy
 internal interface RecommendationPhoto_ProcessedFileDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPhoto_ProcessedFile(
-            binding: RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity)
+            bond: RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity)
 }

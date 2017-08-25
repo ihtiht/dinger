@@ -14,7 +14,7 @@ internal class AlarmBannerCoordinator(private val context: Context) {
         useCase?.execute(object : DisposableCompletableObserver() {
             override fun onError(error: Throwable) = FirebaseCrash.report(error)
 
-            override fun onComplete() { }
+            override fun onComplete() {}
         })
     }
 

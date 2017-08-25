@@ -8,7 +8,7 @@ import android.arch.persistence.room.Query
 @Dao
 internal interface RecommendationUser_PhotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser_Photo(binding: RecommendationUserEntity_RecommendationUserPhotoEntity)
+    fun insertUser_Photo(bond: RecommendationUserEntity_RecommendationUserPhotoEntity)
 
     @Query("SELECT * from RecommendationUserEntity_RecommendationUserPhotoEntity " +
             "WHERE recommendationUserEntityId=:id")

@@ -7,5 +7,5 @@ import android.arch.persistence.room.OnConflictStrategy
 @Dao
 internal interface RecommendationUser_SchoolDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser_School(binding: RecommendationUserEntity_RecommendationUserSchoolEntity)
+    fun insertUser_School(bond: RecommendationUserEntity_RecommendationUserSchoolEntity)
 }

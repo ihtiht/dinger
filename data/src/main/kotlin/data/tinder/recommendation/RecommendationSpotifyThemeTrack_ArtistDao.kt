@@ -9,7 +9,7 @@ import android.arch.persistence.room.Query
 internal interface RecommendationSpotifyThemeTrack_ArtistDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSpotifyThemeTrack_Artist(
-            binding: RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity)
+            bond: RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity)
 
     @Query("SELECT * from RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity " +
             "WHERE recommendationUserSpotifyThemeTrackEntityId=:id")

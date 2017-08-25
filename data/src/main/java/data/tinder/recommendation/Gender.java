@@ -9,4 +9,4 @@ import java.lang.annotation.RetentionPolicy;
 @IntDef({
         RecommendationUser.GENDER_MALE,
         RecommendationUser.GENDER_FEMALE })
-@interface Gender { }
+@interface Gender {}
