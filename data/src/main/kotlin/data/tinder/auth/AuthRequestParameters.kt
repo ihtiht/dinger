@@ -3,8 +3,7 @@ package data.tinder.auth
 import com.squareup.moshi.Json
 import org.stoyicker.dinger.data.BuildConfig
 
-// TODO Try this without it being a data class
-internal data class AuthRequestParameters(
+internal class AuthRequestParameters(
         @field:Json(name = "id")
         private val facebookId: String,
         @field:Json(name = "token")
