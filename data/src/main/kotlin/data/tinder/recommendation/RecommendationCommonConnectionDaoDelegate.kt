@@ -7,7 +7,7 @@ internal class RecommendationCommonConnectionDaoDelegate(
         private val userCommonConnectionDelegate
         : RecommendationUser_RecommendationUserCommonConnectionDao,
         private val photoDaoDelegate: CommonConnectionPhotoDaoDelegate)
-    : CollectibleDaoDelegate<ResolvedRecommendationCommonConnection>() {
+    : CollectibleDaoDelegate<String, ResolvedRecommendationCommonConnection>() {
     override fun selectByPrimaryKey(primaryKey: String) =
             commonConnectionDao.selectCommonConnectionById(primaryKey).firstOrNull()?.let {
                 val photos = photoDaoDelegate.collectByPrimaryKeys(it.photos)

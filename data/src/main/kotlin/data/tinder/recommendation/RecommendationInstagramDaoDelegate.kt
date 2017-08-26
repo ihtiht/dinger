@@ -5,22 +5,29 @@ import data.DaoDelegate
 internal class RecommendationInstagramDaoDelegate(
         private val instagramDao: RecommendationUserInstagramDao,
         private val instagramPhotoDaoDelegate: RecommendationInstagramPhotoDaoDelegate)
-    : DaoDelegate<ResolvedRecommendationInstagram>() {
-    override fun selectByPrimaryKey(primaryKey: String) =
-            instagramDao.selectInstagramByUsername(primaryKey).firstOrNull()?.let {
-                val photos = instagramPhotoDaoDelegate.collectByPrimaryKeys(it.photos)
-                it.recommendationUserInstagram.let {
-                    return ResolvedRecommendationInstagram(
-                            profilePictureUrl = it.profilePictureUrl,
-                            lastFetchTime = it.lastFetchTime,
-                            mediaCount = it.mediaCount,
-                            completedInitialFetch = it.completedInitialFetch,
-                            username = it.username,
-                            photos = photos)
-                }
-            } ?: ResolvedRecommendationInstagram.NONE
+    : DaoDelegate<String?, ResolvedRecommendationInstagram?>() {
+    override fun selectByPrimaryKey(primaryKey: String?): ResolvedRecommendationInstagram? {
+        if (primaryKey == null) {
+            return null
+        }
+        return instagramDao.selectInstagramByUsername(primaryKey).firstOrNull()?.let {
+            val photos = instagramPhotoDaoDelegate.collectByPrimaryKeys(it.photos)
+            it.recommendationUserInstagram.let {
+                ResolvedRecommendationInstagram(
+                        profilePictureUrl = it.profilePictureUrl,
+                        lastFetchTime = it.lastFetchTime,
+                        mediaCount = it.mediaCount,
+                        completedInitialFetch = it.completedInitialFetch,
+                        username = it.username,
+                        photos = photos)
+            }
+        }
+    }
 
-    override fun insertResolved(source: ResolvedRecommendationInstagram) {
+    override fun insertResolved(source: ResolvedRecommendationInstagram?) {
+        if (source == null) {
+            return
+        }
         instagramPhotoDaoDelegate.insertResolvedForInstagramUsername(source.username, source.photos)
         instagramDao.insertInstagram(
                 RecommendationUserInstagramEntity(

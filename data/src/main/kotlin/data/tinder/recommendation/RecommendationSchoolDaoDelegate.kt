@@ -5,7 +5,7 @@ import data.CollectibleDaoDelegate
 internal class RecommendationSchoolDaoDelegate(
         private val schoolDao: RecommendationUserSchoolDao,
         private val userSchoolDao: RecommendationUser_SchoolDao)
-    : CollectibleDaoDelegate<ResolvedRecommendationSchool>() {
+    : CollectibleDaoDelegate<String, ResolvedRecommendationSchool>() {
     override fun insertResolved(source: ResolvedRecommendationSchool) = schoolDao.insertSchool(
             RecommendationUserSchoolEntity(id = source.id, name = source.name))
 

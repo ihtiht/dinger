@@ -5,7 +5,7 @@ import data.DaoDelegate
 internal class RecommendationSpotifyAlbumDaoDelegate(
         private val spotifyAlbumDao: RecommendationUserSpotifyThemeTrackAlbumDao,
         private val processedFileDaoDelegate: RecommendationProcessedFileDaoDelegate)
-    : DaoDelegate<ResolvedRecommendationSpotifyAlbum>() {
+    : DaoDelegate<String, ResolvedRecommendationSpotifyAlbum>() {
     override fun selectByPrimaryKey(primaryKey: String) =
             spotifyAlbumDao.selectAlbumById(primaryKey).firstOrNull()?.let {
                 val images = processedFileDaoDelegate.collectByPrimaryKeys(it.images)

@@ -33,10 +33,10 @@ internal open class RecommendationUserEntity(
         var name: String,
         @Embedded
         var pingTime: Date,
-        var instagram: String,
+        var instagram: String?,
         var teaser: String,
         var sNumber: Int,
-        var spotifyThemeTrack: String,
+        var spotifyThemeTrack: String?,
         var gender: Int,
         var birthDateInfo: String,
         var groupMatched: Boolean,

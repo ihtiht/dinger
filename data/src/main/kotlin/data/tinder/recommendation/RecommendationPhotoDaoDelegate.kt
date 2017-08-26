@@ -6,7 +6,7 @@ internal class RecommendationPhotoDaoDelegate(
         private val photoDao: RecommendationUserPhotoDao,
         private val userPhotoDao: RecommendationUser_PhotoDao,
         private val processedFileDaoDelegate: RecommendationProcessedFileDaoDelegate)
-    : CollectibleDaoDelegate<ResolvedRecommendationPhoto>() {
+    : CollectibleDaoDelegate<String, ResolvedRecommendationPhoto>() {
     override fun insertResolved(source: ResolvedRecommendationPhoto) {
         processedFileDaoDelegate.insertResolvedForPhotoId(source.id, source.processedFiles)
         photoDao.insertPhoto(RecommendationUserPhotoEntity(id = source.id, url = source.url))

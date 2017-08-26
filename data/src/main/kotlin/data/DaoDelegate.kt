@@ -1,7 +1,8 @@
 package data
 
-internal abstract class DaoDelegate<T> {
-    open fun selectByPrimaryKey(primaryKey: String): T = throw NotImplementedError("Not implemented.")
+internal abstract class DaoDelegate<in PrimaryKey, Resolved> {
+    open fun selectByPrimaryKey(primaryKey: PrimaryKey): Resolved =
+            throw NotImplementedError("Not implemented.")
 
-    abstract fun insertResolved(source: T)
+    abstract fun insertResolved(source: Resolved)
 }

@@ -5,7 +5,7 @@ import data.CollectibleDaoDelegate
 internal class RecommendationSpotifyArtistDaoDelegate(
         private val artistDao: RecommendationSpotifyArtistDao,
         private val trackArtistDao: RecommendationSpotifyThemeTrack_ArtistDao)
-    : CollectibleDaoDelegate<ResolvedRecommendationSpotifyArtist>() {
+    : CollectibleDaoDelegate<String, ResolvedRecommendationSpotifyArtist>() {
     override fun insertResolved(source: ResolvedRecommendationSpotifyArtist) =
             artistDao.insertArtist(RecommendationUserSpotifyThemeTrackArtistEntity(
                     id = source.id,

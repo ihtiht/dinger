@@ -5,7 +5,7 @@ import data.CollectibleDaoDelegate
 internal class RecommendationInterestDaoDelegate(
         private val interestDao: RecommendationInterestDao,
         private val userInterestDao: RecommendationUser_InterestDao)
-    : CollectibleDaoDelegate<ResolvedRecommendationInterest>() {
+    : CollectibleDaoDelegate<String, ResolvedRecommendationInterest>() {
     override fun insertResolved(source: ResolvedRecommendationInterest) =
             interestDao.insertInterest(RecommendationInterestEntity(
                     id = source.id,

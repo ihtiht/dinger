@@ -5,7 +5,7 @@ import data.CollectibleDaoDelegate
 internal class RecommendationTeaserDaoDelegate(
         private val teaserDao: RecommendationUserTeaserDao,
         private val userTeaserDao: RecommendationUser_TeaserDao)
-    : CollectibleDaoDelegate<ResolvedRecommendationTeaser>() {
+    : CollectibleDaoDelegate<String, ResolvedRecommendationTeaser>() {
     override fun selectByPrimaryKey(primaryKey: String) =
             teaserDao.selectTeaserById(primaryKey).firstOrNull()?.let {
                 return@let ResolvedRecommendationTeaser(

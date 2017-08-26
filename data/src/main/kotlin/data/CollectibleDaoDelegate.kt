@@ -1,6 +1,7 @@
 package data
 
-internal abstract class CollectibleDaoDelegate<T> : DaoDelegate<T>() {
-    fun collectByPrimaryKeys(primaryKeys: Iterable<String>): Iterable<T> =
+internal abstract class CollectibleDaoDelegate<in PrimaryKey, Resolved>
+    : DaoDelegate<PrimaryKey, Resolved>() {
+    fun collectByPrimaryKeys(primaryKeys: Iterable<PrimaryKey>): Iterable<Resolved> =
             primaryKeys.fold(emptySet(), { acc, s -> acc.plus(selectByPrimaryKey(s)) })
 }

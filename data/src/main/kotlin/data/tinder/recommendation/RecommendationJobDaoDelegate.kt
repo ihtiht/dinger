@@ -5,7 +5,7 @@ import data.CollectibleDaoDelegate
 internal class RecommendationJobDaoDelegate(
         private val jobDao: RecommendationUserJobDao,
         private val userJobDao: RecommendationUser_JobDao)
-    : CollectibleDaoDelegate<ResolvedRecommendationJob>() {
+    : CollectibleDaoDelegate<String, ResolvedRecommendationJob>() {
     override fun insertResolved(source: ResolvedRecommendationJob) = jobDao.insertJob(
             RecommendationUserJobEntity(
                     id = source.id,

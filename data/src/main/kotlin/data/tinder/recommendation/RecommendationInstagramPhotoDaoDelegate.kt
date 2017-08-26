@@ -5,7 +5,7 @@ import data.CollectibleDaoDelegate
 internal class RecommendationInstagramPhotoDaoDelegate(
         private val instagramDao: RecommendationUserInstagramPhotoDao,
         private val userInstagramDao: RecommendationUserInstagram_InstagramPhotoDao)
-    : CollectibleDaoDelegate<ResolvedRecommendationInstagramPhoto>() {
+    : CollectibleDaoDelegate<String, ResolvedRecommendationInstagramPhoto>() {
         override fun selectByPrimaryKey(primaryKey: String) =
                 instagramDao.selectInstagramPhotoByLink(primaryKey).firstOrNull()?.let {
                     return@let ResolvedRecommendationInstagramPhoto(

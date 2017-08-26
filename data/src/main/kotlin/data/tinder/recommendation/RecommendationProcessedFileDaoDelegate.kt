@@ -6,7 +6,7 @@ internal class RecommendationProcessedFileDaoDelegate(
         private val processedFileDao: RecommendationProcessedFileDao,
         private val photoProcessedFileDao: RecommendationPhoto_ProcessedFileDao,
         private val albumProcessedFileDao: RecommendationSpotifyAlbum_ProcessedFileDao)
-    : CollectibleDaoDelegate<ResolvedRecommendationProcessedFile>() {
+    : CollectibleDaoDelegate<String, ResolvedRecommendationProcessedFile>() {
     override fun insertResolved(source: ResolvedRecommendationProcessedFile) =
             processedFileDao.insertProcessedFile(RecommendationUserPhotoProcessedFileEntity(
                     widthPx = source.widthPx,
