@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "37dfc393962ff5f4cc0bcdd4e44230f5",
+    "identityHash": "1fd5010a4720431e2bf7b0e03d57ceb0",
     "entities": [
       {
         "tableName": "RecommendationUserEntity",
@@ -379,6 +379,40 @@
               "id"
             ],
             "createSql": "CREATE  INDEX `index_RecommendationUserSpotifyThemeTrackAlbumEntity_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "RecommendationUserEntity_RecommendationUserCommonConnectionEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationUserCommonConnectionEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserCommonConnectionEntityId`))",
+        "fields": [
+          {
+            "fieldPath": "recommendationUserEntityId",
+            "columnName": "recommendationUserEntityId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "recommendationUserCommonConnectionEntityId",
+            "columnName": "recommendationUserCommonConnectionEntityId",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "recommendationUserEntityId",
+            "recommendationUserCommonConnectionEntityId"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_RecommendationUserEntity_RecommendationUserCommonConnectionEntity_recommendationUserEntityId",
+            "unique": false,
+            "columnNames": [
+              "recommendationUserEntityId"
+            ],
+            "createSql": "CREATE  INDEX `index_RecommendationUserEntity_RecommendationUserCommonConnectionEntity_recommendationUserEntityId` ON `${TABLE_NAME}` (`recommendationUserEntityId`)"
           }
         ],
         "foreignKeys": []
@@ -794,6 +828,135 @@
         "foreignKeys": []
       },
       {
+        "tableName": "RecommendationUserCommonConnectionEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `name` TEXT, `degree` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "degree",
+            "columnName": "degree",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_RecommendationUserCommonConnectionEntity_id",
+            "unique": false,
+            "columnNames": [
+              "id"
+            ],
+            "createSql": "CREATE  INDEX `index_RecommendationUserCommonConnectionEntity_id` ON `${TABLE_NAME}` (`id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "RecommendationUserCommonConnectionPhotoEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`small` TEXT, `medium` TEXT, `large` TEXT, PRIMARY KEY(`small`, `medium`, `large`))",
+        "fields": [
+          {
+            "fieldPath": "small",
+            "columnName": "small",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "medium",
+            "columnName": "medium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "large",
+            "columnName": "large",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_RecommendationUserCommonConnectionPhotoEntity_small_medium_large",
+            "unique": false,
+            "columnNames": [
+              "small",
+              "medium",
+              "large"
+            ],
+            "createSql": "CREATE  INDEX `index_RecommendationUserCommonConnectionPhotoEntity_small_medium_large` ON `${TABLE_NAME}` (`small`, `medium`, `large`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "RecommendationUserCommonConnectionEntity_PhotoEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserCommonConnectionEntityId` TEXT, `small` TEXT, `medium` TEXT, `large` TEXT, PRIMARY KEY(`recommendationUserCommonConnectionEntityId`, `small`, `medium`, `large`))",
+        "fields": [
+          {
+            "fieldPath": "recommendationUserCommonConnectionEntityId",
+            "columnName": "recommendationUserCommonConnectionEntityId",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "small",
+            "columnName": "small",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "medium",
+            "columnName": "medium",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "large",
+            "columnName": "large",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "recommendationUserCommonConnectionEntityId",
+            "small",
+            "medium",
+            "large"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [
+          {
+            "name": "index_RecommendationUserCommonConnectionEntity_PhotoEntity_recommendationUserCommonConnectionEntityId_small_medium_large",
+            "unique": false,
+            "columnNames": [
+              "recommendationUserCommonConnectionEntityId",
+              "small",
+              "medium",
+              "large"
+            ],
+            "createSql": "CREATE  INDEX `index_RecommendationUserCommonConnectionEntity_PhotoEntity_recommendationUserCommonConnectionEntityId_small_medium_large` ON `${TABLE_NAME}` (`recommendationUserCommonConnectionEntityId`, `small`, `medium`, `large`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
         "tableName": "RecommendationInterestEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `name` TEXT, PRIMARY KEY(`id`))",
         "fields": [
@@ -891,7 +1054,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"37dfc393962ff5f4cc0bcdd4e44230f5\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1fd5010a4720431e2bf7b0e03d57ceb0\")"
     ]
   }
 }

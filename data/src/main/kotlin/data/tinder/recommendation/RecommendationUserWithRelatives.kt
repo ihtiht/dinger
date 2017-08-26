@@ -6,8 +6,10 @@ import android.arch.persistence.room.Relation
 internal class RecommendationUserWithRelatives(
         @Embedded
         var recommendationUserEntity: RecommendationUserEntity,
-//      @Relation(parentColumn = "id", entityColumn ="TODO RecommendationCommonConnectionEntity id when common connections are supported")
-//      var commonConnections: Set<RecommendationCommonConnectionEntity>,)
+        @Relation(parentColumn = "id", entityColumn ="recommendationUserEntityId",
+                entity = RecommendationUserEntity_RecommendationUserCommonConnectionEntity::class,
+                projection = arrayOf("recommendationUserCommonConnectionEntityId"))
+        var commonConnections: Set<String>,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserEntityId",
                 entity = RecommendationUserEntity_RecommendationInterestEntity::class,
                 projection = arrayOf("recommendationInterestEntityId"))
@@ -30,6 +32,7 @@ internal class RecommendationUserWithRelatives(
         var teasers: Set<String>) {
     constructor() : this(
             RecommendationUserEntity.NONE,
+            commonConnections = emptySet(),
             commonInterests = emptySet(),
             photos = emptySet(),
             jobs = emptySet(),

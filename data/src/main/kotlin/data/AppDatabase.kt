@@ -9,9 +9,15 @@ import data.tinder.recommendation.RecommendationProcessedFileDao
 import data.tinder.recommendation.RecommendationSpotifyAlbum_ProcessedFileDao
 import data.tinder.recommendation.RecommendationSpotifyArtistDao
 import data.tinder.recommendation.RecommendationSpotifyThemeTrack_ArtistDao
+import data.tinder.recommendation.RecommendationUserCommonConnectionDao
+import data.tinder.recommendation.RecommendationUserCommonConnectionEntity
+import data.tinder.recommendation.RecommendationUserCommonConnectionEntity_PhotoEntity
+import data.tinder.recommendation.RecommendationUserCommonConnectionPhotoDao
+import data.tinder.recommendation.RecommendationUserCommonConnectionPhotoEntity
 import data.tinder.recommendation.RecommendationUserDao
 import data.tinder.recommendation.RecommendationUserEntity
 import data.tinder.recommendation.RecommendationUserEntity_RecommendationInterestEntity
+import data.tinder.recommendation.RecommendationUserEntity_RecommendationUserCommonConnectionEntity
 import data.tinder.recommendation.RecommendationUserEntity_RecommendationUserJobEntity
 import data.tinder.recommendation.RecommendationUserEntity_RecommendationUserPhotoEntity
 import data.tinder.recommendation.RecommendationUserEntity_RecommendationUserSchoolEntity
@@ -42,6 +48,7 @@ import data.tinder.recommendation.RecommendationUserTeaserEntity
 import data.tinder.recommendation.RecommendationUser_InterestDao
 import data.tinder.recommendation.RecommendationUser_JobDao
 import data.tinder.recommendation.RecommendationUser_PhotoDao
+import data.tinder.recommendation.RecommendationUser_RecommendationUserCommonConnectionDao
 import data.tinder.recommendation.RecommendationUser_SchoolDao
 import data.tinder.recommendation.RecommendationUser_TeaserDao
 
@@ -54,6 +61,7 @@ import data.tinder.recommendation.RecommendationUser_TeaserDao
                 RecommendationUserTeaserEntity::class,
                 RecommendationUserSpotifyThemeTrackEntity::class,
                 RecommendationUserSpotifyThemeTrackAlbumEntity::class,
+                RecommendationUserEntity_RecommendationUserCommonConnectionEntity::class,
                 RecommendationUserEntity_RecommendationInterestEntity::class,
                 RecommendationUserEntity_RecommendationUserPhotoEntity::class,
                 RecommendationUserEntity_RecommendationUserJobEntity::class,
@@ -70,6 +78,10 @@ import data.tinder.recommendation.RecommendationUser_TeaserDao
                 RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity::class,
                 // For RecommendationUserPhotoProcessedFileEntity
                 RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity::class,
+                // For RecommendationUserCommonConnectionEntity
+                RecommendationUserCommonConnectionEntity::class,
+                RecommendationUserCommonConnectionPhotoEntity::class,
+                RecommendationUserCommonConnectionEntity_PhotoEntity::class,
                 // For RecommendationInterestEntity
                 RecommendationInterestEntity::class,
                 // For RecommendationUserJobEntity
@@ -103,6 +115,14 @@ internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun recommendationUserSpotifyThemeTrackAlbumDao()
             : RecommendationUserSpotifyThemeTrackAlbumDao
+
+    abstract fun recommendationUserCommonConnectionDao(): RecommendationUserCommonConnectionDao
+
+    abstract fun recommendationUserCommonConnectionPhotoDao()
+            : RecommendationUserCommonConnectionPhotoDao
+
+    abstract fun recommendationUser_RecommendationUserCommonConnectionDao():
+            RecommendationUser_RecommendationUserCommonConnectionDao
 
     abstract fun recommendationInterestDao(): RecommendationInterestDao
 

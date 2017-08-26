@@ -5,8 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 
 @Dao
-internal interface RecommendationSpotifyThemeTrack_ArtistDao {
+internal interface RecommendationUserCommonConnection_PhotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSpotifyThemeTrack_Artist(
-            bond: RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity)
+    fun insertCommonConnection_Photo(bond: RecommendationUserCommonConnectionEntity_PhotoEntity)
 }
