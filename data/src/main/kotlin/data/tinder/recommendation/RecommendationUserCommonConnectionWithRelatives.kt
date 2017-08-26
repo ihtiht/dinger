@@ -9,7 +9,7 @@ internal class RecommendationUserCommonConnectionWithRelatives(
         @Relation(parentColumn = "id",
                 entityColumn = "recommendationUserCommonConnectionEntityId",
                 entity = RecommendationUserCommonConnectionEntity_PhotoEntity::class,
-                projection = arrayOf("small", "medium", "large"))
-        var photos: Set<RecommendationUserCommonConnectionPhotoEntity>) {
+                projection = arrayOf("recommendationUserCommonConnectionPhotoEntitySmall"))
+        var photos: Set<String>) {
     constructor() : this(RecommendationUserCommonConnectionEntity.NONE, emptySet())
 }

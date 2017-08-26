@@ -3,18 +3,14 @@ package data.tinder.recommendation
 import data.CollectibleDaoDelegate
 
 internal class RecommendationCommonConnectionDaoDelegate(
-        private val commonConnectionDelegate: RecommendationUserCommonConnectionDao,
+        private val commonConnectionDao: RecommendationUserCommonConnectionDao,
         private val userCommonConnectionDelegate
         : RecommendationUser_RecommendationUserCommonConnectionDao,
         private val photoDaoDelegate: CommonConnectionPhotoDaoDelegate)
     : CollectibleDaoDelegate<ResolvedRecommendationCommonConnection>() {
     override fun selectByPrimaryKey(primaryKey: String) =
-            commonConnectionDelegate.selectCommonConnectionById(primaryKey).firstOrNull()?.let {
-                val photos = it.photos.map { ResolvedRecommendationCommonConnectionPhoto(
-                        small = it.small,
-                        medium = it.medium,
-                        large = it.large)
-                }
+            commonConnectionDao.selectCommonConnectionById(primaryKey).firstOrNull()?.let {
+                val photos = photoDaoDelegate.collectByPrimaryKeys(it.photos)
                 it.recommendationUserCommonConnection.let {
                     return ResolvedRecommendationCommonConnection(
                             id = it.id,
@@ -26,7 +22,7 @@ internal class RecommendationCommonConnectionDaoDelegate(
 
     override fun insertResolved(source: ResolvedRecommendationCommonConnection) {
         photoDaoDelegate.insertResolvedForCommonConnectionId(source.id, source.photos)
-        commonConnectionDelegate.insertCommonConnection(
+        commonConnectionDao.insertCommonConnection(
                 RecommendationUserCommonConnectionEntity(
                             id = source.id,
                             name = source.name,

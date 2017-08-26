@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "cbbb789c92e86b154542eb84a8db6401",
+    "identityHash": "20c15d639fcd67a733be781ae4f2930a",
     "entities": [
       {
         "tableName": "RecommendationUserEntity",
@@ -867,7 +867,7 @@
       },
       {
         "tableName": "RecommendationUserCommonConnectionPhotoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`small` TEXT, `medium` TEXT, `large` TEXT, PRIMARY KEY(`small`, `medium`, `large`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`small` TEXT, `medium` TEXT, `large` TEXT, PRIMARY KEY(`small`))",
         "fields": [
           {
             "fieldPath": "small",
@@ -887,29 +887,25 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "small",
-            "medium",
-            "large"
+            "small"
           ],
           "autoGenerate": false
         },
         "indices": [
           {
-            "name": "index_RecommendationUserCommonConnectionPhotoEntity_small_medium_large",
+            "name": "index_RecommendationUserCommonConnectionPhotoEntity_small",
             "unique": false,
             "columnNames": [
-              "small",
-              "medium",
-              "large"
+              "small"
             ],
-            "createSql": "CREATE  INDEX `index_RecommendationUserCommonConnectionPhotoEntity_small_medium_large` ON `${TABLE_NAME}` (`small`, `medium`, `large`)"
+            "createSql": "CREATE  INDEX `index_RecommendationUserCommonConnectionPhotoEntity_small` ON `${TABLE_NAME}` (`small`)"
           }
         ],
         "foreignKeys": []
       },
       {
         "tableName": "RecommendationUserCommonConnectionEntity_PhotoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserCommonConnectionEntityId` TEXT, `small` TEXT, `medium` TEXT, `large` TEXT, PRIMARY KEY(`recommendationUserCommonConnectionEntityId`, `small`, `medium`, `large`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserCommonConnectionEntityId` TEXT, `recommendationUserCommonConnectionPhotoEntitySmall` TEXT, PRIMARY KEY(`recommendationUserCommonConnectionEntityId`, `recommendationUserCommonConnectionPhotoEntitySmall`))",
         "fields": [
           {
             "fieldPath": "recommendationUserCommonConnectionEntityId",
@@ -917,27 +913,15 @@
             "affinity": "TEXT"
           },
           {
-            "fieldPath": "small",
-            "columnName": "small",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "medium",
-            "columnName": "medium",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "large",
-            "columnName": "large",
+            "fieldPath": "recommendationUserCommonConnectionPhotoEntitySmall",
+            "columnName": "recommendationUserCommonConnectionPhotoEntitySmall",
             "affinity": "TEXT"
           }
         ],
         "primaryKey": {
           "columnNames": [
             "recommendationUserCommonConnectionEntityId",
-            "small",
-            "medium",
-            "large"
+            "recommendationUserCommonConnectionPhotoEntitySmall"
           ],
           "autoGenerate": false
         },
@@ -1051,7 +1035,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"cbbb789c92e86b154542eb84a8db6401\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"20c15d639fcd67a733be781ae4f2930a\")"
     ]
   }
 }

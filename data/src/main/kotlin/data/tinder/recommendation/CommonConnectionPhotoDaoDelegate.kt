@@ -1,11 +1,11 @@
 package data.tinder.recommendation
 
-import data.DaoDelegate
+import data.CollectibleDaoDelegate
 
 internal class CommonConnectionPhotoDaoDelegate(
         private val photoDao: RecommendationUserCommonConnectionPhotoDao,
         private val commonConnectionPhotoDao: RecommendationUserCommonConnection_PhotoDao)
-    : DaoDelegate<ResolvedRecommendationCommonConnectionPhoto>() {
+    : CollectibleDaoDelegate<ResolvedRecommendationCommonConnectionPhoto>() {
     override fun insertResolved(source: ResolvedRecommendationCommonConnectionPhoto) {
         photoDao.insertPhoto(RecommendationUserCommonConnectionPhotoEntity(
                 small = source.small, medium = source.medium, large = source.large))
@@ -19,9 +19,7 @@ internal class CommonConnectionPhotoDaoDelegate(
             commonConnectionPhotoDao.insertCommonConnection_Photo(
                     RecommendationUserCommonConnectionEntity_PhotoEntity(
                             recommendationUserCommonConnectionEntityId = commonConnectionId,
-                            small = it.small,
-                            medium = it.medium,
-                            large = it.large))
+                            recommendationUserCommonConnectionPhotoEntitySmall = it.small))
         }
     }
 }

@@ -5,11 +5,7 @@ import android.arch.persistence.room.Index
 
 @Entity(indices = arrayOf(Index("recommendationUserCommonConnectionEntityId")),
         primaryKeys = arrayOf("recommendationUserCommonConnectionEntityId",
-                "small",
-                "medium",
-                "large"))
+                "recommendationUserCommonConnectionPhotoEntitySmall"))
 internal class RecommendationUserCommonConnectionEntity_PhotoEntity(
     var recommendationUserCommonConnectionEntityId: String,
-    var small: String,
-    var medium: String,
-    var large: String)
+    var recommendationUserCommonConnectionPhotoEntitySmall: String)
