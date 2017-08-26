@@ -7,6 +7,18 @@ internal class RecommendationPhotoDaoDelegate(
         private val userPhotoDao: RecommendationUser_PhotoDao,
         private val processedFileDaoDelegate: RecommendationProcessedFileDaoDelegate)
     : CollectibleDaoDelegate<String, ResolvedRecommendationPhoto>() {
+    override fun selectByPrimaryKey(primaryKey: String) =
+            photoDao.selectPhotoById(primaryKey).firstOrNull()?.let {
+                val processedFiles =
+                        processedFileDaoDelegate.collectByPrimaryKeys(it.processedFiles)
+                it.recommendationUserPhotoEntity.let {
+                    return ResolvedRecommendationPhoto(
+                            id = it.id,
+                            url = it.url,
+                            processedFiles = processedFiles)
+                }
+            } ?: ResolvedRecommendationPhoto.NONE
+
     override fun insertResolved(source: ResolvedRecommendationPhoto) {
         processedFileDaoDelegate.insertResolvedForPhotoId(source.id, source.processedFiles)
         photoDao.insertPhoto(RecommendationUserPhotoEntity(id = source.id, url = source.url))

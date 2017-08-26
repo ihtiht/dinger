@@ -6,6 +6,14 @@ internal class RecommendationJobDaoDelegate(
         private val jobDao: RecommendationUserJobDao,
         private val userJobDao: RecommendationUser_JobDao)
     : CollectibleDaoDelegate<String, ResolvedRecommendationJob>() {
+    override fun selectByPrimaryKey(primaryKey: String) =
+            jobDao.selectJobById(primaryKey).firstOrNull()?.let {
+                return@let ResolvedRecommendationJob(
+                        id = it.id,
+                        company = ResolvedRecommendationCompany(it.company.name),
+                        title = ResolvedRecommendationTitle(it.title.name))
+            } ?: ResolvedRecommendationJob.NONE
+
     override fun insertResolved(source: ResolvedRecommendationJob) = jobDao.insertJob(
             RecommendationUserJobEntity(
                     id = source.id,

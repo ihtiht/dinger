@@ -7,4 +7,8 @@ internal data class ResolvedRecommendationProcessedFile(
         val widthPx: Int,
         val url: String,
         @Px
-        val heightPx: Int)
+        val heightPx: Int) {
+    companion object {
+        val NONE = ResolvedRecommendationProcessedFile(widthPx = 0, url = "", heightPx = 0)
+    }
+}

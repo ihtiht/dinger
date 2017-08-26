@@ -6,14 +6,14 @@ internal class RecommendationInstagramPhotoDaoDelegate(
         private val instagramDao: RecommendationUserInstagramPhotoDao,
         private val userInstagramDao: RecommendationUserInstagram_InstagramPhotoDao)
     : CollectibleDaoDelegate<String, ResolvedRecommendationInstagramPhoto>() {
-        override fun selectByPrimaryKey(primaryKey: String) =
-                instagramDao.selectInstagramPhotoByLink(primaryKey).firstOrNull()?.let {
-                    return@let ResolvedRecommendationInstagramPhoto(
-                            link = it.link,
-                            imageUrl = it.imageUrl,
-                            thumbnailUrl = it.thumbnailUrl,
-                            ts = it.ts)
-                } ?: ResolvedRecommendationInstagramPhoto.NONE
+    override fun selectByPrimaryKey(primaryKey: String) =
+            instagramDao.selectInstagramPhotoByLink(primaryKey).firstOrNull()?.let {
+                return@let ResolvedRecommendationInstagramPhoto(
+                        link = it.link,
+                        imageUrl = it.imageUrl,
+                        thumbnailUrl = it.thumbnailUrl,
+                        ts = it.ts)
+            } ?: ResolvedRecommendationInstagramPhoto.NONE
 
     override fun insertResolved(source: ResolvedRecommendationInstagramPhoto) =
             instagramDao.insertInstagramPhoto(RecommendationUserInstagramPhotoEntity(

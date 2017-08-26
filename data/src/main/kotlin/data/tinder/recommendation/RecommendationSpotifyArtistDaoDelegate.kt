@@ -6,6 +6,13 @@ internal class RecommendationSpotifyArtistDaoDelegate(
         private val artistDao: RecommendationSpotifyArtistDao,
         private val trackArtistDao: RecommendationSpotifyThemeTrack_ArtistDao)
     : CollectibleDaoDelegate<String, ResolvedRecommendationSpotifyArtist>() {
+    override fun selectByPrimaryKey(primaryKey: String) =
+            artistDao.selectArtistById(primaryKey).firstOrNull()?.let {
+                return ResolvedRecommendationSpotifyArtist(
+                        id = it.id,
+                        name = it.name)
+            } ?: ResolvedRecommendationSpotifyArtist.NONE
+
     override fun insertResolved(source: ResolvedRecommendationSpotifyArtist) =
             artistDao.insertArtist(RecommendationUserSpotifyThemeTrackArtistEntity(
                     id = source.id,

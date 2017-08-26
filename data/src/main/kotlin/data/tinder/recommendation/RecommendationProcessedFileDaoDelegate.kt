@@ -7,6 +7,14 @@ internal class RecommendationProcessedFileDaoDelegate(
         private val photoProcessedFileDao: RecommendationPhoto_ProcessedFileDao,
         private val albumProcessedFileDao: RecommendationSpotifyAlbum_ProcessedFileDao)
     : CollectibleDaoDelegate<String, ResolvedRecommendationProcessedFile>() {
+    override fun selectByPrimaryKey(primaryKey: String) =
+            processedFileDao.selectProcessedFileByUrl(primaryKey).firstOrNull()?.let {
+                return ResolvedRecommendationProcessedFile(
+                        widthPx = it.widthPx,
+                        url = it.url,
+                        heightPx = it.heightPx)
+            } ?: ResolvedRecommendationProcessedFile.NONE
+
     override fun insertResolved(source: ResolvedRecommendationProcessedFile) =
             processedFileDao.insertProcessedFile(RecommendationUserPhotoProcessedFileEntity(
                     widthPx = source.widthPx,
