@@ -1,6 +1,6 @@
 package data.tinder.recommendation
 
-internal class ResolvedRecommendationInstagramPhoto(
+internal data class ResolvedRecommendationInstagramPhoto(
         val link: String,
         val imageUrl: String,
         val thumbnailUrl: String,

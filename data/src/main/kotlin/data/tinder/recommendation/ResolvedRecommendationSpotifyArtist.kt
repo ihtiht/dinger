@@ -1,6 +1,6 @@
 package data.tinder.recommendation
 
-internal class ResolvedRecommendationSpotifyArtist(
+internal data class ResolvedRecommendationSpotifyArtist(
         val name: String,
         val id: String) {
     companion object {

@@ -1,6 +1,6 @@
 package data.tinder.recommendation
 
-internal class ResolvedRecommendationCommonConnection(
+internal data class ResolvedRecommendationCommonConnection(
         val id: String,
         val name: String,
         val degree: String,

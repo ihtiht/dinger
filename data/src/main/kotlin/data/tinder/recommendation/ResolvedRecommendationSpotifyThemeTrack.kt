@@ -1,6 +1,6 @@
 package data.tinder.recommendation
 
-internal class ResolvedRecommendationSpotifyThemeTrack(
+internal data class ResolvedRecommendationSpotifyThemeTrack(
         val artists: Iterable<ResolvedRecommendationSpotifyArtist>,
         val album: ResolvedRecommendationSpotifyAlbum,
         val previewUrl: String,

@@ -2,7 +2,7 @@ package data.tinder.recommendation
 
 import android.support.annotation.Px
 
-internal class ResolvedRecommendationProcessedFile(
+internal data class ResolvedRecommendationProcessedFile(
         @Px
         val widthPx: Int,
         val url: String,

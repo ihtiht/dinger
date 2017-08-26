@@ -1,6 +1,6 @@
 package data.tinder.recommendation
 
-internal class ResolvedRecommendationTeaser(
+internal data class ResolvedRecommendationTeaser(
         val id: String,
         val description: String,
         val type: String) {

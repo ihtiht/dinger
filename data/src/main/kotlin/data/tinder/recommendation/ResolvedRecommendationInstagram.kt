@@ -2,7 +2,7 @@ package data.tinder.recommendation
 
 import java.util.Date
 
-internal class ResolvedRecommendationInstagram(
+internal data class ResolvedRecommendationInstagram(
         val profilePictureUrl: String,
         val lastFetchTime: Date,
         val mediaCount: Int,

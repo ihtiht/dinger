@@ -2,7 +2,7 @@ package data.tinder.recommendation
 
 import java.util.Date
 
-internal class ResolvedRecommendationUser(
+internal data class ResolvedRecommendationUser(
         val distanceMiles: Int,
         val commonConnections: Iterable<ResolvedRecommendationCommonConnection>,
         val connectionCount: Int,
