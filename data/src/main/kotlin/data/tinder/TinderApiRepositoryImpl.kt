@@ -21,10 +21,9 @@ internal class TinderApiRepositoryImpl : TinderApiRepository {
           ComponentHolder.tinderRepositoryComponent.inject(this)
     }
 
-    override fun login(parameters: DomainAuthRequestParameters): Single<DomainAuthedUser>
-            = loginFacade.fetch(parameters).doOnError { FirebaseCrash.report(it) }
+    override fun login(parameters: DomainAuthRequestParameters): Single<DomainAuthedUser> =
+            loginFacade.fetch(parameters).doOnError { FirebaseCrash.report(it) }
 
-    override fun getRecommendations()
-            : Single<Collection<DomainRecommendation>>
-            = recommendationFacade.fetch(Unit).doOnError { FirebaseCrash.report(it) }
+    override fun getRecommendations(): Single<Collection<DomainRecommendation>> =
+            recommendationFacade.fetch(Unit).doOnError { FirebaseCrash.report(it) }
 }

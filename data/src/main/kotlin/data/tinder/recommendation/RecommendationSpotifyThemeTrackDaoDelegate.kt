@@ -1,17 +1,14 @@
 package data.tinder.recommendation
 
-import android.arch.persistence.room.RoomDatabase
 import data.DaoDelegate
 
 internal class RecommendationSpotifyThemeTrackDaoDelegate(
-        appDatabase: RoomDatabase,
+        private val spotifyThemeTrackDelegate: RecommendationUserSpotifyThemeTrackDao,
         private val spotifyArtistDaoDelegate: RecommendationSpotifyArtistDaoDelegate,
         private val spotifyAlbumDaoDelegate: RecommendationSpotifyAlbumDaoDelegate)
-    : DaoDelegate<ResolvedRecommendationSpotifyThemeTrack>(),
-        RecommendationUserSpotifyThemeTrackDao
-        by RecommendationUserSpotifyThemeTrackDao_Impl(appDatabase) {
+    : DaoDelegate<ResolvedRecommendationSpotifyThemeTrack>() {
     override fun selectByPrimaryKey(primaryKey: String) =
-            selectSpotifyThemeTrackById(primaryKey).firstOrNull()?.let {
+            spotifyThemeTrackDelegate.selectSpotifyThemeTrackById(primaryKey).firstOrNull()?.let {
                 val artists = spotifyArtistDaoDelegate.collectByPrimaryKeys(it.artists)
                 it.recommendationUserSpotifyThemeTrackEntity.let {
                     return ResolvedRecommendationSpotifyThemeTrack(
@@ -27,7 +24,7 @@ internal class RecommendationSpotifyThemeTrackDaoDelegate(
     override fun insertResolved(source: ResolvedRecommendationSpotifyThemeTrack) {
         spotifyArtistDaoDelegate.insertResolvedForTrackId(source.id, source.artists)
         spotifyAlbumDaoDelegate.insertResolved(source.album)
-        insertSpotifyThemeTrack(RecommendationUserSpotifyThemeTrackEntity(
+        spotifyThemeTrackDelegate.insertSpotifyThemeTrack(RecommendationUserSpotifyThemeTrackEntity(
                 album = source.album.id,
                 previewUrl = source.previewUrl,
                 name = source.name,

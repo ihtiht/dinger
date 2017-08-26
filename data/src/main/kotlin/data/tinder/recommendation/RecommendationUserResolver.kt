@@ -1,10 +1,9 @@
 package data.tinder.recommendation
 
 import android.arch.lifecycle.Transformations
-import data.AppDatabase
 
 internal class RecommendationUserResolver(
-        appDatabase: AppDatabase,
+        private val userDao: RecommendationUserDao,
         private val commonConnectionDaoDelegate: RecommendationCommonConnectionDaoDelegate,
         private val instagramDaoDelegate: RecommendationInstagramDaoDelegate,
         private val interestDaoDelegate: RecommendationInterestDaoDelegate,
@@ -12,12 +11,9 @@ internal class RecommendationUserResolver(
         private val jobDaoDelegate: RecommendationJobDaoDelegate,
         private val schoolDaoDelegate: RecommendationSchoolDaoDelegate,
         private val teaserDaoDelegate: RecommendationTeaserDaoDelegate,
-        private val spotifyThemeTrackDaoDelegate: RecommendationSpotifyThemeTrackDaoDelegate)
-    : RecommendationUserDao by RecommendationUserDao_Impl(appDatabase),
-        RecommendationUserSpotifyThemeTrackDao
-        by RecommendationUserSpotifyThemeTrackDao_Impl(appDatabase) {
+        private val spotifyThemeTrackDaoDelegate: RecommendationSpotifyThemeTrackDaoDelegate) {
     fun insert(user: ResolvedRecommendationUser) = user.apply {
-        insertUser(RecommendationUserEntity(
+        userDao.insertUser(RecommendationUserEntity(
                 distanceMiles = distanceMiles,
                 connectionCount = connectionCount,
                 contentHash = contentHash,
@@ -46,14 +42,14 @@ internal class RecommendationUserResolver(
     }
 
     fun selectById(id: String) =
-            Transformations.map(selectUserById(id)) { it.map { from(it) } }
+            Transformations.map(userDao.selectUserById(id)) { it.map { from(it) } }
 
     fun selectByFilterOnName(filter: String) =
-            Transformations.map(selectUsersByFilterOnName(filter)) { it.map { from(it) } }
+            Transformations.map(userDao.selectUsersByFilterOnName(filter)) { it.map { from(it) } }
 
     private fun from(source: RecommendationUserWithRelatives): ResolvedRecommendationUser {
-        val commonConnections
-                = commonConnectionDaoDelegate.collectByPrimaryKeys(source.commonConnections)
+        val commonConnections =
+                commonConnectionDaoDelegate.collectByPrimaryKeys(source.commonConnections)
         val commonInterests = interestDaoDelegate.collectByPrimaryKeys(source.commonInterests)
         val photos = photoDaoDelegate.collectByPrimaryKeys(source.photos)
         val jobs = jobDaoDelegate.collectByPrimaryKeys(source.jobs)

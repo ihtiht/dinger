@@ -1,16 +1,13 @@
 package data.tinder.recommendation
 
-import android.arch.persistence.room.RoomDatabase
 import data.CollectibleDaoDelegate
 
-internal class RecommendationInstagramPhotoDaoDelegate(appDatabase: RoomDatabase)
-    : CollectibleDaoDelegate<ResolvedRecommendationInstagramPhoto>(),
-        RecommendationUserInstagramPhotoDao
-        by RecommendationUserInstagramPhotoDao_Impl(appDatabase),
-        RecommendationUserInstagram_InstagramPhotoDao
-        by RecommendationUserInstagram_InstagramPhotoDao_Impl(appDatabase) {
+internal class RecommendationInstagramPhotoDaoDelegate(
+        private val instagramDao: RecommendationUserInstagramPhotoDao,
+        private val userInstagramDao: RecommendationUserInstagram_InstagramPhotoDao)
+    : CollectibleDaoDelegate<ResolvedRecommendationInstagramPhoto>() {
         override fun selectByPrimaryKey(primaryKey: String) =
-                selectInstagramPhotoByLink(primaryKey).firstOrNull()?.let {
+                instagramDao.selectInstagramPhotoByLink(primaryKey).firstOrNull()?.let {
                     return@let ResolvedRecommendationInstagramPhoto(
                             link = it.link,
                             imageUrl = it.imageUrl,
@@ -19,7 +16,7 @@ internal class RecommendationInstagramPhotoDaoDelegate(appDatabase: RoomDatabase
                 } ?: ResolvedRecommendationInstagramPhoto.NONE
 
     override fun insertResolved(source: ResolvedRecommendationInstagramPhoto) =
-            insertInstagramPhoto(RecommendationUserInstagramPhotoEntity(
+            instagramDao.insertInstagramPhoto(RecommendationUserInstagramPhotoEntity(
                     link = source.link,
                     imageUrl = source.imageUrl,
                     thumbnailUrl = source.thumbnailUrl,
@@ -30,7 +27,7 @@ internal class RecommendationInstagramPhotoDaoDelegate(appDatabase: RoomDatabase
             instagramPhotos: Iterable<ResolvedRecommendationInstagramPhoto>) {
         instagramPhotos.forEach {
             insertResolved(it)
-            insertInstagram_Photo(
+            userInstagramDao.insertInstagram_Photo(
                     RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity(
                             recommendationUserInstagramEntityUsername = instagramUsername,
                             recommendationUserInstagramPhotoEntityLink = it.link))

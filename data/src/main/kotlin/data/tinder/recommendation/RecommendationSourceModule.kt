@@ -13,7 +13,7 @@ import data.network.ParserModule
 import data.tinder.TinderApi
 import data.tinder.TinderApiModule
 import okio.BufferedSource
-import java.util.*
+import java.util.Date
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
@@ -36,8 +36,8 @@ internal class RecommendationSourceModule {
 
     @Provides
     @Singleton
-    fun source(store: DaggerLazy<Store<RecommendationResponse, Unit>>)
-            = RecommendationSource(store)
+    fun source(store: DaggerLazy<Store<RecommendationResponse, Unit>>) =
+            RecommendationSource(store)
 
     private fun fetch(api: TinderApi) = api.getRecommendations().map { it.source() }
 }

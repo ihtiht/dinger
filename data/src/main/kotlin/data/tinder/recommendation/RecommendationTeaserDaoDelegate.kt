@@ -1,22 +1,21 @@
 package data.tinder.recommendation
 
-import android.arch.persistence.room.RoomDatabase
 import data.CollectibleDaoDelegate
 
-internal class RecommendationTeaserDaoDelegate(appDatabase: RoomDatabase)
-    : CollectibleDaoDelegate<ResolvedRecommendationTeaser>(),
-        RecommendationUserTeaserDao by RecommendationUserTeaserDao_Impl(appDatabase),
-        RecommendationUser_TeaserDao by RecommendationUser_TeaserDao_Impl(appDatabase) {
+internal class RecommendationTeaserDaoDelegate(
+        private val teaserDao: RecommendationUserTeaserDao,
+        private val userTeaserDao: RecommendationUser_TeaserDao)
+    : CollectibleDaoDelegate<ResolvedRecommendationTeaser>() {
     override fun selectByPrimaryKey(primaryKey: String) =
-            selectTeaserById(primaryKey).firstOrNull()?.let {
+            teaserDao.selectTeaserById(primaryKey).firstOrNull()?.let {
                 return@let ResolvedRecommendationTeaser(
                         id = it.id,
                         description = it.description,
                         type = it.type)
             } ?: ResolvedRecommendationTeaser.NONE
 
-    override fun insertResolved(source: ResolvedRecommendationTeaser) = insertTeaser(
-            RecommendationUserTeaserEntity(
+    override fun insertResolved(source: ResolvedRecommendationTeaser) = teaserDao
+            .insertTeaser(RecommendationUserTeaserEntity(
                     id = source.id,
                     description = source.description,
                     type = source.type))
@@ -24,7 +23,7 @@ internal class RecommendationTeaserDaoDelegate(appDatabase: RoomDatabase)
     fun insertResolvedForUserId(userId: String, teasers: Iterable<ResolvedRecommendationTeaser>) {
         teasers.forEach {
             insertResolved(it)
-            insertUser_Teaser(RecommendationUserEntity_RecommendationUserTeaserEntity(
+            userTeaserDao.insertUser_Teaser(RecommendationUserEntity_RecommendationUserTeaserEntity(
                     recommendationUserEntityId = userId,
                     recommendationUserTeaserEntityId = it.id))
         }

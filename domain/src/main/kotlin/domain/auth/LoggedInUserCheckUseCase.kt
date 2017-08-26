@@ -8,6 +8,6 @@ class LoggedInUserCheckUseCase(
         asyncExecutionScheduler: Scheduler,
         postExecutionScheduler: Scheduler)
     : SingleDisposableUseCase<Boolean>(asyncExecutionScheduler, postExecutionScheduler) {
-    override fun buildUseCase(): Single<Boolean>
-            = Single.just(AuthHolder.accountManager.isThereALoggedInUser())
+    override fun buildUseCase(): Single<Boolean> =
+            Single.just(AuthHolder.accountManager.isThereALoggedInUser())
 }

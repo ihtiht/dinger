@@ -1,15 +1,13 @@
 package data.tinder.recommendation
 
-import android.arch.persistence.room.RoomDatabase
 import data.DaoDelegate
 
 internal class RecommendationInstagramDaoDelegate(
-        appDatabase: RoomDatabase,
+        private val instagramDao: RecommendationUserInstagramDao,
         private val instagramPhotoDaoDelegate: RecommendationInstagramPhotoDaoDelegate)
-    : DaoDelegate<ResolvedRecommendationInstagram>(),
-        RecommendationUserInstagramDao by RecommendationUserInstagramDao_Impl(appDatabase) {
+    : DaoDelegate<ResolvedRecommendationInstagram>() {
     override fun selectByPrimaryKey(primaryKey: String) =
-            selectInstagramByUsername(primaryKey).firstOrNull()?.let {
+            instagramDao.selectInstagramByUsername(primaryKey).firstOrNull()?.let {
                 val photos = instagramPhotoDaoDelegate.collectByPrimaryKeys(it.photos)
                 it.recommendationUserInstagram.let {
                     return ResolvedRecommendationInstagram(
@@ -24,7 +22,7 @@ internal class RecommendationInstagramDaoDelegate(
 
     override fun insertResolved(source: ResolvedRecommendationInstagram) {
         instagramPhotoDaoDelegate.insertResolvedForInstagramUsername(source.username, source.photos)
-        insertInstagram(
+        instagramDao.insertInstagram(
                 RecommendationUserInstagramEntity(
                         profilePictureUrl = source.profilePictureUrl,
                         lastFetchTime = source.lastFetchTime,

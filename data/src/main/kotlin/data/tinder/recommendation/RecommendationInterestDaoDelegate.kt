@@ -1,25 +1,21 @@
 package data.tinder.recommendation
 
-import android.arch.persistence.room.RoomDatabase
 import data.CollectibleDaoDelegate
 
-internal class RecommendationInterestDaoDelegate(appDatabase: RoomDatabase)
-    : CollectibleDaoDelegate<ResolvedRecommendationInterest>(),
-        RecommendationInterestDao by RecommendationInterestDao_Impl(appDatabase),
-        RecommendationUser_InterestDao by RecommendationUser_InterestDao_Impl(appDatabase) {
-    override fun selectByPrimaryKey(primaryKey: String) =
-            selectInterestById(primaryKey).firstOrNull()?.let {
-                return@let ResolvedRecommendationInterest(id = it.id, name = it.name)
-            } ?: ResolvedRecommendationInterest.NONE
-
-    override fun insertResolved(source: ResolvedRecommendationInterest) = insertInterest(
-            RecommendationInterestEntity(id = source.id, name = source.name))
+internal class RecommendationInterestDaoDelegate(
+        private val interestDao: RecommendationInterestDao,
+        private val userInterestDao: RecommendationUser_InterestDao)
+    : CollectibleDaoDelegate<ResolvedRecommendationInterest>() {
+    override fun insertResolved(source: ResolvedRecommendationInterest) =
+            interestDao.insertInterest(RecommendationInterestEntity(
+                    id = source.id,
+                    name = source.name))
 
     fun insertResolvedForUserId(
             userId: String, interests: Iterable<ResolvedRecommendationInterest>) {
         interests.forEach {
             insertResolved(it)
-            insertUser_Interest(RecommendationUserEntity_RecommendationInterestEntity(
+            userInterestDao.insertUser_Interest(RecommendationUserEntity_RecommendationInterestEntity(
                     recommendationUserEntityId = userId,
                     recommendationInterestEntityId = it.id))
         }

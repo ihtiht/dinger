@@ -10,7 +10,7 @@ internal class AutoSwipeLauncherBroadcastReceiver : BroadcastReceiver() {
     }
 
     companion object {
-        fun getCallingIntent(context: Context)
-                = Intent(context, AutoSwipeLauncherBroadcastReceiver::class.java)
+        fun getCallingIntent(context: Context) =
+                Intent(context, AutoSwipeLauncherBroadcastReceiver::class.java)
     }
 }

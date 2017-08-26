@@ -23,6 +23,6 @@ internal class RecommendationFacadeModule {
     fun facade(
             source: RecommendationSource,
             requestEntityMapper: RecommendationRequestEntityMapper,
-            responseEntityMapper: RecommendationResponseEntityMapper)
-            = RecommendationFacade(source, requestEntityMapper, responseEntityMapper)
+            responseEntityMapper: RecommendationResponseEntityMapper) =
+            RecommendationFacade(source, requestEntityMapper, responseEntityMapper)
 }

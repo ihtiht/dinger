@@ -24,8 +24,8 @@ internal class AppAccountManagerImpl constructor(context: Context)
             p3: Array<out String>?,
             p4: Bundle?) = throw UnsupportedOperationException("Not supported")
 
-    override fun getAuthTokenLabel(p0: String?)
-                = throw UnsupportedOperationException("Not supported")
+    override fun getAuthTokenLabel(p0: String?) =
+            throw UnsupportedOperationException("Not supported")
 
     override fun confirmCredentials(
             p0: AccountAuthenticatorResponse?,
@@ -42,16 +42,15 @@ internal class AppAccountManagerImpl constructor(context: Context)
             p0: AccountAuthenticatorResponse?,
             p1: Account?,
             p2: String?,
-            p3: Bundle?)
-            = throw UnsupportedOperationException("Not supported")
+            p3: Bundle?) = throw UnsupportedOperationException("Not supported")
 
     override fun hasFeatures(
             p0: AccountAuthenticatorResponse?,
             p1: Account?,
             p2: Array<out String>?) = throw UnsupportedOperationException("Not supported")
 
-    override fun editProperties(p0: AccountAuthenticatorResponse?, p1: String?)
-            = throw UnsupportedOperationException("Not supported")
+    override fun editProperties(p0: AccountAuthenticatorResponse?, p1: String?) =
+            throw UnsupportedOperationException("Not supported")
 
     override fun addAccount(id: String, token: String) = Account(id, Companion.ACCOUNT_TYPE).let {
         if (delegate.addAccountExplicitly(it, token, null)) {

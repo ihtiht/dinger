@@ -15,10 +15,10 @@ internal class LoggedInCheckModule(
     @Provides
     fun coordinator(
             @Named("io") asyncExecutionScheduler: Scheduler,
-            @Named("main") postExecutionScheduler: Scheduler)
-            = LoggedInCheckCoordinator(
-            context,
-            asyncExecutionScheduler,
-            postExecutionScheduler,
-            resultCallback)
+            @Named("main") postExecutionScheduler: Scheduler) =
+            LoggedInCheckCoordinator(
+                    context,
+                    asyncExecutionScheduler,
+                    postExecutionScheduler,
+                    resultCallback)
 }

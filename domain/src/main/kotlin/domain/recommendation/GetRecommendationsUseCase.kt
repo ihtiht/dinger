@@ -9,6 +9,6 @@ class GetRecommendationsUseCase(
         postExecutionScheduler: Scheduler)
     : SingleDisposableUseCase<Collection<DomainRecommendation>>(
         postExecutionScheduler = postExecutionScheduler) {
-    override fun buildUseCase(): Single<Collection<DomainRecommendation>>
-            = DomainHolder.facadeProvider.tinderApiRepository().getRecommendations()
+    override fun buildUseCase(): Single<Collection<DomainRecommendation>> =
+            DomainHolder.facadeProvider.tinderApiRepository().getRecommendations()
 }

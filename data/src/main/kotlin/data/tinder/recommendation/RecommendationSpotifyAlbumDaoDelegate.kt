@@ -1,18 +1,13 @@
 package data.tinder.recommendation
 
-import android.arch.persistence.room.RoomDatabase
 import data.DaoDelegate
 
 internal class RecommendationSpotifyAlbumDaoDelegate(
-        appDatabase: RoomDatabase,
+        private val spotifyAlbumDao: RecommendationUserSpotifyThemeTrackAlbumDao,
         private val processedFileDaoDelegate: RecommendationProcessedFileDaoDelegate)
-    : DaoDelegate<ResolvedRecommendationSpotifyAlbum>(),
-        RecommendationUserSpotifyThemeTrackAlbumDao
-        by RecommendationUserSpotifyThemeTrackAlbumDao_Impl(appDatabase),
-        RecommendationSpotifyAlbum_ProcessedFileDao
-        by RecommendationSpotifyAlbum_ProcessedFileDao_Impl(appDatabase) {
+    : DaoDelegate<ResolvedRecommendationSpotifyAlbum>() {
     override fun selectByPrimaryKey(primaryKey: String) =
-            selectAlbumById(primaryKey).firstOrNull()?.let {
+            spotifyAlbumDao.selectAlbumById(primaryKey).firstOrNull()?.let {
                 val images = processedFileDaoDelegate.collectByPrimaryKeys(it.images)
                 return@let ResolvedRecommendationSpotifyAlbum(
                         id = it.recommendationUserSpotifyThemeTrackAlbum.id,
@@ -22,7 +17,7 @@ internal class RecommendationSpotifyAlbumDaoDelegate(
 
     override fun insertResolved(source: ResolvedRecommendationSpotifyAlbum) {
         processedFileDaoDelegate.insertResolvedForAlbumId(source.id, source.images)
-        insertAlbum(RecommendationUserSpotifyThemeTrackAlbumEntity(
+        spotifyAlbumDao.insertAlbum(RecommendationUserSpotifyThemeTrackAlbumEntity(
                 id = source.id,
                 name = source.name))
     }

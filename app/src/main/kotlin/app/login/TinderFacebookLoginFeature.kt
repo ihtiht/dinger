@@ -36,8 +36,8 @@ internal class TinderFacebookLoginFeature(
                                     .show()
                         }
 
-                        override fun onSuccess(loginResult: LoginResult)
-                                = reportSuccess(AccessToken.getCurrentAccessToken())
+                        override fun onSuccess(loginResult: LoginResult) =
+                                reportSuccess(AccessToken.getCurrentAccessToken())
                     })
         }
     }

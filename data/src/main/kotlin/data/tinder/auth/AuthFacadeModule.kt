@@ -23,6 +23,6 @@ internal class AuthFacadeModule {
     fun facade(
             source: AuthSource,
             requestEntityMapper: AuthRequestEntityMapper,
-            responseEntityMapper: AuthResponseEntityMapper)
-            = AuthFacade(source, requestEntityMapper, responseEntityMapper)
+            responseEntityMapper: AuthResponseEntityMapper) =
+            AuthFacade(source, requestEntityMapper, responseEntityMapper)
 }

@@ -8,8 +8,8 @@ internal abstract class RequestFacade<in RequestModel, MappedRequestModel, Respo
         internal val requestMapper: EntityMapper<RequestModel, MappedRequestModel>,
         private val responseMapper: EntityMapper<ResponseModel, MappedModel>)
     : Fetchable<RequestModel, MappedModel> {
-    override fun fetch(parameters: RequestModel)
-            = map(source.fetch(requestMapper.from(parameters)))
+    override fun fetch(parameters: RequestModel) =
+            map(source.fetch(requestMapper.from(parameters)))
 
     /**
      * Maps items on the given series to another model.
