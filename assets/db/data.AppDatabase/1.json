@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1fd5010a4720431e2bf7b0e03d57ceb0",
+    "identityHash": "cbbb789c92e86b154542eb84a8db6401",
     "entities": [
       {
         "tableName": "RecommendationUserEntity",
@@ -943,15 +943,12 @@
         },
         "indices": [
           {
-            "name": "index_RecommendationUserCommonConnectionEntity_PhotoEntity_recommendationUserCommonConnectionEntityId_small_medium_large",
+            "name": "index_RecommendationUserCommonConnectionEntity_PhotoEntity_recommendationUserCommonConnectionEntityId",
             "unique": false,
             "columnNames": [
-              "recommendationUserCommonConnectionEntityId",
-              "small",
-              "medium",
-              "large"
+              "recommendationUserCommonConnectionEntityId"
             ],
-            "createSql": "CREATE  INDEX `index_RecommendationUserCommonConnectionEntity_PhotoEntity_recommendationUserCommonConnectionEntityId_small_medium_large` ON `${TABLE_NAME}` (`recommendationUserCommonConnectionEntityId`, `small`, `medium`, `large`)"
+            "createSql": "CREATE  INDEX `index_RecommendationUserCommonConnectionEntity_PhotoEntity_recommendationUserCommonConnectionEntityId` ON `${TABLE_NAME}` (`recommendationUserCommonConnectionEntityId`)"
           }
         ],
         "foreignKeys": []
@@ -1054,7 +1051,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"1fd5010a4720431e2bf7b0e03d57ceb0\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"cbbb789c92e86b154542eb84a8db6401\")"
     ]
   }
 }
