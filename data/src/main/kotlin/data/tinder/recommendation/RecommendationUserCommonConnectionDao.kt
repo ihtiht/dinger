@@ -10,6 +10,7 @@ internal interface RecommendationUserCommonConnectionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCommonConnection(commonConnection: RecommendationUserCommonConnectionEntity)
 
-    @Query("SELECT * from RecommendationUserCommonConnectionEntity")
-    fun selectAllCommonConnections(): List<RecommendationUserCommonConnectionWithRelatives>
+    @Query("SELECT * from RecommendationUserCommonConnectionEntity WHERE id=:id")
+    fun selectCommonConnectionById(id: String)
+            : List<RecommendationUserCommonConnectionWithRelatives>
 }

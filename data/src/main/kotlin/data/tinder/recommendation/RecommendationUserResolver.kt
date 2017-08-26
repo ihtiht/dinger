@@ -5,6 +5,7 @@ import data.AppDatabase
 
 internal class RecommendationUserResolver(
         appDatabase: AppDatabase,
+        private val commonConnectionDaoDelegate: RecommendationCommonConnectionDaoDelegate,
         private val instagramDaoDelegate: RecommendationInstagramDaoDelegate,
         private val interestDaoDelegate: RecommendationInterestDaoDelegate,
         private val photoDaoDelegate: RecommendationPhotoDaoDelegate,
@@ -36,6 +37,7 @@ internal class RecommendationUserResolver(
         instagramDaoDelegate.insertResolved(instagram)
         teaserDaoDelegate.insertResolved(teaser)
         spotifyThemeTrackDaoDelegate.insertResolved(spotifyThemeTrack)
+        commonConnectionDaoDelegate.insertResolvedForUserId(id, commonConnections)
         interestDaoDelegate.insertResolvedForUserId(id, commonInterests)
         photoDaoDelegate.insertResolvedForUserId(id, photos)
         jobDaoDelegate.insertResolvedForUserId(id, jobs)
@@ -50,6 +52,8 @@ internal class RecommendationUserResolver(
             Transformations.map(selectUsersByFilterOnName(filter)) { it.map { from(it) } }
 
     private fun from(source: RecommendationUserWithRelatives): ResolvedRecommendationUser {
+        val commonConnections
+                = commonConnectionDaoDelegate.collectByPrimaryKeys(source.commonConnections)
         val commonInterests = interestDaoDelegate.collectByPrimaryKeys(source.commonInterests)
         val photos = photoDaoDelegate.collectByPrimaryKeys(source.photos)
         val jobs = jobDaoDelegate.collectByPrimaryKeys(source.jobs)
@@ -58,6 +62,7 @@ internal class RecommendationUserResolver(
         source.recommendationUserEntity.let {
             return ResolvedRecommendationUser(
                     distanceMiles = it.distanceMiles,
+                    commonConnections = commonConnections,
                     connectionCount = it.connectionCount,
                     contentHash = it.contentHash,
                     id = it.id,

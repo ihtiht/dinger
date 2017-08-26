@@ -4,6 +4,7 @@ import java.util.Date
 
 internal class ResolvedRecommendationUser(
         val distanceMiles: Int,
+        val commonConnections: Iterable<ResolvedRecommendationCommonConnection>,
         val connectionCount: Int,
         val id: String,
         val birthDate: Date,

@@ -6,7 +6,7 @@ import data.DaoDelegate
 internal class RecommendationSpotifyAlbumDaoDelegate(
         appDatabase: RoomDatabase,
         private val processedFileDaoDelegate: RecommendationProcessedFileDaoDelegate)
-    : DaoDelegate<ResolvedRecommendationSpotifyAlbum>,
+    : DaoDelegate<ResolvedRecommendationSpotifyAlbum>(),
         RecommendationUserSpotifyThemeTrackAlbumDao
         by RecommendationUserSpotifyThemeTrackAlbumDao_Impl(appDatabase),
         RecommendationSpotifyAlbum_ProcessedFileDao

@@ -7,14 +7,6 @@ internal class RecommendationJobDaoDelegate(appDatabase: RoomDatabase)
     : CollectibleDaoDelegate<ResolvedRecommendationJob>(),
         RecommendationUserJobDao by RecommendationUserJobDao_Impl(appDatabase),
         RecommendationUser_JobDao by RecommendationUser_JobDao_Impl(appDatabase) {
-    override fun selectByPrimaryKey(primaryKey: String) =
-            selectJobById(primaryKey).firstOrNull()?.let {
-                return@let ResolvedRecommendationJob(
-                        id = it.id,
-                        company = ResolvedRecommendationCompany(name = it.company.name),
-                        title = ResolvedRecommendationTitle(name = it.title.name))
-            } ?: ResolvedRecommendationJob.NONE
-
     override fun insertResolved(source: ResolvedRecommendationJob) = insertJob(
             RecommendationUserJobEntity(
                     id = source.id,

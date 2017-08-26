@@ -6,7 +6,7 @@ import data.DaoDelegate
 internal class RecommendationInstagramDaoDelegate(
         appDatabase: RoomDatabase,
         private val instagramPhotoDaoDelegate: RecommendationInstagramPhotoDaoDelegate)
-    : DaoDelegate<ResolvedRecommendationInstagram>,
+    : DaoDelegate<ResolvedRecommendationInstagram>(),
         RecommendationUserInstagramDao by RecommendationUserInstagramDao_Impl(appDatabase) {
     override fun selectByPrimaryKey(primaryKey: String) =
             selectInstagramByUsername(primaryKey).firstOrNull()?.let {

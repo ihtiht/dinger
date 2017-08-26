@@ -7,7 +7,7 @@ internal class RecommendationSpotifyThemeTrackDaoDelegate(
         appDatabase: RoomDatabase,
         private val spotifyArtistDaoDelegate: RecommendationSpotifyArtistDaoDelegate,
         private val spotifyAlbumDaoDelegate: RecommendationSpotifyAlbumDaoDelegate)
-    : DaoDelegate<ResolvedRecommendationSpotifyThemeTrack>,
+    : DaoDelegate<ResolvedRecommendationSpotifyThemeTrack>(),
         RecommendationUserSpotifyThemeTrackDao
         by RecommendationUserSpotifyThemeTrackDao_Impl(appDatabase) {
     override fun selectByPrimaryKey(primaryKey: String) =

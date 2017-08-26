@@ -1,7 +1,7 @@
 package data
 
-internal interface DaoDelegate<T> {
-    fun selectByPrimaryKey(primaryKey: String): T
+internal abstract class DaoDelegate<T> {
+    open fun selectByPrimaryKey(primaryKey: String): T = throw NotImplementedError("Not implemented.")
 
-    fun insertResolved(source: T)
+    abstract fun insertResolved(source: T)
 }
