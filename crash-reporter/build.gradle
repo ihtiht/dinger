@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'org.jmailen.kotlinter'
+apply plugin: 'org.jetbrains.dokka-android'
+
+android {
+    compileSdkVersion rootProject.ext.androidCompileSdkVersion
+    buildToolsVersion rootProject.ext.androidBuildToolsVersion
+    defaultConfig {
+        versionCode rootProject.ext.androidVersionCode
+        versionName rootProject.ext.androidVersionName
+        minSdkVersion rootProject.ext.androidMinSdkVersion
+        targetSdkVersion rootProject.ext.androidTargetSdkVersion
+    }
+    dexOptions {
+        preDexLibraries false
+        javaMaxHeapSize "8g"
+    }
+    lintOptions {
+        abortOnError true
+        absolutePaths true
+        checkAllWarnings true
+        htmlOutput = new File("$rootProject.ext.staticAnalysisReportTarget/$project.name/lint.html")
+        quiet false
+        warningsAsErrors true
+    }
+    publishNonDefault true
+    sourceSets.forEach {
+        it.java.srcDirs += ["src/$it.name/kotlin"]
+    }
+}
+repositories {
+    jcenter()
+    maven { url "https://maven.google.com" }
+}
+dependencies {
+    compile rootProject.ext.compileDependencies
+    compile rootProject.ext.compileCrashReporterDependencies
+}
