@@ -66,6 +66,8 @@ dependencies {
     releaseCompile project(path: ':data', configuration: 'release') // This is only for the ContentProvider. Don't import data in src!
     debugCompile project(path: ':domain', configuration: 'debug')
     releaseCompile project(path: ':domain', configuration: 'release')
+    debugCompile project(path: ':crash-reporter', configuration: 'debug')
+    releaseCompile project(path: ':crash-reporter', configuration: 'release')
     compile rootProject.ext.compileDependencies
     kapt rootProject.ext.annotationProcessorAppDependencies
     compile rootProject.ext.compileAppDependencies

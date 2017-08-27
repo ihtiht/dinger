@@ -1,32 +1,29 @@
 package app.splash
 
-import android.content.Context
-import com.google.firebase.crash.FirebaseCrash
 import domain.auth.LoggedInUserCheckUseCase
 import io.reactivex.Scheduler
 import io.reactivex.observers.DisposableSingleObserver
-import org.stoyicker.dinger.R
+import reporter.CrashReporter
 
 internal class LoggedInCheckCoordinator(
-        private val context: Context,
         private val asyncExecutionScheduler: Scheduler,
         private val postExecutionScheduler: Scheduler,
-        private val resultCallback: ResultCallback) {
+        private val resultCallback: ResultCallback,
+        private val crashReporter: CrashReporter) {
     private var useCase: LoggedInUserCheckUseCase? = null
 
     fun actionDoCheck() {
         useCase = LoggedInUserCheckUseCase(asyncExecutionScheduler, postExecutionScheduler)
         useCase?.execute(object : DisposableSingleObserver<Boolean>() {
-            override fun onSuccess(t: Boolean) {
-                when (t) {
+            override fun onSuccess(foundAUser: Boolean) {
+                when (foundAUser) {
                     true -> resultCallback.onLoggedInUserFound()
                     false -> resultCallback.onLoggedInUserNotFound()
                 }
             }
 
             override fun onError(error: Throwable) {
-                FirebaseCrash.report(IllegalStateException(context.getString(
-                        R.string.account_check_should_always_succeed)))
+                crashReporter.report(error)
                 resultCallback.onLoggedInUserNotFound()
             }
         })

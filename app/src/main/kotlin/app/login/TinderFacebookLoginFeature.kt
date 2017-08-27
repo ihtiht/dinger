@@ -9,17 +9,18 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginBehavior
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
-import com.google.firebase.crash.FirebaseCrash
 import org.stoyicker.dinger.R
+import reporter.CrashReporter
 
 internal class TinderFacebookLoginFeature(
         loginButton: LoginButton,
-        private val resultCallback: ResultCallback) {
+        private val resultCallback: ResultCallback,
+        private val crashReporter: CrashReporter) {
     private val callbackManager: CallbackManager = CallbackManager.Factory.create()
 
     init {
         loginButton.apply {
-            // This hack is required to pretend we are Tinder
+            // This 'hack' is required to pretend that we are Tinder
             loginBehavior = LoginBehavior.WEB_ONLY
             registerCallback(callbackManager,
                     object : FacebookCallback<LoginResult> {
@@ -29,8 +30,8 @@ internal class TinderFacebookLoginFeature(
                                     .show()
                         }
 
-                        override fun onError(exception: FacebookException?) {
-                            exception?.let { FirebaseCrash.report(it) }
+                        override fun onError(exception: FacebookException) {
+                            crashReporter.report(exception)
                             Toast.makeText(context, R.string.login_failed,
                                     Toast.LENGTH_LONG)
                                     .show()

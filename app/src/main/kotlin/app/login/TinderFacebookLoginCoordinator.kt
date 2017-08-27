@@ -1,15 +1,16 @@
 package app.login
 
-import com.google.firebase.crash.FirebaseCrash
 import domain.auth.TinderFacebookLoginUseCase
 import io.reactivex.Scheduler
 import io.reactivex.observers.DisposableCompletableObserver
+import reporter.CrashReporter
 
 internal class TinderFacebookLoginCoordinator(
         private val view: TinderLoginView,
         private val asyncExecutionScheduler: Scheduler,
         private val postExecutionScheduler: Scheduler,
-        private val resultCallback: ResultCallback) {
+        private val resultCallback: ResultCallback,
+        private val crashReporter: CrashReporter) {
     private var useCase: TinderFacebookLoginUseCase? = null
 
     fun actionDoLogin(facebookId: String, facebookToken: String) {
@@ -18,7 +19,7 @@ internal class TinderFacebookLoginCoordinator(
                 facebookId, facebookToken, asyncExecutionScheduler, postExecutionScheduler)
         useCase?.execute(object : DisposableCompletableObserver() {
             override fun onError(error: Throwable) {
-                FirebaseCrash.report(error)
+                crashReporter.report(error)
                 view.setError()
             }
 

@@ -6,6 +6,7 @@ import com.facebook.login.widget.LoginButton
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
+import reporter.CrashReporter
 import javax.inject.Named
 
 @Module
@@ -18,8 +19,11 @@ internal class TinderFacebookLoginModule(
         private val tinderFacebookLoginCoordinatorResultCallback
         : TinderFacebookLoginCoordinator.ResultCallback) {
     @Provides
-    fun feature() =
-            TinderFacebookLoginFeature(loginButton, tinderFacebookLoginResultCallback)
+    fun feature(crashReporter: CrashReporter) =
+            TinderFacebookLoginFeature(
+                    loginButton,
+                    tinderFacebookLoginResultCallback,
+                    crashReporter)
 
     @Provides
     fun view(): TinderLoginView =
@@ -29,10 +33,12 @@ internal class TinderFacebookLoginModule(
     fun coordinator(
             view: TinderLoginView,
             @Named("io") asyncExecutionScheduler: Scheduler,
-            @Named("main") postExecutionScheduler: Scheduler) =
+            @Named("main") postExecutionScheduler: Scheduler,
+            crashReporter: CrashReporter) =
             TinderFacebookLoginCoordinator(
                     view,
                     asyncExecutionScheduler,
                     postExecutionScheduler,
-                    tinderFacebookLoginCoordinatorResultCallback)
+                    tinderFacebookLoginCoordinatorResultCallback,
+                    crashReporter)
 }
