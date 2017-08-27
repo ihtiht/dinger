@@ -7,10 +7,9 @@ import reporter.CrashReporter
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
-/**
- * Module used to provide stuff required by TopRequestFacade objects.
- */
-@Module(includes = arrayOf(RecommendationSourceModule::class, FirebaseCrashReporterModule::class))
+@Module(includes = arrayOf(RecommendationSourceModule::class,
+        FirebaseCrashReporterModule::class,
+        RecommendationEventTrackerModule::class))
 internal class RecommendationFacadeModule {
     @Provides
     @Singleton
@@ -18,8 +17,10 @@ internal class RecommendationFacadeModule {
 
     @Provides
     @Singleton
-    fun responseEntityMapper(crashReporter: CrashReporter) = RecommendationResponseEntityMapper(
-            crashReporter)
+    fun responseEntityMapper(
+            crashReporter: CrashReporter,
+            eventTracker: RecommendationEventTracker) =
+            RecommendationResponseEntityMapper(crashReporter, eventTracker)
 
     @Provides
     @Singleton

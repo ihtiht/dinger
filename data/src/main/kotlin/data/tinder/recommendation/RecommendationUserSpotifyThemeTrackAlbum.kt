@@ -4,8 +4,8 @@ import com.squareup.moshi.Json
 
 internal class RecommendationUserSpotifyThemeTrackAlbum private constructor(
         @field:Json(name = "images")
-        private val images: Array<RecommendationUserPhotoProcessedFile>,
+        val images: Array<RecommendationUserPhotoProcessedFile>,
         @field:Json(name = "name")
-        private val name: String,
+        val name: String,
         @field:Json(name = "id")
-        private val id: String)
+        val id: String)
