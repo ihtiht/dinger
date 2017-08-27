@@ -1,6 +1,5 @@
 package data.tinder
 
-import com.google.firebase.crash.FirebaseCrash
 import data.ComponentHolder
 import data.tinder.auth.AuthFacade
 import data.tinder.recommendation.RecommendationFacade
@@ -9,6 +8,7 @@ import domain.auth.DomainAuthedUser
 import domain.recommendation.DomainRecommendation
 import domain.repository.TinderApiRepository
 import io.reactivex.Single
+import reporter.CrashReporter
 import javax.inject.Inject
 
 internal class TinderApiRepositoryImpl : TinderApiRepository {
@@ -16,14 +16,16 @@ internal class TinderApiRepositoryImpl : TinderApiRepository {
     lateinit var loginFacade: AuthFacade
     @Inject
     lateinit var recommendationFacade: RecommendationFacade
+    @Inject
+    lateinit var crashReporter: CrashReporter
 
     init {
           ComponentHolder.tinderRepositoryComponent.inject(this)
     }
 
     override fun login(parameters: DomainAuthRequestParameters): Single<DomainAuthedUser> =
-            loginFacade.fetch(parameters).doOnError { FirebaseCrash.report(it) }
+            loginFacade.fetch(parameters).doOnError { crashReporter.report(it) }
 
     override fun getRecommendations(): Single<Collection<DomainRecommendation>> =
-            recommendationFacade.fetch(Unit).doOnError { FirebaseCrash.report(it) }
+            recommendationFacade.fetch(Unit).doOnError { crashReporter.report(it) }
 }

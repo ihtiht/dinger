@@ -5,9 +5,6 @@ import dagger.Provides
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
-/**
- * Module used to provide stuff required by TopRequestFacade objects.
- */
 @Module(includes = arrayOf(AuthSourceModule::class))
 internal class AuthFacadeModule {
     @Provides

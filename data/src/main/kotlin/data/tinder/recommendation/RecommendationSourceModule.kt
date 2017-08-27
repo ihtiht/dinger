@@ -9,10 +9,12 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Rfc3339DateJsonAdapter
 import dagger.Module
 import dagger.Provides
+import data.crash.FirebaseCrashReporterModule
 import data.network.ParserModule
 import data.tinder.TinderApi
 import data.tinder.TinderApiModule
 import okio.BufferedSource
+import reporter.CrashReporter
 import java.util.Date
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
@@ -20,7 +22,8 @@ import dagger.Lazy as DaggerLazy
 /**
  * Module used to provide stuff required by TopRequestSource objects.
  */
-@Module(includes = arrayOf(ParserModule::class, TinderApiModule::class))
+@Module(includes = arrayOf(ParserModule::class, TinderApiModule::class,
+        FirebaseCrashReporterModule::class))
 internal class RecommendationSourceModule {
     @Provides
     @Singleton
@@ -36,8 +39,8 @@ internal class RecommendationSourceModule {
 
     @Provides
     @Singleton
-    fun source(store: DaggerLazy<Store<RecommendationResponse, Unit>>) =
-            RecommendationSource(store)
+    fun source(store: DaggerLazy<Store<RecommendationResponse, Unit>>,
+               crashReporter: CrashReporter) = RecommendationSource(store, crashReporter)
 
     private fun fetch(api: TinderApi) = api.getRecommendations().map { it.source() }
 }

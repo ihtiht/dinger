@@ -4,11 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.support.annotation.CallSuper
 import android.support.v4.app.JobIntentService
-import com.google.firebase.crash.FirebaseCrash
+import data.ComponentHolder
 import domain.recommendation.DomainRecommendation
+import reporter.CrashReporter
+import javax.inject.Inject
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
     private val ongoingActions = mutableSetOf<Action<*>>()
+    @Inject
+    lateinit var crashReporter: CrashReporter
+
+    init {
+        ComponentHolder.autoSwipeComponent.inject(this)
+    }
 
     override fun onHandleWork(intent: Intent) {
         requestRecommendations()
@@ -36,7 +44,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
 
         @CallSuper
         fun onError(autoSwipeJobIntentService: AutoSwipeJobIntentService, error: Throwable) {
-            FirebaseCrash.report(error)
+            autoSwipeJobIntentService.crashReporter.report(error)
             autoSwipeJobIntentService.clearAction(action)
             autoSwipeJobIntentService.scheduleFromError()
         }

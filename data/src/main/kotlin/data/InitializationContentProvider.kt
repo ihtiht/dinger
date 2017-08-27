@@ -8,13 +8,9 @@ import data.account.AppAccountManagerImpl
 import data.account.DaggerAccountComponent
 import data.alarm.AppAlarmManagerImpl
 import data.autoswipe.AutoSwipeLauncherFactoryImpl
+import data.autoswipe.DaggerAutoSwipeComponent
 import data.network.FacadeProviderImpl
-import data.network.NetworkModule
 import data.tinder.DaggerTinderRepositoryComponent
-import data.tinder.auth.AuthFacadeModule
-import data.tinder.auth.AuthSourceModule
-import data.tinder.recommendation.RecommendationFacadeModule
-import data.tinder.recommendation.RecommendationSourceModule
 import domain.DomainHolder
 import domain.alarm.AlarmHolder
 import domain.auth.AuthHolder
@@ -38,23 +34,22 @@ internal class InitializationContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         val rootModule = RootModule(context)
         val accountModule = AccountModule()
-        data.ComponentHolder.accountComponent = DaggerAccountComponent.builder()
-                .rootModule(rootModule)
-                .accountModule(accountModule)
-                .build()
-        data.ComponentHolder.tinderRepositoryComponent = DaggerTinderRepositoryComponent.builder()
-                .rootModule(rootModule)
-                .accountModule(accountModule)
-                .authSourceModule(AuthSourceModule())
-                .authFacadeModule(AuthFacadeModule())
-                .recommendationSourceModule(RecommendationSourceModule())
-                .recommendationFacadeModule(RecommendationFacadeModule())
-                .build()
+        ComponentHolder.apply {
+            accountComponent = DaggerAccountComponent.builder()
+                    .rootModule(rootModule)
+                    .accountModule(accountModule)
+                    .build()
+            tinderRepositoryComponent = DaggerTinderRepositoryComponent.builder()
+                    .rootModule(rootModule)
+                    .accountModule(accountModule)
+                    .build()
+            autoSwipeComponent = DaggerAutoSwipeComponent.create()
+        }
         DaggerInitializationComponent.builder()
                 .rootModule(rootModule)
                 .accountModule(accountModule)
-                .networkModule(NetworkModule())
-                .build().inject(this)
+                .build()
+                .inject(this)
         DomainHolder.apply {
             facadeProvider(facadeProviderImpl)
         }

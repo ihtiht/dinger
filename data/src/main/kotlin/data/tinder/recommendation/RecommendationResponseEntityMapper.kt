@@ -1,11 +1,11 @@
 package data.tinder.recommendation
 
-import com.google.firebase.crash.FirebaseCrash
 import data.EntityMapper
 import domain.DomainException
 import domain.recommendation.DomainRecommendation
+import reporter.CrashReporter
 
-internal class RecommendationResponseEntityMapper
+internal class RecommendationResponseEntityMapper(private val crashReporter: CrashReporter)
     : EntityMapper<RecommendationResponse, Collection<DomainRecommendation>> {
     override fun from(source: RecommendationResponse) = source.recommendations.let {
         when (it) {
@@ -22,7 +22,7 @@ internal class RecommendationResponseEntityMapper
             when (source.type) {
                 "user" -> source.user.let { DomainRecommendation(it.id, it.name) }
                 else -> {
-                    FirebaseCrash.report(IllegalStateException(
+                    crashReporter.report(IllegalStateException(
                             "Unexpected recommendation type ${source.type}"))
                     null
                 }
