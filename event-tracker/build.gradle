@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jmailen.kotlinter'
 apply plugin: 'org.jetbrains.dokka-android'
 
@@ -35,8 +34,6 @@ repositories {
     maven { url "https://maven.google.com" }
 }
 dependencies {
-    kapt rootProject.ext.annotationProcessorDomainDependencies
     compile rootProject.ext.compileDependencies
-    compile rootProject.ext.compileDomainDependencies
-    provided rootProject.ext.providedDomainDependencies
+    compile rootProject.ext.compileEventTrackerDependencies
 }

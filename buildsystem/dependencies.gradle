@@ -63,4 +63,7 @@ ext {
     compileCrashReporterDependencies = [
             "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
     ]
+    compileEventTrackerDependencies = [
+            "com.google.firebase:firebase-core:$googlePlayServicesVersion",
+    ]
 }

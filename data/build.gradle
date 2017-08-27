@@ -53,6 +53,8 @@ dependencies {
     releaseCompile project(path: ':domain', configuration: 'release')
     debugCompile project(path: ':crash-reporter', configuration: 'debug')
     releaseCompile project(path: ':crash-reporter', configuration: 'release')
+    debugCompile project(path: ':event-tracker', configuration: 'debug')
+    releaseCompile project(path: ':event-tracker', configuration: 'release')
     kapt rootProject.ext.annotationProcessorDataDependencies
     debugCompile rootProject.ext.debugCompileDataDependencies
     compile rootProject.ext.compileDependencies
