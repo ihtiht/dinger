@@ -1,14 +1,12 @@
 package data.autoswipe
 
-import data.autoswipe.AutoSwipeJobIntentService.CommonResultDelegate
 import domain.autoswipe.FromErrorPostAutoSwipeUseCase
 import domain.interactor.DisposableUseCase
 import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.schedulers.Schedulers
 
-internal class FromErrorPostAutoSwipeAction : AutoSwipeJobIntentService.Action<Unit>  {
+internal class FromErrorPostAutoSwipeAction : AutoSwipeJobIntentService.Action<Unit>()  {
     private var useCaseDelegate: DisposableUseCase? = null
-    private val commonDelegate = CommonResultDelegate(this)
 
     override fun execute(owner: AutoSwipeJobIntentService, callback: Unit) =
             FromErrorPostAutoSwipeUseCase(owner, Schedulers.trampoline()).let {

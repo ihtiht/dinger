@@ -1,6 +1,5 @@
 package data.autoswipe
 
-import data.autoswipe.AutoSwipeJobIntentService.CommonResultDelegate
 import domain.interactor.DisposableUseCase
 import domain.recommendation.DomainRecommendation
 import domain.recommendation.GetRecommendationsUseCase
@@ -8,9 +7,8 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
 internal class GetRecommendationsAction
-    : AutoSwipeJobIntentService.Action<GetRecommendationsAction.Callback>  {
+    : AutoSwipeJobIntentService.Action<GetRecommendationsAction.Callback>()  {
     private var useCaseDelegate: DisposableUseCase? = null
-    private val commonDelegate = CommonResultDelegate(this)
 
     override fun execute(owner: AutoSwipeJobIntentService, callback: Callback) =
             GetRecommendationsUseCase(Schedulers.trampoline()).let {

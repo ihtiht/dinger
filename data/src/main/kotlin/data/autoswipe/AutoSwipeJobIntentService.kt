@@ -30,10 +30,12 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         }
     }
 
-    interface Action<in T> {
-        fun execute(owner: AutoSwipeJobIntentService, callback: T)
+    abstract class Action<in T> {
+        protected val commonDelegate by lazy { CommonResultDelegate(this) }
 
-        fun dispose()
+        abstract fun execute(owner: AutoSwipeJobIntentService, callback: T)
+
+        abstract fun dispose()
     }
 
     class CommonResultDelegate(private val action: Action<*>) {
