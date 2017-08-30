@@ -4,7 +4,7 @@ import io.reactivex.Completable
 import io.reactivex.Scheduler
 import io.reactivex.observers.DisposableCompletableObserver
 
-abstract class CompletableDisposableUseCase internal constructor(
+abstract class CompletableDisposableUseCase protected constructor(
         /**
          * Send null for in-place synchronous execution
          */

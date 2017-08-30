@@ -9,7 +9,7 @@ abstract class DisposableUseCase protected constructor() {
      * Tears down the use case if required.
      */
       fun dispose() {
-          if (!(assembledSubscriber?.isDisposed ?: true)) {
+          if (assembledSubscriber?.isDisposed == false) {
             assembledSubscriber!!.dispose()
           }
       }
