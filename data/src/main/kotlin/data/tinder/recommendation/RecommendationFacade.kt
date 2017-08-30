@@ -1,12 +1,11 @@
 package data.tinder.recommendation
 
-import data.EntityMapper
+import data.ObjectMapper
 import data.network.RequestFacade
-import domain.recommendation.DomainRecommendation
 
-internal class RecommendationFacade constructor(
+internal class RecommendationFacade(
         source: RecommendationSource,
-        requestMapper: EntityMapper<Unit, Unit>,
-        responseMapper: EntityMapper<RecommendationResponse, Collection<DomainRecommendation>>)
-    : RequestFacade<Unit, Unit, RecommendationResponse, Collection<DomainRecommendation>>(
+        requestMapper: ObjectMapper<Unit, Unit>,
+        responseMapper: ObjectMapper<RecommendationResponse, Collection<ResolvedRecommendationUser>>)
+    : RequestFacade<Unit, Unit, RecommendationResponse, Collection<ResolvedRecommendationUser>>(
         source, requestMapper, responseMapper)

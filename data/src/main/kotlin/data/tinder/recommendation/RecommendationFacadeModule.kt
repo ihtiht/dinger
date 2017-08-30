@@ -13,20 +13,20 @@ import dagger.Lazy as DaggerLazy
 internal class RecommendationFacadeModule {
     @Provides
     @Singleton
-    fun requestEntityMapper() = RecommendationRequestEntityMapper()
+    fun requestObjectMapper() = RecommendationRequestObjectMapper()
 
     @Provides
     @Singleton
-    fun responseEntityMapper(
+    fun responseObjectMapper(
             crashReporter: CrashReporter,
             eventTracker: RecommendationEventTracker) =
-            RecommendationResponseEntityMapper(crashReporter, eventTracker)
+            RecommendationResponseObjectMapper(crashReporter, eventTracker)
 
     @Provides
     @Singleton
     fun facade(
             source: RecommendationSource,
-            requestEntityMapper: RecommendationRequestEntityMapper,
-            responseEntityMapper: RecommendationResponseEntityMapper) =
-            RecommendationFacade(source, requestEntityMapper, responseEntityMapper)
+            requestObjectMapper: RecommendationRequestObjectMapper,
+            responseObjectMapper: RecommendationResponseObjectMapper) =
+            RecommendationFacade(source, requestObjectMapper, responseObjectMapper)
 }

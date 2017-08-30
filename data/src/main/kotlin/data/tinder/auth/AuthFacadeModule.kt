@@ -9,17 +9,17 @@ import dagger.Lazy as DaggerLazy
 internal class AuthFacadeModule {
     @Provides
     @Singleton
-    fun requestEntityMapper() = AuthRequestEntityMapper()
+    fun requestObjectMapper() = AuthRequestObjectMapper()
 
     @Provides
     @Singleton
-    fun responseEntityMapper() = AuthResponseEntityMapper()
+    fun responseObjectMapper() = AuthResponseObjectMapper()
 
     @Provides
     @Singleton
     fun facade(
             source: AuthSource,
-            requestEntityMapper: AuthRequestEntityMapper,
-            responseEntityMapper: AuthResponseEntityMapper) =
-            AuthFacade(source, requestEntityMapper, responseEntityMapper)
+            requestObjectMapper: AuthRequestObjectMapper,
+            responseObjectMapper: AuthResponseObjectMapper) =
+            AuthFacade(source, requestObjectMapper, responseObjectMapper)
 }

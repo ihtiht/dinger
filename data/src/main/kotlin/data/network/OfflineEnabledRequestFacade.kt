@@ -1,6 +1,6 @@
 package data.network
 
-import data.EntityMapper
+import data.ObjectMapper
 
 /**
  * Defines how a typical request looks.
@@ -8,8 +8,8 @@ import data.EntityMapper
 internal abstract class OfflineEnabledRequestFacade<
         RequestModel, MappedRequestModel, ResponseModel, MappedModel>(
         source: RequestSource<MappedRequestModel, ResponseModel>,
-        requestMapper: EntityMapper<RequestModel, MappedRequestModel>,
-        responseMapper: EntityMapper<ResponseModel, MappedModel>)
+        requestMapper: ObjectMapper<RequestModel, MappedRequestModel>,
+        responseMapper: ObjectMapper<ResponseModel, MappedModel>)
     : Gettable<RequestModel, MappedModel>,
         RequestFacade<RequestModel, MappedRequestModel, ResponseModel, MappedModel>(
         source, requestMapper, responseMapper) {

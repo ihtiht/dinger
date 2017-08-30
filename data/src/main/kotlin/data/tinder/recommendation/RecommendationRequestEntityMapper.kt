@@ -1,7 +1,7 @@
 package data.tinder.recommendation
 
-import data.EntityMapper
+import data.ObjectMapper
 
-internal class RecommendationRequestEntityMapper : EntityMapper<Unit, Unit> {
+internal class RecommendationRequestObjectMapper : ObjectMapper<Unit, Unit> {
     override fun from(source: Unit) = source
 }

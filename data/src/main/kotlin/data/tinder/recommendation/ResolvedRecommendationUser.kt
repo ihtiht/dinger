@@ -18,7 +18,7 @@ internal data class ResolvedRecommendationUser(
         val groupMatched: Boolean,
         val pingTime: Date,
         val sNumber: Int,
-        val liked: Boolean,
+        val liked: Boolean = false, // Recommendations are not liked by default
         val commonInterests: Iterable<ResolvedRecommendationInterest>,
         val photos: Iterable<ResolvedRecommendationPhoto>,
         val jobs: Iterable<ResolvedRecommendationJob>,
