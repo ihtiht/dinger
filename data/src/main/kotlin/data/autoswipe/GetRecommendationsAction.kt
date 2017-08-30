@@ -1,7 +1,7 @@
 package data.autoswipe
 
 import domain.interactor.DisposableUseCase
-import domain.recommendation.DomainRecommendation
+import domain.recommendation.DomainRecommendationUser
 import domain.recommendation.GetRecommendationsUseCase
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
@@ -13,8 +13,9 @@ internal class GetRecommendationsAction
     override fun execute(owner: AutoSwipeJobIntentService, callback: Callback) =
             GetRecommendationsUseCase(Schedulers.trampoline()).let {
                 useCaseDelegate = it
-                it.execute(object : DisposableSingleObserver<Collection<DomainRecommendation>>() {
-                    override fun onSuccess(payload: Collection<DomainRecommendation>) {
+                it.execute(object
+                    : DisposableSingleObserver<Collection<DomainRecommendationUser>>() {
+                    override fun onSuccess(payload: Collection<DomainRecommendationUser>) {
                         commonDelegate.onComplete(owner)
                         callback.onRecommendationsReceived(payload)
                     }
@@ -30,6 +31,6 @@ internal class GetRecommendationsAction
     }
 
     interface Callback {
-        fun onRecommendationsReceived(recommendations: Collection<DomainRecommendation>)
+        fun onRecommendationsReceived(recommendations: Collection<DomainRecommendationUser>)
     }
 }

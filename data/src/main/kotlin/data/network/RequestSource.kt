@@ -10,8 +10,7 @@ internal abstract class RequestSource<in RequestModel, ResponseModel>(
     : Gettable<RequestModel, ResponseModel> {
     override fun fetch(parameters: RequestModel): Single<ResponseModel> {
         return operate(store.fetch(parameters).onErrorResumeNext { error ->
-            get(parameters).doOnEvent { _, _ -> crashReporter.report(error) }
-                    .onErrorResumeNext(Single.error(error))
+            get(parameters).onErrorResumeNext(Single.error(error))
         })
     }
 

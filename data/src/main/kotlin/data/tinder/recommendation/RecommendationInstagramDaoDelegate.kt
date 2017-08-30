@@ -1,19 +1,20 @@
 package data.tinder.recommendation
 
 import data.DaoDelegate
+import domain.recommendation.DomainRecommendationInstagram
 
 internal class RecommendationInstagramDaoDelegate(
         private val instagramDao: RecommendationUserInstagramDao,
         private val instagramPhotoDaoDelegate: RecommendationInstagramPhotoDaoDelegate)
-    : DaoDelegate<String?, ResolvedRecommendationInstagram?>() {
-    override fun selectByPrimaryKey(primaryKey: String?): ResolvedRecommendationInstagram? {
+    : DaoDelegate<String?, DomainRecommendationInstagram?>() {
+    override fun selectByPrimaryKey(primaryKey: String?): DomainRecommendationInstagram? {
         if (primaryKey == null) {
             return null
         }
         return instagramDao.selectInstagramByUsername(primaryKey).firstOrNull()?.let {
             val photos = instagramPhotoDaoDelegate.collectByPrimaryKeys(it.photos)
             it.recommendationUserInstagram.let {
-                ResolvedRecommendationInstagram(
+                DomainRecommendationInstagram(
                         profilePictureUrl = it.profilePictureUrl,
                         lastFetchTime = it.lastFetchTime,
                         mediaCount = it.mediaCount,
@@ -24,11 +25,11 @@ internal class RecommendationInstagramDaoDelegate(
         }
     }
 
-    override fun insertResolved(source: ResolvedRecommendationInstagram?) {
+    override fun insertDomain(source: DomainRecommendationInstagram?) {
         if (source == null) {
             return
         }
-        instagramPhotoDaoDelegate.insertResolvedForInstagramUsername(source.username, source.photos)
+        instagramPhotoDaoDelegate.insertDomainForInstagramUsername(source.username, source.photos)
         instagramDao.insertInstagram(
                 RecommendationUserInstagramEntity(
                         profilePictureUrl = source.profilePictureUrl,

@@ -1,27 +1,28 @@
 package data.tinder.recommendation
 
 import data.CollectibleDaoDelegate
+import domain.recommendation.DomainRecommendationInterest
 
 internal class RecommendationInterestDaoDelegate(
         private val interestDao: RecommendationInterestDao,
         private val userInterestDao: RecommendationUser_InterestDao)
-    : CollectibleDaoDelegate<String, ResolvedRecommendationInterest>() {
+    : CollectibleDaoDelegate<String, DomainRecommendationInterest>() {
     override fun selectByPrimaryKey(primaryKey: String) =
             interestDao.selectInterestById(primaryKey).firstOrNull()?.let {
-                return@let ResolvedRecommendationInterest(
+                return@let DomainRecommendationInterest(
                         id = it.id,
                         name = it.name)
-            } ?: ResolvedRecommendationInterest.NONE
+            } ?: DomainRecommendationInterest.NONE
 
-    override fun insertResolved(source: ResolvedRecommendationInterest) =
+    override fun insertDomain(source: DomainRecommendationInterest) =
             interestDao.insertInterest(RecommendationInterestEntity(
                     id = source.id,
                     name = source.name))
 
-    fun insertResolvedForUserId(
-            userId: String, interests: Iterable<ResolvedRecommendationInterest>) {
+    fun insertDomainForUserId(
+            userId: String, interests: Iterable<DomainRecommendationInterest>) {
         interests.forEach {
-            insertResolved(it)
+            insertDomain(it)
             userInterestDao.insertUser_Interest(RecommendationUserEntity_RecommendationInterestEntity(
                     recommendationUserEntityId = userId,
                     recommendationInterestEntityId = it.id))

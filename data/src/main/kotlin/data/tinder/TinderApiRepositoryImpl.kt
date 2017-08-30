@@ -6,7 +6,8 @@ import data.tinder.like.LikeFacade
 import data.tinder.recommendation.RecommendationFacade
 import domain.auth.DomainAuthRequestParameters
 import domain.auth.DomainAuthedUser
-import domain.recommendation.DomainRecommendation
+import domain.like.DomainLikedRecommendationAnswer
+import domain.recommendation.DomainRecommendationUser
 import domain.repository.TinderApiRepository
 import io.reactivex.Single
 import reporter.CrashReporter
@@ -23,19 +24,16 @@ internal class TinderApiRepositoryImpl : TinderApiRepository {
     lateinit var crashReporter: CrashReporter
 
     init {
-          ComponentHolder.tinderRepositoryComponent.inject(this)
+        ComponentHolder.tinderRepositoryComponent.inject(this)
     }
 
     override fun login(parameters: DomainAuthRequestParameters): Single<DomainAuthedUser> =
             loginFacade.fetch(parameters).doOnError { crashReporter.report(it) }
 
-    override fun getRecommendations(): Single<Collection<DomainRecommendation>> =
-            recommendationFacade.fetch(Unit)
-                    .doOnError { crashReporter.report(it) }
-                    .map {
-                        likeFacade.fetch
-                    }
-//                    .doOnNext {
-//                        saveInDatabase
-//                    }
+    override fun getRecommendations(): Single<Collection<DomainRecommendationUser>> =
+            recommendationFacade.fetch(Unit).doOnError { crashReporter.report(it) }
+
+    override fun like(recommendation: DomainRecommendationUser)
+            : Single<DomainLikedRecommendationAnswer> =
+            likeFacade.fetch(recommendation).doOnError { crashReporter.report(it) }
 }

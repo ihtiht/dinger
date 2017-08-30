@@ -5,7 +5,7 @@ import android.content.Intent
 import android.support.annotation.CallSuper
 import android.support.v4.app.JobIntentService
 import data.ComponentHolder
-import domain.recommendation.DomainRecommendation
+import domain.recommendation.DomainRecommendationUser
 import reporter.CrashReporter
 import javax.inject.Inject
 
@@ -56,7 +56,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         ongoingActions.add(this)
         execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
             override fun onRecommendationsReceived(
-                    recommendations: Collection<DomainRecommendation>) {
+                    recommendations: Collection<DomainRecommendationUser>) {
                 recommendations.stream().parallel().map {
                     // TODO Try to like the recommendation and based on the response, save it as liked/not liked
                 }

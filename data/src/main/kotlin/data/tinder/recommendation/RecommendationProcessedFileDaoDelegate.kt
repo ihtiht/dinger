@@ -1,30 +1,31 @@
 package data.tinder.recommendation
 
 import data.CollectibleDaoDelegate
+import domain.recommendation.DomainRecommendationProcessedFile
 
 internal class RecommendationProcessedFileDaoDelegate(
         private val processedFileDao: RecommendationProcessedFileDao,
         private val photoProcessedFileDao: RecommendationPhoto_ProcessedFileDao,
         private val albumProcessedFileDao: RecommendationSpotifyAlbum_ProcessedFileDao)
-    : CollectibleDaoDelegate<String, ResolvedRecommendationProcessedFile>() {
+    : CollectibleDaoDelegate<String, DomainRecommendationProcessedFile>() {
     override fun selectByPrimaryKey(primaryKey: String) =
             processedFileDao.selectProcessedFileByUrl(primaryKey).firstOrNull()?.let {
-                return ResolvedRecommendationProcessedFile(
+                return DomainRecommendationProcessedFile(
                         widthPx = it.widthPx,
                         url = it.url,
                         heightPx = it.heightPx)
-            } ?: ResolvedRecommendationProcessedFile.NONE
+            } ?: DomainRecommendationProcessedFile.NONE
 
-    override fun insertResolved(source: ResolvedRecommendationProcessedFile) =
+    override fun insertDomain(source: DomainRecommendationProcessedFile) =
             processedFileDao.insertProcessedFile(RecommendationUserPhotoProcessedFileEntity(
                     widthPx = source.widthPx,
                     url = source.url,
                     heightPx = source.heightPx))
 
-    fun insertResolvedForPhotoId(
-            photoId: String, processedFiles: Iterable<ResolvedRecommendationProcessedFile>) {
+    fun insertDomainForPhotoId(
+            photoId: String, processedFiles: Iterable<DomainRecommendationProcessedFile>) {
         processedFiles.forEach {
-            insertResolved(it)
+            insertDomain(it)
             photoProcessedFileDao.insertPhoto_ProcessedFile(
                     RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity(
                             recommendationUserPhotoEntityId = photoId,
@@ -32,10 +33,10 @@ internal class RecommendationProcessedFileDaoDelegate(
         }
     }
 
-    fun insertResolvedForAlbumId(
-            albumId: String, processedFiles: Iterable<ResolvedRecommendationProcessedFile>) {
+    fun insertDomainForAlbumId(
+            albumId: String, processedFiles: Iterable<DomainRecommendationProcessedFile>) {
         processedFiles.forEach {
-            insertResolved(it)
+            insertDomain(it)
             albumProcessedFileDao.insertSpotifyAlbum_ProcessedFile(
                     RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity(
                             recommendationUserSpotifyThemeTrackAlbumEntityId = albumId,

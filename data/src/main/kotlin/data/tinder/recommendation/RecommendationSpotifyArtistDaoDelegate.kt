@@ -1,27 +1,28 @@
 package data.tinder.recommendation
 
 import data.CollectibleDaoDelegate
+import domain.recommendation.DomainRecommendationSpotifyArtist
 
 internal class RecommendationSpotifyArtistDaoDelegate(
         private val artistDao: RecommendationSpotifyArtistDao,
         private val trackArtistDao: RecommendationSpotifyThemeTrack_ArtistDao)
-    : CollectibleDaoDelegate<String, ResolvedRecommendationSpotifyArtist>() {
+    : CollectibleDaoDelegate<String, DomainRecommendationSpotifyArtist>() {
     override fun selectByPrimaryKey(primaryKey: String) =
             artistDao.selectArtistById(primaryKey).firstOrNull()?.let {
-                return ResolvedRecommendationSpotifyArtist(
+                return DomainRecommendationSpotifyArtist(
                         id = it.id,
                         name = it.name)
-            } ?: ResolvedRecommendationSpotifyArtist.NONE
+            } ?: DomainRecommendationSpotifyArtist.NONE
 
-    override fun insertResolved(source: ResolvedRecommendationSpotifyArtist) =
+    override fun insertDomain(source: DomainRecommendationSpotifyArtist) =
             artistDao.insertArtist(RecommendationUserSpotifyThemeTrackArtistEntity(
                     id = source.id,
                     name = source.name))
 
-    fun insertResolvedForTrackId(
-            trackId: String, artists: Iterable<ResolvedRecommendationSpotifyArtist>) {
+    fun insertDomainForTrackId(
+            trackId: String, artists: Iterable<DomainRecommendationSpotifyArtist>) {
         artists.forEach {
-            insertResolved(it)
+            insertDomain(it)
             trackArtistDao.insertSpotifyThemeTrack_Artist(
                     RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity(
                             recommendationUserSpotifyThemeTrackArtistEntityId = trackId,

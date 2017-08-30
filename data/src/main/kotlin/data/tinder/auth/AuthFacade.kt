@@ -5,7 +5,7 @@ import data.network.RequestFacade
 import domain.auth.DomainAuthRequestParameters
 import domain.auth.DomainAuthedUser
 
-internal class AuthFacade constructor(
+internal class AuthFacade(
         source: AuthSource,
         requestMapper: ObjectMapper<DomainAuthRequestParameters, AuthRequestParameters>,
         responseMapper: ObjectMapper<AuthResponse, DomainAuthedUser>)

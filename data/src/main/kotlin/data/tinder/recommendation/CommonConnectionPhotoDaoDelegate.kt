@@ -1,21 +1,22 @@
 package data.tinder.recommendation
 
 import data.CollectibleDaoDelegate
+import domain.recommendation.DomainRecommendationCommonConnectionPhoto
 
 internal class CommonConnectionPhotoDaoDelegate(
         private val photoDao: RecommendationUserCommonConnectionPhotoDao,
         private val commonConnectionPhotoDao: RecommendationUserCommonConnection_PhotoDao)
-    : CollectibleDaoDelegate<String, ResolvedRecommendationCommonConnectionPhoto>() {
-    override fun insertResolved(source: ResolvedRecommendationCommonConnectionPhoto) {
+    : CollectibleDaoDelegate<String, DomainRecommendationCommonConnectionPhoto>() {
+    override fun insertDomain(source: DomainRecommendationCommonConnectionPhoto) {
         photoDao.insertPhoto(RecommendationUserCommonConnectionPhotoEntity(
                 small = source.small, medium = source.medium, large = source.large))
     }
 
-    fun insertResolvedForCommonConnectionId(
+    fun insertDomainForCommonConnectionId(
             commonConnectionId: String,
-            photos: Iterable<ResolvedRecommendationCommonConnectionPhoto>) {
+            photos: Iterable<DomainRecommendationCommonConnectionPhoto>) {
         photos.forEach {
-            insertResolved(it)
+            insertDomain(it)
             commonConnectionPhotoDao.insertCommonConnection_Photo(
                     RecommendationUserCommonConnectionEntity_PhotoEntity(
                             recommendationUserCommonConnectionEntityId = commonConnectionId,

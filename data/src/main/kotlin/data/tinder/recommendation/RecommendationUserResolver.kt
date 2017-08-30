@@ -1,6 +1,7 @@
 package data.tinder.recommendation
 
 import android.arch.lifecycle.Transformations
+import domain.recommendation.DomainRecommendationUser
 
 internal class RecommendationUserResolver(
         private val userDao: RecommendationUserDao,
@@ -12,7 +13,7 @@ internal class RecommendationUserResolver(
         private val schoolDaoDelegate: RecommendationSchoolDaoDelegate,
         private val teaserDaoDelegate: RecommendationTeaserDaoDelegate,
         private val spotifyThemeTrackDaoDelegate: RecommendationSpotifyThemeTrackDaoDelegate) {
-    fun insert(user: ResolvedRecommendationUser) = user.apply {
+    fun insert(user: DomainRecommendationUser) = user.apply {
         userDao.insertUser(RecommendationUserEntity(
                 distanceMiles = distanceMiles,
                 connectionCount = connectionCount,
@@ -30,15 +31,15 @@ internal class RecommendationUserResolver(
                 groupMatched = groupMatched,
                 liked = liked
         ))
-        instagramDaoDelegate.insertResolved(instagram)
-        teaserDaoDelegate.insertResolved(teaser)
-        spotifyThemeTrackDaoDelegate.insertResolved(spotifyThemeTrack)
-        commonConnectionDaoDelegate.insertResolvedForUserId(id, commonConnections)
-        interestDaoDelegate.insertResolvedForUserId(id, commonInterests)
-        photoDaoDelegate.insertResolvedForUserId(id, photos)
-        jobDaoDelegate.insertResolvedForUserId(id, jobs)
-        schoolDaoDelegate.insertResolvedForUserId(id, schools)
-        teaserDaoDelegate.insertResolvedForUserId(id, teasers)
+        instagramDaoDelegate.insertDomain(instagram)
+        teaserDaoDelegate.insertDomain(teaser)
+        spotifyThemeTrackDaoDelegate.insertDomain(spotifyThemeTrack)
+        commonConnectionDaoDelegate.insertDomainForUserId(id, commonConnections)
+        interestDaoDelegate.insertDomainForUserId(id, commonInterests)
+        photoDaoDelegate.insertDomainForUserId(id, photos)
+        jobDaoDelegate.insertDomainForUserId(id, jobs)
+        schoolDaoDelegate.insertDomainForUserId(id, schools)
+        teaserDaoDelegate.insertDomainForUserId(id, teasers)
     }
 
     fun selectById(id: String) =
@@ -47,7 +48,7 @@ internal class RecommendationUserResolver(
     fun selectByFilterOnName(filter: String) =
             Transformations.map(userDao.selectUsersByFilterOnName(filter)) { it.map { from(it) } }
 
-    private fun from(source: RecommendationUserWithRelatives): ResolvedRecommendationUser {
+    private fun from(source: RecommendationUserWithRelatives): DomainRecommendationUser {
         val commonConnections =
                 commonConnectionDaoDelegate.collectByPrimaryKeys(source.commonConnections)
         val commonInterests = interestDaoDelegate.collectByPrimaryKeys(source.commonInterests)
@@ -56,7 +57,7 @@ internal class RecommendationUserResolver(
         val schools = schoolDaoDelegate.collectByPrimaryKeys(source.schools)
         val teasers = teaserDaoDelegate.collectByPrimaryKeys(source.teasers)
         source.recommendationUserEntity.let {
-            return ResolvedRecommendationUser(
+            return DomainRecommendationUser(
                     distanceMiles = it.distanceMiles,
                     commonConnections = commonConnections,
                     connectionCount = it.connectionCount,

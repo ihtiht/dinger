@@ -7,8 +7,8 @@ import io.reactivex.Single
 
 class GetRecommendationsUseCase(
         postExecutionScheduler: Scheduler)
-    : SingleDisposableUseCase<Collection<DomainRecommendation>>(
+    : SingleDisposableUseCase<Collection<DomainRecommendationUser>>(
         postExecutionScheduler = postExecutionScheduler) {
-    override fun buildUseCase(): Single<Collection<DomainRecommendation>> =
+    override fun buildUseCase(): Single<Collection<DomainRecommendationUser>> =
             DomainHolder.facadeProvider.tinderApiRepository().getRecommendations()
 }

@@ -3,7 +3,7 @@ package data.tinder.recommendation
 import android.os.Bundle
 import tracker.TrackedDataMarshaller
 
-internal class RecommendationResponseMarshaller(
+internal class RecommendationResponseTrackedDataMarshaller(
         private val recommendationDelegate: TrackedDataMarshaller<Recommendation>)
     : TrackedDataMarshaller<RecommendationResponse> {
     override fun marshall(source: RecommendationResponse) = Bundle().apply {

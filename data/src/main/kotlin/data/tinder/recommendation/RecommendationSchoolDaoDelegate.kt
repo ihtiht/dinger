@@ -1,24 +1,25 @@
 package data.tinder.recommendation
 
 import data.CollectibleDaoDelegate
+import domain.recommendation.DomainRecommendationSchool
 
 internal class RecommendationSchoolDaoDelegate(
         private val schoolDao: RecommendationUserSchoolDao,
         private val userSchoolDao: RecommendationUser_SchoolDao)
-    : CollectibleDaoDelegate<String, ResolvedRecommendationSchool>() {
+    : CollectibleDaoDelegate<String, DomainRecommendationSchool>() {
     override fun selectByPrimaryKey(primaryKey: String) =
             schoolDao.selectSchoolById(primaryKey).firstOrNull()?.let {
-                return ResolvedRecommendationSchool(
+                return DomainRecommendationSchool(
                         id = it.id,
                         name = it.name)
-            } ?: ResolvedRecommendationSchool.NONE
+            } ?: DomainRecommendationSchool.NONE
 
-    override fun insertResolved(source: ResolvedRecommendationSchool) = schoolDao.insertSchool(
+    override fun insertDomain(source: DomainRecommendationSchool) = schoolDao.insertSchool(
             RecommendationUserSchoolEntity(id = source.id, name = source.name))
 
-    fun insertResolvedForUserId(userId: String, schools: Iterable<ResolvedRecommendationSchool>) {
+    fun insertDomainForUserId(userId: String, schools: Iterable<DomainRecommendationSchool>) {
         schools.forEach {
-            insertResolved(it)
+            insertDomain(it)
             userSchoolDao.insertUser_School(RecommendationUserEntity_RecommendationUserSchoolEntity(
                     recommendationUserEntityId = userId,
                     recommendationUserSchoolEntityId = it.id))

@@ -1,13 +1,14 @@
 package data.tinder.recommendation
 
 import data.DaoDelegate
+import domain.recommendation.DomainRecommendationSpotifyThemeTrack
 
 internal class RecommendationSpotifyThemeTrackDaoDelegate(
         private val spotifyThemeTrackDelegate: RecommendationUserSpotifyThemeTrackDao,
         private val spotifyArtistDaoDelegate: RecommendationSpotifyArtistDaoDelegate,
         private val spotifyAlbumDaoDelegate: RecommendationSpotifyAlbumDaoDelegate)
-    : DaoDelegate<String?, ResolvedRecommendationSpotifyThemeTrack?>() {
-    override fun selectByPrimaryKey(primaryKey: String?): ResolvedRecommendationSpotifyThemeTrack? {
+    : DaoDelegate<String?, DomainRecommendationSpotifyThemeTrack?>() {
+    override fun selectByPrimaryKey(primaryKey: String?): DomainRecommendationSpotifyThemeTrack? {
         if (primaryKey == null) {
             return null
         }
@@ -15,7 +16,7 @@ internal class RecommendationSpotifyThemeTrackDaoDelegate(
                 ?.let {
             val artists = spotifyArtistDaoDelegate.collectByPrimaryKeys(it.artists)
             it.recommendationUserSpotifyThemeTrackEntity.let {
-                ResolvedRecommendationSpotifyThemeTrack(
+                DomainRecommendationSpotifyThemeTrack(
                         artists = artists,
                         album = spotifyAlbumDaoDelegate.selectByPrimaryKey(it.album),
                         previewUrl = it.previewUrl,
@@ -26,12 +27,12 @@ internal class RecommendationSpotifyThemeTrackDaoDelegate(
         }
     }
 
-    override fun insertResolved(source: ResolvedRecommendationSpotifyThemeTrack?) {
+    override fun insertDomain(source: DomainRecommendationSpotifyThemeTrack?) {
         if (source == null) {
             return
         }
-        spotifyArtistDaoDelegate.insertResolvedForTrackId(source.id, source.artists)
-        spotifyAlbumDaoDelegate.insertResolved(source.album)
+        spotifyArtistDaoDelegate.insertDomainForTrackId(source.id, source.artists)
+        spotifyAlbumDaoDelegate.insertDomain(source.album)
         spotifyThemeTrackDelegate.insertSpotifyThemeTrack(RecommendationUserSpotifyThemeTrackEntity(
                 album = source.album.id,
                 previewUrl = source.previewUrl,

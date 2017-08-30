@@ -1,12 +1,12 @@
-package data.tinder.recommendation
+package domain.recommendation
 
-internal data class ResolvedRecommendationInstagramPhoto(
+data class DomainRecommendationInstagramPhoto(
         val link: String,
         val imageUrl: String,
         val thumbnailUrl: String,
         val ts: String) {
     companion object {
-        val NONE = ResolvedRecommendationInstagramPhoto(
+        val NONE = DomainRecommendationInstagramPhoto(
                 link = "",
                 imageUrl = "",
                 thumbnailUrl = "",

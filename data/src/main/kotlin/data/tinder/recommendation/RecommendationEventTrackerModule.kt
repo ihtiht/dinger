@@ -96,14 +96,14 @@ internal class RecommendationEventTrackerModule {
     @Provides
     @Singleton
     fun recommendationResponseMarshaller(recommendationMarshaller : RecommendationMarshaller) =
-            RecommendationResponseMarshaller(recommendationMarshaller)
+            RecommendationResponseTrackedDataMarshaller(recommendationMarshaller)
 
     @Provides
     @Singleton
     fun eventTracker(
             eventTracker: EventTracker,
-            recommendationResponseMarshaller: RecommendationResponseMarshaller) =
+            recommendationResponseTrackedDataMarshaller: RecommendationResponseTrackedDataMarshaller) =
             RecommendationEventTracker(
                     eventTracker = eventTracker,
-                    recommendationResponseMarshaller = recommendationResponseMarshaller)
+                    recommendationResponseMarshaller = recommendationResponseTrackedDataMarshaller)
 }

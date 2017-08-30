@@ -1,32 +1,33 @@
 package data.tinder.recommendation
 
 import data.CollectibleDaoDelegate
+import domain.recommendation.DomainRecommendationInstagramPhoto
 
 internal class RecommendationInstagramPhotoDaoDelegate(
         private val instagramDao: RecommendationUserInstagramPhotoDao,
         private val userInstagramDao: RecommendationUserInstagram_InstagramPhotoDao)
-    : CollectibleDaoDelegate<String, ResolvedRecommendationInstagramPhoto>() {
+    : CollectibleDaoDelegate<String, DomainRecommendationInstagramPhoto>() {
     override fun selectByPrimaryKey(primaryKey: String) =
             instagramDao.selectInstagramPhotoByLink(primaryKey).firstOrNull()?.let {
-                return@let ResolvedRecommendationInstagramPhoto(
+                return@let DomainRecommendationInstagramPhoto(
                         link = it.link,
                         imageUrl = it.imageUrl,
                         thumbnailUrl = it.thumbnailUrl,
                         ts = it.ts)
-            } ?: ResolvedRecommendationInstagramPhoto.NONE
+            } ?: DomainRecommendationInstagramPhoto.NONE
 
-    override fun insertResolved(source: ResolvedRecommendationInstagramPhoto) =
+    override fun insertDomain(source: DomainRecommendationInstagramPhoto) =
             instagramDao.insertInstagramPhoto(RecommendationUserInstagramPhotoEntity(
                     link = source.link,
                     imageUrl = source.imageUrl,
                     thumbnailUrl = source.thumbnailUrl,
                     ts = source.ts))
 
-    fun insertResolvedForInstagramUsername(
+    fun insertDomainForInstagramUsername(
             instagramUsername: String,
-            instagramPhotos: Iterable<ResolvedRecommendationInstagramPhoto>) {
+            instagramPhotos: Iterable<DomainRecommendationInstagramPhoto>) {
         instagramPhotos.forEach {
-            insertResolved(it)
+            insertDomain(it)
             userInstagramDao.insertInstagram_Photo(
                     RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity(
                             recommendationUserInstagramEntityUsername = instagramUsername,
