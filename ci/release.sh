@@ -33,8 +33,6 @@ uploadReleaseToGitHub() {
 
     # Extract the upload_url value
     UPLOAD_URL=$(echo ${RESPONSE_BODY} | python -c 'import sys, json; print json.load(sys.stdin)[sys.argv[1]]' upload_url)
-    # And replace the end of it, which is generic and useless, by a relevant one
-    UPLOAD_URL=$(echo ${UPLOAD_URL} | sed 's/{?name,label}/?name=app-release.apk/')
 
     # Build the apk
     ./gradlew assembleRelease
@@ -42,11 +40,26 @@ uploadReleaseToGitHub() {
     cp app/build/outputs/apk/app-release.apk .
 
     # Attach the artifact
-    curl -D - \
+    UPLOAD_URL=$(echo ${UPLOAD_URL} | sed 's/{?name,label}/?name=app-release.apk/')
+    RESPOSE_BODY=$(curl -D - \
     -u ${REPO_USER}:${GITHUB_TOKEN} \
     --header "Accept: application/vnd.github.v3+json" \
     --header "Content-Type: application/zip" \
     --data-binary "@app-release.apk" \
+    --request POST \
+    ${UPLOAD_URL})
+
+    # Extract the browser_download_url value
+    APK_DOWNLOAD_URL=$(echo ${RESPONSE_BODY} | python -c 'import sys, json; print json.load(sys.stdin)[sys.argv[1]]' browser_download_url)
+
+    # Attach the qr code
+    UPLOAD_URL=$(echo ${UPLOAD_URL} | sed 's/?app-release.apk/qrcode.png')
+    curl -D - \
+    -u ${REPO_USER}:${GITHUB_TOKEN} \
+    --header "Accept: application/vnd.github.v3+json" \
+    --header "Content-Type: image/png" \
+    --data "name=qrcode.png&label=qrcode.png" \
+    --data-raw $(./generate_qr.sh -d ${APK_DOWNLOAD_URL}) \
     --request POST \
     ${UPLOAD_URL}
 
