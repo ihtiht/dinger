@@ -33,7 +33,7 @@ internal class TinderApiRepositoryImpl : TinderApiRepository {
     override fun getRecommendations(): Single<Collection<DomainRecommendationUser>> =
             recommendationFacade.fetch(Unit).doOnError { crashReporter.report(it) }
 
-    override fun like(recommendation: DomainRecommendationUser)
+    override fun likeRecommendation(recommendation: DomainRecommendationUser)
             : Single<DomainLikedRecommendationAnswer> =
             likeFacade.fetch(recommendation).doOnError { crashReporter.report(it) }
 }

@@ -11,5 +11,5 @@ interface TinderApiRepository {
 
     fun getRecommendations(): Single<Collection<DomainRecommendationUser>>
 
-    fun like(recommendation: DomainRecommendationUser): Single<DomainLikedRecommendationAnswer>
+    fun likeRecommendation(recommendation: DomainRecommendationUser): Single<DomainLikedRecommendationAnswer>
 }

@@ -57,7 +57,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
             override fun onRecommendationsReceived(
                     recommendations: Collection<DomainRecommendationUser>) {
-                recommendations.stream().parallel().map {
+                recommendations.forEach {
                     // TODO Try to like the recommendation and based on the response, save it as liked/not liked
                 }
             }
