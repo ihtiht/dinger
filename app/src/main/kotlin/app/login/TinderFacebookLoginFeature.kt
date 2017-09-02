@@ -12,6 +12,12 @@ import com.facebook.login.widget.LoginButton
 import org.stoyicker.dinger.R
 import reporter.CrashReporter
 
+/**
+ * The difference between a 'feature' and a 'coordinator' is that a feature is just a wrapper around
+ * an sdk call, whereas a coordinator _coordinates_ one action that is implemented deeper in the
+ * architecture. Android-framework-facing though, they're the same, as they take weight off of it in
+ * a way that it's only responsibility is flow routing.
+ */
 internal class TinderFacebookLoginFeature(
         loginButton: LoginButton,
         private val resultCallback: ResultCallback,
