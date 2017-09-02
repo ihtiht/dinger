@@ -5,6 +5,8 @@ import android.content.Intent
 import android.support.annotation.CallSuper
 import android.support.v4.app.JobIntentService
 import data.ComponentHolder
+import data.tinder.like.LikeRecommendationAction
+import domain.like.DomainLikedRecommendationAnswer
 import domain.recommendation.DomainRecommendationUser
 import reporter.CrashReporter
 import javax.inject.Inject
@@ -30,10 +32,10 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         }
     }
 
-    abstract class Action<in T> {
+    abstract class Action<in Callback> {
         protected val commonDelegate by lazy { CommonResultDelegate(this) }
 
-        abstract fun execute(owner: AutoSwipeJobIntentService, callback: T)
+        abstract fun execute(owner: AutoSwipeJobIntentService, callback: Callback)
 
         abstract fun dispose()
     }
@@ -57,11 +59,50 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
             override fun onRecommendationsReceived(
                     recommendations: Collection<DomainRecommendationUser>) {
-                recommendations.forEach {
-                    // TODO Try to like the recommendation and based on the response, save it as liked/not liked
-                }
+                recommendations.forEach { likeRecommendation(it) }
             }
         })
+    }
+
+    private fun likeRecommendation(recommendation: DomainRecommendationUser) =
+            LikeRecommendationAction(recommendation).apply {
+                ongoingActions.add(this)
+                execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
+                    override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) {
+                        saveRecommendationToDatabase(recommendation, true)
+                    }
+
+                    override fun onRecommendationLikeFailed() {
+                        saveRecommendationToDatabase(recommendation, false)
+                    }
+                })
+            }
+
+    private fun saveRecommendationToDatabase(
+            recommendation: DomainRecommendationUser, liked: Boolean) {
+        val recommendationToSave = DomainRecommendationUser(
+                distanceMiles = recommendation.distanceMiles,
+                commonConnections = recommendation.commonConnections,
+                connectionCount = recommendation.connectionCount,
+                id = recommendation.id,
+                birthDate = recommendation.birthDate,
+                name = recommendation.name,
+                instagram = recommendation.instagram,
+                teaser = recommendation.teaser,
+                spotifyThemeTrack = recommendation.spotifyThemeTrack,
+                gender = recommendation.gender,
+                birthDateInfo = recommendation.birthDateInfo,
+                contentHash = recommendation.contentHash,
+                groupMatched = recommendation.groupMatched,
+                pingTime = recommendation.pingTime,
+                sNumber = recommendation.sNumber,
+                liked = liked,
+                commonInterests = recommendation.commonInterests,
+                photos = recommendation.photos,
+                jobs = recommendation.jobs,
+                schools = recommendation.schools,
+                teasers = recommendation.teasers)
+        // TODO saveRecommendationToDatabase
     }
 
     // TODO This needs to be called after getting rate-limit on swiping, not on recommend
