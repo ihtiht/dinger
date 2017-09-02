@@ -51,8 +51,12 @@ internal class TinderLoginActivity
     }
 
     private fun inject() = (application as MainApplication).applicationComponent
-            .newTinderFacebookLoginComponent(
-                    TinderFacebookLoginModule(this, login_button, progress, this, this))
+            .newTinderFacebookLoginComponent(TinderFacebookLoginModule(
+                    activity = this,
+                    loginButton = login_button,
+                    contentLoadingProgressBar = progress,
+                    tinderFacebookLoginCoordinatorResultCallback = this,
+                    tinderFacebookLoginResultCallback = this))
             .inject(this)
 
     companion object {
