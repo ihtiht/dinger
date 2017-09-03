@@ -6,6 +6,7 @@ import android.support.annotation.CallSuper
 import android.support.v4.app.JobIntentService
 import data.ComponentHolder
 import data.tinder.like.LikeRecommendationAction
+import data.tinder.recommendation.RecommendationUserResolver
 import domain.like.DomainLikedRecommendationAnswer
 import domain.recommendation.DomainRecommendationUser
 import reporter.CrashReporter
@@ -15,6 +16,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     private val ongoingActions = mutableSetOf<Action<*>>()
     @Inject
     lateinit var crashReporter: CrashReporter
+    @Inject
+    lateinit var recommendationResolver: RecommendationUserResolver
 
     init {
         ComponentHolder.autoSwipeComponent.inject(this)
@@ -81,7 +84,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
 
     private fun saveRecommendationToDatabase(
             recommendation: DomainRecommendationUser, liked: Boolean, matched: Boolean) {
-        val recommendationToSave = DomainRecommendationUser(
+        recommendationResolver.insert(DomainRecommendationUser(
                 distanceMiles = recommendation.distanceMiles,
                 commonConnections = recommendation.commonConnections,
                 connectionCount = recommendation.connectionCount,
@@ -103,8 +106,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 photos = recommendation.photos,
                 jobs = recommendation.jobs,
                 schools = recommendation.schools,
-                teasers = recommendation.teasers)
-        // TODO saveRecommendationToDatabase
+                teasers = recommendation.teasers))
     }
 
     // TODO This needs to be called after getting rate-limit on swiping, not on recommend
