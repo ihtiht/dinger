@@ -14,6 +14,7 @@ import data.tinder.recommendation.RecommendationUserCommonConnectionEntity
 import data.tinder.recommendation.RecommendationUserCommonConnectionEntity_PhotoEntity
 import data.tinder.recommendation.RecommendationUserCommonConnectionPhotoDao
 import data.tinder.recommendation.RecommendationUserCommonConnectionPhotoEntity
+import data.tinder.recommendation.RecommendationUserCommonConnection_PhotoDao
 import data.tinder.recommendation.RecommendationUserDao
 import data.tinder.recommendation.RecommendationUserEntity
 import data.tinder.recommendation.RecommendationUserEntity_RecommendationInterestEntity
@@ -118,11 +119,14 @@ internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun recommendationUserCommonConnectionDao(): RecommendationUserCommonConnectionDao
 
+    abstract fun recommendationUser_RecommendationUserCommonConnectionDao():
+            RecommendationUser_RecommendationUserCommonConnectionDao
+
     abstract fun recommendationUserCommonConnectionPhotoDao()
             : RecommendationUserCommonConnectionPhotoDao
 
-    abstract fun recommendationUser_RecommendationUserCommonConnectionDao():
-            RecommendationUser_RecommendationUserCommonConnectionDao
+    abstract fun recommendationUserCommonConnection_PhotoDao()
+            : RecommendationUserCommonConnection_PhotoDao
 
     abstract fun recommendationInterestDao(): RecommendationInterestDao
 

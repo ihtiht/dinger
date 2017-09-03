@@ -43,7 +43,9 @@ internal class InitializationContentProvider : ContentProvider() {
                     .rootModule(rootModule)
                     .accountModule(accountModule)
                     .build()
-            autoSwipeComponent = DaggerAutoSwipeComponent.create()
+            autoSwipeComponent = DaggerAutoSwipeComponent.builder()
+                    .rootModule(rootModule)
+                    .build()
         }
         DaggerInitializationComponent.builder()
                 .rootModule(rootModule)
