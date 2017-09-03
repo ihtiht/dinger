@@ -3,6 +3,7 @@ package data
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import data.database.AppDatabase
 import javax.inject.Singleton
 
 @Module

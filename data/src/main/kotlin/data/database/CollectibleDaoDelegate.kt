@@ -1,4 +1,4 @@
-package data
+package data.database
 
 internal abstract class CollectibleDaoDelegate<in PrimaryKey, Resolved>
     : DaoDelegate<PrimaryKey, Resolved>() {

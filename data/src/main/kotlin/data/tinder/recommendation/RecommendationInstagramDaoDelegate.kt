@@ -1,6 +1,6 @@
 package data.tinder.recommendation
 
-import data.DaoDelegate
+import data.database.DaoDelegate
 import domain.recommendation.DomainRecommendationInstagram
 
 internal class RecommendationInstagramDaoDelegate(

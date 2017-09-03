@@ -1,6 +1,6 @@
 package data.tinder.recommendation
 
-import data.CollectibleDaoDelegate
+import data.database.CollectibleDaoDelegate
 import domain.recommendation.DomainRecommendationCommonConnectionPhoto
 
 internal class CommonConnectionPhotoDaoDelegate(
