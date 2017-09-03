@@ -29,7 +29,8 @@ internal class RecommendationUserResolver(
                 gender = gender,
                 birthDateInfo = birthDateInfo,
                 groupMatched = groupMatched,
-                liked = liked
+                liked = liked,
+                matched = matched
         ))
         instagramDaoDelegate.insertDomain(instagram)
         teaserDaoDelegate.insertDomain(teaser)
@@ -75,6 +76,7 @@ internal class RecommendationUserResolver(
                     birthDateInfo = it.birthDateInfo,
                     groupMatched = it.groupMatched,
                     liked = it.liked,
+                    matched = it.matched,
                     commonInterests = commonInterests,
                     photos = photos,
                     jobs = jobs,

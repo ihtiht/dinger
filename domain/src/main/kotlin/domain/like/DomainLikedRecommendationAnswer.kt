@@ -1,3 +1,3 @@
 package domain.like
 
-data class DomainLikedRecommendationAnswer(private val matched: Boolean)
+data class DomainLikedRecommendationAnswer(val matched: Boolean)

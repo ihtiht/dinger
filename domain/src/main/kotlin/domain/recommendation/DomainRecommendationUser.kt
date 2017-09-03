@@ -19,6 +19,7 @@ data class DomainRecommendationUser(
         val pingTime: Date,
         val sNumber: Int,
         val liked: Boolean = false, // Recommendations are not liked by default
+        var matched: Boolean = false, // Nor matched by default
         val commonInterests: Iterable<DomainRecommendationInterest>,
         val photos: Iterable<DomainRecommendationPhoto>,
         val jobs: Iterable<DomainRecommendationJob>,

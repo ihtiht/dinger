@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "20c15d639fcd67a733be781ae4f2930a",
+    "identityHash": "c8e38787e8e5c1201b84379283ce2e97",
     "entities": [
       {
         "tableName": "RecommendationUserEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`distanceMiles` INTEGER, `connectionCount` INTEGER, `contentHash` TEXT, `id` TEXT, `name` TEXT, `instagram` TEXT, `teaser` TEXT, `sNumber` INTEGER, `spotifyThemeTrack` TEXT, `gender` INTEGER, `birthDateInfo` TEXT, `groupMatched` INTEGER, `liked` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`instagram`) REFERENCES `RecommendationUserInstagramEntity`(`username`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`teaser`) REFERENCES `RecommendationUserTeaserEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`spotifyThemeTrack`) REFERENCES `RecommendationUserSpotifyThemeTrackEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`distanceMiles` INTEGER, `connectionCount` INTEGER, `contentHash` TEXT, `id` TEXT, `name` TEXT, `instagram` TEXT, `teaser` TEXT, `sNumber` INTEGER, `spotifyThemeTrack` TEXT, `gender` INTEGER, `birthDateInfo` TEXT, `groupMatched` INTEGER, `liked` INTEGER, `matched` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`instagram`) REFERENCES `RecommendationUserInstagramEntity`(`username`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`teaser`) REFERENCES `RecommendationUserTeaserEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`spotifyThemeTrack`) REFERENCES `RecommendationUserSpotifyThemeTrackEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "distanceMiles",
@@ -71,6 +71,11 @@
           {
             "fieldPath": "liked",
             "columnName": "liked",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "matched",
+            "columnName": "matched",
             "affinity": "INTEGER"
           }
         ],
@@ -1035,7 +1040,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"20c15d639fcd67a733be781ae4f2930a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c8e38787e8e5c1201b84379283ce2e97\")"
     ]
   }
 }

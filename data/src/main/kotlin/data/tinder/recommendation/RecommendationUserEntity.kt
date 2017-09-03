@@ -40,7 +40,8 @@ internal open class RecommendationUserEntity(
         var gender: Int,
         var birthDateInfo: String,
         var groupMatched: Boolean,
-        var liked: Boolean) {
+        var liked: Boolean = false,
+        var matched: Boolean = false) {
     companion object {
         val NONE = RecommendationUserEntity(
                 distanceMiles = 0,
@@ -56,7 +57,6 @@ internal open class RecommendationUserEntity(
                 spotifyThemeTrack = "",
                 gender = 0,
                 birthDateInfo = "",
-                groupMatched = false,
-                liked = false)
+                groupMatched = false)
     }
 }

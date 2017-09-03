@@ -69,17 +69,18 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 ongoingActions.add(this)
                 execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
                     override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) {
-                        saveRecommendationToDatabase(recommendation, true)
+                        saveRecommendationToDatabase(
+                                recommendation, liked = true, matched = answer.matched)
                     }
 
                     override fun onRecommendationLikeFailed() {
-                        saveRecommendationToDatabase(recommendation, false)
+                        saveRecommendationToDatabase(recommendation, liked = false, matched = false)
                     }
                 })
             }
 
     private fun saveRecommendationToDatabase(
-            recommendation: DomainRecommendationUser, liked: Boolean) {
+            recommendation: DomainRecommendationUser, liked: Boolean, matched: Boolean) {
         val recommendationToSave = DomainRecommendationUser(
                 distanceMiles = recommendation.distanceMiles,
                 commonConnections = recommendation.commonConnections,
@@ -97,6 +98,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 pingTime = recommendation.pingTime,
                 sNumber = recommendation.sNumber,
                 liked = liked,
+                matched = matched,
                 commonInterests = recommendation.commonInterests,
                 photos = recommendation.photos,
                 jobs = recommendation.jobs,
