@@ -37,7 +37,7 @@ internal class RecommendationUser private constructor(
         @field:Json(name = "s_number")
         val sNumber: Int,
         @field:Json(name = "spotify_theme_track")
-        val spotifyThemeTrack: RecommendationUserSpotifyThemeTrack,
+        val spotifyThemeTrack: RecommendationUserSpotifyThemeTrack?,
         @Gender
         @field:Json(name = "gender")
         val gender: Int,

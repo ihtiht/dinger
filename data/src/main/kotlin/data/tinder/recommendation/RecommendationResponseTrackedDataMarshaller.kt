@@ -82,8 +82,11 @@ internal class RecommendationUserMarshaller(
             arrayOf(id, *acc)
         })
         putInt("s_number", source.sNumber)
-        putBundle("spotify_theme_track",
-                spotifyThemeTrackDelegate.marshall(source.spotifyThemeTrack))
+        source.spotifyThemeTrack?.let {
+            putBundle(
+                    "spotify_theme_track",
+                    spotifyThemeTrackDelegate.marshall(it))
+        }
         putInt("gender", source.gender)
         putString("birth_date_info", source.birthDateInfo)
         putBoolean("group_matched", source.groupMatched)

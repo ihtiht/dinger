@@ -30,7 +30,7 @@ internal class RecommendationResponseObjectMapper(
         private val teaserDelegate
         : ObjectMapper<RecommendationUserTeaser, DomainRecommendationTeaser>,
         private val spotifyThemeTrackDelegate
-        : ObjectMapper<RecommendationUserSpotifyThemeTrack, DomainRecommendationSpotifyThemeTrack>,
+        : ObjectMapper<RecommendationUserSpotifyThemeTrack?, DomainRecommendationSpotifyThemeTrack?>,
         private val commonInterestDelegate
         : ObjectMapper<RecommendationInterest, DomainRecommendationInterest>,
         private val photoDelegate
@@ -153,15 +153,16 @@ internal class RecommendationSpotifyThemeTrackObjectMapper(
         : ObjectMapper<RecommendationUserSpotifyThemeTrackAlbum, DomainRecommendationSpotifyAlbum>,
         private val artistDelegate
         : ObjectMapper<RecommendationUserSpotifyThemeTrackArtist, DomainRecommendationSpotifyArtist>)
-    : ObjectMapper<RecommendationUserSpotifyThemeTrack, DomainRecommendationSpotifyThemeTrack> {
-    override fun from(source: RecommendationUserSpotifyThemeTrack) =
-            DomainRecommendationSpotifyThemeTrack(
-                    album = albumDelegate.from(source.album),
-                    artists = source.artists.map { artistDelegate.from(it) },
-                    id = source.id,
-                    name = source.name,
-                    previewUrl = source.previewUrl,
-                    uri = source.uri)
+    : ObjectMapper<RecommendationUserSpotifyThemeTrack?, DomainRecommendationSpotifyThemeTrack?> {
+    override fun from(source: RecommendationUserSpotifyThemeTrack?) = source?.let {
+        DomainRecommendationSpotifyThemeTrack(
+                album = albumDelegate.from(it.album),
+                artists = it.artists.map { artistDelegate.from(it) },
+                id = it.id,
+                name = it.name,
+                previewUrl = it.previewUrl,
+                uri = it.uri)
+    }
 }
 
 internal class RecommendationSpotifyThemeTrackAlbumObjectMapper(
