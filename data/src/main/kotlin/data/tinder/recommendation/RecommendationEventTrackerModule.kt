@@ -1,13 +1,15 @@
 package data.tinder.recommendation
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
+import data.RootModule
 import data.event.FirebaseEventTrackerModule
 import tracker.EventTracker
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(FirebaseEventTrackerModule::class))
-internal class RecommendationEventTrackerModule {
+@Module(includes = arrayOf(RootModule::class, FirebaseEventTrackerModule::class))
+internal class RecommendationEventTrackerModule constructor() {
     @Provides
     @Singleton
     fun commonConnectionPhotoMarshaller() = CommonConnectionPhotoMarshaller()
@@ -101,9 +103,11 @@ internal class RecommendationEventTrackerModule {
     @Provides
     @Singleton
     fun eventTracker(
+            context: Context,
             eventTracker: EventTracker,
             recommendationResponseTrackedDataMarshaller: RecommendationResponseTrackedDataMarshaller) =
             RecommendationEventTracker(
+                    context,
                     eventTracker = eventTracker,
                     recommendationResponseMarshaller = recommendationResponseTrackedDataMarshaller)
 }
