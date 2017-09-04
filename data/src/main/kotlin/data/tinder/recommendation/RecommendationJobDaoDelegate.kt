@@ -13,14 +13,14 @@ internal class RecommendationJobDaoDelegate(
             jobDao.selectJobById(primaryKey).firstOrNull()?.let {
                 return@let DomainRecommendationJob(
                         id = it.id,
-                        company = DomainRecommendationCompany(it.company.name),
+                        company = it.company?.let { DomainRecommendationCompany(it.name) },
                         title = it.title?.let { DomainRecommendationTitle(it.name) })
             } ?: DomainRecommendationJob.NONE
 
     override fun insertDomain(source: DomainRecommendationJob) = jobDao.insertJob(
             RecommendationUserJobEntity(
                     id = source.id,
-                    company = RecommendationUserJobCompany(source.company.name),
+                    company = source.company?.let { RecommendationUserJobCompany(it.name) },
                     title = source.title?.let { RecommendationUserJobTitle(it.name) }))
 
     fun insertDomainForUserId(userId: String, jobs: Iterable<DomainRecommendationJob>) {

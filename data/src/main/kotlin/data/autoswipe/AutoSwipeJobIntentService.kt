@@ -24,15 +24,17 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     override fun onHandleWork(intent: Intent) {
-        requestRecommendations()
+        likeRecommendations()
+    }
+
+    override fun onStopCurrentWork(): Boolean {
+        releaseResources()
+        return true
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        ongoingActions.apply {
-            map { it.dispose() }
-            clear()
-        }
+        releaseResources()
     }
 
     abstract class Action<in Callback> {
@@ -57,7 +59,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         }
     }
 
-    private fun requestRecommendations() = GetRecommendationsAction().apply {
+    private fun likeRecommendations() = GetRecommendationsAction().apply {
         ongoingActions.add(this)
         execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
             override fun onRecommendationsReceived(
@@ -78,6 +80,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
 
                     override fun onRecommendationLikeFailed() {
                         saveRecommendationToDatabase(recommendation, liked = false, matched = false)
+                        scheduleFromLimited()
                     }
                 })
             }
@@ -109,8 +112,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 teasers = recommendation.teasers))
     }
 
-    // TODO This needs to be called after getting rate-limit on swiping, not on recommend
-    private fun scheduleHappySuccess() = DelayedPostAutoSwipeAction().apply {
+    private fun scheduleFromLimited() = DelayedPostAutoSwipeAction().apply {
         ongoingActions.add(this)
         execute(this@AutoSwipeJobIntentService, Unit)
     }
@@ -118,6 +120,13 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     private fun scheduleFromError() = FromErrorPostAutoSwipeAction().apply {
         ongoingActions.add(this)
         execute(this@AutoSwipeJobIntentService, Unit)
+    }
+
+    private fun releaseResources() {
+        ongoingActions.apply {
+            map { it.dispose() }
+            clear()
+        }
     }
 
     private fun clearAction(action: Action<*>) = action.apply {

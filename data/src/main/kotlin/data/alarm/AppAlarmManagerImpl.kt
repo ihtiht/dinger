@@ -17,6 +17,6 @@ internal class AppAlarmManagerImpl @Inject constructor(private val context: Cont
                         context,
                         requestCode,
                         task,
-                        PendingIntent.FLAG_UPDATE_CURRENT))
+                        PendingIntent.FLAG_ONE_SHOT))
     }
 }
