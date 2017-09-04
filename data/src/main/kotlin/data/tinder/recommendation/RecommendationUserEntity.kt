@@ -51,10 +51,10 @@ internal open class RecommendationUserEntity(
                 birthDate = Date(),
                 name = "",
                 pingTime = Date(),
-                instagram = "",
+                instagram = null,
                 teaser = "",
                 sNumber = 0,
-                spotifyThemeTrack = "",
+                spotifyThemeTrack = null,
                 gender = 0,
                 birthDateInfo = "",
                 groupMatched = false)
