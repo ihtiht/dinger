@@ -25,6 +25,7 @@ internal class TinderApiModule {
                         .apply {
                             appAccountManagerImpl.getAccountToken()?.let {
                                 addHeader(TinderApi.HEADER_AUTH, it)
+                                addHeader(TinderApi.HEADER_CONTENT_TYPE, TinderApi.CONTENT_TYPE_JSON)
                                 addHeader(TinderApi.HEADER_APP_VERSION,
                                         BuildConfig.TINDER_VERSION_CODE)
                                 addHeader(TinderApi.HEADER_PLATFORM, BuildConfig.PLATFORM_ANDROID)

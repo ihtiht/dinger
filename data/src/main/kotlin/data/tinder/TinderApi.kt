@@ -21,8 +21,10 @@ internal interface TinderApi {
 
     companion object {
         const val BASE_URL = "https://api.gotinder.com"
-        const val HEADER_AUTH = "X-Auth-Token"
+        const val CONTENT_TYPE_JSON = "application/json"
         const val HEADER_APP_VERSION = "app-version"
+        const val HEADER_AUTH = "X-Auth-Token"
+        const val HEADER_CONTENT_TYPE = "Content-Type"
         const val HEADER_PLATFORM = "platform"
     }
 }
