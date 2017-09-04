@@ -64,7 +64,11 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
             override fun onRecommendationsReceived(
                     recommendations: Collection<DomainRecommendationUser>) {
-                recommendations.forEach { likeRecommendation(it) }
+                if (recommendations.isEmpty()) {
+                    scheduleBecauseError()
+                } else {
+                    recommendations.forEach { likeRecommendation(it) }
+                }
             }
         })
     }
