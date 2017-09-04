@@ -55,7 +55,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         fun onError(autoSwipeJobIntentService: AutoSwipeJobIntentService, error: Throwable) {
             autoSwipeJobIntentService.crashReporter.report(error)
             autoSwipeJobIntentService.clearAction(action)
-            autoSwipeJobIntentService.scheduleFromError()
+            autoSwipeJobIntentService.scheduleBecauseError()
         }
     }
 
@@ -76,11 +76,12 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                     override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) {
                         saveRecommendationToDatabase(
                                 recommendation, liked = true, matched = answer.matched)
+                        scheduleBecauseMoreAvailable()
                     }
 
                     override fun onRecommendationLikeFailed() {
                         saveRecommendationToDatabase(recommendation, liked = false, matched = false)
-                        scheduleFromLimited()
+                        scheduleBecauseLimited()
                     }
                 })
             }
@@ -112,12 +113,17 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 teasers = recommendation.teasers))
     }
 
-    private fun scheduleFromLimited() = DelayedPostAutoSwipeAction().apply {
+    private fun scheduleBecauseMoreAvailable() = ImmediatePostAutoSwipeAction().apply {
         ongoingActions.add(this)
         execute(this@AutoSwipeJobIntentService, Unit)
     }
 
-    private fun scheduleFromError() = FromErrorPostAutoSwipeAction().apply {
+    private fun scheduleBecauseLimited() = DelayedPostAutoSwipeAction().apply {
+        ongoingActions.add(this)
+        execute(this@AutoSwipeJobIntentService, Unit)
+    }
+
+    private fun scheduleBecauseError() = FromErrorPostAutoSwipeAction().apply {
         ongoingActions.add(this)
         execute(this@AutoSwipeJobIntentService, Unit)
     }
