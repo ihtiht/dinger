@@ -6,7 +6,7 @@ import android.net.Uri
 
 internal class InitializationContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        EventTracker.Firebase.init(context)
+        EventTracker.Firebase.init(context.applicationContext)
         return true
     }
 
