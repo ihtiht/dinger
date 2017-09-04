@@ -25,7 +25,7 @@ internal class RecommendationUser private constructor(
         @field:Json(name = "photos")
         val photos: Array<RecommendationUserPhoto>,
         @field:Json(name = "instagram")
-        val instagram: RecommendationUserInstagram,
+        val instagram: RecommendationUserInstagram?,
         @field:Json(name = "jobs")
         val jobs: Array<RecommendationUserJob>,
         @field:Json(name = "schools")

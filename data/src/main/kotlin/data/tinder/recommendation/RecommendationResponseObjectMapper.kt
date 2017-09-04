@@ -26,7 +26,7 @@ internal class RecommendationResponseObjectMapper(
         private val commonConnectionDelegate
         : ObjectMapper<RecommendationUserCommonConnection, DomainRecommendationCommonConnection>,
         private val instagramDelegate
-        : ObjectMapper<RecommendationUserInstagram, DomainRecommendationInstagram>,
+        : ObjectMapper<RecommendationUserInstagram?, DomainRecommendationInstagram?>,
         private val teaserDelegate
         : ObjectMapper<RecommendationUserTeaser, DomainRecommendationTeaser>,
         private val spotifyThemeTrackDelegate
@@ -115,15 +115,16 @@ internal class RecommendationUserCommonConnectionPhotoObjectMapper
 internal class RecommendationInstagramObjectMapper(
         private val instagramPhotoDelegate
         : ObjectMapper<RecommendationUserInstagramPhoto, DomainRecommendationInstagramPhoto>)
-    : ObjectMapper<RecommendationUserInstagram, DomainRecommendationInstagram> {
-    override fun from(source: RecommendationUserInstagram) =
-            DomainRecommendationInstagram(
-                    profilePictureUrl = source.profilePictureUrl,
-                    lastFetchTime = source.lastFetchTime,
-                    mediaCount = source.mediaCount,
-                    completedInitialFetch = source.completedInitialFetch,
-                    username = source.username,
-                    photos = source.photos.map { instagramPhotoDelegate.from(it) })
+    : ObjectMapper<RecommendationUserInstagram?, DomainRecommendationInstagram?> {
+    override fun from(source: RecommendationUserInstagram?) = source?.let {
+        DomainRecommendationInstagram(
+                profilePictureUrl = it.profilePictureUrl,
+                lastFetchTime = it.lastFetchTime,
+                mediaCount = it.mediaCount,
+                completedInitialFetch = it.completedInitialFetch,
+                username = it.username,
+                photos = it.photos.map { instagramPhotoDelegate.from(it) })
+    }
 }
 
 internal class RecommendationInstagramPhotoObjectMapper

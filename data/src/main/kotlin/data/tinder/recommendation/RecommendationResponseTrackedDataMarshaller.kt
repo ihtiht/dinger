@@ -64,7 +64,7 @@ internal class RecommendationUserMarshaller(
             putBundle(id, photoDelegate.marshall(it))
             arrayOf(id, *acc)
         })
-        putBundle("instagram", instagramDelegate.marshall(source.instagram))
+        source.instagram?.let { putBundle("instagram", instagramDelegate.marshall(it)) }
         putStringArray("jobs", source.jobs.fold(emptyArray()) { acc, it ->
             val id = "job_company_name=${it.company.name}_title_name=${it.title.name}"
             putBundle(id, jobDelegate.marshall(it))
