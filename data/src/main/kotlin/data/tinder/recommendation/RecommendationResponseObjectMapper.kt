@@ -215,8 +215,7 @@ internal class RecommendationJobObjectMapper(
     override fun from(source: RecommendationUserJob) = DomainRecommendationJob(
             id = RecommendationUserJob.createId(source.company, source.title),
             company = companyDelegate.from(source.company),
-            title = titleDelegate.from(source.title)
-    )
+            title = source.title?.let { titleDelegate.from(it) })
 }
 
 internal class RecommendationJobCompanyObjectMapper

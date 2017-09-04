@@ -66,7 +66,7 @@ internal class RecommendationUserMarshaller(
         })
         source.instagram?.let { putBundle("instagram", instagramDelegate.marshall(it)) }
         putStringArray("jobs", source.jobs.fold(emptyArray()) { acc, it ->
-            val id = "job_company_name=${it.company.name}_title_name=${it.title.name}"
+            val id = "job_company_name=${it.company.name}_title_name=${it.title?.name}"
             putBundle(id, jobDelegate.marshall(it))
             arrayOf(id, *acc)
         })
@@ -176,7 +176,7 @@ internal class InstagramPhotoMarshaller : TrackedDataMarshaller<RecommendationUs
 internal class JobMarshaller : TrackedDataMarshaller<RecommendationUserJob> {
     override fun marshall(source: RecommendationUserJob) = Bundle().apply {
         putString("company_name", source.company.name)
-        putString("title_name", source.title.name)
+        source.title?.let { putString("title_name", it.name) }
     }
 }
 

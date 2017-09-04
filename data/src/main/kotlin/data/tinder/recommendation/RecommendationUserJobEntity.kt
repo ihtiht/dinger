@@ -12,4 +12,4 @@ internal class RecommendationUserJobEntity(
         @Embedded(prefix = "company_")
         var company: RecommendationUserJobCompany,
         @Embedded(prefix = "title_")
-        var title: RecommendationUserJobTitle)
+        var title: RecommendationUserJobTitle?)
