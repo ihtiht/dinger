@@ -13,7 +13,7 @@ This repo is here to show that these and other pain points are easily addressed 
 ## Database
 
 Below can be found the database structure for the relevant parts of the app.
-* [Recommendations](assets/db/data.AppDatabase/1.json "Database Schema: Recommendations")
+* [Recommendations](assets/db/data.database.AppDatabase/1.json "Database Schema: Recommendations")
 
 ## Distribution
 
