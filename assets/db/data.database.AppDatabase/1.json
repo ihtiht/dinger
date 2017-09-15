@@ -2,81 +2,95 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c8e38787e8e5c1201b84379283ce2e97",
+    "identityHash": "4b282519cd10a29cf786d326f0f660ba",
     "entities": [
       {
         "tableName": "RecommendationUserEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`distanceMiles` INTEGER, `connectionCount` INTEGER, `contentHash` TEXT, `id` TEXT, `name` TEXT, `instagram` TEXT, `teaser` TEXT, `sNumber` INTEGER, `spotifyThemeTrack` TEXT, `gender` INTEGER, `birthDateInfo` TEXT, `groupMatched` INTEGER, `liked` INTEGER, `matched` INTEGER, PRIMARY KEY(`id`), FOREIGN KEY(`instagram`) REFERENCES `RecommendationUserInstagramEntity`(`username`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`teaser`) REFERENCES `RecommendationUserTeaserEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`spotifyThemeTrack`) REFERENCES `RecommendationUserSpotifyThemeTrackEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`distanceMiles` INTEGER NOT NULL, `connectionCount` INTEGER NOT NULL, `contentHash` TEXT NOT NULL, `id` TEXT NOT NULL, `name` TEXT NOT NULL, `instagram` TEXT, `teaser` TEXT NOT NULL, `sNumber` INTEGER NOT NULL, `spotifyThemeTrack` TEXT, `gender` INTEGER NOT NULL, `birthDateInfo` TEXT NOT NULL, `groupMatched` INTEGER NOT NULL, `liked` INTEGER NOT NULL, `matched` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`instagram`) REFERENCES `RecommendationUserInstagramEntity`(`username`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`teaser`) REFERENCES `RecommendationUserTeaserEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`spotifyThemeTrack`) REFERENCES `RecommendationUserSpotifyThemeTrackEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "distanceMiles",
             "columnName": "distanceMiles",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "connectionCount",
             "columnName": "connectionCount",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "contentHash",
             "columnName": "contentHash",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "instagram",
             "columnName": "instagram",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "teaser",
             "columnName": "teaser",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "sNumber",
             "columnName": "sNumber",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "spotifyThemeTrack",
             "columnName": "spotifyThemeTrack",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "gender",
             "columnName": "gender",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "birthDateInfo",
             "columnName": "birthDateInfo",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "groupMatched",
             "columnName": "groupMatched",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "liked",
             "columnName": "liked",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "matched",
             "columnName": "matched",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -165,27 +179,31 @@
       },
       {
         "tableName": "RecommendationUserInstagramEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`profilePictureUrl` TEXT, `mediaCount` INTEGER, `completedInitialFetch` INTEGER, `username` TEXT, PRIMARY KEY(`username`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`profilePictureUrl` TEXT NOT NULL, `mediaCount` INTEGER NOT NULL, `completedInitialFetch` INTEGER NOT NULL, `username` TEXT NOT NULL, PRIMARY KEY(`username`))",
         "fields": [
           {
             "fieldPath": "profilePictureUrl",
             "columnName": "profilePictureUrl",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "mediaCount",
             "columnName": "mediaCount",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "completedInitialFetch",
             "columnName": "completedInitialFetch",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "username",
             "columnName": "username",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -208,27 +226,31 @@
       },
       {
         "tableName": "RecommendationUserInstagramPhotoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`link` TEXT, `imageUrl` TEXT, `thumbnailUrl` TEXT, `ts` TEXT, PRIMARY KEY(`link`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`link` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `thumbnailUrl` TEXT NOT NULL, `ts` TEXT NOT NULL, PRIMARY KEY(`link`))",
         "fields": [
           {
             "fieldPath": "link",
             "columnName": "link",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "imageUrl",
             "columnName": "imageUrl",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "thumbnailUrl",
             "columnName": "thumbnailUrl",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "ts",
             "columnName": "ts",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -251,22 +273,25 @@
       },
       {
         "tableName": "RecommendationUserTeaserEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `description` TEXT, `type` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `description` TEXT NOT NULL, `type` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "description",
             "columnName": "description",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "type",
             "columnName": "type",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -289,32 +314,37 @@
       },
       {
         "tableName": "RecommendationUserSpotifyThemeTrackEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album` TEXT, `previewUrl` TEXT, `name` TEXT, `id` TEXT, `uri` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`album`) REFERENCES `RecommendationUserSpotifyThemeTrackAlbumEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album` TEXT NOT NULL, `previewUrl` TEXT NOT NULL, `name` TEXT NOT NULL, `id` TEXT NOT NULL, `uri` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`album`) REFERENCES `RecommendationUserSpotifyThemeTrackAlbumEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "album",
             "columnName": "album",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "previewUrl",
             "columnName": "previewUrl",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "uri",
             "columnName": "uri",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -357,17 +387,19 @@
       },
       {
         "tableName": "RecommendationUserSpotifyThemeTrackAlbumEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `id` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -390,17 +422,19 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationUserCommonConnectionEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationUserCommonConnectionEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserCommonConnectionEntityId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT NOT NULL, `recommendationUserCommonConnectionEntityId` TEXT NOT NULL, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserCommonConnectionEntityId`))",
         "fields": [
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationUserCommonConnectionEntityId",
             "columnName": "recommendationUserCommonConnectionEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -424,17 +458,19 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationInterestEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationInterestEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationInterestEntityId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT NOT NULL, `recommendationInterestEntityId` TEXT NOT NULL, PRIMARY KEY(`recommendationUserEntityId`, `recommendationInterestEntityId`))",
         "fields": [
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationInterestEntityId",
             "columnName": "recommendationInterestEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -458,17 +494,19 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationUserPhotoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationUserPhotoEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserPhotoEntityId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT NOT NULL, `recommendationUserPhotoEntityId` TEXT NOT NULL, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserPhotoEntityId`))",
         "fields": [
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationUserPhotoEntityId",
             "columnName": "recommendationUserPhotoEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -492,17 +530,19 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationUserJobEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationUserJobEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserJobEntityId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT NOT NULL, `recommendationUserJobEntityId` TEXT NOT NULL, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserJobEntityId`))",
         "fields": [
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationUserJobEntityId",
             "columnName": "recommendationUserJobEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -526,17 +566,19 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationUserSchoolEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationUserSchoolEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserSchoolEntityId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT NOT NULL, `recommendationUserSchoolEntityId` TEXT NOT NULL, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserSchoolEntityId`))",
         "fields": [
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationUserSchoolEntityId",
             "columnName": "recommendationUserSchoolEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -560,17 +602,19 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationUserTeaserEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT, `recommendationUserTeaserEntityId` TEXT, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserTeaserEntityId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT NOT NULL, `recommendationUserTeaserEntityId` TEXT NOT NULL, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserTeaserEntityId`))",
         "fields": [
           {
             "fieldPath": "recommendationUserEntityId",
             "columnName": "recommendationUserEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationUserTeaserEntityId",
             "columnName": "recommendationUserTeaserEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -594,17 +638,19 @@
       },
       {
         "tableName": "RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserInstagramEntityUsername` TEXT, `recommendationUserInstagramPhotoEntityLink` TEXT, PRIMARY KEY(`recommendationUserInstagramEntityUsername`, `recommendationUserInstagramPhotoEntityLink`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserInstagramEntityUsername` TEXT NOT NULL, `recommendationUserInstagramPhotoEntityLink` TEXT NOT NULL, PRIMARY KEY(`recommendationUserInstagramEntityUsername`, `recommendationUserInstagramPhotoEntityLink`))",
         "fields": [
           {
             "fieldPath": "recommendationUserInstagramEntityUsername",
             "columnName": "recommendationUserInstagramEntityUsername",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationUserInstagramPhotoEntityLink",
             "columnName": "recommendationUserInstagramPhotoEntityLink",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -628,22 +674,25 @@
       },
       {
         "tableName": "RecommendationUserPhotoProcessedFileEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`widthPx` INTEGER, `url` TEXT, `heightPx` INTEGER, PRIMARY KEY(`url`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`widthPx` INTEGER NOT NULL, `url` TEXT NOT NULL, `heightPx` INTEGER NOT NULL, PRIMARY KEY(`url`))",
         "fields": [
           {
             "fieldPath": "widthPx",
             "columnName": "widthPx",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "url",
             "columnName": "url",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "heightPx",
             "columnName": "heightPx",
-            "affinity": "INTEGER"
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -666,17 +715,19 @@
       },
       {
         "tableName": "RecommendationUserPhotoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `url` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `url` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "url",
             "columnName": "url",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -699,17 +750,19 @@
       },
       {
         "tableName": "RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserPhotoEntityId` TEXT, `recommendationUserPhotoProcessedFileEntityUrl` TEXT, PRIMARY KEY(`recommendationUserPhotoEntityId`, `recommendationUserPhotoProcessedFileEntityUrl`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserPhotoEntityId` TEXT NOT NULL, `recommendationUserPhotoProcessedFileEntityUrl` TEXT NOT NULL, PRIMARY KEY(`recommendationUserPhotoEntityId`, `recommendationUserPhotoProcessedFileEntityUrl`))",
         "fields": [
           {
             "fieldPath": "recommendationUserPhotoEntityId",
             "columnName": "recommendationUserPhotoEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationUserPhotoProcessedFileEntityUrl",
             "columnName": "recommendationUserPhotoProcessedFileEntityUrl",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -733,17 +786,19 @@
       },
       {
         "tableName": "RecommendationUserSpotifyThemeTrackArtistEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `id` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -766,17 +821,19 @@
       },
       {
         "tableName": "RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserSpotifyThemeTrackEntityId` TEXT, `recommendationUserSpotifyThemeTrackArtistEntityId` TEXT, PRIMARY KEY(`recommendationUserSpotifyThemeTrackEntityId`, `recommendationUserSpotifyThemeTrackArtistEntityId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserSpotifyThemeTrackEntityId` TEXT NOT NULL, `recommendationUserSpotifyThemeTrackArtistEntityId` TEXT NOT NULL, PRIMARY KEY(`recommendationUserSpotifyThemeTrackEntityId`, `recommendationUserSpotifyThemeTrackArtistEntityId`))",
         "fields": [
           {
             "fieldPath": "recommendationUserSpotifyThemeTrackEntityId",
             "columnName": "recommendationUserSpotifyThemeTrackEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationUserSpotifyThemeTrackArtistEntityId",
             "columnName": "recommendationUserSpotifyThemeTrackArtistEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -800,17 +857,19 @@
       },
       {
         "tableName": "RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserSpotifyThemeTrackAlbumEntityId` TEXT, `recommendationUserPhotoProcessedFileEntityUrl` TEXT, PRIMARY KEY(`recommendationUserSpotifyThemeTrackAlbumEntityId`, `recommendationUserPhotoProcessedFileEntityUrl`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserSpotifyThemeTrackAlbumEntityId` TEXT NOT NULL, `recommendationUserPhotoProcessedFileEntityUrl` TEXT NOT NULL, PRIMARY KEY(`recommendationUserSpotifyThemeTrackAlbumEntityId`, `recommendationUserPhotoProcessedFileEntityUrl`))",
         "fields": [
           {
             "fieldPath": "recommendationUserSpotifyThemeTrackAlbumEntityId",
             "columnName": "recommendationUserSpotifyThemeTrackAlbumEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationUserPhotoProcessedFileEntityUrl",
             "columnName": "recommendationUserPhotoProcessedFileEntityUrl",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -834,22 +893,25 @@
       },
       {
         "tableName": "RecommendationUserCommonConnectionEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `name` TEXT, `degree` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `degree` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "degree",
             "columnName": "degree",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -872,22 +934,25 @@
       },
       {
         "tableName": "RecommendationUserCommonConnectionPhotoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`small` TEXT, `medium` TEXT, `large` TEXT, PRIMARY KEY(`small`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`small` TEXT NOT NULL, `medium` TEXT NOT NULL, `large` TEXT NOT NULL, PRIMARY KEY(`small`))",
         "fields": [
           {
             "fieldPath": "small",
             "columnName": "small",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "medium",
             "columnName": "medium",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "large",
             "columnName": "large",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -910,17 +975,19 @@
       },
       {
         "tableName": "RecommendationUserCommonConnectionEntity_PhotoEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserCommonConnectionEntityId` TEXT, `recommendationUserCommonConnectionPhotoEntitySmall` TEXT, PRIMARY KEY(`recommendationUserCommonConnectionEntityId`, `recommendationUserCommonConnectionPhotoEntitySmall`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserCommonConnectionEntityId` TEXT NOT NULL, `recommendationUserCommonConnectionPhotoEntitySmall` TEXT NOT NULL, PRIMARY KEY(`recommendationUserCommonConnectionEntityId`, `recommendationUserCommonConnectionPhotoEntitySmall`))",
         "fields": [
           {
             "fieldPath": "recommendationUserCommonConnectionEntityId",
             "columnName": "recommendationUserCommonConnectionEntityId",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "recommendationUserCommonConnectionPhotoEntitySmall",
             "columnName": "recommendationUserCommonConnectionPhotoEntitySmall",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -944,17 +1011,19 @@
       },
       {
         "tableName": "RecommendationInterestEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `name` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -977,22 +1046,25 @@
       },
       {
         "tableName": "RecommendationUserJobEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT, `company_name` TEXT, `title_name` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `company_name` TEXT, `title_name` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "company.name",
             "columnName": "company_name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "title.name",
             "columnName": "title_name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -1015,17 +1087,19 @@
       },
       {
         "tableName": "RecommendationUserSchoolEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `id` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "name",
             "columnName": "name",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           },
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT"
+            "affinity": "TEXT",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -1040,7 +1114,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c8e38787e8e5c1201b84379283ce2e97\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4b282519cd10a29cf786d326f0f660ba\")"
     ]
   }
 }
