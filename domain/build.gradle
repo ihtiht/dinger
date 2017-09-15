@@ -31,8 +31,8 @@ android {
     }
 }
 repositories {
+    google()
     jcenter()
-    maven { url "https://maven.google.com" }
 }
 dependencies {
     kapt rootProject.ext.annotationProcessorDomainDependencies
