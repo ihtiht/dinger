@@ -49,7 +49,6 @@ ext {
             "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
             "com.nytimes.android:store-kotlin3:$storeVersion",
             "com.nytimes.android:middleware-moshi3:$storeVersion",
-            "com.nytimes.android:filesystem3:$storeVersion",
             "com.google.dagger:dagger:$daggerVersion",
             "com.android.support:support-v4:$supportLibraryVersion",
             "com.squareup.moshi:moshi-adapters:$moshiVersion",
