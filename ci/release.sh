@@ -72,7 +72,7 @@ uploadReleaseToGitHub() {
             ${UPLOAD_URL})
     QR_DOWNLOAD_URL=$(echo ${RESPONSE_BODY} | jq -r .browser_download_url)
 
-    RELEASE_BODY="**APK DOWNLOAD**: Scan the QR code below or click [here](${APK_DOWNLOAD_URL} \\\"Direct APK download\\\").\\n\\n![QR code](${QR_DOWNLOAD_URL})\\n\\n**CHANGELOG**:\\n$RELEASE_NOTES"
+    RELEASE_BODY="**APK DOWNLOAD**: Scan the QR code below or click [here](${APK_DOWNLOAD_URL} \\\"Direct APK download\\\").\\n\\n![QR code](${QR_DOWNLOAD_URL}?raw=true)\\n\\n**CHANGELOG**:\\n$RELEASE_NOTES"
 
     BODY="{
         \"body\": \"${RELEASE_BODY}\"
