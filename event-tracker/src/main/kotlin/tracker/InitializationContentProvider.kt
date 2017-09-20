@@ -16,5 +16,5 @@ internal class InitializationContentProvider : ContentProvider() {
     override fun update(uri: Uri?, values: ContentValues?, selection: String?,
                         selectionArgs: Array<out String>?) = 0
     override fun delete(uri: Uri?, selection: String?, selectionArgs: Array<out String>?) = 0
-    override fun getType(uri: Uri?) = null
+    override fun getType(uri: Uri?) = "vnd.android.cursor.item.none"
 }
