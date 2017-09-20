@@ -13,7 +13,7 @@ import reporter.CrashReporter
 import javax.inject.Inject
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
-    private val ongoingActions = mutableSetOf<Action<*>>()
+    private var ongoingActions = emptySet<Action<*>>()
     @Inject
     lateinit var crashReporter: CrashReporter
     @Inject
@@ -27,10 +27,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         likeRecommendations()
     }
 
-    override fun onStopCurrentWork(): Boolean {
-        releaseResources()
-        return true
-    }
+    override fun onStopCurrentWork() = true.also { releaseResources() }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -60,7 +57,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     private fun likeRecommendations() = GetRecommendationsAction().apply {
-        ongoingActions.add(this)
+        ongoingActions += (this)
         execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
             override fun onRecommendationsReceived(
                     recommendations: Collection<DomainRecommendationUser>) {
@@ -75,7 +72,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
 
     private fun likeRecommendation(recommendation: DomainRecommendationUser) =
             LikeRecommendationAction(recommendation).apply {
-                ongoingActions.add(this)
+                ongoingActions += (this)
                 execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
                     override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) {
                         saveRecommendationToDatabase(
@@ -118,30 +115,28 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     private fun scheduleBecauseMoreAvailable() = ImmediatePostAutoSwipeAction().apply {
-        ongoingActions.add(this)
+        ongoingActions += this
         execute(this@AutoSwipeJobIntentService, Unit)
     }
 
     private fun scheduleBecauseLimited() = DelayedPostAutoSwipeAction().apply {
-        ongoingActions.add(this)
+        ongoingActions += this
         execute(this@AutoSwipeJobIntentService, Unit)
     }
 
     private fun scheduleBecauseError() = FromErrorPostAutoSwipeAction().apply {
-        ongoingActions.add(this)
+        ongoingActions += this
         execute(this@AutoSwipeJobIntentService, Unit)
     }
 
     private fun releaseResources() {
-        ongoingActions.apply {
-            map { it.dispose() }
-            clear()
-        }
+        ongoingActions.forEach { it.dispose() }
+        ongoingActions = emptySet()
     }
 
     private fun clearAction(action: Action<*>) = action.apply {
         dispose()
-        ongoingActions.remove(this)
+        ongoingActions -= this
     }
 
     companion object {
