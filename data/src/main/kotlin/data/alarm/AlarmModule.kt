@@ -10,5 +10,5 @@ import javax.inject.Singleton
 internal class AlarmModule {
     @Provides
     @Singleton
-    fun facadeProvider(context: Context) = AppAlarmManagerImpl(context)
+    fun alarmManager(context: Context) = AppAlarmManagerImpl(context)
 }
