@@ -1,6 +1,8 @@
 # Dinger
 ## What Tinder should have been
 
+__No clue what's going on? [Start here](assets/overview.pdf "Architecture overview")__
+
 Tinder is a very trendy thing. It's like clubbing, but without the fun :D
 
 From a technical standpoint however, it is an awful piece of software, at least the Android app:
@@ -9,11 +11,6 @@ From a technical standpoint however, it is an awful piece of software, at least 
 * It does not support landscape mode.
 
 This repo is here to show that these and other pain points are easily addressed nowadays if things are done correctly and, while at it, I'll take the chance to demonstrate how well-built modern Android apps are made, and that this is something very feasible to achieve even if your team just consists of a single developer and instead of having the backend guy sitting next to him, you only have Charles Proxy.
-
-## Database
-
-Below can be found the database structure for the relevant parts of the app.
-* [Recommendations](assets/db/data.database.AppDatabase/1.json "Database Schema: Recommendations")
 
 ## Distribution
 
@@ -26,4 +23,4 @@ You'll need to configure Firebase first. For that:
 * Add your private key under `app/` as `firebase-crashreporting-private-key.json`.
 * Add your `google-services.json` files for the debug and release variants of your console project under `app/debug` and `app/release` respectively.
 
-Just use the `assemble` Gradle task to build both debug and release, or the specific task for one of them.
+Then, just use the `assemble` Gradle task to build both debug and release, or the specific task for one of them.
