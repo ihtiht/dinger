@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "95ba6be93fa2519d6ddf041c76b1862b",
+    "identityHash": "43c524ccd5c156c7b218f9dd4638ec95",
     "entities": [
       {
         "tableName": "RecommendationUserEntity",
@@ -566,7 +566,7 @@
       },
       {
         "tableName": "RecommendationUserEntity_RecommendationUserSchoolEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT NOT NULL, `recommendationUserSchoolEntityId` TEXT NOT NULL, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserSchoolEntityId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`recommendationUserEntityId` TEXT NOT NULL, `recommendationUserSchoolEntityName` TEXT NOT NULL, PRIMARY KEY(`recommendationUserEntityId`, `recommendationUserSchoolEntityName`))",
         "fields": [
           {
             "fieldPath": "recommendationUserEntityId",
@@ -575,8 +575,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "recommendationUserSchoolEntityId",
-            "columnName": "recommendationUserSchoolEntityId",
+            "fieldPath": "recommendationUserSchoolEntityName",
+            "columnName": "recommendationUserSchoolEntityName",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -584,7 +584,7 @@
         "primaryKey": {
           "columnNames": [
             "recommendationUserEntityId",
-            "recommendationUserSchoolEntityId"
+            "recommendationUserSchoolEntityName"
           ],
           "autoGenerate": false
         },
@@ -1087,7 +1087,7 @@
       },
       {
         "tableName": "RecommendationUserSchoolEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `id` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `id` TEXT, PRIMARY KEY(`name`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -1099,12 +1099,12 @@
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "name"
           ],
           "autoGenerate": false
         },
@@ -1114,7 +1114,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"95ba6be93fa2519d6ddf041c76b1862b\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"43c524ccd5c156c7b218f9dd4638ec95\")"
     ]
   }
 }

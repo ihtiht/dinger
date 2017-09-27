@@ -22,7 +22,7 @@ internal class RecommendationSchoolDaoDelegate(
             insertDomain(it)
             userSchoolDao.insertUser_School(RecommendationUserEntity_RecommendationUserSchoolEntity(
                     recommendationUserEntityId = userId,
-                    recommendationUserSchoolEntityId = it.id))
+                    recommendationUserSchoolEntityName = it.name))
         }
     }
 }

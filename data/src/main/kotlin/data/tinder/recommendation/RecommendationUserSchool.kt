@@ -6,5 +6,5 @@ internal class RecommendationUserSchool private constructor(
         @field:Json(name = "name")
         val name: String,
         @field:Json(name = "id")
-        val id: String
+        val id: String?
 )

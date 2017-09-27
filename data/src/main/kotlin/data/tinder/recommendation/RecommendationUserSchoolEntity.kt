@@ -5,6 +5,6 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity
 internal class RecommendationUserSchoolEntity(
-        var name: String,
         @PrimaryKey
-        var id: String)
+        var name: String,
+        var id: String?)

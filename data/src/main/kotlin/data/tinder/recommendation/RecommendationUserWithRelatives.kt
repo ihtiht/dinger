@@ -24,7 +24,7 @@ internal class RecommendationUserWithRelatives(
         var jobs: Set<String>,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserEntityId",
                 entity = RecommendationUserEntity_RecommendationUserSchoolEntity::class,
-                projection = arrayOf("recommendationUserSchoolEntityId"))
+                projection = arrayOf("recommendationUserSchoolEntityName"))
         var schools: Set<String>,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserEntityId",
                 entity = RecommendationUserEntity_RecommendationUserTeaserEntity::class,
