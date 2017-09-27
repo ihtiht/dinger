@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4b282519cd10a29cf786d326f0f660ba",
+    "identityHash": "95ba6be93fa2519d6ddf041c76b1862b",
     "entities": [
       {
         "tableName": "RecommendationUserEntity",
@@ -314,7 +314,7 @@
       },
       {
         "tableName": "RecommendationUserSpotifyThemeTrackEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album` TEXT NOT NULL, `previewUrl` TEXT NOT NULL, `name` TEXT NOT NULL, `id` TEXT NOT NULL, `uri` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`album`) REFERENCES `RecommendationUserSpotifyThemeTrackAlbumEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`album` TEXT NOT NULL, `previewUrl` TEXT, `name` TEXT NOT NULL, `id` TEXT NOT NULL, `uri` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`album`) REFERENCES `RecommendationUserSpotifyThemeTrackAlbumEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "album",
@@ -326,7 +326,7 @@
             "fieldPath": "previewUrl",
             "columnName": "previewUrl",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "name",
@@ -1114,7 +1114,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"4b282519cd10a29cf786d326f0f660ba\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"95ba6be93fa2519d6ddf041c76b1862b\")"
     ]
   }
 }
