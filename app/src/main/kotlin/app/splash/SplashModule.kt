@@ -9,7 +9,7 @@ import javax.inject.Named
 
 @Module
 @PerActivity
-internal class LoggedInCheckModule(
+internal class SplashModule(
         private val resultCallback: LoggedInCheckCoordinator.ResultCallback) {
     @Provides
     fun coordinator(
