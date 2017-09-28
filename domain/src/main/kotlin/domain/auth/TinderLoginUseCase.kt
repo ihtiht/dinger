@@ -6,7 +6,7 @@ import domain.interactor.CompletableDisposableUseCase
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 
-class TinderFacebookLoginUseCase(
+class TinderLoginUseCase(
         private val facebookId: String,
         private val facebookToken: String,
         asyncExecutionScheduler: Scheduler,
@@ -20,6 +20,6 @@ class TinderFacebookLoginUseCase(
                         "Failed to add account $facebookId with token $facebookToken")
                 }
             }
-            .doOnSuccess { LoginManager.getInstance().logOut() }
+            .doFinally { LoginManager.getInstance().logOut() }
             .toCompletable()
 }

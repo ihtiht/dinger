@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.Toast
 import org.stoyicker.dinger.R
 
-internal class TinderFacebookLoginView(
+internal class TinderLoginViewImpl(
         private val activity: TinderLoginActivity,
         private val loginButton: View,
         private val progress: View)

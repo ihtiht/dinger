@@ -12,12 +12,12 @@ import javax.inject.Inject
 
 internal class TinderLoginActivity
     : TinderFacebookLoginFeature.ResultCallback,
-        TinderFacebookLoginCoordinator.ResultCallback,
+        TinderLoginCoordinator.ResultCallback,
         Activity()  {
     @Inject
     lateinit var tinderFacebookLoginFeature: TinderFacebookLoginFeature
     @Inject
-    lateinit var tinderFacebookLoginCoordinator: TinderFacebookLoginCoordinator
+    lateinit var tinderLoginCoordinator: TinderLoginCoordinator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +33,12 @@ internal class TinderLoginActivity
 
     override fun onDestroy() {
         tinderFacebookLoginFeature.release(login_button)
-        tinderFacebookLoginCoordinator.actionCancelLogin()
+        tinderLoginCoordinator.actionCancelLogin()
         super.onDestroy()
     }
 
     override fun onSuccess(facebookId: String, facebookToken: String) =
-            tinderFacebookLoginCoordinator.actionDoLogin(facebookId, facebookToken)
+            tinderLoginCoordinator.actionDoLogin(facebookId, facebookToken)
 
     override fun onTinderLoginSuccess() {
         AlarmBannerActivity.getCallingIntent(this).apply {
@@ -49,11 +49,11 @@ internal class TinderLoginActivity
     }
 
     private fun inject() = (application as MainApplication).applicationComponent
-            .newTinderFacebookLoginComponent(TinderFacebookLoginModule(
+            .newTinderLoginComponent(TinderLoginModule(
                     activity = this,
                     loginButton = login_button,
                     contentLoadingProgressBar = progress,
-                    tinderFacebookLoginCoordinatorResultCallback = this,
+                    tinderLoginCoordinatorResultCallback = this,
                     tinderFacebookLoginResultCallback = this))
             .inject(this)
 

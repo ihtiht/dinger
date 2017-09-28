@@ -11,13 +11,12 @@ import javax.inject.Named
 
 @Module
 @PerActivity
-internal class TinderFacebookLoginModule(
+internal class TinderLoginModule(
         private val activity: TinderLoginActivity,
         private val loginButton: LoginButton,
         private val contentLoadingProgressBar: ContentLoadingProgressBar,
         private val tinderFacebookLoginResultCallback: TinderFacebookLoginFeature.ResultCallback,
-        private val tinderFacebookLoginCoordinatorResultCallback
-        : TinderFacebookLoginCoordinator.ResultCallback) {
+        private val tinderLoginCoordinatorResultCallback: TinderLoginCoordinator.ResultCallback) {
     @Provides
     fun feature(crashReporter: CrashReporter) =
             TinderFacebookLoginFeature(
@@ -27,7 +26,7 @@ internal class TinderFacebookLoginModule(
 
     @Provides
     fun view(): TinderLoginView =
-            TinderFacebookLoginView(activity, loginButton, contentLoadingProgressBar)
+            TinderLoginViewImpl(activity, loginButton, contentLoadingProgressBar)
 
     @Provides
     fun coordinator(
@@ -35,10 +34,10 @@ internal class TinderFacebookLoginModule(
             @Named("io") asyncExecutionScheduler: Scheduler,
             @Named("main") postExecutionScheduler: Scheduler,
             crashReporter: CrashReporter) =
-            TinderFacebookLoginCoordinator(
+            TinderLoginCoordinator(
                     view,
                     asyncExecutionScheduler,
                     postExecutionScheduler,
-                    tinderFacebookLoginCoordinatorResultCallback,
+                    tinderLoginCoordinatorResultCallback,
                     crashReporter)
 }
