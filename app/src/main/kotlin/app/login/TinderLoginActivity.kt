@@ -6,8 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import app.MainApplication
 import app.alarmbanner.AlarmBannerActivity
-import kotlinx.android.synthetic.main.activity_login.login_button
-import kotlinx.android.synthetic.main.activity_login.progress
+import kotlinx.android.synthetic.main.activity_login.*
 import org.stoyicker.dinger.R
 import javax.inject.Inject
 
@@ -38,9 +37,8 @@ internal class TinderLoginActivity
         super.onDestroy()
     }
 
-    override fun onSuccess(facebookId: String, facebookToken: String) {
-        tinderFacebookLoginCoordinator.actionDoLogin(facebookId, facebookToken)
-    }
+    override fun onSuccess(facebookId: String, facebookToken: String) =
+            tinderFacebookLoginCoordinator.actionDoLogin(facebookId, facebookToken)
 
     override fun onTinderLoginSuccess() {
         AlarmBannerActivity.getCallingIntent(this).apply {

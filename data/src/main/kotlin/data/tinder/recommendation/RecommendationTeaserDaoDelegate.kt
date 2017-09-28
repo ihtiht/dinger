@@ -21,12 +21,11 @@ internal class RecommendationTeaserDaoDelegate(
                     description = source.description,
                     type = source.type))
 
-    fun insertDomainForUserId(userId: String, teasers: Iterable<DomainRecommendationTeaser>) {
-        teasers.forEach {
-            insertDomain(it)
-            userTeaserDao.insertUser_Teaser(RecommendationUserEntity_RecommendationUserTeaserEntity(
-                    recommendationUserEntityId = userId,
-                    recommendationUserTeaserEntityId = it.id))
-        }
-    }
+    fun insertDomainForUserId(userId: String, teasers: Iterable<DomainRecommendationTeaser>) =
+            teasers.forEach {
+                insertDomain(it)
+                userTeaserDao.insertUser_Teaser(RecommendationUserEntity_RecommendationUserTeaserEntity(
+                        recommendationUserEntityId = userId,
+                        recommendationUserTeaserEntityId = it.id))
+            }
 }

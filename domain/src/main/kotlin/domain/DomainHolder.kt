@@ -1,7 +1,6 @@
 package domain
 
 import domain.repository.FacadeProvider
-import io.reactivex.schedulers.Schedulers
 
 object DomainHolder {
     internal lateinit var facadeProvider: FacadeProvider

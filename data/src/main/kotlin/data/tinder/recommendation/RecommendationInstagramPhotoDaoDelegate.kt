@@ -25,13 +25,12 @@ internal class RecommendationInstagramPhotoDaoDelegate(
 
     fun insertDomainForInstagramUsername(
             instagramUsername: String,
-            instagramPhotos: Iterable<DomainRecommendationInstagramPhoto>) {
-        instagramPhotos.forEach {
-            insertDomain(it)
-            userInstagramDao.insertInstagram_Photo(
-                    RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity(
-                            recommendationUserInstagramEntityUsername = instagramUsername,
-                            recommendationUserInstagramPhotoEntityLink = it.link))
-        }
-    }
+            instagramPhotos: Iterable<DomainRecommendationInstagramPhoto>) =
+            instagramPhotos.forEach {
+                insertDomain(it)
+                userInstagramDao.insertInstagram_Photo(
+                        RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity(
+                                recommendationUserInstagramEntityUsername = instagramUsername,
+                                recommendationUserInstagramPhotoEntityLink = it.link))
+            }
 }

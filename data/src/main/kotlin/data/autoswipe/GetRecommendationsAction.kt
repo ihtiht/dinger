@@ -20,9 +20,7 @@ internal class GetRecommendationsAction
                         callback.onRecommendationsReceived(payload)
                     }
 
-                    override fun onError(error: Throwable) {
-                        commonDelegate.onError(owner, error)
-                    }
+                    override fun onError(error: Throwable) = commonDelegate.onError(owner, error)
                 })
             }
 

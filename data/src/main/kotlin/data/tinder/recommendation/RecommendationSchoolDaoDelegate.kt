@@ -17,12 +17,11 @@ internal class RecommendationSchoolDaoDelegate(
     override fun insertDomain(source: DomainRecommendationSchool) = schoolDao.insertSchool(
             RecommendationUserSchoolEntity(id = source.id, name = source.name))
 
-    fun insertDomainForUserId(userId: String, schools: Iterable<DomainRecommendationSchool>) {
-        schools.forEach {
-            insertDomain(it)
-            userSchoolDao.insertUser_School(RecommendationUserEntity_RecommendationUserSchoolEntity(
-                    recommendationUserEntityId = userId,
-                    recommendationUserSchoolEntityName = it.name))
-        }
-    }
+    fun insertDomainForUserId(userId: String, schools: Iterable<DomainRecommendationSchool>) =
+            schools.forEach {
+                insertDomain(it)
+                userSchoolDao.insertUser_School(RecommendationUserEntity_RecommendationUserSchoolEntity(
+                        recommendationUserEntityId = userId,
+                        recommendationUserSchoolEntityName = it.name))
+            }
 }

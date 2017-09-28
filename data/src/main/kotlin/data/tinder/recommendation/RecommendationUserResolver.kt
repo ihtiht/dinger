@@ -1,5 +1,6 @@
 package data.tinder.recommendation
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Transformations
 import domain.recommendation.DomainRecommendationUser
 
@@ -43,10 +44,10 @@ internal class RecommendationUserResolver(
         teaserDaoDelegate.insertDomainForUserId(id, teasers)
     }
 
-    fun selectById(id: String) =
+    fun selectById(id: String): LiveData<List<DomainRecommendationUser>> =
             Transformations.map(userDao.selectUserById(id)) { it.map { from(it) } }
 
-    fun selectByFilterOnName(filter: String) =
+    fun selectByFilterOnName(filter: String): LiveData<List<DomainRecommendationUser>> =
             Transformations.map(userDao.selectUsersByFilterOnName(filter)) { it.map { from(it) } }
 
     private fun from(source: RecommendationUserWithRelatives): DomainRecommendationUser {

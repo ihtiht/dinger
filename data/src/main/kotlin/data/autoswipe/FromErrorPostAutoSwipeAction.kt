@@ -12,13 +12,9 @@ internal class FromErrorPostAutoSwipeAction : AutoSwipeJobIntentService.Action<U
             FromErrorPostAutoSwipeUseCase(owner, Schedulers.trampoline()).let {
                 useCaseDelegate = it
                 it.execute(object : DisposableCompletableObserver() {
-                    override fun onComplete() {
-                        commonDelegate.onComplete(owner)
-                    }
+                    override fun onComplete() = commonDelegate.onComplete(owner)
 
-                    override fun onError(error: Throwable) {
-                        commonDelegate.onError(owner, error)
-                    }
+                    override fun onError(error: Throwable) = commonDelegate.onError(owner, error)
                 })
             }
 

@@ -15,11 +15,9 @@ internal class LoggedInCheckCoordinator(
     fun actionDoCheck() {
         useCase = LoggedInUserCheckUseCase(asyncExecutionScheduler, postExecutionScheduler)
         useCase?.execute(object : DisposableSingleObserver<Boolean>() {
-            override fun onSuccess(foundAUser: Boolean) {
-                when (foundAUser) {
-                    true -> resultCallback.onLoggedInUserFound()
-                    false -> resultCallback.onLoggedInUserNotFound()
-                }
+            override fun onSuccess(foundAUser: Boolean) = when (foundAUser) {
+                true -> resultCallback.onLoggedInUserFound()
+                false -> resultCallback.onLoggedInUserNotFound()
             }
 
             override fun onError(error: Throwable) {

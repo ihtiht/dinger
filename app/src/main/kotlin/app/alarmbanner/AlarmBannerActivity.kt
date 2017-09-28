@@ -5,9 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import app.MainApplication
-import app.login.TinderFacebookLoginCoordinator
-import app.login.TinderFacebookLoginModule
-import kotlinx.android.synthetic.main.activity_login.*
 import org.stoyicker.dinger.R
 import javax.inject.Inject
 

@@ -16,7 +16,7 @@ internal class AlarmBannerCoordinator(
         useCase?.execute(object : DisposableCompletableObserver() {
             override fun onError(error: Throwable) = crashReporter.report(error)
 
-            override fun onComplete() {}
+            override fun onComplete() = Unit
         })
     }
 

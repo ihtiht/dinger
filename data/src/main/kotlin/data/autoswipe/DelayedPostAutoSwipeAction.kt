@@ -12,12 +12,8 @@ internal class DelayedPostAutoSwipeAction : AutoSwipeJobIntentService.Action<Uni
         DelayedPostAutoSwipeUseCase(owner, Schedulers.trampoline()).let {
             useCaseDelegate = it
             it.execute(object : DisposableCompletableObserver() {
-                override fun onComplete() {
-                    commonDelegate.onComplete(owner)
-                }
-                override fun onError(error: Throwable) {
-                    commonDelegate.onError(owner, error)
-                }
+                override fun onComplete() = commonDelegate.onComplete(owner)
+                override fun onError(error: Throwable) = commonDelegate.onError(owner, error)
             })
         }
 

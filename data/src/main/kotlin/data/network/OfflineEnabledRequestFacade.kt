@@ -6,7 +6,7 @@ import data.ObjectMapper
  * Defines how a typical request looks.
  */
 internal abstract class OfflineEnabledRequestFacade<
-        RequestModel, MappedRequestModel, ResponseModel, MappedModel>(
+        in RequestModel, MappedRequestModel, ResponseModel, MappedModel>(
         source: RequestSource<MappedRequestModel, ResponseModel>,
         requestMapper: ObjectMapper<RequestModel, MappedRequestModel>,
         responseMapper: ObjectMapper<ResponseModel, MappedModel>)

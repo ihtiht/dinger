@@ -2,22 +2,7 @@ package data.tinder.recommendation
 
 import data.ObjectMapper
 import domain.DomainException
-import domain.recommendation.DomainRecommendationCommonConnection
-import domain.recommendation.DomainRecommendationCommonConnectionPhoto
-import domain.recommendation.DomainRecommendationCompany
-import domain.recommendation.DomainRecommendationInstagram
-import domain.recommendation.DomainRecommendationInstagramPhoto
-import domain.recommendation.DomainRecommendationInterest
-import domain.recommendation.DomainRecommendationJob
-import domain.recommendation.DomainRecommendationPhoto
-import domain.recommendation.DomainRecommendationProcessedFile
-import domain.recommendation.DomainRecommendationSchool
-import domain.recommendation.DomainRecommendationSpotifyAlbum
-import domain.recommendation.DomainRecommendationSpotifyArtist
-import domain.recommendation.DomainRecommendationSpotifyThemeTrack
-import domain.recommendation.DomainRecommendationTeaser
-import domain.recommendation.DomainRecommendationTitle
-import domain.recommendation.DomainRecommendationUser
+import domain.recommendation.*
 import reporter.CrashReporter
 
 internal class RecommendationResponseObjectMapper(
@@ -39,21 +24,20 @@ internal class RecommendationResponseObjectMapper(
         private val schoolDelegate: ObjectMapper<RecommendationUserSchool,
                 DomainRecommendationSchool>)
     : ObjectMapper<RecommendationResponse, Collection<DomainRecommendationUser>> {
-    override fun from(source: RecommendationResponse): Collection<DomainRecommendationUser> {
-        source.let {
-            eventTracker.track(it)
-            return it.recommendations.let {
-                when (it) {
-                    null -> throw when (source.message) {
-                        is String -> DomainException(source.message)
-                        else -> IllegalStateException(
-                                "Unexpected 2xx recommendation response without message: $source")
+    override fun from(source: RecommendationResponse): Collection<DomainRecommendationUser> =
+            source.let {
+                eventTracker.track(it)
+                return it.recommendations.let {
+                    when (it) {
+                        null -> throw when (source.message) {
+                            is String -> DomainException(source.message)
+                            else -> IllegalStateException(
+                                    "Unexpected 2xx recommendation response without message: $source")
+                        }
+                        else -> it.mapNotNull { transformRecommendation(it) }
                     }
-                    else -> it.mapNotNull { transformRecommendation(it) }
-                }
-            }.toHashSet()
-        }
-    }
+                }.toHashSet()
+            }
 
     private fun transformRecommendation(source: Recommendation) = when (source.type) {
         "user" -> source.user.let {

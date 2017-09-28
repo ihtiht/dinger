@@ -12,8 +12,6 @@ internal class RecommendationEventTracker(
         eventTracker.init(context)
     }
 
-    fun track(response: RecommendationResponse) {
-        eventTracker.trackRecommendationResponse(
-                recommendationResponseMarshaller.marshall(response))
-    }
+    fun track(response: RecommendationResponse) = eventTracker.trackRecommendationResponse(
+            recommendationResponseMarshaller.marshall(response))
 }

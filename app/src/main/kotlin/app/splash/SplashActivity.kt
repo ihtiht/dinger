@@ -58,13 +58,9 @@ internal class SplashActivity : Activity(), LoggedInCheckCoordinator.ResultCallb
         super.onDestroy()
     }
 
-    override fun onLoggedInUserFound() {
-        continueLoggedIn()
-    }
+    override fun onLoggedInUserFound() = continueLoggedIn()
 
-    override fun onLoggedInUserNotFound() {
-        requestToken()
-    }
+    override fun onLoggedInUserNotFound() = requestToken()
 
     private fun inject() = (application as MainApplication).applicationComponent
             .newSplashComponent(SplashModule(this))

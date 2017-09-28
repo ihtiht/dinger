@@ -30,11 +30,9 @@ internal class TinderFacebookLoginFeature(
             loginBehavior = LoginBehavior.WEB_ONLY
             registerCallback(callbackManager,
                     object : FacebookCallback<LoginResult> {
-                        override fun onCancel() {
-                            Toast.makeText(context, R.string.login_cancelled,
-                                    Toast.LENGTH_LONG)
-                                    .show()
-                        }
+                        override fun onCancel() = Toast.makeText(context, R.string.login_cancelled,
+                                Toast.LENGTH_LONG)
+                                .show()
 
                         override fun onError(exception: FacebookException) {
                             crashReporter.report(exception)
@@ -58,9 +56,7 @@ internal class TinderFacebookLoginFeature(
         callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 
-    fun release(loginButton: LoginButton) {
-        loginButton.unregisterCallback(callbackManager)
-    }
+    fun release(loginButton: LoginButton) = loginButton.unregisterCallback(callbackManager)
 
     private fun reportSuccess(accessToken: AccessToken) = accessToken.let {
         resultCallback.onSuccess(it.userId, it.token)

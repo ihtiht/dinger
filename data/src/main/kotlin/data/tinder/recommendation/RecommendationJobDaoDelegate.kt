@@ -23,12 +23,11 @@ internal class RecommendationJobDaoDelegate(
                     company = source.company?.let { RecommendationUserJobCompany(it.name) },
                     title = source.title?.let { RecommendationUserJobTitle(it.name) }))
 
-    fun insertDomainForUserId(userId: String, jobs: Iterable<DomainRecommendationJob>) {
-        jobs.forEach {
-            insertDomain(it)
-            userJobDao.insertUser_Job(RecommendationUserEntity_RecommendationUserJobEntity(
-                    recommendationUserEntityId = userId,
-                    recommendationUserJobEntityId = it.id))
-        }
-    }
+    fun insertDomainForUserId(userId: String, jobs: Iterable<DomainRecommendationJob>) =
+            jobs.forEach {
+                insertDomain(it)
+                userJobDao.insertUser_Job(RecommendationUserEntity_RecommendationUserJobEntity(
+                        recommendationUserEntityId = userId,
+                        recommendationUserJobEntityId = it.id))
+            }
 }

@@ -16,8 +16,7 @@ internal sealed class EventTrackerImpl : EventTracker {
             delegate = FirebaseAnalytics.getInstance(context)
         }
 
-        override fun trackRecommendationResponse(data: Bundle) {
-            delegate.logEvent(Event.RECOMMENDATION_RESPONSE.key, data)
-        }
+        override fun trackRecommendationResponse(data: Bundle) =
+                delegate.logEvent(Event.RECOMMENDATION_RESPONSE.key, data)
     }
 }

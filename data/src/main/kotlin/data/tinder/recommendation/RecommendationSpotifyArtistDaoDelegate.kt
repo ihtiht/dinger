@@ -20,13 +20,12 @@ internal class RecommendationSpotifyArtistDaoDelegate(
                     name = source.name))
 
     fun insertDomainForTrackId(
-            trackId: String, artists: Iterable<DomainRecommendationSpotifyArtist>) {
-        artists.forEach {
-            insertDomain(it)
-            trackArtistDao.insertSpotifyThemeTrack_Artist(
-                    RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity(
-                            recommendationUserSpotifyThemeTrackArtistEntityId = trackId,
-                            recommendationUserSpotifyThemeTrackEntityId = it.id))
-        }
-    }
+            trackId: String, artists: Iterable<DomainRecommendationSpotifyArtist>) =
+            artists.forEach {
+                insertDomain(it)
+                trackArtistDao.insertSpotifyThemeTrack_Artist(
+                        RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity(
+                                recommendationUserSpotifyThemeTrackArtistEntityId = trackId,
+                                recommendationUserSpotifyThemeTrackEntityId = it.id))
+            }
 }

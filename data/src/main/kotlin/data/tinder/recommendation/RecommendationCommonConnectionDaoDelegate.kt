@@ -31,13 +31,12 @@ internal class RecommendationCommonConnectionDaoDelegate(
     }
 
     fun insertDomainForUserId(
-            userId: String, commonConnections: Iterable<DomainRecommendationCommonConnection>) {
-        commonConnections.forEach {
-            insertDomain(it)
-            userCommonConnectionDelegate.insertUser_CommonConnection(
-                    RecommendationUserEntity_RecommendationUserCommonConnectionEntity(
-                            recommendationUserEntityId = userId,
-                            recommendationUserCommonConnectionEntityId = it.id))
-        }
-    }
+            userId: String, commonConnections: Iterable<DomainRecommendationCommonConnection>) =
+            commonConnections.forEach {
+                insertDomain(it)
+                userCommonConnectionDelegate.insertUser_CommonConnection(
+                        RecommendationUserEntity_RecommendationUserCommonConnectionEntity(
+                                recommendationUserEntityId = userId,
+                                recommendationUserCommonConnectionEntityId = it.id))
+            }
 }

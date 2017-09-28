@@ -25,12 +25,11 @@ internal class RecommendationPhotoDaoDelegate(
         photoDao.insertPhoto(RecommendationUserPhotoEntity(id = source.id, url = source.url))
     }
 
-    fun insertDomainForUserId(userId: String, photos: Iterable<DomainRecommendationPhoto>) {
-        photos.forEach {
-            insertDomain(it)
-            userPhotoDao.insertUser_Photo(RecommendationUserEntity_RecommendationUserPhotoEntity(
-                    recommendationUserEntityId = userId,
-                    recommendationUserPhotoEntityId = it.id))
-        }
-    }
+    fun insertDomainForUserId(userId: String, photos: Iterable<DomainRecommendationPhoto>) =
+            photos.forEach {
+                insertDomain(it)
+                userPhotoDao.insertUser_Photo(RecommendationUserEntity_RecommendationUserPhotoEntity(
+                        recommendationUserEntityId = userId,
+                        recommendationUserPhotoEntityId = it.id))
+            }
 }

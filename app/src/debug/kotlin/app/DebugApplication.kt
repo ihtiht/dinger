@@ -17,34 +17,31 @@ internal class DebugApplication : MainApplication() {
      * @see <a href="https://developer.android.com/reference/android/os/StrictMode.html">
      *     Strict Mode | Android Developers</a>
      */
-    private fun enforceThreadStrictMode() {
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                .detectCustomSlowCalls()
-                .detectDiskReads()
-                .detectDiskWrites()
-                .detectNetwork()
-                .detectResourceMismatches()
-                .detectUnbufferedIo()
-                .penaltyLog()
-                .penaltyDialog()
-                .build())
-    }
+    private fun enforceThreadStrictMode() =
+            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+                    .detectCustomSlowCalls()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()
+                    .detectResourceMismatches()
+                    .detectUnbufferedIo()
+                    .penaltyLog()
+                    .penaltyDialog()
+                    .build())
 
     /**
      * Enforces StrictMode for the VM.
      * @see <a href="https://developer.android.com/reference/android/os/StrictMode.html">
      *     Strict Mode | Android Developers</a>
      */
-    private fun enforceVMStrictMode() {
-        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                .detectActivityLeaks()
-                .detectCleartextNetwork()
-                .detectContentUriWithoutPermission()
-                .detectFileUriExposure()
-                .detectLeakedClosableObjects()
-                .detectLeakedRegistrationObjects()
-                .detectLeakedSqlLiteObjects()
-                .penaltyLog()
-                .build())
-    }
+    private fun enforceVMStrictMode() = StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+            .detectActivityLeaks()
+            .detectCleartextNetwork()
+            .detectContentUriWithoutPermission()
+            .detectFileUriExposure()
+            .detectLeakedClosableObjects()
+            .detectLeakedRegistrationObjects()
+            .detectLeakedSqlLiteObjects()
+            .penaltyLog()
+            .build())
 }

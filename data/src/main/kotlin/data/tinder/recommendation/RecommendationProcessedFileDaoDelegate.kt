@@ -23,24 +23,22 @@ internal class RecommendationProcessedFileDaoDelegate(
                     heightPx = source.heightPx))
 
     fun insertDomainForPhotoId(
-            photoId: String, processedFiles: Iterable<DomainRecommendationProcessedFile>) {
-        processedFiles.forEach {
-            insertDomain(it)
-            photoProcessedFileDao.insertPhoto_ProcessedFile(
-                    RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity(
-                            recommendationUserPhotoEntityId = photoId,
-                            recommendationUserPhotoProcessedFileEntityUrl = it.url))
-        }
-    }
+            photoId: String, processedFiles: Iterable<DomainRecommendationProcessedFile>) =
+            processedFiles.forEach {
+                insertDomain(it)
+                photoProcessedFileDao.insertPhoto_ProcessedFile(
+                        RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity(
+                                recommendationUserPhotoEntityId = photoId,
+                                recommendationUserPhotoProcessedFileEntityUrl = it.url))
+            }
 
     fun insertDomainForAlbumId(
-            albumId: String, processedFiles: Iterable<DomainRecommendationProcessedFile>) {
-        processedFiles.forEach {
-            insertDomain(it)
-            albumProcessedFileDao.insertSpotifyAlbum_ProcessedFile(
-                    RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity(
-                            recommendationUserSpotifyThemeTrackAlbumEntityId = albumId,
-                            recommendationUserPhotoProcessedFileEntityUrl = it.url))
-        }
-    }
+            albumId: String, processedFiles: Iterable<DomainRecommendationProcessedFile>) =
+            processedFiles.forEach {
+                insertDomain(it)
+                albumProcessedFileDao.insertSpotifyAlbum_ProcessedFile(
+                        RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity(
+                                recommendationUserSpotifyThemeTrackAlbumEntityId = albumId,
+                                recommendationUserPhotoProcessedFileEntityUrl = it.url))
+            }
 }

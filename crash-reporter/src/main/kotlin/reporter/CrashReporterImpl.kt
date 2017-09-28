@@ -8,8 +8,6 @@ internal sealed class CrashReporterImpl : CrashReporter {
      * ids would not be.
      */
     object Firebase : CrashReporterImpl() {
-        override fun report(throwable: Throwable) {
-            FirebaseCrash.report(throwable)
-        }
+        override fun report(throwable: Throwable) = FirebaseCrash.report(throwable)
     }
 }

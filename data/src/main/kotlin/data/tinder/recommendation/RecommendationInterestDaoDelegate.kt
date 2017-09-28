@@ -20,12 +20,10 @@ internal class RecommendationInterestDaoDelegate(
                     name = source.name))
 
     fun insertDomainForUserId(
-            userId: String, interests: Iterable<DomainRecommendationInterest>) {
-        interests.forEach {
-            insertDomain(it)
-            userInterestDao.insertUser_Interest(RecommendationUserEntity_RecommendationInterestEntity(
-                    recommendationUserEntityId = userId,
-                    recommendationInterestEntityId = it.id))
-        }
-    }
+            userId: String, interests: Iterable<DomainRecommendationInterest>) = interests.forEach {
+                insertDomain(it)
+                userInterestDao.insertUser_Interest(RecommendationUserEntity_RecommendationInterestEntity(
+                        recommendationUserEntityId = userId,
+                        recommendationInterestEntityId = it.id))
+            }
 }

@@ -73,10 +73,9 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
             LikeRecommendationAction(recommendation).apply {
                 ongoingActions += (this)
                 execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
-                    override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) {
-                        saveRecommendationToDatabase(
-                                recommendation, liked = true, matched = answer.matched)
-                    }
+                    override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) =
+                            saveRecommendationToDatabase(
+                                    recommendation, liked = true, matched = answer.matched)
 
                     override fun onRecommendationLikeFailed() {
                         saveRecommendationToDatabase(recommendation, liked = false, matched = false)
