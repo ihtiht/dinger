@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.support.annotation.CallSuper
 import android.support.v4.app.JobIntentService
-import data.ComponentHolder
 import data.tinder.like.LikeRecommendationAction
 import data.tinder.recommendation.RecommendationUserResolver
 import domain.like.DomainLikedRecommendationAnswer
@@ -20,7 +19,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     lateinit var recommendationResolver: RecommendationUserResolver
 
     init {
-        ComponentHolder.autoSwipeComponent.inject(this)
+        AutoSwipeComponentHolder.autoSwipeComponent.inject(this)
     }
 
     override fun onHandleWork(intent: Intent) {

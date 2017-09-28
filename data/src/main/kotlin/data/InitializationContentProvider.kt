@@ -3,14 +3,17 @@ package data
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.net.Uri
+import data.account.AccountComponentHolder
 import data.account.AccountModule
 import data.account.AppAccountManagerImpl
 import data.account.DaggerAccountComponent
 import data.alarm.AppAlarmManagerImpl
+import data.autoswipe.AutoSwipeComponentHolder
 import data.autoswipe.AutoSwipeLauncherFactoryImpl
 import data.autoswipe.DaggerAutoSwipeComponent
 import data.network.FacadeProviderImpl
 import data.tinder.DaggerTinderRepositoryComponent
+import data.tinder.TinderRepositoryComponentHolder
 import domain.DomainHolder
 import domain.alarm.AlarmHolder
 import domain.auth.AuthHolder
@@ -34,27 +37,24 @@ internal class InitializationContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         val rootModule = RootModule(context)
         val accountModule = AccountModule()
-        ComponentHolder.apply {
-            accountComponent = DaggerAccountComponent.builder()
-                    .rootModule(rootModule)
-                    .accountModule(accountModule)
-                    .build()
-            tinderRepositoryComponent = DaggerTinderRepositoryComponent.builder()
-                    .rootModule(rootModule)
-                    .accountModule(accountModule)
-                    .build()
-            autoSwipeComponent = DaggerAutoSwipeComponent.builder()
-                    .rootModule(rootModule)
-                    .build()
-        }
+        AccountComponentHolder.accountComponent = DaggerAccountComponent.builder()
+                .rootModule(rootModule)
+                .accountModule(accountModule)
+                .build()
+        TinderRepositoryComponentHolder.tinderRepositoryComponent =
+                DaggerTinderRepositoryComponent.builder()
+                        .rootModule(rootModule)
+                        .accountModule(accountModule)
+                        .build()
+        AutoSwipeComponentHolder.autoSwipeComponent = DaggerAutoSwipeComponent.builder()
+                .rootModule(rootModule)
+                .build()
         DaggerInitializationComponent.builder()
                 .rootModule(rootModule)
                 .accountModule(accountModule)
                 .build()
                 .inject(this)
-        DomainHolder.apply {
-            facadeProvider(facadeProviderImpl)
-        }
+        DomainHolder.facadeProvider(facadeProviderImpl)
         AuthHolder.accountManager(accountManagerImpl)
         AlarmHolder.alarmManager(alarmManagerImpl)
         AutoSwipeHolder.autoSwipeIntentFactory(autoSwipeIntentFactoryImpl)

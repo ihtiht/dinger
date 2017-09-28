@@ -1,6 +1,5 @@
 package data.tinder
 
-import data.ComponentHolder
 import data.tinder.auth.AuthFacade
 import data.tinder.like.LikeFacade
 import data.tinder.recommendation.RecommendationFacade
@@ -24,7 +23,7 @@ internal class TinderApiRepositoryImpl : TinderApiRepository {
     lateinit var crashReporter: CrashReporter
 
     init {
-        ComponentHolder.tinderRepositoryComponent.inject(this)
+        TinderRepositoryComponentHolder.tinderRepositoryComponent.inject(this)
     }
 
     override fun login(parameters: DomainAuthRequestParameters): Single<DomainAuthedUser> =
