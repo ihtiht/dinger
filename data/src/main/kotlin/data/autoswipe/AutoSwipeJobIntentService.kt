@@ -77,7 +77,6 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                     override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) {
                         saveRecommendationToDatabase(
                                 recommendation, liked = true, matched = answer.matched)
-                        scheduleBecauseMoreAvailable()
                     }
 
                     override fun onRecommendationLikeFailed() {
@@ -113,12 +112,6 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 schools = recommendation.schools,
                 teasers = recommendation.teasers))
     }
-
-    private fun scheduleBecauseMoreAvailable() = ImmediatePostAutoSwipeAction().apply {
-        ongoingActions += this
-        execute(this@AutoSwipeJobIntentService, Unit)
-    }
-
     private fun scheduleBecauseLimited() = DelayedPostAutoSwipeAction().apply {
         ongoingActions += this
         execute(this@AutoSwipeJobIntentService, Unit)
