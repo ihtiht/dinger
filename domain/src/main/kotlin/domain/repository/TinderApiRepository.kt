@@ -9,7 +9,5 @@ import io.reactivex.Single
 interface TinderApiRepository {
     fun login(parameters: DomainAuthRequestParameters): Single<DomainAuthedUser>
 
-    fun getRecommendations(): Single<Collection<DomainRecommendationUser>>
-
     fun likeRecommendation(recommendation: DomainRecommendationUser): Single<DomainLikedRecommendationAnswer>
 }

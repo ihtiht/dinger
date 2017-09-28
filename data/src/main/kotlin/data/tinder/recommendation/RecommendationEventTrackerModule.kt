@@ -9,7 +9,7 @@ import tracker.EventTracker
 import javax.inject.Singleton
 
 @Module(includes = arrayOf(RootModule::class, FirebaseEventTrackerModule::class))
-internal class RecommendationEventTrackerModule 1{
+internal class RecommendationEventTrackerModule {
     @Provides
     @Singleton
     fun commonConnectionPhotoMarshaller() = CommonConnectionPhotoMarshaller()

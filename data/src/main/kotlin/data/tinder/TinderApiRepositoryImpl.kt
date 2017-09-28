@@ -16,8 +16,6 @@ internal class TinderApiRepositoryImpl : TinderApiRepository {
     @Inject
     lateinit var loginFacade: AuthFacade
     @Inject
-    lateinit var recommendationFacade: RecommendationFacade
-    @Inject
     lateinit var likeFacade: LikeFacade
     @Inject
     lateinit var crashReporter: CrashReporter
@@ -28,9 +26,6 @@ internal class TinderApiRepositoryImpl : TinderApiRepository {
 
     override fun login(parameters: DomainAuthRequestParameters): Single<DomainAuthedUser> =
             loginFacade.fetch(parameters).doOnError { crashReporter.report(it) }
-
-    override fun getRecommendations(): Single<Collection<DomainRecommendationUser>> =
-            recommendationFacade.fetch(Unit).doOnError { crashReporter.report(it) }
 
     override fun likeRecommendation(recommendation: DomainRecommendationUser)
             : Single<DomainLikedRecommendationAnswer> =

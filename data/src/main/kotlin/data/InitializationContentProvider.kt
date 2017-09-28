@@ -14,10 +14,12 @@ import data.autoswipe.DaggerAutoSwipeComponent
 import data.network.FacadeProviderImpl
 import data.tinder.DaggerTinderRepositoryComponent
 import data.tinder.TinderRepositoryComponentHolder
+import data.tinder.recommendation.GetRecommendationProviderImpl
 import domain.DomainHolder
 import domain.alarm.AlarmHolder
 import domain.auth.AuthHolder
 import domain.autoswipe.AutoSwipeHolder
+import domain.recommendation.GetRecommendationHolder
 import javax.inject.Inject
 
 /**
@@ -27,6 +29,8 @@ import javax.inject.Inject
 internal class InitializationContentProvider : ContentProvider() {
     @Inject
     lateinit var facadeProviderImpl: FacadeProviderImpl
+    @Inject
+    lateinit var getRecommendationProviderImpl: GetRecommendationProviderImpl
     @Inject
     lateinit var accountManagerImpl: AppAccountManagerImpl
     @Inject
@@ -55,6 +59,7 @@ internal class InitializationContentProvider : ContentProvider() {
                 .build()
                 .inject(this)
         DomainHolder.facadeProvider(facadeProviderImpl)
+        GetRecommendationHolder.getRecommendationProvider(getRecommendationProviderImpl)
         AuthHolder.accountManager(accountManagerImpl)
         AlarmHolder.alarmManager(alarmManagerImpl)
         AutoSwipeHolder.autoSwipeIntentFactory(autoSwipeIntentFactoryImpl)
