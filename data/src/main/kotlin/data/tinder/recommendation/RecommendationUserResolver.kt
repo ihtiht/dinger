@@ -2,7 +2,9 @@ package data.tinder.recommendation
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Transformations
+import android.database.SQLException
 import domain.recommendation.DomainRecommendationUser
+import reporter.CrashReporter
 
 internal class RecommendationUserResolver(
         private val userDao: RecommendationUserDao,
@@ -13,36 +15,42 @@ internal class RecommendationUserResolver(
         private val jobDaoDelegate: RecommendationJobDaoDelegate,
         private val schoolDaoDelegate: RecommendationSchoolDaoDelegate,
         private val teaserDaoDelegate: RecommendationTeaserDaoDelegate,
-        private val spotifyThemeTrackDaoDelegate: RecommendationSpotifyThemeTrackDaoDelegate) {
-    fun insert(user: DomainRecommendationUser) = user.apply {
-        userDao.insertUser(RecommendationUserEntity(
-                distanceMiles = distanceMiles,
-                connectionCount = connectionCount,
-                contentHash = contentHash,
-                id = id,
-                birthDate = birthDate,
-                name = name,
-                instagram = instagram?.username,
-                pingTime = pingTime,
-                teaser = teaser.id,
-                sNumber = sNumber,
-                spotifyThemeTrack = spotifyThemeTrack?.id,
-                gender = gender,
-                birthDateInfo = birthDateInfo,
-                groupMatched = groupMatched,
-                liked = liked,
-                matched = matched
-        ))
-        instagramDaoDelegate.insertDomain(instagram)
-        teaserDaoDelegate.insertDomain(teaser)
-        spotifyThemeTrackDaoDelegate.insertDomain(spotifyThemeTrack)
-        commonConnectionDaoDelegate.insertDomainForUserId(id, commonConnections)
-        interestDaoDelegate.insertDomainForUserId(id, commonInterests)
-        photoDaoDelegate.insertDomainForUserId(id, photos)
-        jobDaoDelegate.insertDomainForUserId(id, jobs)
-        schoolDaoDelegate.insertDomainForUserId(id, schools)
-        teaserDaoDelegate.insertDomainForUserId(id, teasers)
-    }
+        private val spotifyThemeTrackDaoDelegate: RecommendationSpotifyThemeTrackDaoDelegate,
+        private val crashReporter: CrashReporter) {
+    fun insert(user: DomainRecommendationUser) =
+            try {
+                user.apply {
+                    userDao.insertUser(RecommendationUserEntity(
+                            distanceMiles = distanceMiles,
+                            connectionCount = connectionCount,
+                            contentHash = contentHash,
+                            id = id,
+                            birthDate = birthDate,
+                            name = name,
+                            instagram = instagram?.username,
+                            pingTime = pingTime,
+                            teaser = teaser.id,
+                            sNumber = sNumber,
+                            spotifyThemeTrack = spotifyThemeTrack?.id,
+                            gender = gender,
+                            birthDateInfo = birthDateInfo,
+                            groupMatched = groupMatched,
+                            liked = liked,
+                            matched = matched
+                    ))
+                    instagramDaoDelegate.insertDomain(instagram)
+                    teaserDaoDelegate.insertDomain(teaser)
+                    spotifyThemeTrackDaoDelegate.insertDomain(spotifyThemeTrack)
+                    commonConnectionDaoDelegate.insertDomainForUserId(id, commonConnections)
+                    interestDaoDelegate.insertDomainForUserId(id, commonInterests)
+                    photoDaoDelegate.insertDomainForUserId(id, photos)
+                    jobDaoDelegate.insertDomainForUserId(id, jobs)
+                    schoolDaoDelegate.insertDomainForUserId(id, schools)
+                    teaserDaoDelegate.insertDomainForUserId(id, teasers)
+                }
+            } catch (sqlException: SQLException) {
+                crashReporter.report(sqlException)
+            }
 
     fun selectById(id: String): LiveData<List<DomainRecommendationUser>> =
             Transformations.map(userDao.selectUserById(id)) { it.map { from(it) } }

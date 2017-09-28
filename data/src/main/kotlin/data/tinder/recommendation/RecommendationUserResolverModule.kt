@@ -3,10 +3,12 @@ package data.tinder.recommendation
 import dagger.Module
 import dagger.Provides
 import data.RootModule
+import data.crash.FirebaseCrashReporterModule
 import data.database.AppDatabase
+import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(RootModule::class))
+@Module(includes = arrayOf(RootModule::class, FirebaseCrashReporterModule::class))
 internal class RecommendationUserResolverModule {
     @Provides
     @Singleton
@@ -243,7 +245,8 @@ internal class RecommendationUserResolverModule {
             jobDaoDelegate: RecommendationJobDaoDelegate,
             schoolDaoDelegate: RecommendationSchoolDaoDelegate,
             teaserDaoDelegate: RecommendationTeaserDaoDelegate,
-            spotifyThemeTrackDaoDelegate: RecommendationSpotifyThemeTrackDaoDelegate) =
+            spotifyThemeTrackDaoDelegate: RecommendationSpotifyThemeTrackDaoDelegate,
+            crashReporter: CrashReporter) =
             RecommendationUserResolver(
                     userDao,
                     commonConnectionDaoDelegate,
@@ -253,5 +256,6 @@ internal class RecommendationUserResolverModule {
                     jobDaoDelegate,
                     schoolDaoDelegate,
                     teaserDaoDelegate,
-                    spotifyThemeTrackDaoDelegate)
+                    spotifyThemeTrackDaoDelegate,
+                    crashReporter)
 }
