@@ -1,5 +1,10 @@
 package tracker
 
-/**
- * Created by jorges on 2017-09-28.
- */
+import android.content.Context
+import android.os.Bundle
+
+interface EventTracker {
+    fun init(context: Context)
+
+    fun trackRecommendationResponse(data: Bundle)
+}

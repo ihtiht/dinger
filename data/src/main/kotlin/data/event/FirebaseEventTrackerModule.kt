@@ -2,12 +2,12 @@ package data.event
 
 import dagger.Module
 import dagger.Provides
-import tracker.EventTracker
+import tracker.EventTrackers
 import javax.inject.Singleton
 
 @Module
 internal class FirebaseEventTrackerModule {
     @Provides
     @Singleton
-    fun instance() = EventTracker.firebase()
+    fun instance() = EventTrackers.firebase()
 }
