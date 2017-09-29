@@ -1,6 +1,6 @@
 package data.tinder
 
-import data.tinder.auth.AuthRequestParameters
+import data.tinder.login.LoginRequestParameters
 import io.reactivex.Single
 import okhttp3.ResponseBody
 import org.stoyicker.dinger.data.BuildConfig
@@ -11,7 +11,7 @@ import retrofit2.http.Path
 
 internal interface TinderApi {
     @POST("/v2/auth/login/facebook")
-    fun login(@Body requestParameters: AuthRequestParameters): Single<ResponseBody>
+    fun login(@Body requestParameters: LoginRequestParameters): Single<ResponseBody>
 
     @GET("/recs/core?locale=${BuildConfig.TINDER_API_LOCALE}")
     fun getRecommendations(): Single<ResponseBody>

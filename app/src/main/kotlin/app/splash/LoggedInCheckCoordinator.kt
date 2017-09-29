@@ -1,6 +1,6 @@
 package app.splash
 
-import domain.auth.LoggedInUserCheckUseCase
+import domain.loggedincheck.LoggedInUserCheckUseCase
 import io.reactivex.Scheduler
 import io.reactivex.observers.DisposableSingleObserver
 import reporter.CrashReporter

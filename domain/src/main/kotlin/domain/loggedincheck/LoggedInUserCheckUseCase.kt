@@ -1,4 +1,4 @@
-package domain.auth
+package domain.loggedincheck
 
 import domain.interactor.SingleDisposableUseCase
 import io.reactivex.Scheduler
@@ -9,5 +9,5 @@ class LoggedInUserCheckUseCase(
         postExecutionScheduler: Scheduler)
     : SingleDisposableUseCase<Boolean>(asyncExecutionScheduler, postExecutionScheduler) {
     override fun buildUseCase(): Single<Boolean> =
-            Single.just(AuthHolder.accountManager.isThereALoggedInUser())
+            Single.just(LoggedInCheckHolder.loggedInCheckProvider.isThereALoggedInUser())
 }

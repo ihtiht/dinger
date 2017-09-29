@@ -1,4 +1,4 @@
-package domain.auth
+package domain.login
 
 object LoginHolder {
     internal lateinit var loginRecommendationProvider: LoginProvider

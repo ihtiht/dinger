@@ -1,6 +1,6 @@
-package domain.auth
+package domain.loggedincheck
 
-interface AccountManager {
+interface LoggedInCheckProvider {
     fun addAccount(id: String, token: String): Boolean
     fun isThereALoggedInUser(): Boolean
 }

@@ -3,7 +3,7 @@ package data.tinder
 import dagger.Module
 import dagger.Provides
 import data.account.AccountModule
-import data.account.AppAccountManagerImpl
+import data.account.AppLoggedInCheckProviderImpl
 import data.network.NetworkClientModule
 import data.network.NetworkModule
 import okhttp3.OkHttpClient
@@ -18,7 +18,7 @@ internal class TinderApiModule {
     fun tinderApi(
             clientBuilder: OkHttpClient.Builder,
             retrofitBuilder: Retrofit.Builder,
-            appAccountManagerImpl: AppAccountManagerImpl)
+            appAccountManagerImpl: AppLoggedInCheckProviderImpl)
             : TinderApi = retrofitBuilder
             .client(clientBuilder.addInterceptor {
                 it.proceed(it.request().newBuilder()

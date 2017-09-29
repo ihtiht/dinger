@@ -1,6 +1,6 @@
 package app.login
 
-import domain.auth.TinderLoginUseCase
+import domain.login.TinderLoginUseCase
 import io.reactivex.Scheduler
 import io.reactivex.observers.DisposableCompletableObserver
 import reporter.CrashReporter

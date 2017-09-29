@@ -5,18 +5,18 @@ import android.content.ContentValues
 import android.net.Uri
 import data.account.AccountComponentHolder
 import data.account.AccountModule
-import data.account.AppAccountManagerImpl
+import data.account.AppLoggedInCheckProviderImpl
 import data.account.DaggerAccountComponent
 import data.alarm.AppAlarmManagerImpl
 import data.autoswipe.AutoSwipeComponentHolder
 import data.autoswipe.AutoSwipeLauncherFactoryImpl
 import data.autoswipe.DaggerAutoSwipeComponent
-import data.tinder.auth.LoginProviderImpl
+import data.tinder.login.LoginProviderImpl
 import data.tinder.like.LikeRecommendationProviderImpl
 import data.tinder.recommendation.GetRecommendationProviderImpl
 import domain.alarm.AlarmHolder
-import domain.auth.AuthHolder
-import domain.auth.LoginHolder
+import domain.loggedincheck.LoggedInCheckHolder
+import domain.login.LoginHolder
 import domain.autoswipe.AutoSwipeHolder
 import domain.like.LikeRecommendationHolder
 import domain.recommendation.GetRecommendationHolder
@@ -34,7 +34,7 @@ internal class InitializationContentProvider : ContentProvider() {
     @Inject
     lateinit var likeRecommendationProviderImpl: LikeRecommendationProviderImpl
     @Inject
-    lateinit var accountManagerImpl: AppAccountManagerImpl
+    lateinit var accountManagerImpl: AppLoggedInCheckProviderImpl
     @Inject
     lateinit var alarmManagerImpl: AppAlarmManagerImpl
     @Inject
@@ -58,7 +58,7 @@ internal class InitializationContentProvider : ContentProvider() {
         LoginHolder.loginRecommendationProvider(loginProviderImpl)
         GetRecommendationHolder.getRecommendationProvider(getRecommendationProviderImpl)
         LikeRecommendationHolder.likeRecommendationProvider(likeRecommendationProviderImpl)
-        AuthHolder.accountManager(accountManagerImpl)
+        LoggedInCheckHolder.loggedInCheckProvider(accountManagerImpl)
         AlarmHolder.alarmManager(alarmManagerImpl)
         AutoSwipeHolder.autoSwipeIntentFactory(autoSwipeIntentFactoryImpl)
         return true

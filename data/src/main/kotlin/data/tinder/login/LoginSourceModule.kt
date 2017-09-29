@@ -1,4 +1,4 @@
-package data.tinder.auth
+package data.tinder.login
 
 import com.nytimes.android.external.store3.base.Fetcher
 import com.nytimes.android.external.store3.base.impl.FluentStoreBuilder
@@ -22,23 +22,23 @@ import dagger.Lazy as DaggerLazy
  */
 @Module(includes = arrayOf(ParserModule::class, TinderApiModule::class,
         FirebaseCrashReporterModule::class))
-internal class AuthSourceModule {
+internal class LoginSourceModule {
     @Provides
     @Singleton
     fun store(moshiBuilder: Moshi.Builder, api: TinderApi) =
-            FluentStoreBuilder.parsedWithKey<AuthRequestParameters, BufferedSource, AuthResponse>(
+            FluentStoreBuilder.parsedWithKey<LoginRequestParameters, BufferedSource, LoginResponse>(
                     Fetcher { fetch(it, api) }) {
                 parsers = listOf(MoshiParserFactory.createSourceParser(
                     moshiBuilder.build(),
-                    AuthResponse::class.java))
+                    LoginResponse::class.java))
                 stalePolicy = StalePolicy.NETWORK_BEFORE_STALE
             }
 
     @Provides
     @Singleton
-    fun source(store: DaggerLazy<Store<AuthResponse, AuthRequestParameters>>,
-               crashReporter: CrashReporter) = AuthSource(store, crashReporter)
+    fun source(store: DaggerLazy<Store<LoginResponse, LoginRequestParameters>>,
+               crashReporter: CrashReporter) = LoginSource(store, crashReporter)
 
-    private fun fetch(requestParameters: AuthRequestParameters, api: TinderApi) =
+    private fun fetch(requestParameters: LoginRequestParameters, api: TinderApi) =
             api.login(requestParameters).map { it.source() }
 }

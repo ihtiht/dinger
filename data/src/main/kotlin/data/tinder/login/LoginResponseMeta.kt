@@ -1,7 +1,7 @@
-package data.tinder.auth
+package data.tinder.login
 
 import com.squareup.moshi.Json
 
-internal class AuthResponseMeta private constructor(
+internal class LoginResponseMeta private constructor(
         @field:Json(name = "status")
         val status: Int)

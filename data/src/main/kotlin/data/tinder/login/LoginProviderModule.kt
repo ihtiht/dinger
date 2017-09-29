@@ -1,4 +1,4 @@
-package data.tinder.auth
+package data.tinder.login
 
 import dagger.Module
 import dagger.Provides
@@ -6,11 +6,11 @@ import data.crash.FirebaseCrashReporterModule
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(AuthFacadeModule::class, FirebaseCrashReporterModule::class))
+@Module(includes = arrayOf(LoginFacadeModule::class, FirebaseCrashReporterModule::class))
 internal class LoginProviderModule {
     @Provides
     @Singleton
-    fun loginProvider(authFacade: AuthFacade,
+    fun loginProvider(loginFacade: LoginFacade,
                       crashReporter: CrashReporter): LoginProviderImpl =
-            LoginProviderImpl(authFacade, crashReporter)
+            LoginProviderImpl(loginFacade, crashReporter)
 }

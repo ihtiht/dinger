@@ -1,4 +1,4 @@
-package domain.auth
+package domain.login
 
 import io.reactivex.Single
 

@@ -1,4 +1,4 @@
-package domain.auth
+package domain.login
 
 data class DomainAuthRequestParameters(
         val facebookId: String,
