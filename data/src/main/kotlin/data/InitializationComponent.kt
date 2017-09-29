@@ -5,12 +5,14 @@ import data.account.AccountModule
 import data.alarm.AlarmModule
 import data.autoswipe.AutoSwipeModule
 import data.network.NetworkModule
+import data.tinder.auth.LoginProviderModule
 import data.tinder.like.LikeRecommendationProviderModule
 import data.tinder.recommendation.GetRecommendationProviderModule
 import javax.inject.Singleton
 
 @Component(modules = arrayOf(
         NetworkModule::class,
+        LoginProviderModule::class,
         GetRecommendationProviderModule::class,
         LikeRecommendationProviderModule::class,
         AccountModule::class,

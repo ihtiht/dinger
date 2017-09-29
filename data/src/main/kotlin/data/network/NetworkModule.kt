@@ -16,8 +16,4 @@ internal class NetworkModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(MoshiConverterFactory.create())
             .validateEagerly(BuildConfig.DEBUG)
-
-    @Provides
-    @Singleton
-    fun facadeProvider(): FacadeProviderImpl = FacadeProviderImpl()
 }

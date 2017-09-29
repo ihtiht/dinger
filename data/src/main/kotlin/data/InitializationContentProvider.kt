@@ -11,14 +11,12 @@ import data.alarm.AppAlarmManagerImpl
 import data.autoswipe.AutoSwipeComponentHolder
 import data.autoswipe.AutoSwipeLauncherFactoryImpl
 import data.autoswipe.DaggerAutoSwipeComponent
-import data.network.FacadeProviderImpl
-import data.tinder.DaggerTinderRepositoryComponent
-import data.tinder.TinderRepositoryComponentHolder
+import data.tinder.auth.LoginProviderImpl
 import data.tinder.like.LikeRecommendationProviderImpl
 import data.tinder.recommendation.GetRecommendationProviderImpl
-import domain.DomainHolder
 import domain.alarm.AlarmHolder
 import domain.auth.AuthHolder
+import domain.auth.LoginHolder
 import domain.autoswipe.AutoSwipeHolder
 import domain.like.LikeRecommendationHolder
 import domain.recommendation.GetRecommendationHolder
@@ -30,7 +28,7 @@ import javax.inject.Inject
  */
 internal class InitializationContentProvider : ContentProvider() {
     @Inject
-    lateinit var facadeProviderImpl: FacadeProviderImpl
+    lateinit var loginProviderImpl: LoginProviderImpl
     @Inject
     lateinit var getRecommendationProviderImpl: GetRecommendationProviderImpl
     @Inject
@@ -49,11 +47,6 @@ internal class InitializationContentProvider : ContentProvider() {
                 .rootModule(rootModule)
                 .accountModule(accountModule)
                 .build()
-        TinderRepositoryComponentHolder.tinderRepositoryComponent =
-                DaggerTinderRepositoryComponent.builder()
-                        .rootModule(rootModule)
-                        .accountModule(accountModule)
-                        .build()
         AutoSwipeComponentHolder.autoSwipeComponent = DaggerAutoSwipeComponent.builder()
                 .rootModule(rootModule)
                 .build()
@@ -62,7 +55,7 @@ internal class InitializationContentProvider : ContentProvider() {
                 .accountModule(accountModule)
                 .build()
                 .inject(this)
-        DomainHolder.facadeProvider(facadeProviderImpl)
+        LoginHolder.loginRecommendationProvider(loginProviderImpl)
         GetRecommendationHolder.getRecommendationProvider(getRecommendationProviderImpl)
         LikeRecommendationHolder.likeRecommendationProvider(likeRecommendationProviderImpl)
         AuthHolder.accountManager(accountManagerImpl)
