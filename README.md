@@ -17,10 +17,6 @@ This repo is here to show that these and other pain points are easily addressed 
 At some point, I would love to distribute this app through some channel like Google Play or F-Droid, but at the time of writing there is little reason for anyone to use this app, although I intend that to change soon.
 Until that happens, you are encouraged to try out the app by getting it yourself from the 'Releases' tab, which you can find above the file explorer in this page.
 
-## Building manually
+## Building 
 
-You'll need to configure Firebase first. For that:
-* Add your private key under `app/` as `firebase-crashreporting-private-key.json`.
-* Add your `google-services.json` files for the debug and release variants of your console project under `app/debug` and `app/release` respectively.
-
-Then, just use the `assemble` Gradle task to build both debug and release, or the specific task for one of them.
+See [BUILDING.md](BUILDING.md).
