@@ -6,11 +6,12 @@ import android.accounts.AccountAuthenticatorResponse
 import android.accounts.AccountManager
 import android.content.Context
 import android.os.Bundle
+import domain.loggedincheck.LoggedInCheckProvider
+import domain.login.AddAccountProvider
 import org.stoyicker.dinger.data.R
-import domain.loggedincheck.LoggedInCheckProvider as AppAccountManager
 
-internal class AppLoggedInCheckProviderImpl constructor(context: Context)
-    : AppAccountManager, AbstractAccountAuthenticator(context) {
+internal class AppAccountAuthenticator(context: Context)
+    : AddAccountProvider, LoggedInCheckProvider, AbstractAccountAuthenticator(context) {
     init {
         ACCOUNT_TYPE = context.getString(R.string.account_type)
     }

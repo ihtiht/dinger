@@ -5,20 +5,20 @@ import android.content.ContentValues
 import android.net.Uri
 import data.account.AccountComponentHolder
 import data.account.AccountModule
-import data.account.AppLoggedInCheckProviderImpl
+import data.account.AppAccountAuthenticator
 import data.account.DaggerAccountComponent
 import data.alarm.AppAlarmManagerImpl
 import data.autoswipe.AutoSwipeComponentHolder
 import data.autoswipe.AutoSwipeLauncherFactoryImpl
 import data.autoswipe.DaggerAutoSwipeComponent
-import data.tinder.login.LoginProviderImpl
 import data.tinder.like.LikeRecommendationProviderImpl
+import data.tinder.login.LoginProviderImpl
 import data.tinder.recommendation.GetRecommendationProviderImpl
 import domain.alarm.AlarmHolder
-import domain.loggedincheck.LoggedInCheckHolder
-import domain.login.LoginHolder
 import domain.autoswipe.AutoSwipeHolder
 import domain.like.LikeRecommendationHolder
+import domain.loggedincheck.LoggedInCheckHolder
+import domain.login.LoginHolder
 import domain.recommendation.GetRecommendationHolder
 import javax.inject.Inject
 
@@ -34,7 +34,7 @@ internal class InitializationContentProvider : ContentProvider() {
     @Inject
     lateinit var likeRecommendationProviderImpl: LikeRecommendationProviderImpl
     @Inject
-    lateinit var accountManagerImpl: AppLoggedInCheckProviderImpl
+    lateinit var accountManagerImpl: AppAccountAuthenticator
     @Inject
     lateinit var alarmManagerImpl: AppAlarmManagerImpl
     @Inject
@@ -55,10 +55,11 @@ internal class InitializationContentProvider : ContentProvider() {
                 .accountModule(accountModule)
                 .build()
                 .inject(this)
-        LoginHolder.loginRecommendationProvider(loginProviderImpl)
+        LoginHolder.loginProvider(loginProviderImpl)
+        LoginHolder.addAccountProvider(accountManagerImpl)
+        LoggedInCheckHolder.loggedInCheckProvider(accountManagerImpl)
         GetRecommendationHolder.getRecommendationProvider(getRecommendationProviderImpl)
         LikeRecommendationHolder.likeRecommendationProvider(likeRecommendationProviderImpl)
-        LoggedInCheckHolder.loggedInCheckProvider(accountManagerImpl)
         AlarmHolder.alarmManager(alarmManagerImpl)
         AutoSwipeHolder.autoSwipeIntentFactory(autoSwipeIntentFactoryImpl)
         return true

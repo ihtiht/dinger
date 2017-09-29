@@ -10,5 +10,5 @@ import javax.inject.Singleton
 internal class AccountModule {
     @Provides
     @Singleton
-    fun accountManager(context: Context) = AppLoggedInCheckProviderImpl(context)
+    fun accountManager(context: Context) = AppAccountAuthenticator(context)
 }

@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 internal class DingerAccountManagerService : Service() {
     @Inject
-    lateinit var accountManagerImpl: AppLoggedInCheckProviderImpl
+    lateinit var accountManagerImpl: AppAccountAuthenticator
 
     override fun onBind(intent: Intent): IBinder {
         AccountComponentHolder.accountComponent.inject(this)
