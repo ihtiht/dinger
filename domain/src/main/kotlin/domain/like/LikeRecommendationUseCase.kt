@@ -1,6 +1,5 @@
 package domain.like
 
-import domain.DomainHolder
 import domain.interactor.SingleDisposableUseCase
 import domain.recommendation.DomainRecommendationUser
 import io.reactivex.Scheduler
@@ -12,5 +11,5 @@ class LikeRecommendationUseCase(
     : SingleDisposableUseCase<DomainLikedRecommendationAnswer>(
         postExecutionScheduler = postExecutionScheduler) {
     override fun buildUseCase(): Single<DomainLikedRecommendationAnswer> =
-            DomainHolder.facadeProvider.tinderApiRepository().likeRecommendation(recommendation)
+            LikeRecommendationHolder.likeRecommendationProvider.likeRecommendation(recommendation)
 }

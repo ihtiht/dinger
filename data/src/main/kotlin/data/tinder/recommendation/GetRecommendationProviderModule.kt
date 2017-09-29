@@ -10,7 +10,7 @@ import javax.inject.Singleton
 internal class GetRecommendationProviderModule {
     @Provides
     @Singleton
-    fun recommendationProvider(recommendationFacade: RecommendationFacade,
-                               crashReporter: CrashReporter): GetRecommendationProviderImpl =
+    fun getRecommendationProvider(recommendationFacade: RecommendationFacade,
+                                  crashReporter: CrashReporter): GetRecommendationProviderImpl =
             GetRecommendationProviderImpl(recommendationFacade, crashReporter)
 }
