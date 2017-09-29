@@ -6,11 +6,11 @@ import data.crash.FirebaseCrashReporterModule
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(RecommendationFacadeModule::class, FirebaseCrashReporterModule::class))
+@Module(includes = arrayOf(GetRecommendationFacadeModule::class, FirebaseCrashReporterModule::class))
 internal class GetRecommendationProviderModule {
     @Provides
     @Singleton
-    fun getRecommendationProvider(recommendationFacade: RecommendationFacade,
+    fun getRecommendationProvider(getRecommendationFacade: GetRecommendationFacade,
                                   crashReporter: CrashReporter): GetRecommendationProviderImpl =
-            GetRecommendationProviderImpl(recommendationFacade, crashReporter)
+            GetRecommendationProviderImpl(getRecommendationFacade, crashReporter)
 }

@@ -40,7 +40,7 @@ internal class RecommendationSourceModule {
     @Provides
     @Singleton
     fun source(store: DaggerLazy<Store<RecommendationResponse, Unit>>,
-               crashReporter: CrashReporter) = RecommendationSource(store, crashReporter)
+               crashReporter: CrashReporter) = GetRecommendationSource(store, crashReporter)
 
     private fun fetch(api: TinderApi) = api.getRecommendations().map { it.source() }
 }

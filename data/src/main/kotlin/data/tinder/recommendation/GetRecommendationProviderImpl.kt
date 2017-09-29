@@ -6,8 +6,8 @@ import io.reactivex.Single
 import reporter.CrashReporter
 
 internal class GetRecommendationProviderImpl(
-        private val recommendationFacade: RecommendationFacade,
+        private val getRecommendationFacade: GetRecommendationFacade,
         private val crashReporter: CrashReporter) : GetRecommendationProvider {
     override fun getRecommendations(): Single<Collection<DomainRecommendationUser>> =
-            recommendationFacade.fetch(Unit).doOnError { crashReporter.report(it) }
+            getRecommendationFacade.fetch(Unit).doOnError { crashReporter.report(it) }
 }

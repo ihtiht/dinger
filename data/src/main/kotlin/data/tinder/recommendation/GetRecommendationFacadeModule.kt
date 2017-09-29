@@ -10,7 +10,7 @@ import dagger.Lazy as DaggerLazy
 @Module(includes = arrayOf(RecommendationSourceModule::class,
         FirebaseCrashReporterModule::class,
         RecommendationEventTrackerModule::class))
-internal class RecommendationFacadeModule {
+internal class GetRecommendationFacadeModule {
     @Provides
     @Singleton
     fun requestObjectMapper() = RecommendationRequestObjectMapper()
@@ -118,8 +118,8 @@ internal class RecommendationFacadeModule {
     @Provides
     @Singleton
     fun facade(
-            source: RecommendationSource,
+            getRecommendationSource: GetRecommendationSource,
             requestObjectMapper: RecommendationRequestObjectMapper,
             responseObjectMapper: RecommendationResponseObjectMapper) =
-            RecommendationFacade(source, requestObjectMapper, responseObjectMapper)
+            GetRecommendationFacade(getRecommendationSource, requestObjectMapper, responseObjectMapper)
 }
