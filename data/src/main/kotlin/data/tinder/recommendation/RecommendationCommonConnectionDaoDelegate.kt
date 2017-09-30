@@ -22,7 +22,7 @@ internal class RecommendationCommonConnectionDaoDelegate(
             } ?: DomainRecommendationCommonConnection.NONE
 
     override fun insertResolved(source: DomainRecommendationCommonConnection) {
-        photoDaoDelegate.insertDomainForCommonConnectionId(source.id, source.photos)
+        photoDaoDelegate.insertResolvedForCommonConnectionId(source.id, source.photos)
         commonConnectionDao.insertCommonConnection(
                 RecommendationUserCommonConnectionEntity(
                             id = source.id,

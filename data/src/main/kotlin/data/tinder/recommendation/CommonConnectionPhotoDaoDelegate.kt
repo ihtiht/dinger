@@ -11,7 +11,7 @@ internal class CommonConnectionPhotoDaoDelegate(
             photoDao.insertPhoto(RecommendationUserCommonConnectionPhotoEntity(
                     small = source.small, medium = source.medium, large = source.large))
 
-    fun insertDomainForCommonConnectionId(
+    fun insertResolvedForCommonConnectionId(
             commonConnectionId: String,
             photos: Iterable<DomainRecommendationCommonConnectionPhoto>) = photos.forEach {
                 insertResolved(it)

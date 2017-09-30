@@ -29,7 +29,7 @@ internal class RecommendationInstagramDaoDelegate(
         if (source == null) {
             return
         }
-        instagramPhotoDaoDelegate.insertDomainForInstagramUsername(source.username, source.photos)
+        instagramPhotoDaoDelegate.insertResolvedForInstagramUsername(source.username, source.photos)
         instagramDao.insertInstagram(
                 RecommendationUserInstagramEntity(
                         profilePictureUrl = source.profilePictureUrl,

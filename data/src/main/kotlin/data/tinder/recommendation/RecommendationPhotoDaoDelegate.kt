@@ -21,7 +21,7 @@ internal class RecommendationPhotoDaoDelegate(
             } ?: DomainRecommendationPhoto.NONE
 
     override fun insertResolved(source: DomainRecommendationPhoto) {
-        processedFileDaoDelegate.insertDomainForPhotoId(source.id, source.processedFiles)
+        processedFileDaoDelegate.insertResolvedForPhotoId(source.id, source.processedFiles)
         photoDao.insertPhoto(RecommendationUserPhotoEntity(id = source.id, url = source.url))
     }
 

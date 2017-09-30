@@ -19,7 +19,7 @@ internal class RecommendationSpotifyArtistDaoDelegate(
                     id = source.id,
                     name = source.name))
 
-    fun insertDomainForTrackId(
+    fun insertResolvedForTrackId(
             trackId: String, artists: Iterable<DomainRecommendationSpotifyArtist>) =
             artists.forEach {
                 insertResolved(it)

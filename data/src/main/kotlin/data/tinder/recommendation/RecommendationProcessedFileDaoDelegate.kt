@@ -22,7 +22,7 @@ internal class RecommendationProcessedFileDaoDelegate(
                     url = source.url,
                     heightPx = source.heightPx))
 
-    fun insertDomainForPhotoId(
+    fun insertResolvedForPhotoId(
             photoId: String, processedFiles: Iterable<DomainRecommendationProcessedFile>) =
             processedFiles.forEach {
                 insertResolved(it)
@@ -32,7 +32,7 @@ internal class RecommendationProcessedFileDaoDelegate(
                                 recommendationUserPhotoProcessedFileEntityUrl = it.url))
             }
 
-    fun insertDomainForAlbumId(
+    fun insertResolvedForAlbumId(
             albumId: String, processedFiles: Iterable<DomainRecommendationProcessedFile>) =
             processedFiles.forEach {
                 insertResolved(it)

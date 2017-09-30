@@ -23,7 +23,7 @@ internal class RecommendationInstagramPhotoDaoDelegate(
                     thumbnailUrl = source.thumbnailUrl,
                     ts = source.ts))
 
-    fun insertDomainForInstagramUsername(
+    fun insertResolvedForInstagramUsername(
             instagramUsername: String,
             instagramPhotos: Iterable<DomainRecommendationInstagramPhoto>) =
             instagramPhotos.forEach {

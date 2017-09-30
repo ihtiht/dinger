@@ -28,16 +28,16 @@ internal class RecommendationSpotifyThemeTrackDaoDelegate(
     }
 
     override fun insertResolved(source: DomainRecommendationSpotifyThemeTrack?) {
-        if (source == null) {
-            return
+        source?.apply {
+            spotifyAlbumDaoDelegate.insertResolved(album)
+            spotifyArtistDaoDelegate.insertResolvedForTrackId(id, artists)
+            spotifyThemeTrackDelegate.insertSpotifyThemeTrack(
+                    RecommendationUserSpotifyThemeTrackEntity(
+                            album = album.id,
+                            previewUrl = previewUrl,
+                            name = name,
+                            id = id,
+                            uri = uri))
         }
-        spotifyArtistDaoDelegate.insertDomainForTrackId(source.id, source.artists)
-        spotifyAlbumDaoDelegate.insertResolved(source.album)
-        spotifyThemeTrackDelegate.insertSpotifyThemeTrack(RecommendationUserSpotifyThemeTrackEntity(
-                album = source.album.id,
-                previewUrl = source.previewUrl,
-                name = source.name,
-                id = source.id,
-                uri = source.uri))
     }
 }

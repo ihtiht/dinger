@@ -20,6 +20,15 @@ internal class RecommendationUserResolver(
     fun insert(user: DomainRecommendationUser) =
             try {
                 user.apply {
+                    instagramDaoDelegate.insertResolved(instagram)
+                    teaserDaoDelegate.insertResolved(teaser)
+                    spotifyThemeTrackDaoDelegate.insertResolved(spotifyThemeTrack)
+                    commonConnectionDaoDelegate.insertResolvedForUserId(id, commonConnections)
+                    interestDaoDelegate.insertResolvedForUserId(id, commonInterests)
+                    photoDaoDelegate.insertResolvedForUserId(id, photos)
+                    jobDaoDelegate.insertResolvedForUserId(id, jobs)
+                    schoolDaoDelegate.insertResolvedForUserId(id, schools)
+                    teaserDaoDelegate.insertResolvedForUserId(id, teasers)
                     userDao.insertUser(RecommendationUserEntity(
                             distanceMiles = distanceMiles,
                             connectionCount = connectionCount,
@@ -38,15 +47,6 @@ internal class RecommendationUserResolver(
                             liked = liked,
                             matched = matched
                     ))
-                    instagramDaoDelegate.insertResolved(instagram)
-                    teaserDaoDelegate.insertResolved(teaser)
-                    spotifyThemeTrackDaoDelegate.insertResolved(spotifyThemeTrack)
-                    commonConnectionDaoDelegate.insertResolvedForUserId(id, commonConnections)
-                    interestDaoDelegate.insertResolvedForUserId(id, commonInterests)
-                    photoDaoDelegate.insertResolvedForUserId(id, photos)
-                    jobDaoDelegate.insertResolvedForUserId(id, jobs)
-                    schoolDaoDelegate.insertResolvedForUserId(id, schools)
-                    teaserDaoDelegate.insertResolvedForUserId(id, teasers)
                 }
             } catch (sqlException: SQLException) {
                 crashReporter.report(sqlException)
