@@ -15,15 +15,15 @@ internal class RecommendationTeaserDaoDelegate(
                         type = it.type)
             } ?: DomainRecommendationTeaser.NONE
 
-    override fun insertDomain(source: DomainRecommendationTeaser) = teaserDao
+    override fun insertResolved(source: DomainRecommendationTeaser) = teaserDao
             .insertTeaser(RecommendationUserTeaserEntity(
                     id = source.id,
                     description = source.description,
                     type = source.type))
 
-    fun insertDomainForUserId(userId: String, teasers: Iterable<DomainRecommendationTeaser>) =
+    fun insertResolvedForUserId(userId: String, teasers: Iterable<DomainRecommendationTeaser>) =
             teasers.forEach {
-                insertDomain(it)
+                insertResolved(it)
                 userTeaserDao.insertUser_Teaser(RecommendationUserEntity_RecommendationUserTeaserEntity(
                         recommendationUserEntityId = userId,
                         recommendationUserTeaserEntityId = it.id))

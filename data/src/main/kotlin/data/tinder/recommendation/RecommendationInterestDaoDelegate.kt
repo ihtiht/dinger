@@ -14,14 +14,14 @@ internal class RecommendationInterestDaoDelegate(
                         name = it.name)
             } ?: DomainRecommendationInterest.NONE
 
-    override fun insertDomain(source: DomainRecommendationInterest) =
+    override fun insertResolved(source: DomainRecommendationInterest) =
             interestDao.insertInterest(RecommendationInterestEntity(
                     id = source.id,
                     name = source.name))
 
-    fun insertDomainForUserId(
+    fun insertResolvedForUserId(
             userId: String, interests: Iterable<DomainRecommendationInterest>) = interests.forEach {
-                insertDomain(it)
+                insertResolved(it)
                 userInterestDao.insertUser_Interest(RecommendationUserEntity_RecommendationInterestEntity(
                         recommendationUserEntityId = userId,
                         recommendationInterestEntityId = it.id))

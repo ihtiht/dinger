@@ -20,14 +20,14 @@ internal class RecommendationPhotoDaoDelegate(
                 }
             } ?: DomainRecommendationPhoto.NONE
 
-    override fun insertDomain(source: DomainRecommendationPhoto) {
+    override fun insertResolved(source: DomainRecommendationPhoto) {
         processedFileDaoDelegate.insertDomainForPhotoId(source.id, source.processedFiles)
         photoDao.insertPhoto(RecommendationUserPhotoEntity(id = source.id, url = source.url))
     }
 
-    fun insertDomainForUserId(userId: String, photos: Iterable<DomainRecommendationPhoto>) =
+    fun insertResolvedForUserId(userId: String, photos: Iterable<DomainRecommendationPhoto>) =
             photos.forEach {
-                insertDomain(it)
+                insertResolved(it)
                 userPhotoDao.insertUser_Photo(RecommendationUserEntity_RecommendationUserPhotoEntity(
                         recommendationUserEntityId = userId,
                         recommendationUserPhotoEntityId = it.id))

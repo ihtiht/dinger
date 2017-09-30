@@ -17,15 +17,15 @@ internal class RecommendationJobDaoDelegate(
                         title = it.title?.let { DomainRecommendationTitle(it.name) })
             } ?: DomainRecommendationJob.NONE
 
-    override fun insertDomain(source: DomainRecommendationJob) = jobDao.insertJob(
+    override fun insertResolved(source: DomainRecommendationJob) = jobDao.insertJob(
             RecommendationUserJobEntity(
                     id = source.id,
                     company = source.company?.let { RecommendationUserJobCompany(it.name) },
                     title = source.title?.let { RecommendationUserJobTitle(it.name) }))
 
-    fun insertDomainForUserId(userId: String, jobs: Iterable<DomainRecommendationJob>) =
+    fun insertResolvedForUserId(userId: String, jobs: Iterable<DomainRecommendationJob>) =
             jobs.forEach {
-                insertDomain(it)
+                insertResolved(it)
                 userJobDao.insertUser_Job(RecommendationUserEntity_RecommendationUserJobEntity(
                         recommendationUserEntityId = userId,
                         recommendationUserJobEntityId = it.id))

@@ -16,7 +16,7 @@ internal class RecommendationSpotifyAlbumDaoDelegate(
                         images = images)
             } ?: DomainRecommendationSpotifyAlbum.NONE
 
-    override fun insertDomain(source: DomainRecommendationSpotifyAlbum) {
+    override fun insertResolved(source: DomainRecommendationSpotifyAlbum) {
         processedFileDaoDelegate.insertDomainForAlbumId(source.id, source.images)
         spotifyAlbumDao.insertAlbum(RecommendationUserSpotifyThemeTrackAlbumEntity(
                 id = source.id,

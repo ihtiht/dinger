@@ -38,15 +38,15 @@ internal class RecommendationUserResolver(
                             liked = liked,
                             matched = matched
                     ))
-                    instagramDaoDelegate.insertDomain(instagram)
-                    teaserDaoDelegate.insertDomain(teaser)
-                    spotifyThemeTrackDaoDelegate.insertDomain(spotifyThemeTrack)
-                    commonConnectionDaoDelegate.insertDomainForUserId(id, commonConnections)
-                    interestDaoDelegate.insertDomainForUserId(id, commonInterests)
-                    photoDaoDelegate.insertDomainForUserId(id, photos)
-                    jobDaoDelegate.insertDomainForUserId(id, jobs)
-                    schoolDaoDelegate.insertDomainForUserId(id, schools)
-                    teaserDaoDelegate.insertDomainForUserId(id, teasers)
+                    instagramDaoDelegate.insertResolved(instagram)
+                    teaserDaoDelegate.insertResolved(teaser)
+                    spotifyThemeTrackDaoDelegate.insertResolved(spotifyThemeTrack)
+                    commonConnectionDaoDelegate.insertResolvedForUserId(id, commonConnections)
+                    interestDaoDelegate.insertResolvedForUserId(id, commonInterests)
+                    photoDaoDelegate.insertResolvedForUserId(id, photos)
+                    jobDaoDelegate.insertResolvedForUserId(id, jobs)
+                    schoolDaoDelegate.insertResolvedForUserId(id, schools)
+                    teaserDaoDelegate.insertResolvedForUserId(id, teasers)
                 }
             } catch (sqlException: SQLException) {
                 crashReporter.report(sqlException)

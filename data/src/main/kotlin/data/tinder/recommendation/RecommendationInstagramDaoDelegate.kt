@@ -25,7 +25,7 @@ internal class RecommendationInstagramDaoDelegate(
         }
     }
 
-    override fun insertDomain(source: DomainRecommendationInstagram?) {
+    override fun insertResolved(source: DomainRecommendationInstagram?) {
         if (source == null) {
             return
         }

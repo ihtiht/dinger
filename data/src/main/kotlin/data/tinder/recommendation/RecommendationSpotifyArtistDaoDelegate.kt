@@ -14,7 +14,7 @@ internal class RecommendationSpotifyArtistDaoDelegate(
                         name = it.name)
             } ?: DomainRecommendationSpotifyArtist.NONE
 
-    override fun insertDomain(source: DomainRecommendationSpotifyArtist) =
+    override fun insertResolved(source: DomainRecommendationSpotifyArtist) =
             artistDao.insertArtist(RecommendationUserSpotifyThemeTrackArtistEntity(
                     id = source.id,
                     name = source.name))
@@ -22,7 +22,7 @@ internal class RecommendationSpotifyArtistDaoDelegate(
     fun insertDomainForTrackId(
             trackId: String, artists: Iterable<DomainRecommendationSpotifyArtist>) =
             artists.forEach {
-                insertDomain(it)
+                insertResolved(it)
                 trackArtistDao.insertSpotifyThemeTrack_Artist(
                         RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity(
                                 recommendationUserSpotifyThemeTrackArtistEntityId = trackId,

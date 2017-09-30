@@ -16,7 +16,7 @@ internal class RecommendationInstagramPhotoDaoDelegate(
                         ts = it.ts)
             } ?: DomainRecommendationInstagramPhoto.NONE
 
-    override fun insertDomain(source: DomainRecommendationInstagramPhoto) =
+    override fun insertResolved(source: DomainRecommendationInstagramPhoto) =
             instagramDao.insertInstagramPhoto(RecommendationUserInstagramPhotoEntity(
                     link = source.link,
                     imageUrl = source.imageUrl,
@@ -27,7 +27,7 @@ internal class RecommendationInstagramPhotoDaoDelegate(
             instagramUsername: String,
             instagramPhotos: Iterable<DomainRecommendationInstagramPhoto>) =
             instagramPhotos.forEach {
-                insertDomain(it)
+                insertResolved(it)
                 userInstagramDao.insertInstagram_Photo(
                         RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity(
                                 recommendationUserInstagramEntityUsername = instagramUsername,

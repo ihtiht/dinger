@@ -21,7 +21,7 @@ internal class RecommendationCommonConnectionDaoDelegate(
                 }
             } ?: DomainRecommendationCommonConnection.NONE
 
-    override fun insertDomain(source: DomainRecommendationCommonConnection) {
+    override fun insertResolved(source: DomainRecommendationCommonConnection) {
         photoDaoDelegate.insertDomainForCommonConnectionId(source.id, source.photos)
         commonConnectionDao.insertCommonConnection(
                 RecommendationUserCommonConnectionEntity(
@@ -30,10 +30,10 @@ internal class RecommendationCommonConnectionDaoDelegate(
                             degree = source.degree))
     }
 
-    fun insertDomainForUserId(
+    fun insertResolvedForUserId(
             userId: String, commonConnections: Iterable<DomainRecommendationCommonConnection>) =
             commonConnections.forEach {
-                insertDomain(it)
+                insertResolved(it)
                 userCommonConnectionDelegate.insertUser_CommonConnection(
                         RecommendationUserEntity_RecommendationUserCommonConnectionEntity(
                                 recommendationUserEntityId = userId,

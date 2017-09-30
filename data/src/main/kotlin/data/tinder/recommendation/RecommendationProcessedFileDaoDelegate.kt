@@ -16,7 +16,7 @@ internal class RecommendationProcessedFileDaoDelegate(
                         heightPx = it.heightPx)
             } ?: DomainRecommendationProcessedFile.NONE
 
-    override fun insertDomain(source: DomainRecommendationProcessedFile) =
+    override fun insertResolved(source: DomainRecommendationProcessedFile) =
             processedFileDao.insertProcessedFile(RecommendationUserPhotoProcessedFileEntity(
                     widthPx = source.widthPx,
                     url = source.url,
@@ -25,7 +25,7 @@ internal class RecommendationProcessedFileDaoDelegate(
     fun insertDomainForPhotoId(
             photoId: String, processedFiles: Iterable<DomainRecommendationProcessedFile>) =
             processedFiles.forEach {
-                insertDomain(it)
+                insertResolved(it)
                 photoProcessedFileDao.insertPhoto_ProcessedFile(
                         RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity(
                                 recommendationUserPhotoEntityId = photoId,
@@ -35,7 +35,7 @@ internal class RecommendationProcessedFileDaoDelegate(
     fun insertDomainForAlbumId(
             albumId: String, processedFiles: Iterable<DomainRecommendationProcessedFile>) =
             processedFiles.forEach {
-                insertDomain(it)
+                insertResolved(it)
                 albumProcessedFileDao.insertSpotifyAlbum_ProcessedFile(
                         RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity(
                                 recommendationUserSpotifyThemeTrackAlbumEntityId = albumId,
