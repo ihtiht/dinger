@@ -7,6 +7,6 @@ internal class RecommendationResponseTrackedDataMarshaller
     : TrackedDataMarshaller<RecommendationResponse> {
     override fun marshall(source: RecommendationResponse) = Bundle().apply {
         putString("message", source.message ?: "no_message")
-        putInt("status", source.status)
+        putString("status", source.status.toString())
     }
 }
