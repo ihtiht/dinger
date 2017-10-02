@@ -1,27 +1,29 @@
-package data.tinder.recommendation
+package data.tinder.like
 
 import android.content.Context
 import dagger.Module
 import dagger.Provides
 import data.RootModule
 import data.event.FirebaseEventTrackerModule
+import data.tinder.recommendation.RecommendationEventTracker
+import data.tinder.recommendation.RecommendationResponseTrackedDataMarshaller
 import tracker.EventTracker
 import javax.inject.Singleton
 
 @Module(includes = arrayOf(RootModule::class, FirebaseEventTrackerModule::class))
-internal class RecommendationEventTrackerModule {
+internal class LikeEventTrackerModule {
     @Provides
     @Singleton
-    fun recommendationResponseMarshaller() = RecommendationResponseTrackedDataMarshaller()
+    fun likeResponseMarshaller() = LikeResponseTrackedDataMarshaller()
 
     @Provides
     @Singleton
     fun eventTracker(
             context: Context,
             eventTracker: EventTracker,
-            recommendationResponseTrackedDataMarshaller: RecommendationResponseTrackedDataMarshaller) =
-            RecommendationEventTracker(
+            likeResponseMarshaller: LikeResponseTrackedDataMarshaller) =
+            LikeEventTracker(
                     context,
                     eventTracker,
-                    recommendationResponseTrackedDataMarshaller)
+                    likeResponseMarshaller)
 }

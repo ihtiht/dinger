@@ -7,4 +7,6 @@ interface EventTracker {
     fun init(context: Context)
 
     fun trackRecommendationResponse(data: Bundle)
+
+    fun trackLikeResponse(data: Bundle)
 }

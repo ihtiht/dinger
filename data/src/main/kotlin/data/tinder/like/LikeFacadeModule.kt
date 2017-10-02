@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(LikeSourceModule::class))
+@Module(includes = arrayOf(LikeSourceModule::class, LikeEventTrackerModule::class))
 internal class LikeFacadeModule {
     @Provides
     @Singleton
@@ -12,7 +12,8 @@ internal class LikeFacadeModule {
 
     @Provides
     @Singleton
-    fun responseObjectMapper() = LikeResponseObjectMapper()
+    fun responseObjectMapper(eventTracker: LikeEventTracker) =
+            LikeResponseObjectMapper(eventTracker)
 
     @Provides
     @Singleton

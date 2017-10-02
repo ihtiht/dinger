@@ -2,13 +2,11 @@ package data.tinder.recommendation
 
 import dagger.Module
 import dagger.Provides
-import data.crash.FirebaseCrashReporterModule
 import reporter.CrashReporter
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
 @Module(includes = arrayOf(RecommendationSourceModule::class,
-        FirebaseCrashReporterModule::class,
         RecommendationEventTrackerModule::class))
 internal class GetRecommendationFacadeModule {
     @Provides

@@ -17,6 +17,9 @@ internal sealed class EventTrackerImpl : EventTracker {
         }
 
         override fun trackRecommendationResponse(data: Bundle) =
-                delegate.logEvent(Event.RECOMMENDATION_RESPONSE.key, data)
+                delegate.logEvent(Event.RESPONSE_RECOMMENDATION.key, data)
+
+        override fun trackLikeResponse(data: Bundle) =
+                delegate.logEvent(Event.RESPONSE_LIKE.key, data)
     }
 }

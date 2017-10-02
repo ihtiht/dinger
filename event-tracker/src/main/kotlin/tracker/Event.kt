@@ -1,5 +1,6 @@
 package tracker
 
 internal enum class Event(val key: String) {
-    RECOMMENDATION_RESPONSE("recommendation_response")
+    RESPONSE_RECOMMENDATION("response_recommendation"),
+    RESPONSE_LIKE("response_like")
 }

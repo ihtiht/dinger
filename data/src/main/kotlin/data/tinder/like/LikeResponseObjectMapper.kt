@@ -3,6 +3,10 @@ package data.tinder.like
 import data.ObjectMapper
 import domain.like.DomainLikedRecommendationAnswer
 
-internal class LikeResponseObjectMapper : ObjectMapper<LikeResponse, DomainLikedRecommendationAnswer> {
-    override fun from(source: LikeResponse) = DomainLikedRecommendationAnswer(source.match)
+internal class LikeResponseObjectMapper(private val eventTracker: LikeEventTracker)
+    : ObjectMapper<LikeResponse, DomainLikedRecommendationAnswer> {
+    override fun from(source: LikeResponse) = source.let {
+        eventTracker.track(it)
+        DomainLikedRecommendationAnswer(it.match)
+    }
 }
