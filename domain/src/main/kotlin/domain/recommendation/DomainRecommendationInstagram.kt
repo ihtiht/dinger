@@ -8,4 +8,4 @@ data class DomainRecommendationInstagram(
         val mediaCount: Int,
         val completedInitialFetch: Boolean,
         val username: String,
-        val photos: Iterable<DomainRecommendationInstagramPhoto>)
+        val photos: Iterable<DomainRecommendationInstagramPhoto>?)

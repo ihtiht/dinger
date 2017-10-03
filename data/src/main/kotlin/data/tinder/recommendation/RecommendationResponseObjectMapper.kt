@@ -2,7 +2,22 @@ package data.tinder.recommendation
 
 import data.ObjectMapper
 import domain.DomainException
-import domain.recommendation.*
+import domain.recommendation.DomainRecommendationCommonConnection
+import domain.recommendation.DomainRecommendationCommonConnectionPhoto
+import domain.recommendation.DomainRecommendationCompany
+import domain.recommendation.DomainRecommendationInstagram
+import domain.recommendation.DomainRecommendationInstagramPhoto
+import domain.recommendation.DomainRecommendationInterest
+import domain.recommendation.DomainRecommendationJob
+import domain.recommendation.DomainRecommendationPhoto
+import domain.recommendation.DomainRecommendationProcessedFile
+import domain.recommendation.DomainRecommendationSchool
+import domain.recommendation.DomainRecommendationSpotifyAlbum
+import domain.recommendation.DomainRecommendationSpotifyArtist
+import domain.recommendation.DomainRecommendationSpotifyThemeTrack
+import domain.recommendation.DomainRecommendationTeaser
+import domain.recommendation.DomainRecommendationTitle
+import domain.recommendation.DomainRecommendationUser
 import reporter.CrashReporter
 
 internal class RecommendationResponseObjectMapper(
@@ -107,7 +122,7 @@ internal class RecommendationInstagramObjectMapper(
                 mediaCount = it.mediaCount,
                 completedInitialFetch = it.completedInitialFetch,
                 username = it.username,
-                photos = it.photos.map { instagramPhotoDelegate.from(it) })
+                photos = it.photos?.map { instagramPhotoDelegate.from(it) })
     }
 }
 
