@@ -10,4 +10,4 @@ internal open class RecommendationUserCommonConnection(
         @field:Json(name = "degree")
         var degree: String,
         @field:Json(name = "photos")
-        val photos: Set<RecommendationUserCommonConnectionPhoto>)
+        val photos: Set<RecommendationUserCommonConnectionPhoto>?)
