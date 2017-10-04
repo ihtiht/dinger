@@ -19,7 +19,6 @@ before_install:
 - tar xvf secrets.tar
 - mv google-services-debug.json app/src/debug/google-services.json
 - mv google-services-release.json app/src/release/google-services.json
-- mv firebase-crashreporting-private-key.json app/
 before_script:
 - |
   if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then
