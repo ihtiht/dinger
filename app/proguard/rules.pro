@@ -1,4 +1,5 @@
 -verbose
+-optimizations !code/allocation/variable
 -keep class sun.misc.Unsafe { *; }
 -dontwarn okhttp3.**
 -dontnote okhttp3.**
