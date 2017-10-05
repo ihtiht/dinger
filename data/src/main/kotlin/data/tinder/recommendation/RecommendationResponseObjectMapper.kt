@@ -32,7 +32,8 @@ internal class RecommendationResponseObjectMapper(
                         null -> throw when (source.message) {
                             is String -> DomainException(source.message)
                             else -> IllegalStateException(
-                                    "Unexpected 2xx recommendation response without message: $source")
+                                    "Unexpected 2xx (${source.status}) recommendation response without message." +
+                                            "Array size: ${source.recommendations?.size ?: 0}")
                         }
                         else -> it.mapNotNull { transformRecommendation(it) }
                     }
