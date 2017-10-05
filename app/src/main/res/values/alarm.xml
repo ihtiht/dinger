@@ -4,4 +4,5 @@
         whenever possible, whether you are free or premium, and regardless of app and/or system
         updates and device shutdown and/or reboots.
     </string>
+    <string name="alarm_do_it">Do it</string>
 </resources>

@@ -18,8 +18,7 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         app:lottie_fileName="lottie_emoji_wink.json"
         app:lottie_autoPlay="true"
@@ -34,9 +33,24 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="@string/alarm_set_announcement"
         style="@style/TextAppearance.AppCompat.Subhead" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="true"
+        android:text="@string/alarm_do_it" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>
