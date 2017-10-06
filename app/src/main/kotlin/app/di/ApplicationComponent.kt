@@ -1,7 +1,8 @@
 package app.di
 
 import app.alarmbanner.AlarmBannerComponent
-import app.alarmbanner.AlarmBannerModule
+import app.alarmbanner.AutoSwipeTriggerModule
+import app.alarmbanner.ContinueModule
 import app.crash.FirebaseCrashReporterModule
 import app.login.TinderLoginComponent
 import app.login.TinderLoginModule
@@ -15,5 +16,7 @@ import javax.inject.Singleton
 internal interface ApplicationComponent {
     fun newSplashComponent(splashModule: SplashModule): SplashComponent
     fun newTinderLoginComponent(tinderLoginModule: TinderLoginModule): TinderLoginComponent
-    fun newAlarmBannerComponent(alarmBannerModule: AlarmBannerModule): AlarmBannerComponent
+    fun newAlarmBannerComponent(
+            autoSwipeTriggerModule: AutoSwipeTriggerModule,
+            continueModule: ContinueModule): AlarmBannerComponent
 }

@@ -29,7 +29,7 @@ internal class RecommendationSourceModule {
     @Singleton
     fun store(moshiBuilder: Moshi.Builder, api: TinderApi) =
             FluentStoreBuilder.parsedWithKey<Unit, BufferedSource, RecommendationResponse>(
-                    Fetcher { _ -> fetch(api) }) {
+                    Fetcher { fetch(api) }) {
                 parsers = listOf(MoshiParserFactory.createSourceParser(moshiBuilder
                                 .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
                                 .build(),

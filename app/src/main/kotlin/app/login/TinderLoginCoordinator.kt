@@ -5,7 +5,7 @@ import io.reactivex.Scheduler
 import io.reactivex.observers.DisposableCompletableObserver
 import reporter.CrashReporter
 
-internal class TinderLoginCoordinator(
+internal class TinderLoginCoordinator constructor(
         private val view: TinderLoginView,
         private val asyncExecutionScheduler: Scheduler,
         private val postExecutionScheduler: Scheduler,
