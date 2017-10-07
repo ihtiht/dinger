@@ -1,5 +1,6 @@
 package app
 
+import android.os.Build
 import android.os.StrictMode
 
 /**
@@ -23,10 +24,16 @@ internal class DebugApplication : MainApplication() {
                     .detectDiskReads()
                     .detectDiskWrites()
                     .detectNetwork()
-                    .detectResourceMismatches()
-                    .detectUnbufferedIo()
                     .penaltyLog()
                     .penaltyDialog()
+                    .apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            detectResourceMismatches()
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                detectUnbufferedIo()
+                            }
+                        }
+                    }
                     .build())
 
     /**
@@ -36,12 +43,18 @@ internal class DebugApplication : MainApplication() {
      */
     private fun enforceVMStrictMode() = StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
             .detectActivityLeaks()
-            .detectCleartextNetwork()
-            .detectContentUriWithoutPermission()
-            .detectFileUriExposure()
             .detectLeakedClosableObjects()
             .detectLeakedRegistrationObjects()
             .detectLeakedSqlLiteObjects()
             .penaltyLog()
+            .apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    detectCleartextNetwork()
+                    detectFileUriExposure()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        detectContentUriWithoutPermission()
+                    }
+                }
+            }
             .build())
 }
