@@ -5,6 +5,7 @@ import android.accounts.Account
 import android.accounts.AccountAuthenticatorResponse
 import android.accounts.AccountManager
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import domain.loggedincheck.LoggedInCheckProvider
 import domain.login.AddAccountProvider
@@ -55,7 +56,9 @@ internal class AppAccountAuthenticator(context: Context)
 
     override fun addAccount(id: String, token: String) = Account(id, Companion.ACCOUNT_TYPE).let {
         if (delegate.addAccountExplicitly(it, token, null)) {
-            delegate.notifyAccountAuthenticated(it)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                delegate.notifyAccountAuthenticated(it)
+            }
             true
         } else {
             false
