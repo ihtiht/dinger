@@ -2,7 +2,6 @@ package data.autoswipe
 
 import android.content.Context
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
 import android.support.annotation.CallSuper
 import android.support.v4.app.JobIntentService
 import data.tinder.like.LikeRecommendationAction
@@ -10,6 +9,8 @@ import data.tinder.recommendation.RecommendationUserResolver
 import domain.like.DomainLikedRecommendationAnswer
 import domain.recommendation.DomainRecommendationUser
 import reporter.CrashReporter
+import java.text.SimpleDateFormat
+import java.util.Locale
 import javax.inject.Inject
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
@@ -26,7 +27,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     override fun onHandleWork(intent: Intent) {
         crashReporter.report(AutoSwipeTrackedException(
                 "onHandleWork starting at " +
-                        SimpleDateFormat("yyyy-MM-dd hh:mm:ss a")
+                        SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.ENGLISH)
                                 .format(System.currentTimeMillis())))
         likeRecommendations()
     }

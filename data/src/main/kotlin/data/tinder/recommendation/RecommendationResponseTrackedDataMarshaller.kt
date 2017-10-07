@@ -1,8 +1,9 @@
 package data.tinder.recommendation
 
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import tracker.TrackedDataMarshaller
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 internal class RecommendationResponseTrackedDataMarshaller
     : TrackedDataMarshaller<RecommendationResponse> {
@@ -11,7 +12,9 @@ internal class RecommendationResponseTrackedDataMarshaller
         putString("status", source.status.toString())
         System.currentTimeMillis().let {
             putLong("date", it)
-            putString("date_string", SimpleDateFormat("yyyy-MM-dd hh:mm:ss a").format(it))
+            putString(
+                    "date_string",
+                    SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.ENGLISH).format(it))
         }
     }
 }
