@@ -17,6 +17,6 @@ This repo is here to show that these and other pain points are easily addressed 
 At some point, I would love to distribute this app through some channel like Google Play or F-Droid, but at the time of writing there is little reason for anyone to use this app, although I intend that to change soon.
 Until that happens, you are encouraged to try out the app by getting it yourself from the 'Releases' tab, which you can find above the file explorer in this page.
 
-## Building 
+## Contributing 
 
-See [BUILDING.md](BUILDING.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md).
