@@ -1,8 +1,8 @@
 package app.splash
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import app.MainApplication
 import app.home.HomeActivity
 import app.login.TinderLoginActivity
@@ -18,7 +18,7 @@ import javax.inject.Inject
  * background in the theme. This allows it to be shown without having to wait for the content view
  * to be drawn.
  */
-internal class SplashActivity : Activity(), LoggedInCheckCoordinator.ResultCallback {
+internal class SplashActivity : AppCompatActivity(), LoggedInCheckCoordinator.ResultCallback {
     @Inject
     lateinit var loggedInCheckCoordinator: LoggedInCheckCoordinator
 
@@ -92,7 +92,7 @@ internal class SplashActivity : Activity(), LoggedInCheckCoordinator.ResultCallb
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(this)
         }
-        finishAfterTransition()
+        supportFinishAfterTransition()
         overridePendingTransition(R.anim.fade_in, 0)
     }
 
@@ -101,7 +101,7 @@ internal class SplashActivity : Activity(), LoggedInCheckCoordinator.ResultCallb
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(this)
         }
-        finishAfterTransition()
+        supportFinishAfterTransition()
     }
 
     private companion object {

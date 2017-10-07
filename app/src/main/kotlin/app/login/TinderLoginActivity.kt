@@ -1,19 +1,20 @@
 package app.login
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import app.MainApplication
 import app.alarmbanner.AlarmBannerActivity
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.login_button
+import kotlinx.android.synthetic.main.activity_login.progress
 import org.stoyicker.dinger.R
 import javax.inject.Inject
 
 internal class TinderLoginActivity
     : TinderFacebookLoginFeature.ResultCallback,
         TinderLoginCoordinator.ResultCallback,
-        Activity()  {
+        AppCompatActivity()  {
     @Inject
     lateinit var tinderFacebookLoginFeature: TinderFacebookLoginFeature
     @Inject
@@ -45,7 +46,7 @@ internal class TinderLoginActivity
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(this)
         }
-        finishAfterTransition()
+        supportFinishAfterTransition()
     }
 
     private fun inject() = (application as MainApplication).applicationComponent
