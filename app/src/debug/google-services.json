@@ -1,0 +1,86 @@
+{
+  "project_info": {
+    "project_number": "1025061729925",
+    "firebase_url": "https://dinger-3fb67.firebaseio.com",
+    "project_id": "dinger-3fb67",
+    "storage_bucket": "dinger-3fb67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025061729925:android:20cd0087bc7f8517",
+        "android_client_info": {
+          "package_name": "org.stoyicker.dinger.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025061729925-pghvb1ruagsm6huclhipnfg0m0tp7pqm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5i0aTGOnk-TuxHm8iNEr_2svooQbhBHI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025061729925:android:d02c2a5d93963451",
+        "android_client_info": {
+          "package_name": "org.stoyicker.dinger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025061729925-8c4prmn43eb6tkjg6hdv3s92f5g3281i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.stoyicker.dinger",
+            "certificate_hash": "26e26427918816b7603c278b91421305e5649af4"
+          }
+        },
+        {
+          "client_id": "1025061729925-pghvb1ruagsm6huclhipnfg0m0tp7pqm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5i0aTGOnk-TuxHm8iNEr_2svooQbhBHI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025061729925-pghvb1ruagsm6huclhipnfg0m0tp7pqm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
