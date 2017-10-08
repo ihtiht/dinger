@@ -1,4 +1,4 @@
-# Dinger
+# Dinger [![Build Status](https://travis-ci.org/stoyicker/dinger.svg?branch=master)](https://travis-ci.org/stoyicker/dinger)
 ## What Tinder should have been
 
 __No clue what's going on? [Start here](assets/overview.pdf "Architecture overview")__
