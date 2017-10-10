@@ -127,7 +127,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         execute(this@AutoSwipeJobIntentService, Unit)
     }
 
-    private fun scheduleBecauseLimited() = DelayedPostAutoSwipeAction().apply {
+    private fun scheduleBecauseLimited() = DelayedPostAutoSwipeAction(crashReporter).apply {
         ongoingActions += this
         execute(this@AutoSwipeJobIntentService, Unit)
     }
