@@ -25,7 +25,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     override fun onHandleWork(intent: Intent) {
-        crashReporter.report(AutoSwipeTrackedException(
+        crashReporter.report(AutoSwipeStartedTrackedException(
                 "onHandleWork starting at " +
                         SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.ENGLISH)
                                 .format(System.currentTimeMillis())))
@@ -37,6 +37,10 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     override fun onDestroy() {
         super.onDestroy()
         releaseResources()
+        crashReporter.report(AutoSwipeDestroyedTrackedException(
+                "onDestroy finishing at " +
+                        SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.ENGLISH)
+                                .format(System.currentTimeMillis())))
     }
 
     abstract class Action<in Callback> {
@@ -149,5 +153,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 context, AutoSwipeJobIntentService::class.java, JOB_ID, Intent())
         }
 
-    private class AutoSwipeTrackedException(message: String) : Throwable(message)
+    private class AutoSwipeStartedTrackedException(message: String) : Throwable(message)
+
+    private class AutoSwipeDestroyedTrackedException(message: String) : Throwable(message)
 }
