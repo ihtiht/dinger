@@ -1,5 +1,5 @@
 final def architectureComponentsVersion = "1.0.0-beta2"
-final def daggerVersion = "2.11"
+final def daggerVersion = "2.12"
 final def facebookSdkVersion = "4.27.0"
 final def googlePlayServicesVersion = "11.4.0"
 final def jsr250Version = "1.0"
