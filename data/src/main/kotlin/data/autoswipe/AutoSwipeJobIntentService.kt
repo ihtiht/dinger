@@ -70,6 +70,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
             override fun onRecommendationsReceived(
                     recommendations: Collection<DomainRecommendationUser>) {
+                crashReporter.report(AutoSwipeGotRecommendationsTrackedException(
+                        "Got recommendations with size ${recommendations.size}"))
                 if (recommendations.isEmpty()) {
                     scheduleBecauseError()
                 } else {
@@ -156,4 +158,6 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     private class AutoSwipeStartedTrackedException(message: String) : Throwable(message)
 
     private class AutoSwipeDestroyedTrackedException(message: String) : Throwable(message)
+
+    private class AutoSwipeGotRecommendationsTrackedException(message: String) : Throwable(message)
 }
