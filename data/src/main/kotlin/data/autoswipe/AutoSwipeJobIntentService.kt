@@ -60,7 +60,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         @CallSuper
         fun onError(autoSwipeJobIntentService: AutoSwipeJobIntentService, error: Throwable) {
             autoSwipeJobIntentService.crashReporter.report(Throwable(
-                "From ${autoSwipeJobIntentService::class.java.name}", error)
+                "From ${autoSwipeJobIntentService::class.java.name}", error))
             autoSwipeJobIntentService.clearAction(action)
             autoSwipeJobIntentService.scheduleBecauseError()
         }
