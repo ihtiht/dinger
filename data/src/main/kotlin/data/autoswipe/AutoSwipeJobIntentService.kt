@@ -135,7 +135,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         execute(this@AutoSwipeJobIntentService, Unit)
     }
 
-    private fun scheduleBecauseError() = FromErrorPostAutoSwipeAction(crashReporter).apply {
+    private fun scheduleBecauseError() = FromErrorPostAutoSwipeAction().apply {
         ongoingActions += this
         execute(this@AutoSwipeJobIntentService, Unit)
     }
