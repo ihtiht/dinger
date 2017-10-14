@@ -8,15 +8,10 @@ import data.tinder.like.LikeRecommendationAction
 import data.tinder.recommendation.RecommendationUserResolver
 import domain.like.DomainLikedRecommendationAnswer
 import domain.recommendation.DomainRecommendationUser
-import reporter.CrashReporter
-import java.text.SimpleDateFormat
-import java.util.Locale
 import javax.inject.Inject
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
     private var ongoingActions = emptySet<Action<*>>()
-    @Inject
-    lateinit var crashReporter: CrashReporter
     @Inject
     lateinit var recommendationResolver: RecommendationUserResolver
 
@@ -24,23 +19,13 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         AutoSwipeComponentHolder.autoSwipeComponent.inject(this)
     }
 
-    override fun onHandleWork(intent: Intent) {
-        crashReporter.report(AutoSwipeStartedTrackedException(
-                "onHandleWork starting at " +
-                        SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.ENGLISH)
-                                .format(System.currentTimeMillis())))
-        likeRecommendations()
-    }
+    override fun onHandleWork(intent: Intent) = Unit.also { likeRecommendations() }
 
     override fun onStopCurrentWork() = true.also { releaseResources() }
 
     override fun onDestroy() {
         super.onDestroy()
         releaseResources()
-        crashReporter.report(AutoSwipeDestroyedTrackedException(
-                "onDestroy finishing at " +
-                        SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.ENGLISH)
-                                .format(System.currentTimeMillis())))
     }
 
     abstract class Action<in Callback> {
@@ -58,9 +43,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         }
 
         @CallSuper
-        fun onError(autoSwipeJobIntentService: AutoSwipeJobIntentService, error: Throwable) {
-            autoSwipeJobIntentService.crashReporter.report(Throwable(
-                "From ${autoSwipeJobIntentService::class.java.name}", error))
+        fun onError(autoSwipeJobIntentService: AutoSwipeJobIntentService) {
             autoSwipeJobIntentService.clearAction(action)
             autoSwipeJobIntentService.scheduleBecauseError()
         }
@@ -71,8 +54,6 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
             override fun onRecommendationsReceived(
                     recommendations: Collection<DomainRecommendationUser>) {
-                crashReporter.report(AutoSwipeGotRecommendationsTrackedException(
-                        "Got recommendations with size ${recommendations.size}"))
                 if (recommendations.isEmpty()) {
                     scheduleBecauseError()
                 } else {
@@ -154,11 +135,5 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         private const val JOB_ID = 1000
         fun trigger(context: Context) = enqueueWork(
                 context, AutoSwipeJobIntentService::class.java, JOB_ID, Intent())
-        }
-
-    private class AutoSwipeStartedTrackedException(message: String) : Throwable(message)
-
-    private class AutoSwipeDestroyedTrackedException(message: String) : Throwable(message)
-
-    private class AutoSwipeGotRecommendationsTrackedException(message: String) : Throwable(message)
+    }
 }

@@ -22,7 +22,7 @@ internal class LikeRecommendationAction(private val user: DomainRecommendationUs
                     }
 
                     override fun onError(error: Throwable) {
-                        commonDelegate.onError(owner, error)
+                        commonDelegate.onError(owner)
                         callback.onRecommendationLikeFailed()
                     }
                 })

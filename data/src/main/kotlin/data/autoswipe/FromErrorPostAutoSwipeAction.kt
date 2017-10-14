@@ -14,7 +14,7 @@ internal class FromErrorPostAutoSwipeAction : AutoSwipeJobIntentService.Action<U
                 it.execute(object : DisposableCompletableObserver() {
                     override fun onComplete() = commonDelegate.onComplete(owner)
 
-                    override fun onError(error: Throwable) = commonDelegate.onError(owner, error)
+                    override fun onError(error: Throwable) = commonDelegate.onError(owner)
                 })
             }
 

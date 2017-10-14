@@ -16,7 +16,7 @@ internal class ImmediatePostAutoSwipeAction : AutoSwipeJobIntentService.Action<U
                     commonDelegate.onComplete(owner)
                 }
                 override fun onError(error: Throwable) {
-                    commonDelegate.onError(owner, error)
+                    commonDelegate.onError(owner)
                 }
             })
         }
