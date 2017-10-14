@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<lint>
+    <!-- Used by Firebase -->
+    <issue id="UnusedResources">
+        <ignore regexp="account_data_fb_id" />
+        <ignore regexp="account_data_fb_token" />
+    </issue>
+</lint>
