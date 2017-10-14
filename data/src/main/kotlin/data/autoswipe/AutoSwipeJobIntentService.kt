@@ -88,17 +88,10 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 ongoingActions += (this)
                 execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
                     override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) =
-                            crashReporter.report(
-                                    AutoSwipeLikeSucceededTrackedException(
-                                            "Tried to like ${recommendation.name}, succeeded"))
-                                    .also {
-                                        saveRecommendationToDatabase(
-                                                recommendation, liked = true, matched = answer.matched)
-                                    }
+                            saveRecommendationToDatabase(
+                                    recommendation, liked = true, matched = answer.matched)
 
                     override fun onRecommendationLikeFailed() {
-                        crashReporter.report(AutoSwipeLikeFailedTrackedException(
-                                "Tried to like ${recommendation.name}, failed"))
                         saveRecommendationToDatabase(recommendation, liked = false, matched = false)
                         scheduleBecauseLimited()
                     }
@@ -168,8 +161,4 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     private class AutoSwipeDestroyedTrackedException(message: String) : Throwable(message)
 
     private class AutoSwipeGotRecommendationsTrackedException(message: String) : Throwable(message)
-
-    private class AutoSwipeLikeSucceededTrackedException(message: String) : Throwable(message)
-
-    private class AutoSwipeLikeFailedTrackedException(message: String) : Throwable(message)
 }
