@@ -24,7 +24,6 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
     lateinit var loggedInCheckCoordinator: LoggedInCheckCoordinator
     @Inject
     lateinit var userEmailPropertySetter: UserEmailPropertySetterCoordinator
-
     private lateinit var handler: Handler
 
     override fun onResume() {
