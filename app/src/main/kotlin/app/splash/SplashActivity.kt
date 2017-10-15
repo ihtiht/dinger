@@ -42,10 +42,9 @@ internal class SplashActivity : AppCompatActivity(), LoggedInCheckCoordinator.Re
      * Closes the splash and introduces the actual content of the app.
      */
     private fun fetchUserAccount() {
-        if (!assertGooglePlayServicesAvailable()) {
-            return
+        if (assertGooglePlayServicesAvailable()) {
+            loggedInCheckCoordinator.actionDoCheck()
         }
-        loggedInCheckCoordinator.actionDoCheck()
     }
 
     override fun onPause() {
