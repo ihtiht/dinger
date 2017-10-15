@@ -11,4 +11,6 @@ interface EventTracker {
     fun trackLikeResponse(data: Bundle)
 
     fun trackUserProvidedAccount()
+
+    fun setUserProvidedAccount(value: String?)
 }

@@ -11,4 +11,6 @@ internal class SplashEventTracker(
     }
 
     fun trackUserProvidedAccount() = eventTracker.trackUserProvidedAccount()
+
+    fun setUserProvidedAccount(value: String?) = eventTracker.setUserProvidedAccount(value)
 }

@@ -32,9 +32,10 @@ internal class UserEmailPropertySetterCoordinator(
     fun onActivityResult(resultCode: Int, data: Intent?) {
         when (resultCode) {
             Activity.RESULT_OK -> {
-                data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
-                // TODO Set the property
-                splashEventTracker.trackUserProvidedAccount()
+                splashEventTracker.apply {
+                    setUserProvidedAccount(data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME))
+                    trackUserProvidedAccount()
+                }
                 resultCallback.onUserEmailPropertySet()
             }
             else -> {

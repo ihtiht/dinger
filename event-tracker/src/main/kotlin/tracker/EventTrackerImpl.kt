@@ -24,5 +24,8 @@ internal sealed class EventTrackerImpl : EventTracker {
 
         override fun trackUserProvidedAccount() =
                 delegate.logEvent(Event.USER_ACCOUNT_PROVIDED.key, null)
+
+        override fun setUserProvidedAccount(value: String?) =
+                delegate.setUserProperty(Property.USER_PROVIDED_ACCOUNT.key, value)
     }
 }
