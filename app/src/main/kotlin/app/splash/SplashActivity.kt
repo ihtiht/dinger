@@ -18,9 +18,12 @@ import javax.inject.Inject
  * background in the theme. This allows it to be shown without having to wait for the content view
  * to be drawn.
  */
-internal class SplashActivity : AppCompatActivity(), LoggedInCheckCoordinator.ResultCallback {
+internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
+        UserEmailPropertySetterCoordinator.ResultCallback, AppCompatActivity() {
     @Inject
     lateinit var loggedInCheckCoordinator: LoggedInCheckCoordinator
+    @Inject
+    lateinit var userEmailPropertySetter: UserEmailPropertySetterCoordinator
 
     private lateinit var handler: Handler
 
@@ -29,6 +32,34 @@ internal class SplashActivity : AppCompatActivity(), LoggedInCheckCoordinator.Re
         inject()
         scheduleContentOpening()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            UserEmailPropertySetterCoordinator.REQUEST_CODE ->
+                userEmailPropertySetter.onActivityResult(resultCode, data)
+            else -> super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    override fun onPause() {
+        handler.removeCallbacksAndMessages(null)
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        loggedInCheckCoordinator.actionCancelCheck()
+        super.onDestroy()
+    }
+
+    override fun onUserEmailPropertySet() = loggedInCheckCoordinator.actionDoCheck()
+
+    override fun onUserEmailAcquisitionFailed() {
+        if (!isFinishing) supportFinishAfterTransition()
+    }
+
+    override fun onLoggedInUserFound() = continueLoggedIn()
+
+    override fun onLoggedInUserNotFound() = requestToken()
 
     /**
      * Schedules the app content to be shown.
@@ -43,26 +74,15 @@ internal class SplashActivity : AppCompatActivity(), LoggedInCheckCoordinator.Re
      */
     private fun fetchUserAccount() {
         if (assertGooglePlayServicesAvailable()) {
-            loggedInCheckCoordinator.actionDoCheck()
+            userEmailPropertySetter.actionDoSet()
         }
     }
 
-    override fun onPause() {
-        handler.removeCallbacksAndMessages(null)
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        loggedInCheckCoordinator.actionCancelCheck()
-        super.onDestroy()
-    }
-
-    override fun onLoggedInUserFound() = continueLoggedIn()
-
-    override fun onLoggedInUserNotFound() = requestToken()
-
     private fun inject() = (application as MainApplication).applicationComponent
-            .newSplashComponent(SplashModule(this))
+            .newSplashComponent(SplashModule(
+                    activity = this,
+                    loggedInCheckResultCallback = this,
+                    userEmailPropertySetterCoordinatorResultCallback = this))
             .inject(this)
 
     /**

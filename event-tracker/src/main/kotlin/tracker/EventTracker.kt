@@ -9,4 +9,6 @@ interface EventTracker {
     fun trackRecommendationResponse(data: Bundle)
 
     fun trackLikeResponse(data: Bundle)
+
+    fun trackUserProvidedAccount()
 }

@@ -21,5 +21,8 @@ internal sealed class EventTrackerImpl : EventTracker {
 
         override fun trackLikeResponse(data: Bundle) =
                 delegate.logEvent(Event.RESPONSE_LIKE.key, data)
+
+        override fun trackUserProvidedAccount() =
+                delegate.logEvent(Event.USER_ACCOUNT_PROVIDED.key, null)
     }
 }
