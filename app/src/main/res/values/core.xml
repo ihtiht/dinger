@@ -13,7 +13,8 @@
 
     <integer name="anim_duration">@android:integer/config_mediumAnimTime</integer>
 
-    <string name="app_label">Dinger</string>
+    <string name="app_label" translatable="false">Dinger</string>
+    <string name="preferences_file_core" translatable="false">core</string>
 
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/accent</item>
