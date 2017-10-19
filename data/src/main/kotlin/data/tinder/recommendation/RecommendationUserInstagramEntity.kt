@@ -10,7 +10,7 @@ import java.util.Date
 internal open class RecommendationUserInstagramEntity(
         var profilePictureUrl: String,
         @Embedded
-        var lastFetchTime: Date,
+        var lastFetchTime: Date?,
         var mediaCount: Int,
         var completedInitialFetch: Boolean,
         @PrimaryKey

@@ -7,7 +7,7 @@ internal class RecommendationUserInstagram private constructor(
         @field:Json(name = "profile_picture")
         val profilePictureUrl: String,
         @field:Json(name = "last_fetch_time")
-        val lastFetchTime: Date,
+        val lastFetchTime: Date?,
         @field:Json(name = "media_count")
         val mediaCount: Int,
         @field:Json(name = "photos")
