@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="account_label">Dinger</string>
-    <string name="account_data_fb_id">fb_id</string>
-    <string name="account_data_fb_token">fb_token</string>
     <string name="account_type">org.stoyicker.dinger</string>
+    <string name="account_label">Dinger</string>
 </resources>
