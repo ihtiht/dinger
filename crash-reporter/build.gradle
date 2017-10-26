@@ -34,9 +34,6 @@ repositories {
     jcenter()
 }
 dependencies {
-    debugCompile project(path: ':event-tracker', configuration: 'debug')
-    releaseCompile project(path: ':event-tracker', configuration: 'release')
-    compile rootProject.ext.compileDependencies
-    compile rootProject.ext.compileCrashReporterDependencies
-    provided rootProject.ext.providedCrashReporterDependencies
+    implementation rootProject.ext.compileDependencies
+    implementation rootProject.ext.compileCrashReporterDependencies
 }
