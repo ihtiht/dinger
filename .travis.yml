@@ -1,48 +1,38 @@
-language: android
-jdk: oraclejdk8
 sudo: required
 git:
   depth: 9999
-android:
-  components:
-  - tools
-  - platform-tools
-  - android-26
-  - build-tools-26.0.2
-  - extra-android-m2repository
-  - extra-google-m2repository
 branches:
   except:
-  - "/^[0-9]/"
+    - "/^[0-9]/"
+services:
+  - docker
 before_install:
-- openssl aes-256-cbc -K $encrypted_13d4b12ffe60_key -iv $encrypted_13d4b12ffe60_iv -in firebase-crashreporting-private-key.json.enc -out firebase-crashreporting-private-key.json -d
-before_script:
-- |
-  if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then
-    echo "Do not open PRs against master; merge dev into master locally and push instead."
-    exit 1
-  fi
-- export ARTIFACT_VERSION=$(git rev-list --count HEAD)
+  - |
+    if [ "$TRAVIS_PULL_REQUEST" != "false" ] && [ "$TRAVIS_BRANCH" = "master" ]; then
+      echo "Do not open PRs against master; merge dev into master locally and push instead."
+      exit 1
+    fi
+  - export DOCKER_IMAGE_TAG=cb8c1179da518b5ad403786b9bbba1bc5f28fd78
+  - export ARTIFACT_VERSION=$(git rev-list --count HEAD)
+  - openssl aes-256-cbc -K $encrypted_13d4b12ffe60_key -iv $encrypted_13d4b12ffe60_iv -in firebase-crashreporting-private-key.json.enc -out firebase-crashreporting-private-key.json -d
+  - docker pull stoyicker/docker-android:${DOCKER_IMAGE_TAG}
+  - docker tag stoyicker/docker-android:${DOCKER_IMAGE_TAG} stoyicker/docker-android
+  - export CONTAINER=$(docker run -dt -p 127.0.0.1:80:4567 stoyicker/docker-android)
+  - docker exec -t $CONTAINER /bin/sh -c "mkdir -p /root/${TRAVIS_REPO_SLUG}"
+  - docker cp ./ $CONTAINER:root/${TRAVIS_REPO_SLUG}
 script:
-- case "$TRAVIS_COMMIT_MESSAGE" in
-    *"[noci]"*)
-      echo "Commit message has [noci]. CI skipped (reported successful)".
-      ;;
-    *)
-      ./gradlew clean build dokka :app:check :domain:check :data:check --no-daemon --stacktrace
-      ;;
-  esac
+  - docker exec -t $CONTAINER /bin/sh -c "cd root/${TRAVIS_REPO_SLUG}; ./ci/script.sh"
 after_success:
-- |
-  if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ] && [[ "$TRAVIS_JOB_NUMBER" == *.1 ]]; then
-    echo "CI on master succeded. Executing release tasks..."
-    ./ci/release.sh
-    echo "Uploading mapping to Firebase..."
-    ./gradlew :app:firebaseUploadReleaseProguardMapping
-  fi
+  - |
+    if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ] && [[ "$TRAVIS_JOB_NUMBER" == *.1 ]]; then
+      echo "CI on master succeded. Executing release tasks..."
+      docker exec -t $CONTAINER /bin/sh -c "cd root/${TRAVIS_REPO_SLUG}; ./ci/release.sh"
+      echo "Uploading mapping to Firebase..."
+      docker exec -t $CONTAINER /bin/sh -c "cd root/${TRAVIS_REPO_SLUG}; ./gradlew :app:firebaseUploadReleaseProguardMapping"
+    fi
 notifications:
   email:
     recipients:
-    - jorge.diazbenitosoriano@gmail.com
+      - jorge.diazbenitosoriano@gmail.com
     on_success: change
     on_failure: always
