@@ -5,7 +5,6 @@ BRANCH_NAME=${TRAVIS_BRANCH}
 ARTIFACT_VERSION=undefined
 
 uploadReleaseToGitHub() {
-    echo 'Uploading release to GitHub'
     git fetch --tags
     LAST_TAG=$(git describe --tags --abbrev=0)
     THIS_RELEASE=$(git rev-parse --short ${BRANCH_NAME})
