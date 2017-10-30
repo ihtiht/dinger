@@ -1,13 +1,14 @@
 #!/bin/bash
 set -e
 
+BRANCH_NAME=${TRAVIS_BRANCH}
 ARTIFACT_VERSION=undefined
 
 uploadReleaseToGitHub() {
     echo 'Uploading release to GitHub'
     git fetch --tags
     LAST_TAG=$(git describe --tags --abbrev=0)
-    THIS_RELEASE=$(git rev-parse --short master)
+    THIS_RELEASE=$(git rev-parse --short ${BRANCH_NAME})
     local IFS=$'\n'
     RELEASE_NOTES_ARRAY=($(git log --format=%B ${LAST_TAG}..${THIS_RELEASE} | tr -d '\r'))
     { for i in "${RELEASE_NOTES_ARRAY[@]}"
@@ -18,7 +19,7 @@ uploadReleaseToGitHub() {
 
     BODY="{
         \"tag_name\": \"$ARTIFACT_VERSION\",
-        \"target_commitish\": \"master\",
+        \"target_commitish\": \"$BRANCH_NAME\",
         \"name\": \"$ARTIFACT_VERSION\",
         \"body\": \" \"
     }"
@@ -89,5 +90,13 @@ uploadReleaseToGitHub() {
     echo "Release complete."
 }
 
-ARTIFACT_VERSION=$(git rev-list --count HEAD)
-uploadReleaseToGitHub
+case ${BRANCH_NAME} in
+    "master")
+        ARTIFACT_VERSION=$(git rev-list --count HEAD)
+        uploadReleaseToGitHub
+        ;;
+    *)
+        echo "Branch is ${BRANCH_NAME}, which is not releasable. Skipping release."
+        exit 0
+        ;;
+esac
