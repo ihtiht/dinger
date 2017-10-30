@@ -1,3 +1,5 @@
+language: ruby
+cache: bundler
 sudo: required
 git:
   depth: 9999
