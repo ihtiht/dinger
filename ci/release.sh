@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-BRANCH_NAME=${TRAVIS_BRANCH}
+BRANCH_NAME=master
 ARTIFACT_VERSION=undefined
 
 uploadReleaseToGitHub() {
