@@ -37,6 +37,7 @@ uploadReleaseToGitHub() {
             --data "${BODY}" \
             https://api.github.com/repos/"${TRAVIS_REPO_SLUG}"/releases)
 
+    echo ${RESPONSE_BODY}
     echo 'FLAG 5'
 
     # Extract the upload_url value
