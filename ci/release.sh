@@ -5,8 +5,6 @@ BRANCH_NAME=${TRAVIS_BRANCH}
 ARTIFACT_VERSION=undefined
 
 uploadReleaseToGitHub() {
-    echo ${REPO_USER}
-    exit 0
     git fetch --tags
     LAST_TAG=$(git describe --tags --abbrev=0)
     THIS_RELEASE=$(git rev-parse --short ${BRANCH_NAME})
