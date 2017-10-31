@@ -35,6 +35,7 @@ after_success:
   - |
     if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ] && [[ "$TRAVIS_JOB_NUMBER" == *.1 ]]; then
       echo "CI on master succeded. Executing release tasks..."
+      export CONTAINER=$(docker run -dt -p 127.0.0.1:80:4567 stoyicker/docker-android)
       docker exec -t $CONTAINER /bin/sh -c "cd root/${TRAVIS_REPO_SLUG}; ./ci/release.sh"
       echo "Uploading mapping to Firebase..."
       docker exec -t $CONTAINER /bin/sh -c "cd root/${TRAVIS_REPO_SLUG}; ./gradlew :app:firebaseUploadReleaseProguardMapping"
