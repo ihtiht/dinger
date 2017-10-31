@@ -32,12 +32,6 @@ uploadReleaseToGitHub() {
             --data "${BODY}" \
             https://api.github.com/repos/"${TRAVIS_REPO_SLUG}"/releases)
 
-    echo 'hola'
-    echo ${RESPONSE_BODY}
-    echo ${TRAVIS_BRANCH}
-    echo ${BRANCH_NAME}
-    echo ${REPO_USER}
-
     # Extract the upload_url value
     UPLOAD_URL=$(echo ${RESPONSE_BODY} | jq -r .upload_url)
     # And the id for later use
