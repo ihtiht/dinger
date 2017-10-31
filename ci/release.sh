@@ -1,24 +1,20 @@
 #!/bin/bash
 set -e
 
-BRANCH_NAME=master
+BRANCH_NAME=${TRAVIS_BRANCH}
 ARTIFACT_VERSION=undefined
 
 uploadReleaseToGitHub() {
-    echo 'FLAG 0'
     git fetch --tags
     LAST_TAG=$(git describe --tags --abbrev=0)
     THIS_RELEASE=$(git rev-parse --short ${BRANCH_NAME})
     local IFS=$'\n'
-    echo 'FLAG 1'
     RELEASE_NOTES_ARRAY=($(git log --format=%B ${LAST_TAG}..${THIS_RELEASE} | tr -d '\r'))
-    echo 'FLAG 2'
     { for i in "${RELEASE_NOTES_ARRAY[@]}"
     do
         RELEASE_NOTES="$RELEASE_NOTES\\n$i"
     done
     }
-    echo 'FLAG 3'
 
     BODY="{
         \"tag_name\": \"$ARTIFACT_VERSION\",
@@ -26,7 +22,6 @@ uploadReleaseToGitHub() {
         \"name\": \"$ARTIFACT_VERSION\",
         \"body\": \" \"
     }"
-    echo 'FLAG 4'
 
     # Create the release in GitHub and extract its id from the response
     RESPONSE_BODY=$(curl \
@@ -36,9 +31,6 @@ uploadReleaseToGitHub() {
             --request POST \
             --data "${BODY}" \
             https://api.github.com/repos/"${TRAVIS_REPO_SLUG}"/releases)
-
-    echo ${RESPONSE_BODY}
-    echo 'FLAG 5'
 
     # Extract the upload_url value
     UPLOAD_URL=$(echo ${RESPONSE_BODY} | jq -r .upload_url)
