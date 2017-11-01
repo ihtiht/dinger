@@ -2,7 +2,6 @@
 set -e
 
 BRANCH_NAME=${TRAVIS_BRANCH}
-ARTIFACT_VERSION=undefined
 
 uploadReleaseToGitHub() {
     git fetch --tags
@@ -89,7 +88,6 @@ uploadReleaseToGitHub() {
 
 case ${BRANCH_NAME} in
     "master")
-        ARTIFACT_VERSION=$(git rev-list --count HEAD)
         uploadReleaseToGitHub
         ;;
     *)
