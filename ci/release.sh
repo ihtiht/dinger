@@ -16,9 +16,6 @@ uploadReleaseToGitHub() {
     done
     }
 
-    echo 'Inside'
-    echo ${ARTIFACT_VERSION}
-
     BODY="{
         \"tag_name\": \"$ARTIFACT_VERSION\",
         \"target_commitish\": \"$BRANCH_NAME\",
@@ -40,9 +37,7 @@ uploadReleaseToGitHub() {
     # And the id for later use
     RELEASE_ID=$(echo ${RESPONSE_BODY} | jq -r .id)
 
-    # Build the apk
-    ./gradlew --no-daemon assembleRelease
-    # Copy it out of its cave
+    # Copy the APK out of its cave
     cp app/build/outputs/apk/app-release.apk .
 
     # Attach the artifact
@@ -95,8 +90,6 @@ uploadReleaseToGitHub() {
 case ${BRANCH_NAME} in
     "master")
         ARTIFACT_VERSION=$(git rev-list --count HEAD)
-        echo 'Outside'
-        echo ${ARTIFACT_VERSION}
         uploadReleaseToGitHub
         ;;
     *)

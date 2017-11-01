@@ -1,7 +1,4 @@
 language: ruby
-cache:
-  directiories:
-    - /home/travis/.rvm/rubies/ruby-2.4.1/bin/gem
 sudo: required
 git:
   depth: 9999
@@ -20,8 +17,7 @@ before_install:
   - openssl aes-256-cbc -K $encrypted_13d4b12ffe60_key -iv $encrypted_13d4b12ffe60_iv -in firebase-crashreporting-private-key.json.enc -out firebase-crashreporting-private-key.json -d
   - docker pull stoyicker/docker-android:${DOCKER_IMAGE_TAG}
   - docker tag stoyicker/docker-android:${DOCKER_IMAGE_TAG} stoyicker/docker-android
-  - |
-    export CONTAINER=$(docker run -dt -p 127.0.0.1:80:4567 -e TRAVIS_BRANCH -e REPO_USER -e GITHUB_TOKEN -e TRAVIS_REPO_SLUG stoyicker/docker-android)
+  - export CONTAINER=$(docker run -dt -p 127.0.0.1:80:4567 -e TRAVIS_BRANCH -e REPO_USER -e GITHUB_TOKEN -e TRAVIS_REPO_SLUG stoyicker/docker-android)
   - docker exec -t $CONTAINER /bin/sh -c "mkdir -p /root/${TRAVIS_REPO_SLUG}"
   - docker cp ./ $CONTAINER:root/${TRAVIS_REPO_SLUG}
 env:
