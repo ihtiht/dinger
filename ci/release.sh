@@ -16,6 +16,9 @@ uploadReleaseToGitHub() {
     done
     }
 
+    echo 'Inside'
+    echo ${ARTIFACT_VERSION}
+
     BODY="{
         \"tag_name\": \"$ARTIFACT_VERSION\",
         \"target_commitish\": \"$BRANCH_NAME\",
@@ -92,6 +95,8 @@ uploadReleaseToGitHub() {
 case ${BRANCH_NAME} in
     "master")
         ARTIFACT_VERSION=$(git rev-list --count HEAD)
+        echo 'Outside'
+        echo ${ARTIFACT_VERSION}
         uploadReleaseToGitHub
         ;;
     *)
