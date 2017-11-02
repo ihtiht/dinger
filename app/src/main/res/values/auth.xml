@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="login_cancelled">Login cancelled</string>
-    <string name="login_failed">Login failed</string>
-    <string name="facebook_app_id">464891386855067</string>
-    <string name="fb_login_protocol_scheme">fb464891386855067</string>
-    <string name="sign_in_with_facebook">Sign in with Facebook</string>
-</resources>

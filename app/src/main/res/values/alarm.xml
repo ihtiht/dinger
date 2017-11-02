@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="alarm_set_announcement">Your device will now swipe everyone right for you,
-        whenever possible, whether you are free or premium, and regardless of app and/or system
-        updates and device shutdown and/or reboots.
-    </string>
-    <string name="alarm_do_it">Do it</string>
-</resources>
