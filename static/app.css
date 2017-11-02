@@ -3,7 +3,7 @@ html, body {
   font-size: 15px;
 }
 body {
-  background-color: #f6f6f6;
+  background-color: #263238;
   padding-bottom: 50px;
   padding-top: 80px;
 }
@@ -100,11 +100,6 @@ a.dl:hover {
 .content-nav.affix {
   top: 0;
 }
-.content-nav li.active a, .content-nav li.active a:hover {
-  background-color: transparent;
-  color: #555;
-  border-left-width: 2px;
-}
 .content-nav .secondary a {
   color: #aaa;
 }
@@ -161,6 +156,10 @@ code {
   .content-nav {
     width: 166px;
   }
+}
+
+p {
+    color: #fff;
 }
 
 /* One-column mobile display. */
