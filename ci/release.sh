@@ -40,7 +40,7 @@ uploadReleaseToGitHub() {
     cp app/build/outputs/apk/app-release.apk .
 
     # Attach the artifact
-    UPLOAD_URL=$(echo ${UPLOAD_URL} | sed "s/{?name,label}/?name=app-release-${ARTIFACT_VERSION}.apk/")
+    UPLOAD_URL=$(echo ${UPLOAD_URL} | sed "s/{?name,label}/?name=app-release.apk/")
     echo ${UPLOAD_URL}
     RESPONSE_BODY=$(curl \
             -u ${REPO_USER}:${GITHUB_TOKEN} \
@@ -59,7 +59,7 @@ uploadReleaseToGitHub() {
     APK_DOWNLOAD_URL=$(echo ${RESPONSE_BODY} | jq -r .browser_download_url)
 
     # Attach the qr code
-    UPLOAD_URL=$(echo ${UPLOAD_URL} | sed "s/app-release-${ARTIFACT_VERSION}.apk/qrcode-${ARTIFACT_VERSION}.png/")
+    UPLOAD_URL=$(echo ${UPLOAD_URL} | sed "s/app-release.apk/qrcode.png/")
     RESPONSE_BODY=$(curl \
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
