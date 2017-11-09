@@ -19,14 +19,13 @@ internal class NetworkClientModule {
             .addInterceptor { chain ->
                 chain.request().let {
                     it.newBuilder().build().let { copy ->
+                        val buffer = Buffer().also { copy.body()?.writeTo(it) }
                         crashReporter.report(IllegalMonitorStateException("""
                             Method: ${copy.method()}
-                            Https: ${copy.isHttps}
-                            Body: ${Buffer().let { buffer ->
-                                copy.body()?.writeTo(buffer)
-                                ?.also { buffer.readUtf8() } }}
-                            Cache-Control: ${copy.cacheControl()}
-                            Headers: ${copy.headers()}
+                            HTTPS: ${copy.isHttps}
+                            Body: ${buffer.readUtf8()}
+                            Cache-Control: ${copy.cacheControl().takeUnless { it.toString().isBlank() } ?: "EMPTY"}
+                            Headers: ${copy.headers().takeUnless { it.toString().isBlank() } ?: "NONE"}
                             Tag: ${copy.tag()}
                             Url: ${copy.url()}
                             """
