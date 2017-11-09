@@ -34,9 +34,7 @@ internal class NetworkClientModule {
                     }
                     chain.proceed(it)
                 }
-                chain.proceed(chain.request()).also {
-               crashReporter.report()
-            } }
+            }
             .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
