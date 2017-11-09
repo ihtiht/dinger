@@ -56,7 +56,6 @@ dependencies {
     debugCompile project(path: ':event-tracker', configuration: 'debug')
     releaseCompile project(path: ':event-tracker', configuration: 'release')
     kapt rootProject.ext.annotationProcessorDataDependencies
-    debugCompile rootProject.ext.debugCompileDataDependencies
     compile rootProject.ext.compileDependencies
     rootProject.ext.compileDataDependencies.forEach {
         compile(it) {

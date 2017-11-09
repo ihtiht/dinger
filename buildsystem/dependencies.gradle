@@ -40,9 +40,6 @@ ext {
             "com.google.dagger:dagger-compiler:$daggerVersion",
             "android.arch.persistence.room:compiler:$architectureComponentsVersion"
     ]
-    debugCompileDataDependencies = [
-            "com.squareup.okhttp3:logging-interceptor:$okHttp3Version"
-    ]
     compileDataDependencies = [
             "com.squareup.retrofit2:retrofit:$retrofitVersion",
             "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
@@ -55,6 +52,7 @@ ext {
             "android.arch.persistence.room:runtime:$architectureComponentsVersion",
             "android.arch.lifecycle:runtime:$architectureComponentsVersion",
             "android.arch.lifecycle:extensions:$architectureComponentsVersion",
+            "com.squareup.okhttp3:logging-interceptor:$okHttp3Version"
     ]
     providedDataDependencies = [
             "com.android.support:support-annotations:$supportLibraryVersion"
