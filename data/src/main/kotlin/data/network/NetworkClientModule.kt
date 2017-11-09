@@ -16,7 +16,7 @@ internal class NetworkClientModule {
     @Singleton
     fun client(crashReporter: CrashReporter): OkHttpClient.Builder = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addInterceptor { chain ->
+            .addNetworkInterceptor { chain ->
                 chain.request().let {
                     it.newBuilder().build().let { copy ->
                         val buffer = Buffer().also { copy.body()?.writeTo(it) }
