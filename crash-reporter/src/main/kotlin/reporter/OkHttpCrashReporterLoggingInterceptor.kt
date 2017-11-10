@@ -76,7 +76,7 @@ class OkHttpCrashReporterLoggingInterceptor(private val crashReporter: CrashRepo
                     it.readText()
                 }.let { message.append("$it\n") }
             }
-            message.append("<-- END HTTP (gzip-encoded body decoded)\n")
+            message.append("<-- END HTTP (gzip-encoded ${buffer.size()}-byte body decoded)\n")
         } else {
             response.body()!!.apply {
                 val source = source()
