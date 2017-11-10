@@ -22,14 +22,11 @@ internal class NetworkClientModule {
                         val buffer = Buffer().also { copy.body()?.writeTo(it) }
                         crashReporter.report(IllegalMonitorStateException("""
                             Method: ${copy.method()}
-                            HTTPS: ${copy.isHttps}
                             Body: ${buffer.readUtf8()}
                             Cache-Control: ${copy.cacheControl().takeUnless { it.toString().isBlank() } ?: "EMPTY"}
                             Headers: ${copy.headers().takeUnless { it.toString().isBlank() } ?: "NONE"}
-                            Tag: ${copy.tag()}
-                            Url: ${copy.url()}
-                            """
-                        ))
+                            Url: ${copy.url().encodedPath()}
+                            """))
                     }
                     chain.proceed(it)
                 }
