@@ -18,23 +18,27 @@ internal class NetworkClientModule {
     fun client(crashReporter: CrashReporter): OkHttpClient.Builder = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addNetworkInterceptor { chain ->
-                chain.request().let {
-                    chain.proceed(it).also {
-                        it.newBuilder().build().let { copy ->
-                            val buffer = Buffer().also { copy.request().body()?.writeTo(it) }
+                chain.request().let { request ->
+                    chain.proceed(request).also { response ->
+                            val requestBuffer = Buffer().also { request.body()?.writeTo(it) }
                             crashReporter.report(TrackedNetworkRequestTracedException("""
-                                Code: ${copy.code()}
-                                Method: ${copy.request().method()}
-                                Request body: ${buffer.readUtf8()}
-                                Response body: ${copy.body()?.string()}
-                                Cache-Control: ${copy.cacheControl().takeUnless { it.toString().isBlank() } ?: "EMPTY"}
-                                Headers: ${copy.headers().takeUnless { it.toString().isBlank() } ?: "NONE"}
-                                Url: ${copy.request().url().encodedPath()}
+                                Method: ${request.method()}
+                                Code: ${response.code()}
+                                Request body: ${requestBuffer.readUtf8()}
+                                Response body: ${response
+                                    .peekBody(1 * 1024 * 1024)
+                                    ?.string() ?: "EMPTY"}
+                                Cache-Control: ${response.cacheControl().takeUnless {
+                                it.toString().isBlank()
+                            } ?: "EMPTY"}
+                                Headers: ${response.headers().takeUnless {
+                                it.toString().isBlank()
+                            } ?: "NONE"}
+                                Url: ${request.url().encodedPath()}
                                 """))
                         }
                     }
                 }
-            }
             .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
