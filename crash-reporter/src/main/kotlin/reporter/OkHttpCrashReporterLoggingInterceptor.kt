@@ -69,8 +69,11 @@ class OkHttpCrashReporterLoggingInterceptor(private val crashReporter: CrashRepo
         if (!HttpHeaders.hasBody(response)) {
             message.append("<-- END HTTP\n")
         } else if (bodyEncoded(responseHeaders)) {
+            val source = response.body()!!.source()
+            source.request(Long.MAX_VALUE) // Buffer the entire body.
+            val buffer = source.buffer()
             if (responseHeaders["Content-Encoding"].equals("gzip", ignoreCase = true)) {
-                GZIPInputStream(response.body()!!.byteStream()).bufferedReader(Charsets.UTF_8).use {
+                GZIPInputStream(buffer.clone().inputStream()).bufferedReader(Charsets.UTF_8).use {
                     it.readText()
                 }.let { message.append("$it\n") }
             }
