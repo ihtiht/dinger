@@ -51,14 +51,17 @@ ext {
             "com.squareup.moshi:moshi-adapters:$moshiVersion",
             "android.arch.persistence.room:runtime:$architectureComponentsVersion",
             "android.arch.lifecycle:runtime:$architectureComponentsVersion",
-            "android.arch.lifecycle:extensions:$architectureComponentsVersion",
-            "com.squareup.okhttp3:logging-interceptor:$okHttp3Version"
+            "android.arch.lifecycle:extensions:$architectureComponentsVersion"
     ]
     providedDataDependencies = [
             "com.android.support:support-annotations:$supportLibraryVersion"
     ]
     compileCrashReporterDependencies = [
             "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
+    ]
+    providedCrashReporterDependencies = [
+            "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
+            "com.squareup.okhttp3:okhttp:$okHttp3Version"
     ]
     compileEventTrackerDependencies = [
             "com.google.firebase:firebase-core:$googlePlayServicesVersion",
