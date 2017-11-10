@@ -18,17 +18,20 @@ internal class NetworkClientModule {
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .addNetworkInterceptor { chain ->
                 chain.request().let {
-                    it.newBuilder().build().let { copy ->
-                        val buffer = Buffer().also { copy.body()?.writeTo(it) }
-                        crashReporter.report(IllegalMonitorStateException("""
-                            Method: ${copy.method()}
-                            Body: ${buffer.readUtf8()}
-                            Cache-Control: ${copy.cacheControl().takeUnless { it.toString().isBlank() } ?: "EMPTY"}
-                            Headers: ${copy.headers().takeUnless { it.toString().isBlank() } ?: "NONE"}
-                            Url: ${copy.url().encodedPath()}
-                            """))
+                    chain.proceed(it).also {
+                        it.newBuilder().build().let { copy ->
+                            val buffer = Buffer().also { copy.request().body()?.writeTo(it) }
+                            crashReporter.report(IllegalMonitorStateException("""
+                                Code: ${copy.code()}
+                                Method: ${copy.request().method()}
+                                Request body: ${buffer.readUtf8()}
+                                Response body: ${copy.body()?.string()}
+                                Cache-Control: ${copy.cacheControl().takeUnless { it.toString().isBlank() } ?: "EMPTY"}
+                                Headers: ${copy.headers().takeUnless { it.toString().isBlank() } ?: "NONE"}
+                                Url: ${copy.request().url().encodedPath()}
+                                """))
+                        }
                     }
-                    chain.proceed(it)
                 }
             }
             .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
