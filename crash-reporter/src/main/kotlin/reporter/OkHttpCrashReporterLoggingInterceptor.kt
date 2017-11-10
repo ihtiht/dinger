@@ -51,8 +51,7 @@ class OkHttpCrashReporterLoggingInterceptor(private val crashReporter: CrashRepo
             response = chain.proceed(request)
         } catch (e: Exception) {
             message.append("<-- HTTP FAILED: $e\n")
-//        crashReporter.report(TrackedNetworkRequestTracedException(message.toString()))
-            Log.e("BANANAS", message.toString())
+            crashReporter.report(TrackedNetworkRequestTracedException(message.toString()))
             throw e
         }
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
@@ -97,8 +96,7 @@ class OkHttpCrashReporterLoggingInterceptor(private val crashReporter: CrashRepo
                 message.append("<-- END HTTP (${buffer.size()}-byte body)\n")
             }
         }
-//        crashReporter.report(TrackedNetworkRequestTracedException(message.toString()))
-        Log.e("BANANAS", message.toString())
+        crashReporter.report(TrackedNetworkRequestTracedException(message.toString()))
         return response
     }
 
