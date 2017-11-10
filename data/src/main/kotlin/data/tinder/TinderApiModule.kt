@@ -20,7 +20,7 @@ internal class TinderApiModule {
             retrofitBuilder: Retrofit.Builder,
             appAccountManagerImpl: AppAccountAuthenticator): TinderApi = retrofitBuilder
             .client(clientBuilder
-                    .addNetworkInterceptor({
+                    .addInterceptor({
                         it.proceed(it.request().newBuilder()
                                 .apply {
                                     appAccountManagerImpl.getAccountToken()?.let {
