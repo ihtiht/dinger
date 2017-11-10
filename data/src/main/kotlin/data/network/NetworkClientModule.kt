@@ -23,8 +23,11 @@ internal class NetworkClientModule {
                             val requestBuffer = Buffer().also { request.body()?.writeTo(it) }
                             crashReporter.report(TrackedNetworkRequestTracedException("""
                                 Method: ${request.method()}
+                                Url: ${request.url().encodedPath()}
                                 Code: ${response.code()}
-                                Request body: ${requestBuffer.readUtf8()}
+                                Request body: ${requestBuffer.readUtf8().takeUnless {
+                                it.toString().isBlank()
+                            } ?: "EMPTY"}
                                 Response body: ${response
                                     .peekBody(1 * 1024 * 1024)
                                     ?.string() ?: "EMPTY"}
@@ -34,7 +37,6 @@ internal class NetworkClientModule {
                                 Headers: ${response.headers().takeUnless {
                                 it.toString().isBlank()
                             } ?: "NONE"}
-                                Url: ${request.url().encodedPath()}
                                 """))
                         }
                     }
