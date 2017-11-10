@@ -12,6 +12,7 @@ import java.io.EOFException
 import java.io.IOException
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
+import java.util.zip.GZIPInputStream
 
 class OkHttpCrashReporterLoggingInterceptor(private val crashReporter: CrashReporter)
     : Interceptor {
@@ -67,8 +68,13 @@ class OkHttpCrashReporterLoggingInterceptor(private val crashReporter: CrashRepo
 
         if (!HttpHeaders.hasBody(response)) {
             message.append("<-- END HTTP\n")
-        } else if (bodyEncoded(response.headers())) {
-            message.append("<-- END HTTP (encoded body omitted)\n")
+        } else if (bodyEncoded(responseHeaders)) {
+            if (responseHeaders["Content-Encoding"].equals("gzip", ignoreCase = true)) {
+                GZIPInputStream(response.body()!!.byteStream()).bufferedReader(Charsets.UTF_8).use {
+                    it.readText()
+                }.let { message.append("$it\n") }
+            }
+            message.append("<-- END HTTP (gzip-encoded body decoded)\n")
         } else {
             response.body()!!.apply {
                 val source = source()
