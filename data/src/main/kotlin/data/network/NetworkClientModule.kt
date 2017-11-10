@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okio.Buffer
 import reporter.CrashReporter
+import tracker.TracedException
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -21,7 +22,7 @@ internal class NetworkClientModule {
                     chain.proceed(it).also {
                         it.newBuilder().build().let { copy ->
                             val buffer = Buffer().also { copy.request().body()?.writeTo(it) }
-                            crashReporter.report(IllegalMonitorStateException("""
+                            crashReporter.report(TrackedNetworkRequestTracedException("""
                                 Code: ${copy.code()}
                                 Method: ${copy.request().method()}
                                 Request body: ${buffer.readUtf8()}
@@ -42,3 +43,5 @@ internal class NetworkClientModule {
         const val TIMEOUT_SECONDS = 45L
     }
 }
+
+private class TrackedNetworkRequestTracedException(message: String) : TracedException(message)
