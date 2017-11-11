@@ -49,25 +49,27 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         }
     }
 
-    private fun likeRecommendations() = GetRecommendationsAction().apply {
-        ongoingActions += (this)
-        execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
-            override fun onRecommendationsReceived(
-                    recommendations: List<DomainRecommendationUser>) {
-                if (recommendations.isEmpty()) {
-                    scheduleBecauseError()
-                } else {
-                    likeRecommendation(
-                            recommendations.first(),
-                            recommendations.subList(fromIndex = 1, toIndex = recommendations.size))
+    private fun likeRecommendations() = Unit.also {
+        GetRecommendationsAction().apply {
+            ongoingActions += (this)
+            execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
+                override fun onRecommendationsReceived(
+                        recommendations: List<DomainRecommendationUser>) {
+                    if (recommendations.isEmpty()) {
+                        scheduleBecauseError()
+                    } else {
+                        likeRecommendation(
+                                recommendations.first(),
+                                recommendations.subList(fromIndex = 1, toIndex = recommendations.size))
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 
     private fun likeRecommendation(
             recommendation: DomainRecommendationUser,
-            remaining: List<DomainRecommendationUser>) {
+            remaining: List<DomainRecommendationUser>): Unit = Unit.also {
         LikeRecommendationAction(recommendation).apply {
             ongoingActions += (this)
             execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
