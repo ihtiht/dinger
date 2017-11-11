@@ -1,6 +1,5 @@
 package reporter
 
-import android.util.Log
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Protocol
