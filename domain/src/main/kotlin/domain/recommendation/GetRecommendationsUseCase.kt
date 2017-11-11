@@ -6,8 +6,8 @@ import io.reactivex.Single
 
 class GetRecommendationsUseCase(
         postExecutionScheduler: Scheduler)
-    : SingleDisposableUseCase<Collection<DomainRecommendationUser>>(
+    : SingleDisposableUseCase<List<DomainRecommendationUser>>(
         postExecutionScheduler = postExecutionScheduler) {
-    override fun buildUseCase(): Single<Collection<DomainRecommendationUser>> =
+    override fun buildUseCase() =
             GetRecommendationHolder.getRecommendationProvider.getRecommendations()
 }

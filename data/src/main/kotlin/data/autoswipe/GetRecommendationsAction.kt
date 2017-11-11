@@ -14,8 +14,8 @@ internal class GetRecommendationsAction
             GetRecommendationsUseCase(Schedulers.trampoline()).let {
                 useCaseDelegate = it
                 it.execute(object
-                    : DisposableSingleObserver<Collection<DomainRecommendationUser>>() {
-                    override fun onSuccess(payload: Collection<DomainRecommendationUser>) {
+                    : DisposableSingleObserver<List<DomainRecommendationUser>>() {
+                    override fun onSuccess(payload: List<DomainRecommendationUser>) {
                         commonDelegate.onComplete(owner)
                         callback.onRecommendationsReceived(payload)
                     }
@@ -29,6 +29,6 @@ internal class GetRecommendationsAction
     }
 
     interface Callback {
-        fun onRecommendationsReceived(recommendations: Collection<DomainRecommendationUser>)
+        fun onRecommendationsReceived(recommendations: List<DomainRecommendationUser>)
     }
 }

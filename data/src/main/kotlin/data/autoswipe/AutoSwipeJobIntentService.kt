@@ -53,31 +53,43 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         ongoingActions += (this)
         execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
             override fun onRecommendationsReceived(
-                    recommendations: Collection<DomainRecommendationUser>) {
+                    recommendations: List<DomainRecommendationUser>) {
                 if (recommendations.isEmpty()) {
                     scheduleBecauseError()
                 } else {
-                    recommendations.forEach { likeRecommendation(it) }
-                    scheduleBecauseMoreAvailable()
+                    likeRecommendation(
+                            recommendations.first(),
+                            recommendations.subList(fromIndex = 1, toIndex = recommendations.size))
                 }
             }
         })
     }
 
-    private fun likeRecommendation(recommendation: DomainRecommendationUser) =
-            LikeRecommendationAction(recommendation).apply {
-                ongoingActions += (this)
-                execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
-                    override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) =
-                            saveRecommendationToDatabase(
-                                    recommendation, liked = true, matched = answer.matched)
+    private fun likeRecommendation(
+            recommendation: DomainRecommendationUser,
+            remaining: List<DomainRecommendationUser>) {
+        LikeRecommendationAction(recommendation).apply {
+            ongoingActions += (this)
+            execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
+                override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) =
+                        saveRecommendationToDatabase(
+                                recommendation, liked = true, matched = answer.matched).also {
+                            if (remaining.isEmpty()) {
+                                scheduleBecauseMoreAvailable()
+                            } else {
+                                likeRecommendation(
+                                        remaining.first(),
+                                        remaining.subList(fromIndex = 1, toIndex = remaining.size))
+                            }
+                        }
 
-                    override fun onRecommendationLikeFailed() {
-                        saveRecommendationToDatabase(recommendation, liked = false, matched = false)
-                        scheduleBecauseLimited()
-                    }
-                })
-            }
+                override fun onRecommendationLikeFailed() {
+                    saveRecommendationToDatabase(recommendation, liked = false, matched = false)
+                    scheduleBecauseLimited()
+                }
+            })
+        }
+    }
 
     private fun saveRecommendationToDatabase(
             recommendation: DomainRecommendationUser, liked: Boolean, matched: Boolean) {
