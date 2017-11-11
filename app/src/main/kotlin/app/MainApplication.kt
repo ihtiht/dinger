@@ -6,6 +6,7 @@ import app.di.ApplicationComponent
 import app.di.DaggerApplicationComponent
 import app.splash.SplashEventTracker
 import app.splash.UserEmailPropertySetterCoordinator
+import hu.akarnokd.rxjava2.debug.RxJavaAssemblyTracking
 import org.stoyicker.dinger.R
 import tracker.EventTrackers
 
@@ -18,6 +19,7 @@ internal open class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         trackAccountName()
+        enableRxJavaAssemblyTracking()
     }
 
     private fun trackAccountName() =
@@ -28,4 +30,6 @@ internal open class MainApplication : Application() {
                 SplashEventTracker(this, EventTrackers.firebase())
                         .setUserProvidedAccount(it)
             }
+
+    private fun enableRxJavaAssemblyTracking() = RxJavaAssemblyTracking.enable()
 }
