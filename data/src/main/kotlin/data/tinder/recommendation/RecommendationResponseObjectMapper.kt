@@ -23,8 +23,8 @@ internal class RecommendationResponseObjectMapper(
         private val jobDelegate: ObjectMapper<RecommendationUserJob, DomainRecommendationJob>,
         private val schoolDelegate: ObjectMapper<RecommendationUserSchool,
                 DomainRecommendationSchool>)
-    : ObjectMapper<RecommendationResponse, Collection<DomainRecommendationUser>> {
-    override fun from(source: RecommendationResponse): Collection<DomainRecommendationUser> =
+    : ObjectMapper<RecommendationResponse, List<DomainRecommendationUser>> {
+    override fun from(source: RecommendationResponse): List<DomainRecommendationUser> =
             source.let {
                 eventTracker.track(it)
                 return it.recommendations.let {
@@ -37,7 +37,7 @@ internal class RecommendationResponseObjectMapper(
                         }
                         else -> it.mapNotNull { transformRecommendation(it) }
                     }
-                }.toHashSet()
+                }
             }
 
     private fun transformRecommendation(source: Recommendation) = when (source.type) {

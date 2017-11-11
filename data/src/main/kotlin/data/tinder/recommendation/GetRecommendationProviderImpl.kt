@@ -8,6 +8,6 @@ import reporter.CrashReporter
 internal class GetRecommendationProviderImpl(
         private val getRecommendationFacade: GetRecommendationFacade,
         private val crashReporter: CrashReporter) : GetRecommendationProvider {
-    override fun getRecommendations(): Single<Collection<DomainRecommendationUser>> =
+    override fun getRecommendations(): Single<List<DomainRecommendationUser>> =
             getRecommendationFacade.fetch(Unit).doOnError { crashReporter.report(it) }
 }
