@@ -13,7 +13,7 @@ android {
         minSdkVersion rootProject.ext.androidMinSdkVersion
         targetSdkVersion rootProject.ext.androidTargetSdkVersion
         buildConfigField "String", "PLATFORM_ANDROID", "\"android\""
-        buildConfigField "String", "TINDER_VERSION_NAME", "\"7.6.0\""
+        buildConfigField "String", "TINDER_VERSION_NAME", "\"8.1.1\""
         buildConfigField "String", "TINDER_API_LOCALE", "\"en\""
         javaCompileOptions {
             annotationProcessorOptions {
