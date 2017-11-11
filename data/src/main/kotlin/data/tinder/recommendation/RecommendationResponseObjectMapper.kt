@@ -40,39 +40,32 @@ internal class RecommendationResponseObjectMapper(
                 }
             }
 
-    private fun transformRecommendation(source: Recommendation) = when (source.type) {
-        "user" -> source.user.let {
-            DomainRecommendationUser(
-                    distanceMiles = it.distanceMiles,
-                    commonConnections = it.commonConnections.map {
-                        commonConnectionDelegate.from(it)
-                    },
-                    connectionCount = it.connectionCount,
-                    id = it.id,
-                    birthDate = it.birthDate,
-                    name = it.name,
-                    instagram = instagramDelegate.from(it.instagram),
-                    teaser = teaserDelegate.from(it.teaser),
-                    spotifyThemeTrack = spotifyThemeTrackDelegate.from(it.spotifyThemeTrack),
-                    gender = it.gender,
-                    birthDateInfo = it.birthDateInfo,
-                    contentHash = it.contentHash,
-                    groupMatched = it.groupMatched,
-                    pingTime = it.pingTime,
-                    sNumber = it.sNumber,
-                    commonInterests = it.commonInterests.map {
-                        commonInterestDelegate.from(it)
-                    },
-                    photos = it.photos.map { photoDelegate.from(it) },
-                    jobs = it.jobs.map { jobDelegate.from(it) },
-                    schools = it.schools.map { schoolDelegate.from(it) },
-                    teasers = it.teasers.map { teaserDelegate.from(it) })
-        }
-        else -> {
-            crashReporter.report(IllegalStateException(
-                    "Unexpected recommendation type ${source.type}"))
-            null
-        }
+    private fun transformRecommendation(source: Recommendation) = source.user.let {
+        DomainRecommendationUser(
+                distanceMiles = it.distanceMiles,
+                commonConnections = it.commonConnections.map {
+                    commonConnectionDelegate.from(it)
+                },
+                connectionCount = it.connectionCount,
+                id = it.id,
+                birthDate = it.birthDate,
+                name = it.name,
+                instagram = instagramDelegate.from(it.instagram),
+                teaser = teaserDelegate.from(it.teaser),
+                spotifyThemeTrack = spotifyThemeTrackDelegate.from(it.spotifyThemeTrack),
+                gender = it.gender,
+                birthDateInfo = it.birthDateInfo,
+                contentHash = it.contentHash,
+                groupMatched = it.groupMatched,
+                pingTime = it.pingTime,
+                sNumber = it.sNumber,
+                commonInterests = it.commonInterests.map {
+                    commonInterestDelegate.from(it)
+                },
+                photos = it.photos.map { photoDelegate.from(it) },
+                jobs = it.jobs.map { jobDelegate.from(it) },
+                schools = it.schools.map { schoolDelegate.from(it) },
+                teasers = it.teasers.map { teaserDelegate.from(it) })
     }
 }
 
