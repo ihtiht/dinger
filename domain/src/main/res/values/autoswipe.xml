@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="sweep_immediate_delay_ms">360000</integer> <!-- 1000 * 60 * 60 = 1h -->
+    <integer name="sweep_immediate_delay_ms">0</integer>
     <integer name="sweep_delayed_delay_ms">45000000</integer> <!-- 1000 * 60 * 60 * 12.5 = 12.5h -->
-    <integer name="sweep_from_error_delay_ms">2160000</integer> <!-- 1000 * 60 * 60 * 6 = 6h -->
+    <integer name="sweep_from_error_delay_ms">360000</integer> <!-- 1000 * 60 * 60 = 1h -->
 </resources>
