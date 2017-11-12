@@ -40,32 +40,31 @@ internal class RecommendationResponseObjectMapper(
                 }
             }
 
-    private fun transformRecommendation(source: Recommendation) = source.let {
-        DomainRecommendationUser(
-                distanceMiles = it.distanceMiles,
-                commonConnections = it.commonConnections.map {
-                    commonConnectionDelegate.from(it)
-                },
-                connectionCount = it.connectionCount,
-                id = it.id,
-                birthDate = it.birthDate,
-                name = it.name,
-                instagram = instagramDelegate.from(it.instagram),
-                teaser = teaserDelegate.from(it.teaser),
-                spotifyThemeTrack = spotifyThemeTrackDelegate.from(it.spotifyThemeTrack),
-                gender = it.gender,
-                birthDateInfo = it.birthDateInfo,
-                contentHash = it.contentHash,
-                groupMatched = it.groupMatched,
-                pingTime = it.pingTime,
-                sNumber = it.sNumber,
-                commonInterests = it.commonInterests.map {
-                    commonInterestDelegate.from(it)
-                },
-                photos = it.photos.map { photoDelegate.from(it) },
-                jobs = it.jobs.map { jobDelegate.from(it) },
-                schools = it.schools.map { schoolDelegate.from(it) },
-                teasers = it.teasers.map { teaserDelegate.from(it) })
+    private fun transformRecommendation(source: Recommendation) = DomainRecommendationUser(
+            distanceMiles = source.distanceMiles,
+            commonConnections = source.commonConnections.map {
+                commonConnectionDelegate.from(it)
+            },
+            connectionCount = source.connectionCount,
+            id = source.id,
+            birthDate = source.birthDate,
+            name = source.name,
+            instagram = instagramDelegate.from(source.instagram),
+            teaser = teaserDelegate.from(source.teaser),
+            spotifyThemeTrack = spotifyThemeTrackDelegate.from(source.spotifyThemeTrack),
+            gender = source.gender,
+            birthDateInfo = source.birthDateInfo,
+            contentHash = source.contentHash,
+            groupMatched = source.groupMatched,
+            pingTime = source.pingTime,
+            sNumber = source.sNumber,
+            commonInterests = source.commonInterests.map {
+                commonInterestDelegate.from(it)
+            },
+            photos = source.photos.map { photoDelegate.from(it) },
+            jobs = source.jobs.map { jobDelegate.from(it) },
+            schools = source.schools.map { schoolDelegate.from(it) },
+            teasers = source.teasers.map { teaserDelegate.from(it) })
     }
 }
 
