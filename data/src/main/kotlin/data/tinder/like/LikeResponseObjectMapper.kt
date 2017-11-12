@@ -7,6 +7,6 @@ internal class LikeResponseObjectMapper(private val eventTracker: LikeEventTrack
     : ObjectMapper<LikeResponse, DomainLikedRecommendationAnswer> {
     override fun from(source: LikeResponse) = source.let {
         eventTracker.track(it)
-        DomainLikedRecommendationAnswer(it.match)
+        DomainLikedRecommendationAnswer(it.match, it.rateLimitedUntil)
     }
 }

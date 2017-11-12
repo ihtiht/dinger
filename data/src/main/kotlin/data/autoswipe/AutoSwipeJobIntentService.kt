@@ -81,10 +81,12 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) =
                         saveRecommendationToDatabase(
                                 recommendation, liked = true, matched = answer.matched).also {
-                            if (remaining.isEmpty()) {
-                                scheduleBecauseMoreAvailable()
-                            } else {
-                                likeRecommendation(
+                            when {
+                                answer.rateLimitedUntilMillis != null -> {
+                                    scheduleBecauseLimited() // TODO Schedule exact
+                                }
+                                remaining.isEmpty() -> scheduleBecauseMoreAvailable()
+                                else -> likeRecommendation(
                                         remaining.first(),
                                         remaining.subList(fromIndex = 1, toIndex = remaining.size))
                             }
@@ -92,7 +94,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
 
                 override fun onRecommendationLikeFailed() {
                     saveRecommendationToDatabase(recommendation, liked = false, matched = false)
-                    scheduleBecauseLimited()
+                    scheduleBecauseError()
                 }
             })
         }
