@@ -1,17 +1,19 @@
 package data.tinder.recommendation
 
 import com.squareup.moshi.Json
-import java.util.Date
+import java.util.*
 
 internal class Recommendation private constructor(
         @field:Json(name = "distance_mi")
         val distanceMiles: Int,
-        @field:Json(name = "common_connections")
-        val commonConnections: Set<RecommendationUserCommonConnection>,
-        @field:Json(name = "connection_count")
-        val connectionCount: Int,
-        @field:Json(name = "common_interests")
-        val commonInterests: Array<RecommendationInterest>,
+        @field:Json(name = "common_friends")
+        val commonFriends: Set<RecommendationUserCommonFriend>,
+        @field:Json(name = "common_friend_count")
+        val commonFriendCount: Int,
+        @field:Json(name = "common_likes")
+        val commonLikes: Array<RecommendationLike>,
+        @field:Json(name = "common_like_count")
+        val commonLikeCount: Int,
         @field:Json(name = "content_hash")
         val contentHash: String,
         @field:Json(name = "_id")

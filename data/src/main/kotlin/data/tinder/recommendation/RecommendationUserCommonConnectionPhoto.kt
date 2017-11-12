@@ -2,7 +2,7 @@ package data.tinder.recommendation
 
 import com.squareup.moshi.Json
 
-internal class RecommendationUserCommonConnectionPhoto(
+internal class RecommendationUserCommonFriendPhoto(
         @field:Json(name = "small")
         var small: String,
         @field:Json(name = "medium")

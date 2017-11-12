@@ -5,7 +5,7 @@ import android.arch.persistence.room.Index
 
 @Entity(indices = arrayOf(Index("recommendationUserEntityId")),
         primaryKeys = arrayOf("recommendationUserEntityId",
-                "recommendationUserCommonConnectionEntityId"))
-internal class RecommendationUserEntity_RecommendationUserCommonConnectionEntity(
+                "recommendationUserCommonFriendEntityId"))
+internal class RecommendationUserEntity_RecommendationUserCommonFriendEntity(
     var recommendationUserEntityId: String,
-    var recommendationUserCommonConnectionEntityId: String)
+    var recommendationUserCommonFriendEntityId: String)

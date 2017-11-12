@@ -24,7 +24,7 @@ import java.util.Date
                         childColumns = arrayOf("spotifyThemeTrack"))))
 internal open class RecommendationUserEntity(
         var distanceMiles: Int,
-        var connectionCount: Int,
+        var friendCount: Int,
         var contentHash: String,
         @PrimaryKey
         var id: String,
@@ -45,7 +45,7 @@ internal open class RecommendationUserEntity(
     companion object {
         val NONE = RecommendationUserEntity(
                 distanceMiles = 0,
-                connectionCount = 0,
+                friendCount = 0,
                 contentHash = "",
                 id = "",
                 birthDate = Date(),

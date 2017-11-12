@@ -6,11 +6,11 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 
 @Dao
-internal interface RecommendationUserCommonConnectionDao {
+internal interface RecommendationUserCommonFriendDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCommonConnection(commonConnection: RecommendationUserCommonConnectionEntity)
+    fun insertCommonFriend(commonFriend: RecommendationUserCommonFriendEntity)
 
-    @Query("SELECT * from RecommendationUserCommonConnectionEntity WHERE id=:id")
-    fun selectCommonConnectionById(id: String)
-            : List<RecommendationUserCommonConnectionWithRelatives>
+    @Query("SELECT * from RecommendationUserCommonFriendEntity WHERE id=:id")
+    fun selectCommonFriendById(id: String)
+            : List<RecommendationUserCommonFriendWithRelatives>
 }

@@ -3,9 +3,9 @@ package data.tinder.recommendation
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 
-@Entity(indices = arrayOf(Index("recommendationUserCommonConnectionEntityId")),
-        primaryKeys = arrayOf("recommendationUserCommonConnectionEntityId",
-                "recommendationUserCommonConnectionPhotoEntitySmall"))
-internal class RecommendationUserCommonConnectionEntity_PhotoEntity(
-    var recommendationUserCommonConnectionEntityId: String,
-    var recommendationUserCommonConnectionPhotoEntitySmall: String)
+@Entity(indices = arrayOf(Index("recommendationUserCommonFriendEntityId")),
+        primaryKeys = arrayOf("recommendationUserCommonFriendEntityId",
+                "recommendationUserCommonFriendPhotoEntitySmall"))
+internal class RecommendationUserCommonFriendEntity_PhotoEntity(
+    var recommendationUserCommonFriendEntityId: String,
+    var recommendationUserCommonFriendPhotoEntitySmall: String)

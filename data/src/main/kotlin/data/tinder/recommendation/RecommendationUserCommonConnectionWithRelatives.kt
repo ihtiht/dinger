@@ -3,13 +3,13 @@ package data.tinder.recommendation
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Relation
 
-internal class RecommendationUserCommonConnectionWithRelatives(
+internal class RecommendationUserCommonFriendWithRelatives(
         @Embedded
-        var recommendationUserCommonConnection: RecommendationUserCommonConnectionEntity,
+        var recommendationUserCommonFriend: RecommendationUserCommonFriendEntity,
         @Relation(parentColumn = "id",
-                entityColumn = "recommendationUserCommonConnectionEntityId",
-                entity = RecommendationUserCommonConnectionEntity_PhotoEntity::class,
-                projection = arrayOf("recommendationUserCommonConnectionPhotoEntitySmall"))
+                entityColumn = "recommendationUserCommonFriendEntityId",
+                entity = RecommendationUserCommonFriendEntity_PhotoEntity::class,
+                projection = arrayOf("recommendationUserCommonFriendPhotoEntitySmall"))
         var photos: Set<String>) {
-    constructor() : this(RecommendationUserCommonConnectionEntity.NONE, emptySet())
+    constructor() : this(RecommendationUserCommonFriendEntity.NONE, emptySet())
 }

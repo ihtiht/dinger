@@ -5,12 +5,12 @@ import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(indices = arrayOf(Index("id")))
-internal open class RecommendationUserCommonConnectionEntity(
+internal open class RecommendationUserCommonFriendEntity(
         @PrimaryKey
         var id: String,
         var name: String,
         var degree: String) {
     companion object {
-        val NONE = RecommendationUserCommonConnectionEntity(id = "", name = "", degree = "")
+        val NONE = RecommendationUserCommonFriendEntity(id = "", name = "", degree = "")
     }
 }

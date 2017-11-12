@@ -8,9 +8,9 @@ import reporter.CrashReporter
 
 internal class RecommendationUserResolver(
         private val userDao: RecommendationUserDao,
-        private val commonConnectionDaoDelegate: RecommendationCommonConnectionDaoDelegate,
+        private val commonFriendDaoDelegate: RecommendationCommonFriendDaoDelegate,
         private val instagramDaoDelegate: RecommendationInstagramDaoDelegate,
-        private val interestDaoDelegate: RecommendationInterestDaoDelegate,
+        private val likeDaoDelegate: RecommendationLikeDaoDelegate,
         private val photoDaoDelegate: RecommendationPhotoDaoDelegate,
         private val jobDaoDelegate: RecommendationJobDaoDelegate,
         private val schoolDaoDelegate: RecommendationSchoolDaoDelegate,
@@ -23,15 +23,15 @@ internal class RecommendationUserResolver(
                     instagramDaoDelegate.insertResolved(instagram)
                     teaserDaoDelegate.insertResolved(teaser)
                     spotifyThemeTrackDaoDelegate.insertResolved(spotifyThemeTrack)
-                    commonConnectionDaoDelegate.insertResolvedForUserId(id, commonConnections)
-                    interestDaoDelegate.insertResolvedForUserId(id, commonInterests)
+                    commonFriendDaoDelegate.insertResolvedForUserId(id, commonFriends)
+                    likeDaoDelegate.insertResolvedForUserId(id, commonLikes)
                     photoDaoDelegate.insertResolvedForUserId(id, photos)
                     jobDaoDelegate.insertResolvedForUserId(id, jobs)
                     schoolDaoDelegate.insertResolvedForUserId(id, schools)
                     teaserDaoDelegate.insertResolvedForUserId(id, teasers)
                     userDao.insertUser(RecommendationUserEntity(
                             distanceMiles = distanceMiles,
-                            connectionCount = connectionCount,
+                            friendCount = friendCount,
                             contentHash = contentHash,
                             id = id,
                             birthDate = birthDate,
@@ -59,9 +59,9 @@ internal class RecommendationUserResolver(
             Transformations.map(userDao.selectUsersByFilterOnName(filter)) { it.map { from(it) } }
 
     private fun from(source: RecommendationUserWithRelatives): DomainRecommendationUser {
-        val commonConnections =
-                commonConnectionDaoDelegate.collectByPrimaryKeys(source.commonConnections)
-        val commonInterests = interestDaoDelegate.collectByPrimaryKeys(source.commonInterests)
+        val commonFriends =
+                commonFriendDaoDelegate.collectByPrimaryKeys(source.commonFriends)
+        val commonLikes = likeDaoDelegate.collectByPrimaryKeys(source.commonLikes)
         val photos = photoDaoDelegate.collectByPrimaryKeys(source.photos)
         val jobs = jobDaoDelegate.collectByPrimaryKeys(source.jobs)
         val schools = schoolDaoDelegate.collectByPrimaryKeys(source.schools)
@@ -69,8 +69,8 @@ internal class RecommendationUserResolver(
         source.recommendationUserEntity.let {
             return DomainRecommendationUser(
                     distanceMiles = it.distanceMiles,
-                    commonConnections = commonConnections,
-                    connectionCount = it.connectionCount,
+                    commonFriends = commonFriends,
+                    friendCount = it.friendCount,
                     contentHash = it.contentHash,
                     id = it.id,
                     birthDate = it.birthDate,
@@ -86,7 +86,7 @@ internal class RecommendationUserResolver(
                     groupMatched = it.groupMatched,
                     liked = it.liked,
                     matched = it.matched,
-                    commonInterests = commonInterests,
+                    commonLikes = commonLikes,
                     photos = photos,
                     jobs = jobs,
                     schools = schools,

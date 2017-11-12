@@ -21,7 +21,9 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         AutoSwipeComponentHolder.autoSwipeComponent.inject(this)
     }
 
-    override fun onHandleWork(intent: Intent) = Unit.also { likeRecommendations() }
+    override fun onHandleWork(intent: Intent) {
+        likeRecommendations()
+    }
 
     override fun onStopCurrentWork() = true.also { releaseResources() }
 
@@ -100,8 +102,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
             recommendation: DomainRecommendationUser, liked: Boolean, matched: Boolean) {
         recommendationResolver.insert(DomainRecommendationUser(
                 distanceMiles = recommendation.distanceMiles,
-                commonConnections = recommendation.commonConnections,
-                connectionCount = recommendation.connectionCount,
+                commonFriends = recommendation.commonFriends,
+                friendCount = recommendation.friendCount,
                 id = recommendation.id,
                 birthDate = recommendation.birthDate,
                 name = recommendation.name,
@@ -116,7 +118,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 sNumber = recommendation.sNumber,
                 liked = liked,
                 matched = matched,
-                commonInterests = recommendation.commonInterests,
+                commonLikes = recommendation.commonLikes,
                 photos = recommendation.photos,
                 jobs = recommendation.jobs,
                 schools = recommendation.schools,

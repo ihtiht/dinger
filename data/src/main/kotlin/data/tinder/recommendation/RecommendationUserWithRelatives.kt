@@ -7,13 +7,13 @@ internal class RecommendationUserWithRelatives(
         @Embedded
         var recommendationUserEntity: RecommendationUserEntity,
         @Relation(parentColumn = "id", entityColumn ="recommendationUserEntityId",
-                entity = RecommendationUserEntity_RecommendationUserCommonConnectionEntity::class,
-                projection = arrayOf("recommendationUserCommonConnectionEntityId"))
-        var commonConnections: Set<String>,
+                entity = RecommendationUserEntity_RecommendationUserCommonFriendEntity::class,
+                projection = arrayOf("recommendationUserCommonFriendEntityId"))
+        var commonFriends: Set<String>,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserEntityId",
-                entity = RecommendationUserEntity_RecommendationInterestEntity::class,
-                projection = arrayOf("recommendationInterestEntityId"))
-        var commonInterests: Set<String>,
+                entity = RecommendationUserEntity_RecommendationLikeEntity::class,
+                projection = arrayOf("recommendationLikeEntityId"))
+        var commonLikes: Set<String>,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserEntityId",
                 entity = RecommendationUserEntity_RecommendationUserPhotoEntity::class,
                 projection = arrayOf("recommendationUserPhotoEntityId"))
@@ -32,8 +32,8 @@ internal class RecommendationUserWithRelatives(
         var teasers: Set<String>) {
     constructor() : this(
             RecommendationUserEntity.NONE,
-            commonConnections = emptySet(),
-            commonInterests = emptySet(),
+            commonFriends = emptySet(),
+            commonLikes = emptySet(),
             photos = emptySet(),
             jobs = emptySet(),
             schools = emptySet(),

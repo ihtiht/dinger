@@ -14,13 +14,13 @@ internal class GetRecommendationFacadeModule {
 
     @Provides
     @Singleton
-    fun commonConnectionPhotoObjectMapper() = RecommendationUserCommonConnectionPhotoObjectMapper()
+    fun commonFriendPhotoObjectMapper() = RecommendationUserCommonFriendPhotoObjectMapper()
 
     @Provides
     @Singleton
-    fun commonConnectionObjectMapper(
-            photoDelegate: RecommendationUserCommonConnectionPhotoObjectMapper) =
-            RecommendationUserCommonConnectionObjectMapper(photoDelegate)
+    fun commonFriendObjectMapper(
+            photoDelegate: RecommendationUserCommonFriendPhotoObjectMapper) =
+            RecommendationUserCommonFriendObjectMapper(photoDelegate)
 
     @Provides
     @Singleton
@@ -59,7 +59,7 @@ internal class GetRecommendationFacadeModule {
 
     @Provides
     @Singleton
-    fun interestObjectMapper() = RecommendationInterestObjectMapper()
+    fun likeObjectMapper() = RecommendationLikeObjectMapper()
 
     @Provides
     @Singleton fun photoObjectMapper(
@@ -91,21 +91,21 @@ internal class GetRecommendationFacadeModule {
     @Singleton
     fun responseObjectMapper(
             eventTracker: RecommendationEventTracker,
-            commonConnectionDelegate: RecommendationUserCommonConnectionObjectMapper,
+            commonFriendDelegate: RecommendationUserCommonFriendObjectMapper,
             instagramDelegate: RecommendationInstagramObjectMapper,
             teaserDelegate: RecommendationTeaserObjectMapper,
             spotifyThemeTrackDelegate: RecommendationSpotifyThemeTrackObjectMapper,
-            commonInterestDelegate: RecommendationInterestObjectMapper,
+            commonLikeDelegate: RecommendationLikeObjectMapper,
             photoDelegate: RecommendationPhotoObjectMapper,
             jobDelegate: RecommendationJobObjectMapper,
             schoolDelegate: RecommendationSchoolObjectMapper) =
             RecommendationResponseObjectMapper(
                     eventTracker = eventTracker,
-                    commonConnectionDelegate = commonConnectionDelegate,
+                    commonFriendDelegate = commonFriendDelegate,
                     instagramDelegate = instagramDelegate,
                     teaserDelegate = teaserDelegate,
                     spotifyThemeTrackDelegate = spotifyThemeTrackDelegate,
-                    commonInterestDelegate = commonInterestDelegate,
+                    commonLikeDelegate = commonLikeDelegate,
                     photoDelegate = photoDelegate,
                     jobDelegate = jobDelegate,
                     schoolDelegate = schoolDelegate)

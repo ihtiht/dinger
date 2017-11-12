@@ -5,7 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 
 @Dao
-internal interface RecommendationUser_InterestDao {
+internal interface RecommendationUser_LikeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser_Interest(bond: RecommendationUserEntity_RecommendationInterestEntity)
+    fun insertUser_Like(bond: RecommendationUserEntity_RecommendationLikeEntity)
 }

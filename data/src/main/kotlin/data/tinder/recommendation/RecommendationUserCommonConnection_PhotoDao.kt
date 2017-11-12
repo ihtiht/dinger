@@ -5,7 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 
 @Dao
-internal interface RecommendationUserCommonConnection_PhotoDao {
+internal interface RecommendationUserCommonFriend_PhotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCommonConnection_Photo(bond: RecommendationUserCommonConnectionEntity_PhotoEntity)
+    fun insertCommonFriend_Photo(bond: RecommendationUserCommonFriendEntity_PhotoEntity)
 }

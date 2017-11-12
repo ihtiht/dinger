@@ -1,29 +1,29 @@
 package data.tinder.recommendation
 
 import data.database.CollectibleDaoDelegate
-import domain.recommendation.DomainRecommendationInterest
+import domain.recommendation.DomainRecommendationLike
 
-internal class RecommendationInterestDaoDelegate(
-        private val interestDao: RecommendationInterestDao,
-        private val userInterestDao: RecommendationUser_InterestDao)
-    : CollectibleDaoDelegate<String, DomainRecommendationInterest>() {
+internal class RecommendationLikeDaoDelegate(
+        private val likeDao: RecommendationLikeDao,
+        private val userLikeDao: RecommendationUser_LikeDao)
+    : CollectibleDaoDelegate<String, DomainRecommendationLike>() {
     override fun selectByPrimaryKey(primaryKey: String) =
-            interestDao.selectInterestById(primaryKey).firstOrNull()?.let {
-                return@let DomainRecommendationInterest(
+            likeDao.selectLikeById(primaryKey).firstOrNull()?.let {
+                return@let DomainRecommendationLike(
                         id = it.id,
                         name = it.name)
-            } ?: DomainRecommendationInterest.NONE
+            } ?: DomainRecommendationLike.NONE
 
-    override fun insertResolved(source: DomainRecommendationInterest) =
-            interestDao.insertInterest(RecommendationInterestEntity(
+    override fun insertResolved(source: DomainRecommendationLike) =
+            likeDao.insertLike(RecommendationLikeEntity(
                     id = source.id,
                     name = source.name))
 
     fun insertResolvedForUserId(
-            userId: String, interests: Iterable<DomainRecommendationInterest>) = interests.forEach {
+            userId: String, likes: Iterable<DomainRecommendationLike>) = likes.forEach {
                 insertResolved(it)
-                userInterestDao.insertUser_Interest(RecommendationUserEntity_RecommendationInterestEntity(
+                userLikeDao.insertUser_Like(RecommendationUserEntity_RecommendationLikeEntity(
                         recommendationUserEntityId = userId,
-                        recommendationInterestEntityId = it.id))
+                        recommendationLikeEntityId = it.id))
             }
 }

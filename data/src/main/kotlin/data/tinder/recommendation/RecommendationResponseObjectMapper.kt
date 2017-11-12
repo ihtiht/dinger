@@ -6,16 +6,16 @@ import domain.recommendation.*
 
 internal class RecommendationResponseObjectMapper(
         private val eventTracker: RecommendationEventTracker,
-        private val commonConnectionDelegate
-        : ObjectMapper<RecommendationUserCommonConnection, DomainRecommendationCommonConnection>,
+        private val commonFriendDelegate
+        : ObjectMapper<RecommendationUserCommonFriend, DomainRecommendationCommonFriend>,
         private val instagramDelegate
         : ObjectMapper<RecommendationUserInstagram?, DomainRecommendationInstagram?>,
         private val teaserDelegate
         : ObjectMapper<RecommendationUserTeaser, DomainRecommendationTeaser>,
         private val spotifyThemeTrackDelegate
         : ObjectMapper<RecommendationUserSpotifyThemeTrack?, DomainRecommendationSpotifyThemeTrack?>,
-        private val commonInterestDelegate
-        : ObjectMapper<RecommendationInterest, DomainRecommendationInterest>,
+        private val commonLikeDelegate
+        : ObjectMapper<RecommendationLike, DomainRecommendationLike>,
         private val photoDelegate
         : ObjectMapper<RecommendationUserPhoto, DomainRecommendationPhoto>,
         private val jobDelegate: ObjectMapper<RecommendationUserJob, DomainRecommendationJob>,
@@ -38,12 +38,13 @@ internal class RecommendationResponseObjectMapper(
                 }
             }
 
+
     private fun transformRecommendation(source: Recommendation) = DomainRecommendationUser(
             distanceMiles = source.distanceMiles,
-            commonConnections = source.commonConnections.map {
-                commonConnectionDelegate.from(it)
+            commonFriends = source.commonFriends.map {
+                commonFriendDelegate.from(it)
             },
-            connectionCount = source.connectionCount,
+            friendCount = source.commonFriendCount,
             id = source.id,
             birthDate = source.birthDate,
             name = source.name,
@@ -56,31 +57,31 @@ internal class RecommendationResponseObjectMapper(
             groupMatched = source.groupMatched,
             pingTime = source.pingTime,
             sNumber = source.sNumber,
-            commonInterests = source.commonInterests.map {
-                commonInterestDelegate.from(it)
+            commonLikes = source.commonLikes.map {
+                commonLikeDelegate.from(it)
             },
             photos = source.photos.map { photoDelegate.from(it) },
             jobs = source.jobs.map { jobDelegate.from(it) },
             schools = source.schools.map { schoolDelegate.from(it) },
             teasers = source.teasers.map { teaserDelegate.from(it) })
-    }
+}
 
-internal class RecommendationUserCommonConnectionObjectMapper(
-        private val commonConnectionPhotoDelegate
-        : ObjectMapper<RecommendationUserCommonConnectionPhoto, DomainRecommendationCommonConnectionPhoto>)
-    : ObjectMapper<RecommendationUserCommonConnection, DomainRecommendationCommonConnection> {
-    override fun from(source: RecommendationUserCommonConnection) =
-            DomainRecommendationCommonConnection(
+internal class RecommendationUserCommonFriendObjectMapper(
+        private val commonFriendPhotoDelegate
+        : ObjectMapper<RecommendationUserCommonFriendPhoto, DomainRecommendationCommonFriendPhoto>)
+    : ObjectMapper<RecommendationUserCommonFriend, DomainRecommendationCommonFriend> {
+    override fun from(source: RecommendationUserCommonFriend) =
+            DomainRecommendationCommonFriend(
                     id = source.id,
                     name = source.name,
                     degree = source.degree,
-                    photos = source.photos?.map { commonConnectionPhotoDelegate.from(it) })
+                    photos = source.photos?.map { commonFriendPhotoDelegate.from(it) })
 }
 
-internal class RecommendationUserCommonConnectionPhotoObjectMapper
-    : ObjectMapper<RecommendationUserCommonConnectionPhoto, DomainRecommendationCommonConnectionPhoto> {
-    override fun from(source: RecommendationUserCommonConnectionPhoto) =
-            DomainRecommendationCommonConnectionPhoto(
+internal class RecommendationUserCommonFriendPhotoObjectMapper
+    : ObjectMapper<RecommendationUserCommonFriendPhoto, DomainRecommendationCommonFriendPhoto> {
+    override fun from(source: RecommendationUserCommonFriendPhoto) =
+            DomainRecommendationCommonFriendPhoto(
                     small = source.small,
                     medium = source.medium,
                     large = source.large)
@@ -165,10 +166,10 @@ internal class RecommendationSpotifyThemeTrackArtistObjectMapper
             DomainRecommendationSpotifyArtist(id = source.id, name = source.name)
 }
 
-internal class RecommendationInterestObjectMapper
-    : ObjectMapper<RecommendationInterest, DomainRecommendationInterest> {
-    override fun from(source: RecommendationInterest) =
-            DomainRecommendationInterest(id = source.id, name = source.name)
+internal class RecommendationLikeObjectMapper
+    : ObjectMapper<RecommendationLike, DomainRecommendationLike> {
+    override fun from(source: RecommendationLike) =
+            DomainRecommendationLike(id = source.id, name = source.name)
 }
 
 internal class RecommendationPhotoObjectMapper(
@@ -178,8 +179,7 @@ internal class RecommendationPhotoObjectMapper(
     override fun from(source: RecommendationUserPhoto) = DomainRecommendationPhoto(
             id = source.id,
             url = source.url,
-            processedFiles = source.processedFiles.map { processedFileDelegate.from(it) }
-    )
+            processedFiles = source.processedFiles.map { processedFileDelegate.from(it) })
 }
 
 internal class RecommendationJobObjectMapper(

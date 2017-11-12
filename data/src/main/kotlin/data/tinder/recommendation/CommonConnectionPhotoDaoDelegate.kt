@@ -1,24 +1,24 @@
 package data.tinder.recommendation
 
 import data.database.CollectibleDaoDelegate
-import domain.recommendation.DomainRecommendationCommonConnectionPhoto
+import domain.recommendation.DomainRecommendationCommonFriendPhoto
 
-internal class CommonConnectionPhotoDaoDelegate(
-        private val photoDao: RecommendationUserCommonConnectionPhotoDao,
-        private val commonConnectionPhotoDao: RecommendationUserCommonConnection_PhotoDao)
-    : CollectibleDaoDelegate<String, DomainRecommendationCommonConnectionPhoto>() {
-    override fun insertResolved(source: DomainRecommendationCommonConnectionPhoto) =
-            photoDao.insertPhoto(RecommendationUserCommonConnectionPhotoEntity(
+internal class CommonFriendPhotoDaoDelegate(
+        private val photoDao: RecommendationUserCommonFriendPhotoDao,
+        private val commonFriendPhotoDao: RecommendationUserCommonFriend_PhotoDao)
+    : CollectibleDaoDelegate<String, DomainRecommendationCommonFriendPhoto>() {
+    override fun insertResolved(source: DomainRecommendationCommonFriendPhoto) =
+            photoDao.insertPhoto(RecommendationUserCommonFriendPhotoEntity(
                     small = source.small, medium = source.medium, large = source.large))
 
-    fun insertResolvedForCommonConnectionId(
-            commonConnectionId: String,
-            photos: Iterable<DomainRecommendationCommonConnectionPhoto>) = photos.forEach {
+    fun insertResolvedForCommonFriendId(
+            commonFriendId: String,
+            photos: Iterable<DomainRecommendationCommonFriendPhoto>) = photos.forEach {
                 insertResolved(it)
-                commonConnectionPhotoDao.insertCommonConnection_Photo(
-                        RecommendationUserCommonConnectionEntity_PhotoEntity(
-                                recommendationUserCommonConnectionEntityId = commonConnectionId,
-                                recommendationUserCommonConnectionPhotoEntitySmall = it.small))
+                commonFriendPhotoDao.insertCommonFriend_Photo(
+                        RecommendationUserCommonFriendEntity_PhotoEntity(
+                                recommendationUserCommonFriendEntityId = commonFriendId,
+                                recommendationUserCommonFriendPhotoEntitySmall = it.small))
             }
 }
 

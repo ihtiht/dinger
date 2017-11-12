@@ -4,8 +4,8 @@ import java.util.Date
 
 data class DomainRecommendationUser(
         val distanceMiles: Int,
-        val commonConnections: Iterable<DomainRecommendationCommonConnection>,
-        val connectionCount: Int,
+        val commonFriends: Iterable<DomainRecommendationCommonFriend>,
+        val friendCount: Int,
         val id: String,
         val birthDate: Date,
         val name: String,
@@ -20,7 +20,7 @@ data class DomainRecommendationUser(
         val sNumber: Int,
         val liked: Boolean = false, // Recommendations are not liked by default
         var matched: Boolean = false, // Nor matched by default
-        val commonInterests: Iterable<DomainRecommendationInterest>,
+        val commonLikes: Iterable<DomainRecommendationLike>,
         val photos: Iterable<DomainRecommendationPhoto>,
         val jobs: Iterable<DomainRecommendationJob>,
         val schools: Iterable<DomainRecommendationSchool>,

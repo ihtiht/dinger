@@ -95,7 +95,7 @@ class OkHttpCrashReporterLoggingInterceptor(private val crashReporter: CrashRepo
                 message.append("<-- END HTTP (${buffer.size()}-byte body)\n")
             }
         }
-        crashReporter.report(TrackedNetworkRequestTracedException(message.toString()))
+//        crashReporter.report(TrackedNetworkRequestTracedException(message.toString()))
         return response
     }
 

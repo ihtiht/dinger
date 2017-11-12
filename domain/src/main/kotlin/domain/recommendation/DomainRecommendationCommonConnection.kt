@@ -1,12 +1,12 @@
 package domain.recommendation
 
-data class DomainRecommendationCommonConnection(
+data class DomainRecommendationCommonFriend(
         val id: String,
         val name: String,
         val degree: String,
-        val photos: Iterable<DomainRecommendationCommonConnectionPhoto>?) {
+        val photos: Iterable<DomainRecommendationCommonFriendPhoto>?) {
     companion object {
-        val NONE = DomainRecommendationCommonConnection(
+        val NONE = DomainRecommendationCommonFriend(
                 id = "",
                 name = "",
                 degree = "",

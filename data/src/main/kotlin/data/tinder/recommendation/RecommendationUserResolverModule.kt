@@ -16,30 +16,30 @@ internal class RecommendationUserResolverModule {
 
     @Provides
     @Singleton
-    fun commonConnectionDao(appDatabase: AppDatabase) =
-            appDatabase.recommendationUserCommonConnectionDao()
+    fun commonFriendDao(appDatabase: AppDatabase) =
+            appDatabase.recommendationUserCommonFriendDao()
 
     @Provides
     @Singleton
-    fun user_CommonConnectionDao(appDatabase: AppDatabase) =
-            appDatabase.recommendationUser_RecommendationUserCommonConnectionDao()
+    fun user_CommonFriendDao(appDatabase: AppDatabase) =
+            appDatabase.recommendationUser_RecommendationUserCommonFriendDao()
 
     @Provides
     @Singleton
-    fun commonConnectionPhotoDao(appDatabase: AppDatabase) =
-            appDatabase.recommendationUserCommonConnectionPhotoDao()
+    fun commonFriendPhotoDao(appDatabase: AppDatabase) =
+            appDatabase.recommendationUserCommonFriendPhotoDao()
 
     @Provides
     @Singleton
-    fun commonConnection_PhotoDao(appDatabase: AppDatabase) =
-            appDatabase.recommendationUserCommonConnection_PhotoDao()
+    fun commonFriend_PhotoDao(appDatabase: AppDatabase) =
+            appDatabase.recommendationUserCommonFriend_PhotoDao()
 
     @Provides
     @Singleton
-    fun commonConnectionPhotoDaoDelegate(
-            photoDao: RecommendationUserCommonConnectionPhotoDao,
-            commonConnection_PhotoDao: RecommendationUserCommonConnection_PhotoDao) =
-            CommonConnectionPhotoDaoDelegate(photoDao, commonConnection_PhotoDao)
+    fun commonFriendPhotoDaoDelegate(
+            photoDao: RecommendationUserCommonFriendPhotoDao,
+            commonFriend_PhotoDao: RecommendationUserCommonFriend_PhotoDao) =
+            CommonFriendPhotoDaoDelegate(photoDao, commonFriend_PhotoDao)
 
     @Provides
     fun instagramDao(appDatabase: AppDatabase) = appDatabase.recommendationUserInstagramDao()
@@ -70,31 +70,31 @@ internal class RecommendationUserResolverModule {
 
     @Provides
     @Singleton
-    fun commonConnectionDaoDelegate(
-            commonConnectionDao: RecommendationUserCommonConnectionDao,
-            user_CommonConnectionDao: RecommendationUser_RecommendationUserCommonConnectionDao,
-            commonConnectionPhotoDaoDelegate: CommonConnectionPhotoDaoDelegate) =
-            RecommendationCommonConnectionDaoDelegate(
-                    commonConnectionDao,
-                    user_CommonConnectionDao,
-                    commonConnectionPhotoDaoDelegate)
+    fun commonFriendDaoDelegate(
+            commonFriendDao: RecommendationUserCommonFriendDao,
+            user_CommonFriendDao: RecommendationUser_RecommendationUserCommonFriendDao,
+            commonFriendPhotoDaoDelegate: CommonFriendPhotoDaoDelegate) =
+            RecommendationCommonFriendDaoDelegate(
+                    commonFriendDao,
+                    user_CommonFriendDao,
+                    commonFriendPhotoDaoDelegate)
 
     @Provides
     @Singleton
-    fun interestDao(appDatabase: AppDatabase) = appDatabase.recommendationInterestDao()
+    fun likeDao(appDatabase: AppDatabase) = appDatabase.recommendationLikeDao()
 
     @Provides
     @Singleton
-    fun user_InterestDao(appDatabase: AppDatabase) = appDatabase.recommendationUser_InterestDao()
+    fun user_LikeDao(appDatabase: AppDatabase) = appDatabase.recommendationUser_LikeDao()
 
     @Provides
     @Singleton
-    fun interestDaoDelegate(
-            interestDao: RecommendationInterestDao,
-            user_InterestDao: RecommendationUser_InterestDao) =
-            RecommendationInterestDaoDelegate(
-                    interestDao,
-                    user_InterestDao)
+    fun likeDaoDelegate(
+            likeDao: RecommendationLikeDao,
+            user_LikeDao: RecommendationUser_LikeDao) =
+            RecommendationLikeDaoDelegate(
+                    likeDao,
+                    user_LikeDao)
 
     @Provides
     @Singleton
@@ -238,9 +238,9 @@ internal class RecommendationUserResolverModule {
     @Singleton
     fun recommendationUserResolver(
             userDao: RecommendationUserDao,
-            commonConnectionDaoDelegate: RecommendationCommonConnectionDaoDelegate,
+            commonFriendDaoDelegate: RecommendationCommonFriendDaoDelegate,
             instagramDaoDelegate: RecommendationInstagramDaoDelegate,
-            interestDaoDelegate: RecommendationInterestDaoDelegate,
+            likeDaoDelegate: RecommendationLikeDaoDelegate,
             photoDaoDelegate: RecommendationPhotoDaoDelegate,
             jobDaoDelegate: RecommendationJobDaoDelegate,
             schoolDaoDelegate: RecommendationSchoolDaoDelegate,
@@ -249,9 +249,9 @@ internal class RecommendationUserResolverModule {
             crashReporter: CrashReporter) =
             RecommendationUserResolver(
                     userDao,
-                    commonConnectionDaoDelegate,
+                    commonFriendDaoDelegate,
                     instagramDaoDelegate,
-                    interestDaoDelegate,
+                    likeDaoDelegate,
                     photoDaoDelegate,
                     jobDaoDelegate,
                     schoolDaoDelegate,

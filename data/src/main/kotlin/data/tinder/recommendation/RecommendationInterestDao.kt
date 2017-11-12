@@ -6,10 +6,10 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 
 @Dao
-internal interface RecommendationInterestDao {
+internal interface RecommendationLikeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertInterest(interest: RecommendationInterestEntity)
+    fun insertLike(like: RecommendationLikeEntity)
 
-    @Query("SELECT * from RecommendationInterestEntity WHERE id=:id")
-    fun selectInterestById(id: String): List<RecommendationInterestEntity>
+    @Query("SELECT * from RecommendationLikeEntity WHERE id=:id")
+    fun selectLikeById(id: String): List<RecommendationLikeEntity>
 }

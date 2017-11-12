@@ -1,6 +1,6 @@
 package domain.recommendation
 
-data class DomainRecommendationCommonConnectionPhoto(
+data class DomainRecommendationCommonFriendPhoto(
         val small: String,
         val medium: String,
         val large: String)
