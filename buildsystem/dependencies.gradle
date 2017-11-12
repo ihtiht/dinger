@@ -10,7 +10,6 @@ final def okHttp3Version = "3.8.0"
 final def retrofitVersion = "2.3.0"
 final def rxAndroid2Version = "2.0.1"
 final def rxJava2Version = "2.1.6"
-final def rxJava2ExtensionsVersion = "0.17.9"
 final def storeVersion = "3.0.0-beta"
 
 ext {
@@ -24,7 +23,6 @@ ext {
             "com.facebook.android:facebook-android-sdk:$facebookSdkVersion",
             "com.google.android.gms:play-services-auth-base:$googlePlayServicesVersion",
             "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
-            "com.github.akarnokd:rxjava2-extensions:$rxJava2ExtensionsVersion",
             "com.google.dagger:dagger:$daggerVersion",
             "com.airbnb.android:lottie:$lottieVersion"
     ]
