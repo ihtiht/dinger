@@ -12,12 +12,12 @@ abstract class PostAutoSwipeUseCase internal constructor(
         postExecutionScheduler: Scheduler)
     : CompletableDisposableUseCase(postExecutionScheduler = postExecutionScheduler) {
     @IntRange(from = 0, to = Long.MAX_VALUE)
-    internal abstract fun provideDelayMillis(context: Context): Long
+    internal abstract fun provideNotBeforeMillis(context: Context): Long
 
     override fun buildUseCase(): Completable = Completable.fromCallable {
-        AlarmHolder.alarmManager.delayBroadcastOneShot(
+        AlarmHolder.alarmManager.setBroadcastOneShotFor(
                 REQUEST_CODE,
-                provideDelayMillis(context),
+                provideNotBeforeMillis(context),
                 AutoSwipeHolder.autoSwipeLauncherFactory.newFromBroadcast(context))
     }
 

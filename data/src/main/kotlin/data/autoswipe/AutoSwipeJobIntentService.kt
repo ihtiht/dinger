@@ -80,10 +80,12 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
             execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
                 override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) =
                         saveRecommendationToDatabase(
-                                recommendation, liked = true, matched = answer.matched).also {
+                                recommendation = recommendation,
+                                liked = answer.rateLimitedUntilMillis != null,
+                                matched = answer.matched).also {
                             when {
                                 answer.rateLimitedUntilMillis != null -> {
-                                    scheduleBecauseLimited() // TODO Schedule exact
+                                    scheduleBecauseLimited(answer.rateLimitedUntilMillis!!)
                                 }
                                 remaining.isEmpty() -> scheduleBecauseMoreAvailable()
                                 else -> likeRecommendation(
@@ -132,9 +134,10 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         execute(this@AutoSwipeJobIntentService, Unit)
     }
 
-    private fun scheduleBecauseLimited() = DelayedPostAutoSwipeAction(crashReporter).apply {
-        ongoingActions += this
-        execute(this@AutoSwipeJobIntentService, Unit)
+    private fun scheduleBecauseLimited(notBeforeMillis: Long) =
+            FromRateLimitedPostAutoSwipeAction(crashReporter, notBeforeMillis).apply {
+                ongoingActions += this
+                execute(this@AutoSwipeJobIntentService, Unit)
     }
 
     private fun scheduleBecauseError() = FromErrorPostAutoSwipeAction(crashReporter).apply {
