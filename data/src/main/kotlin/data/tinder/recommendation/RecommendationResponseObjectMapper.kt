@@ -35,12 +35,12 @@ internal class RecommendationResponseObjectMapper(
                                     "Unexpected 2xx (${source.status}) recommendation response without message." +
                                             "Array size: ${source.recommendations?.size ?: 0}")
                         }
-                        else -> it.mapNotNull { transformRecommendation(it) }
+                        else -> it.map { transformRecommendation(it) }
                     }
                 }
             }
 
-    private fun transformRecommendation(source: Recommendation) = source.user.let {
+    private fun transformRecommendation(source: Recommendation) = source.let {
         DomainRecommendationUser(
                 distanceMiles = it.distanceMiles,
                 commonConnections = it.commonConnections.map {

@@ -7,6 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
 @IntDef({
-        RecommendationUser.GENDER_MALE,
-        RecommendationUser.GENDER_FEMALE })
+        Recommendation.GENDER_MALE,
+        Recommendation.GENDER_FEMALE })
 @interface Gender {}

@@ -7,5 +7,5 @@ internal class RecommendationResponse private constructor(
         val status: Int,
         @field:Json(name = "results")
         val recommendations: Array<Recommendation>?,
-        @Json(name = "message")
+        @field:Json(name = "message")
         val message: String?)
