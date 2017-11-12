@@ -3,10 +3,8 @@ package data.tinder.recommendation
 import data.ObjectMapper
 import domain.DomainException
 import domain.recommendation.*
-import reporter.CrashReporter
 
 internal class RecommendationResponseObjectMapper(
-        private val crashReporter: CrashReporter,
         private val eventTracker: RecommendationEventTracker,
         private val commonConnectionDelegate
         : ObjectMapper<RecommendationUserCommonConnection, DomainRecommendationCommonConnection>,
@@ -66,7 +64,6 @@ internal class RecommendationResponseObjectMapper(
             schools = source.schools.map { schoolDelegate.from(it) },
             teasers = source.teasers.map { teaserDelegate.from(it) })
     }
-}
 
 internal class RecommendationUserCommonConnectionObjectMapper(
         private val commonConnectionPhotoDelegate

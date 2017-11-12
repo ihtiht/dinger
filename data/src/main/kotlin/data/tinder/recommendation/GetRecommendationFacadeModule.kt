@@ -2,7 +2,6 @@ package data.tinder.recommendation
 
 import dagger.Module
 import dagger.Provides
-import reporter.CrashReporter
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
@@ -91,7 +90,6 @@ internal class GetRecommendationFacadeModule {
     @Provides
     @Singleton
     fun responseObjectMapper(
-            crashReporter: CrashReporter,
             eventTracker: RecommendationEventTracker,
             commonConnectionDelegate: RecommendationUserCommonConnectionObjectMapper,
             instagramDelegate: RecommendationInstagramObjectMapper,
@@ -102,7 +100,6 @@ internal class GetRecommendationFacadeModule {
             jobDelegate: RecommendationJobObjectMapper,
             schoolDelegate: RecommendationSchoolObjectMapper) =
             RecommendationResponseObjectMapper(
-                    crashReporter = crashReporter,
                     eventTracker = eventTracker,
                     commonConnectionDelegate = commonConnectionDelegate,
                     instagramDelegate = instagramDelegate,

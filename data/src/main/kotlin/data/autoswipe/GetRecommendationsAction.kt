@@ -5,9 +5,10 @@ import domain.recommendation.DomainRecommendationUser
 import domain.recommendation.GetRecommendationsUseCase
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import reporter.CrashReporter
 
-internal class GetRecommendationsAction
-    : AutoSwipeJobIntentService.Action<GetRecommendationsAction.Callback>()  {
+internal class GetRecommendationsAction(crashReporter: CrashReporter)
+    : AutoSwipeJobIntentService.Action<GetRecommendationsAction.Callback>(crashReporter)  {
     private var useCaseDelegate: DisposableUseCase? = null
 
     override fun execute(owner: AutoSwipeJobIntentService, callback: Callback) =
@@ -20,7 +21,7 @@ internal class GetRecommendationsAction
                         callback.onRecommendationsReceived(payload)
                     }
 
-                    override fun onError(error: Throwable) = commonDelegate.onError(owner)
+                    override fun onError(error: Throwable) = commonDelegate.onError(error, owner)
                 })
             }
 

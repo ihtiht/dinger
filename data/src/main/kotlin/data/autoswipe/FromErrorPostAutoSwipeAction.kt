@@ -4,8 +4,10 @@ import domain.autoswipe.FromErrorPostAutoSwipeUseCase
 import domain.interactor.DisposableUseCase
 import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.schedulers.Schedulers
+import reporter.CrashReporter
 
-internal class FromErrorPostAutoSwipeAction : AutoSwipeJobIntentService.Action<Unit>()  {
+internal class FromErrorPostAutoSwipeAction(crashReporter: CrashReporter)
+    : AutoSwipeJobIntentService.Action<Unit>(crashReporter)  {
     private var useCaseDelegate: DisposableUseCase? = null
 
     override fun execute(owner: AutoSwipeJobIntentService, callback: Unit) =
@@ -14,7 +16,7 @@ internal class FromErrorPostAutoSwipeAction : AutoSwipeJobIntentService.Action<U
                 it.execute(object : DisposableCompletableObserver() {
                     override fun onComplete() = commonDelegate.onComplete(owner)
 
-                    override fun onError(error: Throwable) = commonDelegate.onError(owner)
+                    override fun onError(error: Throwable) = commonDelegate.onError(error, owner)
                 })
             }
 

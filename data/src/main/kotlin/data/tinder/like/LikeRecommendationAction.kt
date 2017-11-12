@@ -7,9 +7,12 @@ import domain.like.LikeRecommendationUseCase
 import domain.recommendation.DomainRecommendationUser
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import reporter.CrashReporter
 
-internal class LikeRecommendationAction(private val user: DomainRecommendationUser)
-    : AutoSwipeJobIntentService.Action<LikeRecommendationAction.Callback>()  {
+internal class LikeRecommendationAction(
+        private val user: DomainRecommendationUser,
+        crashReporter: CrashReporter)
+    : AutoSwipeJobIntentService.Action<LikeRecommendationAction.Callback>(crashReporter)  {
     private var useCaseDelegate: DisposableUseCase? = null
 
     override fun execute(owner: AutoSwipeJobIntentService, callback: Callback) =
@@ -22,7 +25,7 @@ internal class LikeRecommendationAction(private val user: DomainRecommendationUs
                     }
 
                     override fun onError(error: Throwable) {
-                        commonDelegate.onError(owner)
+                        commonDelegate.onError(error, owner)
                         callback.onRecommendationLikeFailed()
                     }
                 })
