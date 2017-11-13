@@ -13,7 +13,7 @@ before_install:
       echo "Do not open PRs against master; merge dev into master locally and push instead."
       exit 1
     fi
-  - export DOCKER_IMAGE_TAG=665b9213b0e5d5281457fcc2007a5061a2d22976
+  - export DOCKER_IMAGE_TAG=c43aecb8009e51fb4c78f28cd7fbbd5fe6935b6b
   - export ARTIFACT_VERSION=$(git rev-list --count HEAD)
   - openssl aes-256-cbc -K $encrypted_13d4b12ffe60_key -iv $encrypted_13d4b12ffe60_iv -in firebase-crashreporting-private-key.json.enc -out firebase-crashreporting-private-key.json -d
   - docker pull stoyicker/docker-android:${DOCKER_IMAGE_TAG}
