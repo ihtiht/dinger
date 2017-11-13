@@ -35,7 +35,7 @@ uploadReleaseToGitHub() {
     RELEASE_ID=$(echo ${RESPONSE_BODY} | jq -r .id)
 
     ./gradlew --no-daemon assembleRelease
-    cp app/build/outputs/apk/app-release.apk .
+    cp app/build/outputs/apk/release/app-release.apk .
 
     # Attach the artifact
     UPLOAD_URL=$(echo ${UPLOAD_URL} | sed "s/{?name,label}/?name=app-release.apk/")
