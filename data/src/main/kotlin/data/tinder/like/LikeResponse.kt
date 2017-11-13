@@ -8,4 +8,4 @@ internal class LikeResponse private constructor(
         @field:Json(name = "likes_remaining")
         val likesRemaining: Int,
         @field:Json(name = "rate_limited_until")
-        val rateLimitedUntil: Long)
+        val rateLimitedUntil: Long?)
