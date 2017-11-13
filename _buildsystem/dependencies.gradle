@@ -14,6 +14,7 @@ final def supportLibraryVersion = "27.0.1"
 ext {
     compileDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
             "com.google.firebase:firebase-perf:$googlePlayServicesVersion"
     ]
     annotationProcessorAppDependencies = [
