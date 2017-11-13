@@ -21,9 +21,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         AutoSwipeComponentHolder.autoSwipeComponent.inject(this)
     }
 
-    override fun onHandleWork(intent: Intent) {
-        likeRecommendations()
-    }
+    override fun onHandleWork(intent: Intent) { startAutoSwipe() }
 
     override fun onStopCurrentWork() = true.also { releaseResources() }
 
@@ -54,7 +52,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         }
     }
 
-    private fun likeRecommendations() = Unit.also {
+    private fun startAutoSwipe() = Unit.also {
         GetRecommendationsAction(crashReporter).apply {
             ongoingActions += (this)
             execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
