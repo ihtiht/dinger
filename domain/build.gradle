@@ -34,7 +34,6 @@ android {
         quiet false
         warningsAsErrors true
     }
-    publishNonDefault true
     sourceSets.forEach {
         it.java.srcDirs = ["src/$it.name/kotlin"]
     }
