@@ -1,5 +1,6 @@
 package app
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import app.di.ApplicationComponent
@@ -12,6 +13,7 @@ import tracker.EventTrackers
 /**
  * Custom application.
  */
+@SuppressLint("Registered") // It is registered in the /src/release manifest
 internal open class MainApplication : Application() {
     val applicationComponent: ApplicationComponent by lazy { DaggerApplicationComponent.create() }
 
