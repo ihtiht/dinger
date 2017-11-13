@@ -2,19 +2,15 @@ package data.network
 
 import dagger.Module
 import dagger.Provides
-import data.crash.FirebaseCrashReporterModule
 import okhttp3.OkHttpClient
-import reporter.CrashReporter
-import reporter.OkHttpCrashReporterLoggingInterceptor
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(FirebaseCrashReporterModule::class))
+@Module
 internal class NetworkClientModule {
     @Provides
     @Singleton
-    fun client(crashReporter: CrashReporter): OkHttpClient.Builder = OkHttpClient.Builder()
-            .addNetworkInterceptor(OkHttpCrashReporterLoggingInterceptor(crashReporter))
+    fun client(): OkHttpClient.Builder = OkHttpClient.Builder()
             .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
