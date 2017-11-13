@@ -1,7 +1,7 @@
 final def architectureComponentsVersion = "1.0.0"
 final def daggerVersion = "2.12"
 final def facebookSdkVersion = "4.27.0"
-final def googlePlayServicesVersion = "11.4.0"
+final def googlePlayServicesVersion = "11.6.0"
 final def jsr250Version = "1.0"
 final def kotlinVersion = "1.1.51"
 final def lottieVersion = "2.1.0"
@@ -13,7 +13,8 @@ final def storeVersion = "3.0.0-beta"
 final def supportLibraryVersion = "27.0.0"
 ext {
     compileDependencies = [
-            "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+            "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            "com.google.firebase:firebase-perf:$googlePlayServicesVersion"
     ]
     annotationProcessorAppDependencies = [
             "com.google.dagger:dagger-compiler:$daggerVersion"
