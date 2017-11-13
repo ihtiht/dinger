@@ -8,5 +8,5 @@ class FromRateLimitedPostAutoSwipeUseCase(
         postExecutionScheduler: Scheduler,
         private val notBeforeMillis: Long)
     : PostAutoSwipeUseCase(context, postExecutionScheduler) {
-    override fun provideNotBeforeMillis(context: Context) = notBeforeMillis
+    override fun notBeforeMillis(context: Context) = notBeforeMillis
 }
