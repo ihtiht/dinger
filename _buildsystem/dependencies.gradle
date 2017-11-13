@@ -14,7 +14,6 @@ final def supportLibraryVersion = "27.0.1"
 ext {
     compileDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
-            "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
             "com.google.firebase:firebase-perf:$googlePlayServicesVersion"
     ]
     annotationProcessorAppDependencies = [
@@ -25,7 +24,8 @@ ext {
             "com.google.android.gms:play-services-auth-base:$googlePlayServicesVersion",
             "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
             "com.google.dagger:dagger:$daggerVersion",
-            "com.airbnb.android:lottie:$lottieVersion"
+            "com.airbnb.android:lottie:$lottieVersion",
+            "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
     ]
     annotationProcessorDomainDependencies = [
             "javax.annotation:jsr250-api:$jsr250Version"
