@@ -1,7 +1,7 @@
 final def androidPluginVersion = "3.1.0-alpha03"
 final def kotlinPluginVersion = "1.1.51"
 final def googleServicesPluginVersion = "3.1.0"
-final def firebasePluginsVersion = "1.1.4"
+final def firebasePluginsVersion = "1.1.0-alpha1"
 final def kotlinterPluginVersion = "1.5.0"
 project.ext.classpathRepositories = {
     google()
