@@ -1,10 +1,17 @@
--verbose
 -optimizations !code/allocation/variable
 -keep class sun.misc.Unsafe { *; }
 -dontwarn okhttp3.**
 -dontnote okhttp3.**
 -dontwarn okio.**
 -dontnote okio.**
+-dontnote io.reactivex.**
+-dontnote com.google.**
+-dontnote com.facebook.**
+-dontnote com.airbnb.**
+-dontnote com.android.**
+-dontnote android.**
+-dontnote org.apache.**
+-dontnote org.reactivestreams.**
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;
 }
