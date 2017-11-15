@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <lint>
-    <!-- Used by Firebase -->
     <issue id="UnusedResources">
         <ignore regexp="account_data_fb_id" />
         <ignore regexp="account_data_fb_token" />
+        <ignore regexp="ic_notification" />
+        <ignore regexp="preferences_file_notifications" />
+    </issue>
+    <issue id="NewApi">
+        <!-- This is Kotlin's, not java.lang's Iterable -->
+        <ignore regexp="forEach" />
     </issue>
 </lint>
