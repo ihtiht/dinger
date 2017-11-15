@@ -25,7 +25,6 @@ internal class DebugApplication : MainApplication() {
                     .detectDiskWrites()
                     .detectNetwork()
                     .penaltyLog()
-                    .penaltyDialog()
                     .apply {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             detectResourceMismatches()
