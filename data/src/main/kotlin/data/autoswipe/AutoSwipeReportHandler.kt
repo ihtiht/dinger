@@ -48,7 +48,7 @@ internal class AutoSwipeReportHandler(
 internal annotation class AutoSwipeResult
 
 private fun generateTitle(context: Context, likes: Int, matches: Int) = StringBuilder().apply {
-    append(context.getString(R.string.autoswipe_notification_title_swept, likes))
+    append(context.resources.getQuantityString(R.plurals.autoswipe_notification_title_swept, likes))
     append(context.resources.getQuantityString(
             R.plurals.autoswipe_notification_title_matches, matches))
 }.toString()

@@ -3,6 +3,13 @@
     <issue id="UnusedResources">
         <ignore regexp="account_data_fb_id" />
         <ignore regexp="account_data_fb_token" />
+        <ignore regexp="autoswipe_notification_body_capped" />
+        <ignore regexp="autoswipe_notification_body_error" />
+        <ignore regexp="autoswipe_notification_body_more_available" />
+        <ignore regexp="autoswipe_notification_body_unexpected" />
+        <ignore regexp="autoswipe_notification_channel_name" />
+        <ignore regexp="autoswipe_notification_title_matches" />
+        <ignore regexp="autoswipe_notification_title_swept" />
         <ignore regexp="ic_notification" />
         <ignore regexp="preferences_file_notifications" />
     </issue>
