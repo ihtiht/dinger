@@ -27,7 +27,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
-                        "room.schemaLocation": "${rootProject.projectDir}/assets/db".toString()
+                        "room.schemaLocation": "${rootProject.projectDir}/_assets/db".toString()
                 ]
             }
         }
