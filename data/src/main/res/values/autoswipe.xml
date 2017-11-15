@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="autoswipe_notification_title_matches">
+        <item quantity="zero">.</item>
+        <item quantity="one">, 1 new match.</item>
+        <item quantity="other">, %1d new matches.</item>
+    </plurals>
+
+    <string name="autoswipe_notification_body_error">Scheduled after an error for approximately %1s</string>
+    <string name="autoswipe_notification_body_more_available">Scheduled to request more profile for approximately %1s</string>
+    <string name="autoswipe_notification_body_capped">Scheduled after being capped for approximately %1s</string>
+    <string name="autoswipe_notification_body_unexpected">Unexpected result. Reported for diagnosis.</string>
+    <string name="autoswipe_notification_channel_name">Autoswipe</string>
+    <string name="autoswipe_notification_title_swept">Swept %1$d profiles</string>
     <string name="autoswipe_receiver_description">Swiping for you!</string>
     <string name="autoswipe_receiver_label">Dinger</string>
 </resources>

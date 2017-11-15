@@ -12,11 +12,11 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import org.jetbrains.annotations.Contract
 import org.stoyicker.dinger.data.R
-import java.util.*
+import java.util.Locale
 
 internal class NotificationManagerImpl(private val context: Context) : NotificationManager {
     @Contract(value = "_, _, _, _, null, true, _, _, _ -> fail")
-    override fun of(
+    override fun pop(
             @StringRes channelName: Int,
             title: String,
             body: String,

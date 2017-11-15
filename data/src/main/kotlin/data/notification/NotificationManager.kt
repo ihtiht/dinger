@@ -5,7 +5,7 @@ import android.support.annotation.StringRes
 import android.support.v4.app.NotificationCompat
 
 internal interface NotificationManager {
-    fun of(@StringRes channelName: Int,
+    fun pop(@StringRes channelName: Int,
            title: String,
            body: String,
            @NotificationCategory category: String,

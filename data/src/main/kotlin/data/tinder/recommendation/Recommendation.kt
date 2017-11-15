@@ -1,7 +1,7 @@
 package data.tinder.recommendation
 
 import com.squareup.moshi.Json
-import java.util.*
+import java.util.Date
 
 internal class Recommendation private constructor(
         @field:Json(name = "distance_mi")
