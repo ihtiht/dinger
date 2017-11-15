@@ -62,7 +62,7 @@ uploadReleaseToGitHub() {
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
             --header "Content-Type: image/png" \
-            --data-binary @${ARTIFACT_VERSION}.png $(bash ci/generate_qr.sh -d ${APK_DOWNLOAD_URL} -o ${ARTIFACT_VERSION}.png) \
+            --data-binary @${ARTIFACT_VERSION}.png $(bash _ci/generate_qr.sh -d ${APK_DOWNLOAD_URL} -o ${ARTIFACT_VERSION}.png) \
             --request POST \
             ${UPLOAD_URL})
     QR_DOWNLOAD_URL=$(echo ${RESPONSE_BODY} | jq -r .browser_download_url)
