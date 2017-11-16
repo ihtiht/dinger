@@ -1,0 +1,8 @@
+{
+  "title": "Update available",
+  "body": "There is an update available for the app. Older versions are unsupported.",
+  "positive_button": "Download",
+  "negative_button": "Cancel",
+  "download_url": "https://github.com/stoyicker/dinger/releases/download/485/app-release.apk",
+  "version": "485"
+}
