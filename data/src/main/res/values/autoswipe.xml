@@ -11,7 +11,7 @@
         <item quantity="other">, %1$d new matches.</item>
     </plurals>
 
-    <string name="autoswipe_notification_body_error">Scheduled after an error after an hour.</string>
+    <string name="autoswipe_notification_body_error">Scheduled after an hour because of an error.</string>
     <string name="autoswipe_notification_body_more_available">Scheduled to request more profiles immediately.</string>
     <string name="autoswipe_notification_body_capped">Scheduled for when the cap resets.</string>
     <string name="autoswipe_notification_body_unexpected">Unexpected result. Reported for diagnosis.</string>
