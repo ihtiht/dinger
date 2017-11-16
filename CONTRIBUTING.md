@@ -14,6 +14,11 @@
 4. Push the branch to your fork.
 5. Create a new pull request on this repository with your branch.
 
+Note that, if approved, your pull request may have to be closed and 
+re-opened by a contributor with write access due to CI restrictions, 
+but once merged you will still figure as author of the commits 
+nevertheless.
+
 ## Building
 
 See [BUILDING.md](BUILDING.md).
