@@ -8,6 +8,7 @@ import data.tinder.recommendation.RecommendationUserResolver
 import domain.like.DomainLikedRecommendationAnswer
 import domain.recommendation.DomainRecommendationUser
 import reporter.CrashReporter
+import java.util.Random
 import javax.inject.Inject
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
@@ -98,9 +99,14 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                                 remaining.isEmpty() -> {
                                     scheduleBecauseMoreAvailable()
                                 }
-                                else -> likeRecommendation(
-                                        remaining.first(),
-                                        remaining.subList(fromIndex = 1, toIndex = remaining.size))
+                                else -> {
+                                    Thread.sleep(
+                                            (1000 * Random().nextInt(50 - 10) + 10).toLong())
+                                    likeRecommendation(
+                                            remaining.first(),
+                                            remaining.subList(
+                                                    fromIndex = 1, toIndex = remaining.size))
+                                }
                             }
                         }
 
