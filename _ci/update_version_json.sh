@@ -3,7 +3,7 @@ set -e
 
 usage() { echo "Usage: $0 [-v <version>]" 1>&2; exit 1; }
 
-while getopts ":v" it; do
+while getopts ":v:" it; do
     case "${it}" in
         v)
             VERSION=${OPTARG}
