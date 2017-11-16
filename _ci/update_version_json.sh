@@ -21,6 +21,7 @@ chmod 600 travis_rsa
 eval `ssh-agent -s`
 ssh-add travis_rsa
 
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 git config --replace-all remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
 git fetch
 git checkout gh-pages
