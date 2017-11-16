@@ -81,6 +81,8 @@ uploadReleaseToGitHub() {
         --data "${BODY}" \
         https://api.github.com/repos/"${TRAVIS_REPO_SLUG}"/releases/${RELEASE_ID}
 
+    ./update_version_json.sh -v $ARTIFACT_VERSION
+
     echo "Release complete."
 }
 
