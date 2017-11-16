@@ -13,6 +13,7 @@ internal class AutoSwipeReportHandlerModule {
     @Provides
     @Singleton
     fun autoSwipeReportHandler(
-            notificationManager: NotificationManager, crashReporter: CrashReporter) =
-            AutoSwipeReportHandler(notificationManager, crashReporter)
+            notificationManager: NotificationManager, crashReporter: CrashReporter) = {
+        AutoSwipeReportHandler(notificationManager, crashReporter)
+    }
 }

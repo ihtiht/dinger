@@ -13,21 +13,30 @@ import javax.inject.Inject
 internal class AutoSwipeJobIntentService : JobIntentService() {
     private var ongoingActions = emptySet<Action<*>>()
     @Inject
+    lateinit var crashReporter: CrashReporter
+    @Inject
     lateinit var recommendationResolver: RecommendationUserResolver
     @Inject
-    lateinit var crashReporter: CrashReporter
+    lateinit var reportHandlerFactory: () -> AutoSwipeReportHandler
+    private val reportHandler by lazy { reportHandlerFactory() }
 
     init {
         AutoSwipeComponentHolder.autoSwipeComponent.inject(this)
     }
 
-    override fun onHandleWork(intent: Intent) { startAutoSwipe() }
+    override fun onHandleWork(intent: Intent) {
+        startAutoSwipe()
+    }
 
-    override fun onStopCurrentWork() = true.also { releaseResources() }
+    override fun onStopCurrentWork() = true.also {
+        releaseResources()
+        reportHandler.show(this, AutoSwipeReportHandler.RESULT_UNEXPECTED)
+    }
 
     override fun onDestroy() {
         super.onDestroy()
         releaseResources()
+        reportHandler.show(this, AutoSwipeReportHandler.RESULT_UNEXPECTED)
     }
 
     abstract class Action<in Callback>(crashReporter: CrashReporter) {
@@ -81,11 +90,14 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                                 recommendation = recommendation,
                                 liked = answer.rateLimitedUntilMillis != null,
                                 matched = answer.matched).also {
+                            reportHandler.addLikeAnswer(answer)
                             when {
                                 answer.rateLimitedUntilMillis != null -> {
                                     scheduleBecauseLimited(answer.rateLimitedUntilMillis!!)
                                 }
-                                remaining.isEmpty() -> scheduleBecauseMoreAvailable()
+                                remaining.isEmpty() -> {
+                                    scheduleBecauseMoreAvailable()
+                                }
                                 else -> likeRecommendation(
                                         remaining.first(),
                                         remaining.subList(fromIndex = 1, toIndex = remaining.size))
@@ -129,17 +141,26 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
 
     private fun scheduleBecauseMoreAvailable() = ImmediatePostAutoSwipeAction(crashReporter).apply {
         ongoingActions += this
+        reportHandler.show(
+                this@AutoSwipeJobIntentService,
+                AutoSwipeReportHandler.RESULT_MORE_AVAILABLE)
         execute(this@AutoSwipeJobIntentService, Unit)
     }
 
     private fun scheduleBecauseLimited(notBeforeMillis: Long) =
             FromRateLimitedPostAutoSwipeAction(crashReporter, notBeforeMillis).apply {
                 ongoingActions += this
+                reportHandler.show(
+                        this@AutoSwipeJobIntentService,
+                        AutoSwipeReportHandler.RESULT_RATE_LIMITED)
                 execute(this@AutoSwipeJobIntentService, Unit)
     }
 
     private fun scheduleBecauseError() = FromErrorPostAutoSwipeAction(crashReporter).apply {
         ongoingActions += this
+        reportHandler.show(
+                this@AutoSwipeJobIntentService,
+                AutoSwipeReportHandler.RESULT_ERROR)
         execute(this@AutoSwipeJobIntentService, Unit)
     }
 
