@@ -21,6 +21,7 @@ chmod 600 travis_rsa
 eval `ssh-agent -s`
 ssh-add travis_rsa
 
+git fetch
 git checkout gh-pages
 
 echo "{
