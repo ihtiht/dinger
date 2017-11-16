@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <lint>
     <issue id="GoogleAppIndexingWarning" severity="ignore" />
-    <issue id="IconMissingDensityFolder" severity="ignore" />
-    <!-- "Kotlin is now a first-class citizen of Android" my balls -->
-    <issue id="MissingRegistered" severity="ignore" />
     <!-- Used by Firebase -->
     <issue id="UnusedResources">
         <ignore path="build/generated/res/google-services" />
     </issue>
-    <!-- This check is broken when using Kotlin -->
-    <issue id="UnusedResources" severity="ignore" />
-    <!-- This check is broken when using KotlinX -->
-    <issue id="UnusedIds" severity="ignore" />
     <issue id="IconLauncherFormat,IconExpectedSize">
         <!-- Not a launcher icon -->
         <ignore regexp="ic_launcher_big" />
