@@ -14,7 +14,7 @@ while getopts ":d:o:" it; do
     esac
 done
 
-git config user.name "Travis CI"
+git config user.name "Jorge Antonio Diaz-Benito Soriano"
 git config user.email "jorge.diazbenitosoriano@gmail.com"
 
 git checkout gh-pages
