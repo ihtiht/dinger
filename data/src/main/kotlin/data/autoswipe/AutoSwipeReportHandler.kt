@@ -7,30 +7,37 @@ import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_MORE_AVAILABLE
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_RATE_LIMITED
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_UNEXPECTED
 import data.notification.NotificationManager
+import domain.like.DomainLikedRecommendationAnswer
 import org.stoyicker.dinger.data.R
 import reporter.CrashReporter
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 internal class AutoSwipeReportHandler(
         private val notificationManager: NotificationManager,
         private val crashReporter: CrashReporter) {
+    private var consumed = false
     private var likeCounter = 0
     private var matchCounter = 0
 
-    fun addMatch() {
-        addLike()
-        ++matchCounter
+    fun addLikeAnswer(answer: DomainLikedRecommendationAnswer) {
+        if (answer.rateLimitedUntilMillis == null) {
+            addLike()
+            if (answer.matched) {
+                addMatch()
+            }
+        }
     }
 
-    fun addLike() { ++likeCounter }
+    private fun addMatch() { ++matchCounter }
 
-    fun show(context: Context, @AutoSwipeResult result: Long, timestamp: Long) {
+    private fun addLike() { ++likeCounter }
+
+    fun show(context: Context, @AutoSwipeResult result: Long) {
+        if (consumed) return
+        consumed = true
         notificationManager.pop(
                 channelName = R.string.autoswipe_notification_channel_name,
                 title = generateTitle(context, likeCounter, matchCounter),
-                body = generateBody(context, crashReporter, result, timestamp),
+                body = generateBody(context, crashReporter, result),
                 category = NotificationManager.CATEGORY_SERVICE,
                 priority = NotificationManager.PRIORITY_LOW)
     }
@@ -48,33 +55,23 @@ internal class AutoSwipeReportHandler(
 internal annotation class AutoSwipeResult
 
 private fun generateTitle(context: Context, likes: Int, matches: Int) = StringBuilder().apply {
-    append(context.resources.getQuantityString(R.plurals.autoswipe_notification_title_swept, likes))
     append(context.resources.getQuantityString(
-            R.plurals.autoswipe_notification_title_matches, matches))
+            R.plurals.autoswipe_notification_title_swept, likes, likes))
+    append(context.resources.getQuantityString(
+            R.plurals.autoswipe_notification_title_matches, matches, matches))
 }.toString()
 
 private fun generateBody(
         context: Context,
         crashReporter: CrashReporter,
-        @AutoSwipeResult result: Long,
-        timestamp: Long? = null) =
-        timestamp.run { if (this == null) {
-            ""
-        } else {
-            SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).format(Date(this))
-        } }.run {
-            when (result) {
-                RESULT_RATE_LIMITED -> context.getString(
-                        R.string.autoswipe_notification_body_capped, this)
-                RESULT_MORE_AVAILABLE -> context.getString(
-                        R.string.autoswipe_notification_body_more_available, this)
-                RESULT_ERROR -> context.getString(
-                        R.string.autoswipe_notification_body_error, this)
-                RESULT_UNEXPECTED -> {
-                    crashReporter.report(IllegalStateException(
-                            "Got RESULT_UNEXPECTED in the autoswipe report."))
-                    context.getString(R.string.autoswipe_notification_body_unexpected)
-                }
-            else -> throw IllegalStateException("Unexpected result $result in the autoswipe report.")
-        }
+        @AutoSwipeResult result: Long) = when (result) {
+    RESULT_RATE_LIMITED -> context.getString(R.string.autoswipe_notification_body_capped)
+    RESULT_MORE_AVAILABLE -> context.getString(R.string.autoswipe_notification_body_more_available)
+    RESULT_ERROR -> context.getString(R.string.autoswipe_notification_body_error)
+    RESULT_UNEXPECTED -> {
+        crashReporter.report(IllegalStateException(
+                "Got RESULT_UNEXPECTED in the autoswipe report."))
+        context.getString(R.string.autoswipe_notification_body_unexpected)
+    }
+    else -> throw IllegalStateException("Unexpected result $result in the autoswipe report.")
 }
