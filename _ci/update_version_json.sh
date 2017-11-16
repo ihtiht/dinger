@@ -3,7 +3,7 @@ set -e
 
 usage() { echo "Usage: $0 [-v <version>]" 1>&2; exit 1; }
 
-while getopts ":d:o:" it; do
+while getopts ":v" it; do
     case "${it}" in
         v)
             VERSION=${OPTARG}
@@ -16,6 +16,10 @@ done
 
 git config user.name "Jorge Antonio Diaz-Benito Soriano"
 git config user.email "jorge.diazbenitosoriano@gmail.com"
+
+chmod 600 travis_rsa
+eval `ssh-agent -s`
+ssh-add travis_rsa
 
 git checkout gh-pages
 
