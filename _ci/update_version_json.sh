@@ -14,6 +14,9 @@ while getopts ":d:o:" it; do
     esac
 done
 
+git config user.name "Travis CI"
+git config user.email "jorge.diazbenitosoriano@gmail.com"
+
 git checkout gh-pages
 
 echo "{
@@ -24,3 +27,6 @@ echo "{
   \"download_url\": \"https://github.com/stoyicker/dinger/releases/download/${VERSION}/app-release.apk\",
   \"version\": \"${VERSION}\"
 }" > version.json
+
+git commit -am "Update version check file: ${VERSION}"
+git push git@github.com:stoyicker/dinger.git gh-pages
