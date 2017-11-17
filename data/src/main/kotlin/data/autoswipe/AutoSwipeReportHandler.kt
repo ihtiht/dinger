@@ -19,7 +19,8 @@ internal class AutoSwipeReportHandler(
     private var matchCounter = 0
 
     fun addLikeAnswer(answer: DomainLikedRecommendationAnswer) {
-        if (answer.rateLimitedUntilMillis == null) {
+        // The last like done comes with rateLimited too
+        if (answer.rateLimitedUntilMillis == null || likeCounter == 0) {
             addLike()
             if (answer.matched) {
                 addMatch()
