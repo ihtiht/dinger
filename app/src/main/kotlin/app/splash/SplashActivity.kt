@@ -9,7 +9,6 @@ import app.home.HomeActivity
 import app.login.TinderLoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import org.stoyicker.dinger.R
 import javax.inject.Inject
 /**
  * A simple activity that acts as a splash screen.
@@ -124,7 +123,6 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
             startActivity(this)
         }
         supportFinishAfterTransition()
-        overridePendingTransition(R.anim.fade_in, 0)
     }
 
     private fun continueLoggedIn() {
