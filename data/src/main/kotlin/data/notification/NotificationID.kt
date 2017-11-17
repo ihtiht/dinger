@@ -21,7 +21,7 @@ internal object NotificationID {
 
     @SuppressLint("ApplySharedPref") // Intended, otherwise notification overriding could occur
     private fun saveCurrent(prefs: SharedPreferences, value: Int) {
-        prefs.edit().putInt(PREFERENCE_KEY_NOTIFICATION_ID, value).commit()
+        prefs.edit().putInt(PREFERENCE_KEY_NOTIFICATION_ID, value).apply()
     }
 
     private const val PREFERENCE_KEY_NOTIFICATION_ID = "org.stoyicker.dinger.NOTIFICATION_ID"

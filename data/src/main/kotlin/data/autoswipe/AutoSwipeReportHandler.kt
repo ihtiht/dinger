@@ -1,6 +1,7 @@
 package data.autoswipe
 
 import android.content.Context
+import android.os.Build
 import android.support.annotation.IntDef
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_ERROR
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_MORE_AVAILABLE
@@ -33,13 +34,25 @@ internal class AutoSwipeReportHandler(
     private fun addLike() { ++likeCounter }
 
     fun show(context: Context, @AutoSwipeResult result: Long) {
+        // Show nothing on unsupported APIs to avoid spammy notifications
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
         if (consumed) return
         consumed = true
+        notificationManager.pop(
+                channelName = R.string.autoswipe_notification_channel_name,
+                title = context.getString(R.string.autoswipe_notification_group_title),
+                body = context.getString(R.string.autoswipe_notification_group_body),
+                category = NotificationManager.CATEGORY_SERVICE,
+                groupName = context.getString(R.string.autoswipe_notification_group_name),
+                isGroupSummary = true,
+                priority = NotificationManager.PRIORITY_LOW)
         notificationManager.pop(
                 channelName = R.string.autoswipe_notification_channel_name,
                 title = generateTitle(context, likeCounter, matchCounter),
                 body = generateBody(context, crashReporter, result),
                 category = NotificationManager.CATEGORY_SERVICE,
+                groupName = context.getString(R.string.autoswipe_notification_group_name),
+                isGroupSummary = false,
                 priority = NotificationManager.PRIORITY_LOW)
     }
 

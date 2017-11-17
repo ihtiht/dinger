@@ -26,6 +26,9 @@ internal class NotificationManagerImpl(private val context: Context) : Notificat
             @NotificationPriority priority: Long,
             @NotificationVisibility visibility: Long,
             clickHandler: PendingIntent?) {
+        if (isGroupSummary && GroupNotificationHandler.isGroupShown(context, groupName!!)) {
+            return
+        }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.getSystemService<android.app.NotificationManager>(
                     android.app.NotificationManager::class.java)
@@ -54,7 +57,7 @@ internal class NotificationManagerImpl(private val context: Context) : Notificat
                                 if (groupName != null) {
                                     setGroup(groupName)
                                 }
-                                setLocalOnly(false)
+                                setLocalOnly(true)
                                 setSortKey("${System.currentTimeMillis()}")
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     setCategory(NotificationCompat.CATEGORY_SERVICE)

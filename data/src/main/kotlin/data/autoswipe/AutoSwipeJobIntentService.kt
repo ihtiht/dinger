@@ -96,9 +96,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                                 answer.rateLimitedUntilMillis != null -> {
                                     scheduleBecauseLimited(answer.rateLimitedUntilMillis!!)
                                 }
-                                remaining.isEmpty() -> {
-                                    scheduleBecauseMoreAvailable()
-                                }
+                                remaining.isEmpty() -> scheduleBecauseMoreAvailable()
                                 else -> {
                                     Thread.sleep(
                                             (1000 * Random().nextInt(50 - 10) + 10).toLong())
