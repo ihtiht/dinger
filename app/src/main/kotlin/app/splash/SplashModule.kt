@@ -15,7 +15,9 @@ internal class SplashModule(
         private val activity: Activity,
         private val loggedInCheckResultCallback: LoggedInCheckCoordinator.ResultCallback,
         private val userEmailPropertySetterCoordinatorResultCallback
-        : UserEmailPropertySetterCoordinator.ResultCallback) {
+        : UserEmailPropertySetterCoordinator.ResultCallback,
+        private val versionCheckCoordinatorResultCallback
+        : VersionCheckCoordinator.ResultCallback) {
     @Provides
     fun loggedInCheckCoordinator(
             @Named("io") asyncExecutionScheduler: Scheduler,
@@ -35,5 +37,6 @@ internal class SplashModule(
             activity, splashEventTracker, userEmailPropertySetterCoordinatorResultCallback)
 
     @Provides
-    fun versionCheckCoordinator() = VersionCheckCoordinator(activity)
+    fun versionCheckCoordinator() = VersionCheckCoordinator(
+            activity, versionCheckCoordinatorResultCallback)
 }

@@ -19,7 +19,8 @@ import javax.inject.Inject
  * to be drawn.
  */
 internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
-        UserEmailPropertySetterCoordinator.ResultCallback, AppCompatActivity() {
+        UserEmailPropertySetterCoordinator.ResultCallback, VersionCheckCoordinator.ResultCallback,
+        AppCompatActivity() {
     @Inject
     lateinit var loggedInCheckCoordinator: LoggedInCheckCoordinator
     @Inject
@@ -59,12 +60,13 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
         }
     }
 
-    override fun onUserEmailPropertySet() { versionCheckCoordinator.actionRun() }
-//    override fun onUserEmailPropertySet() = loggedInCheckCoordinator.actionRun()
+    override fun onUserEmailPropertySet() = versionCheckCoordinator.actionRun()
 
     override fun onUserEmailAcquisitionFailed() {
         if (!isFinishing) supportFinishAfterTransition()
     }
+
+    override fun onVersionCheckCompleted() { loggedInCheckCoordinator.actionRun() }
 
     override fun onLoggedInUserFound() = continueLoggedIn()
 
@@ -91,7 +93,8 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
             .newSplashComponent(SplashModule(
                     activity = this,
                     loggedInCheckResultCallback = this,
-                    userEmailPropertySetterCoordinatorResultCallback = this))
+                    userEmailPropertySetterCoordinatorResultCallback = this,
+                    versionCheckCoordinatorResultCallback = this))
             .inject(this)
 
     /**

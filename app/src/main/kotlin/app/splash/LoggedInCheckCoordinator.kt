@@ -12,7 +12,7 @@ internal class LoggedInCheckCoordinator(
         private val crashReporter: CrashReporter) {
     private var useCase: LoggedInUserCheckUseCase? = null
 
-    fun actionDoCheck() {
+    fun actionRun() {
         useCase = LoggedInUserCheckUseCase(asyncExecutionScheduler, postExecutionScheduler)
         useCase?.execute(object : DisposableSingleObserver<Boolean>() {
             override fun onSuccess(foundAUser: Boolean) = when (foundAUser) {

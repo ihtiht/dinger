@@ -4,8 +4,9 @@ import android.app.Activity
 import android.support.v7.app.AlertDialog
 import java.lang.ref.WeakReference
 
-internal class VersionCheckCoordinator(activity: Activity) {
+internal class VersionCheckCoordinator(activity: Activity, resultCallback: ResultCallback) {
     private val activityWeakRef by lazy { WeakReference(activity) }
+    private val resultCallbackWeakRef by lazy { WeakReference(resultCallback) }
     private var dialog: AlertDialog? = null
     private var wasShowing = false
 
@@ -18,6 +19,7 @@ internal class VersionCheckCoordinator(activity: Activity) {
                         .setPositiveButton("Download", { _, _ -> System.out.println("clicked") })
                         .setOnDismissListener {
                             wasShowing = false
+                            resultCallbackWeakRef.get()?.onVersionCheckCompleted()
                         }
                         .show()
             }
@@ -39,5 +41,9 @@ internal class VersionCheckCoordinator(activity: Activity) {
 //        useCase?.dispose()
         dialog?.dismiss()
         wasShowing = false
+    }
+
+    interface ResultCallback {
+        fun onVersionCheckCompleted()
     }
 }
