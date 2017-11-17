@@ -2,10 +2,6 @@ package data.stoyicker.versioncheck
 
 import dagger.Module
 import dagger.Provides
-import data.tinder.login.LoginFacade
-import data.tinder.login.LoginRequestObjectMapper
-import data.tinder.login.LoginResponseObjectMapper
-import data.tinder.login.LoginSource
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
@@ -13,11 +9,11 @@ import dagger.Lazy as DaggerLazy
 internal class VersionCheckFacadeModule {
     @Provides
     @Singleton
-    fun responseObjectMapper() = LoginResponseObjectMapper()
+    fun responseObjectMapper() = VersionCheckResponseObjectMapper()
 
     @Provides
     @Singleton
     fun facade(source: VersionCheckSource,
-               responseObjectMapper: VersionResponseObjectMapper) =
+               responseObjectMapper: VersionCheckResponseObjectMapper) =
             VersionCheckFacade(source, responseObjectMapper)
 }

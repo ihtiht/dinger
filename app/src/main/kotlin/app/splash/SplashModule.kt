@@ -37,6 +37,11 @@ internal class SplashModule(
             activity, splashEventTracker, userEmailPropertySetterCoordinatorResultCallback)
 
     @Provides
-    fun versionCheckCoordinator() = VersionCheckCoordinator(
-            activity, versionCheckCoordinatorResultCallback)
+    fun versionCheckCoordinator(
+            @Named("io") asyncExecutionScheduler: Scheduler,
+            @Named("main") postExecutionScheduler: Scheduler) = VersionCheckCoordinator(
+            activity,
+            asyncExecutionScheduler,
+            postExecutionScheduler,
+            versionCheckCoordinatorResultCallback)
 }
