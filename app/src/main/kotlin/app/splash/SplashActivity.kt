@@ -134,7 +134,7 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
     }
 
     private companion object {
-        const val SHOW_TIME_MILLIS = 1000L
+        const val SHOW_TIME_MILLIS = 900L
     }
 }
 

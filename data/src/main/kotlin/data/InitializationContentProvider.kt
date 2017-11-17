@@ -11,6 +11,7 @@ import data.alarm.AppAlarmManagerImpl
 import data.autoswipe.AutoSwipeComponentHolder
 import data.autoswipe.AutoSwipeLauncherFactoryImpl
 import data.autoswipe.DaggerAutoSwipeComponent
+import data.stoyicker.versioncheck.VersionCheckProviderImpl
 import data.tinder.like.LikeRecommendationProviderImpl
 import data.tinder.login.LoginProviderImpl
 import data.tinder.recommendation.GetRecommendationProviderImpl
@@ -20,6 +21,7 @@ import domain.like.LikeRecommendationHolder
 import domain.loggedincheck.LoggedInCheckHolder
 import domain.login.LoginHolder
 import domain.recommendation.GetRecommendationHolder
+import domain.versioncheck.VersionCheckHolder
 import javax.inject.Inject
 
 /**
@@ -39,6 +41,8 @@ internal class InitializationContentProvider : ContentProvider() {
     lateinit var alarmManagerImpl: AppAlarmManagerImpl
     @Inject
     lateinit var autoSwipeIntentFactoryImpl: AutoSwipeLauncherFactoryImpl
+    @Inject
+    lateinit var versionCheckProviderImpl: VersionCheckProviderImpl
 
     override fun onCreate(): Boolean {
         val rootModule = RootModule(context)
@@ -62,6 +66,7 @@ internal class InitializationContentProvider : ContentProvider() {
         LikeRecommendationHolder.likeRecommendationProvider(likeRecommendationProviderImpl)
         AlarmHolder.alarmManager(alarmManagerImpl)
         AutoSwipeHolder.autoSwipeIntentFactory(autoSwipeIntentFactoryImpl)
+        VersionCheckHolder.versionCheckProvider(versionCheckProviderImpl)
         return true
     }
 

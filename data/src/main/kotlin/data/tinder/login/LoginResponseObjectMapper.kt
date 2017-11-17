@@ -1,8 +1,8 @@
 package data.tinder.login
 
 import data.ObjectMapper
-import domain.login.DomainAuthedUser
+import domain.login.DomainAuthenticatedUser
 
-internal class LoginResponseObjectMapper : ObjectMapper<LoginResponse, DomainAuthedUser> {
-    override fun from(source: LoginResponse) = source.data.let { DomainAuthedUser(it.apiToken) }
+internal class LoginResponseObjectMapper : ObjectMapper<LoginResponse, DomainAuthenticatedUser> {
+    override fun from(source: LoginResponse) = source.data.let { DomainAuthenticatedUser(it.apiToken) }
 }

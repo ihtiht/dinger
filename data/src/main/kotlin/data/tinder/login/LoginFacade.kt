@@ -3,12 +3,12 @@ package data.tinder.login
 import data.ObjectMapper
 import data.network.RequestFacade
 import domain.login.DomainAuthRequestParameters
-import domain.login.DomainAuthedUser
+import domain.login.DomainAuthenticatedUser
 
 internal class LoginFacade(
         source: LoginSource,
         requestMapper: ObjectMapper<DomainAuthRequestParameters, LoginRequestParameters>,
-        responseMapper: ObjectMapper<LoginResponse, DomainAuthedUser>)
+        responseMapper: ObjectMapper<LoginResponse, DomainAuthenticatedUser>)
     : RequestFacade<
-        DomainAuthRequestParameters, LoginRequestParameters, LoginResponse, DomainAuthedUser>(
+        DomainAuthRequestParameters, LoginRequestParameters, LoginResponse, DomainAuthenticatedUser>(
         source, requestMapper, responseMapper)

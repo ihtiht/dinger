@@ -1,4 +1,4 @@
-package data.stoyicker.version
+package data.stoyicker.versioncheck
 
 import com.nytimes.android.external.store3.base.Fetcher
 import com.nytimes.android.external.store3.base.impl.FluentMemoryPolicyBuilder
@@ -20,22 +20,22 @@ import dagger.Lazy as DaggerLazy
 
 @Module(includes = arrayOf(
         ParserModule::class, StoyickerApiModule::class, FirebaseCrashReporterModule::class))
-internal class VersionSourceModule {
+internal class VersionCheckSourceModule {
     @Provides
     @Singleton
     fun store(moshiBuilder: Moshi.Builder, api: StoyickerApi) =
-            FluentStoreBuilder.parsedWithKey<Unit, BufferedSource, VersionResponse>(
+            FluentStoreBuilder.parsedWithKey<Unit, BufferedSource, VersionCheckResponse>(
                     Fetcher { fetch(api) }) {
                 parsers = listOf(MoshiParserFactory.createSourceParser(
-                    moshiBuilder.build(), VersionResponse::class.java))
+                    moshiBuilder.build(), VersionCheckResponse::class.java))
                 memoryPolicy = FluentMemoryPolicyBuilder.build { memorySize = 0 }
                 stalePolicy = StalePolicy.REFRESH_ON_STALE
             }
 
     @Provides
     @Singleton
-    fun source(store: DaggerLazy<Store<VersionResponse, Unit>>,
-               crashReporter: CrashReporter) = VersionSource(store, crashReporter)
+    fun source(store: DaggerLazy<Store<VersionCheckResponse, Unit>>,
+               crashReporter: CrashReporter) = VersionCheckSource(store, crashReporter)
 
     private fun fetch(api: StoyickerApi) = api.versionCheck().map { it.source() }
 }

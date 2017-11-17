@@ -1,28 +1,46 @@
 package app.splash
 
 import android.app.Activity
+import android.app.startIntent
+import android.content.Intent
+import android.content.versionCode
+import android.net.Uri
 import android.support.v7.app.AlertDialog
+import android.widget.Toast
+import domain.versioncheck.DomainVersionCheckDescription
+import domain.versioncheck.VersionCheckUseCase
+import io.reactivex.Scheduler
+import io.reactivex.observers.DisposableSingleObserver
+import org.stoyicker.dinger.R
 import java.lang.ref.WeakReference
 
-internal class VersionCheckCoordinator(activity: Activity, resultCallback: ResultCallback) {
+internal class VersionCheckCoordinator(
+        activity: Activity,
+        private val asyncExecutionScheduler: Scheduler,
+        private val postExecutionScheduler: Scheduler,
+        resultCallback: ResultCallback) {
     private val activityWeakRef by lazy { WeakReference(activity) }
     private val resultCallbackWeakRef by lazy { WeakReference(resultCallback) }
     private var dialog: AlertDialog? = null
     private var wasShowing = false
+    private var useCase: VersionCheckUseCase? = null
 
     fun actionRun() {
         activityWeakRef.get()?.let {
-            if (!it.isFinishing) {
-                dialog = AlertDialog.Builder(it)
-                        .setTitle("Update available")
-                        .setMessage("There is an update available for the app. Older versions are now unsupported.")
-                        .setPositiveButton("Download", { _, _ -> System.out.println("clicked") })
-                        .setOnDismissListener {
-                            wasShowing = false
-                            resultCallbackWeakRef.get()?.onVersionCheckCompleted()
-                        }
-                        .show()
-            }
+            useCase = VersionCheckUseCase(
+                    it.versionCode(), asyncExecutionScheduler, postExecutionScheduler)
+            useCase?.execute(object : DisposableSingleObserver<DomainVersionCheckDescription>() {
+                override fun onSuccess(versionCheckDescription: DomainVersionCheckDescription) {
+                    when (versionCheckDescription.isUpToDate) {
+                        true -> resultCallbackWeakRef.get()?.onVersionCheckCompleted()
+                        false -> showDialog(versionCheckDescription)
+                    }
+                }
+
+                override fun onError(e: Throwable?) {
+                    resultCallbackWeakRef.get()?.onVersionCheckCompleted()
+                }
+            })
         }
     }
 
@@ -38,9 +56,34 @@ internal class VersionCheckCoordinator(activity: Activity, resultCallback: Resul
     }
 
     fun actionCancel() {
-//        useCase?.dispose()
+        useCase?.dispose()
         dialog?.dismiss()
         wasShowing = false
+    }
+
+    private fun showDialog(checkDescription: DomainVersionCheckDescription) =
+            activityWeakRef.get()?.let {
+                if (!it.isFinishing) {
+                    dialog = AlertDialog.Builder(it)
+                            .setTitle(checkDescription.dialogTitle)
+                            .setMessage(checkDescription.dialogBody)
+                            .setPositiveButton(checkDescription.positiveButtonText) { _, _ ->
+                                it.startIntent(Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(checkDescription.downloadUrl))) { intent ->
+                                    Toast.makeText(
+                                            it,
+                                            it.getString(R.string.no_intent_handlers, intent),
+                                            Toast.LENGTH_LONG)
+                                            .show()
+                                }
+                            }
+                            .setOnDismissListener {
+                                wasShowing = false
+                                resultCallbackWeakRef.get()?.onVersionCheckCompleted()
+                            }
+                            .show()
+            }
     }
 
     interface ResultCallback {
