@@ -31,6 +31,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
 
     override fun onStopCurrentWork() = true.also {
         releaseResources()
+        scheduleBecauseError()
         reportHandler.show(this, AutoSwipeReportHandler.RESULT_UNEXPECTED)
     }
 
