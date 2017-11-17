@@ -48,7 +48,7 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
     sourceSets.forEach {
-        it.java.srcDirs += ["src/$it.name/kotlin"]
+        it.java.srcDirs = ["src/$it.name/kotlin"]
     }
 }
 dependencies {

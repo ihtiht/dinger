@@ -48,7 +48,7 @@ internal class Recommendation private constructor(
         @field:Json(name = "group_matched")
         val groupMatched: Boolean) {
     companion object {
-        const val GENDER_MALE = 0
-        const val GENDER_FEMALE = 1
+        const val GENDER_MALE = 0L
+        const val GENDER_FEMALE = 1L
     }
 }
