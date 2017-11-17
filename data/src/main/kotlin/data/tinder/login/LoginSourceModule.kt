@@ -17,11 +17,8 @@ import reporter.CrashReporter
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
-/**
- * Module used to provide stuff required by TopRequestSource objects.
- */
-@Module(includes = arrayOf(ParserModule::class, TinderApiModule::class,
-        FirebaseCrashReporterModule::class))
+@Module(includes = arrayOf(
+        ParserModule::class, TinderApiModule::class, FirebaseCrashReporterModule::class))
 internal class LoginSourceModule {
     @Provides
     @Singleton
@@ -29,8 +26,7 @@ internal class LoginSourceModule {
             FluentStoreBuilder.parsedWithKey<LoginRequestParameters, BufferedSource, LoginResponse>(
                     Fetcher { fetch(it, api) }) {
                 parsers = listOf(MoshiParserFactory.createSourceParser(
-                    moshiBuilder.build(),
-                    LoginResponse::class.java))
+                    moshiBuilder.build(), LoginResponse::class.java))
                 stalePolicy = StalePolicy.NETWORK_BEFORE_STALE
             }
 

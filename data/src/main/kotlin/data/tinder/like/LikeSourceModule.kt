@@ -17,9 +17,6 @@ import okio.BufferedSource
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-/**
- * Module used to provide stuff required by TopRequestSource objects.
- */
 @Module(includes = arrayOf(ParserModule::class, TinderApiModule::class,
         FirebaseCrashReporterModule::class))
 internal class LikeSourceModule {
