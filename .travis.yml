@@ -19,7 +19,7 @@ before_install:
   - tar xvf secrets.tar
   - docker pull stoyicker/docker-android:${DOCKER_IMAGE_TAG}
   - docker tag stoyicker/docker-android:${DOCKER_IMAGE_TAG} stoyicker/docker-android
-  - export CONTAINER=$(docker run -dt -p 127.0.0.1:80:4567 -e ARTIFACT_VERSION -e TRAVIS_BRANCH -e REPO_USER -e GITHUB_TOKEN -e TRAVIS_REPO_SLUG -e TASK stoyicker/docker-android)
+  - export CONTAINER=$(docker run -dt -p 127.0.0.1:80:4567 -e ARTIFACT_VERSION -e TRAVIS_BRANCH -e REPO_USER -e GITHUB_TOKEN -e TRAVIS_REPO_SLUG stoyicker/docker-android)
   - docker exec -t $CONTAINER /bin/sh -c "mkdir -p /root/${TRAVIS_REPO_SLUG}"
   - docker cp ./ $CONTAINER:root/${TRAVIS_REPO_SLUG}
 env:
