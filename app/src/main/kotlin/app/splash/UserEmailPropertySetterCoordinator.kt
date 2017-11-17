@@ -12,8 +12,9 @@ import java.lang.ref.WeakReference
 internal class UserEmailPropertySetterCoordinator(
         activity: Activity,
         private val splashEventTracker: SplashEventTracker,
-        private val resultCallback: ResultCallback) {
+        resultCallback: ResultCallback) {
     private val activityWeakRef by lazy { WeakReference(activity) }
+    private val callbackWeakRef by lazy { WeakReference(resultCallback) }
 
     fun actionDoSet() {
         activityWeakRef.get()?.apply {
@@ -32,7 +33,7 @@ internal class UserEmailPropertySetterCoordinator(
                             null).let {
                         activityWeakRef.get()
                                 ?.startActivityForResult(it, Companion.REQUEST_CODE)
-                                ?: resultCallback.onUserEmailAcquisitionFailed() }
+                                ?: callbackWeakRef.get()?.onUserEmailAcquisitionFailed() }
                     else -> saveAndReportSuccess(it)
                 }
             }
@@ -42,7 +43,7 @@ internal class UserEmailPropertySetterCoordinator(
     fun onActivityResult(resultCode: Int, data: Intent?) {
         when (resultCode) {
             Activity.RESULT_OK -> saveAndReportSuccess(data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME))
-            else -> resultCallback.onUserEmailAcquisitionFailed()
+            else -> callbackWeakRef.get()?.onUserEmailAcquisitionFailed()
         }
     }
 
@@ -59,7 +60,7 @@ internal class UserEmailPropertySetterCoordinator(
             }
             trackUserProvidedAccount()
         }
-        resultCallback.onUserEmailPropertySet()
+        callbackWeakRef.get()?.onUserEmailPropertySet()
     }
 
     interface ResultCallback {

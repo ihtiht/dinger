@@ -16,7 +16,9 @@ internal class VersionCheckCoordinator(activity: Activity) {
                         .setTitle("Update available")
                         .setMessage("There is an update available for the app. Older versions are now unsupported.")
                         .setPositiveButton("Download", { _, _ -> System.out.println("clicked") })
-                        .setOnDismissListener { wasShowing = false }
+                        .setOnDismissListener {
+                            wasShowing = false
+                        }
                         .show()
             }
         }
