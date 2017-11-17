@@ -27,7 +27,7 @@ internal class LoggedInCheckCoordinator(
         })
     }
 
-    fun actionCancelCheck() {
+    fun actionCancel() {
         useCase?.dispose()
     }
 

@@ -33,4 +33,7 @@ internal class SplashModule(
     fun userEmailPropertySetterCoordinator(splashEventTracker: SplashEventTracker) =
             UserEmailPropertySetterCoordinator(
             activity, splashEventTracker, userEmailPropertySetterCoordinatorResultCallback)
+
+    @Provides
+    fun versionCheckCoordinator() = VersionCheckCoordinator(activity)
 }

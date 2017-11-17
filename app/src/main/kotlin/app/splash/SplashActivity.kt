@@ -1,6 +1,7 @@
 package app.splash
 
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import app.MainApplication
@@ -10,7 +11,6 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import org.stoyicker.dinger.R
 import javax.inject.Inject
-
 /**
  * A simple activity that acts as a splash screen.
  *
@@ -23,34 +23,44 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
     @Inject
     lateinit var loggedInCheckCoordinator: LoggedInCheckCoordinator
     @Inject
-    lateinit var userEmailPropertySetter: UserEmailPropertySetterCoordinator
+    lateinit var userEmailPropertySetterCoordinator: UserEmailPropertySetterCoordinator
+    @Inject
+    lateinit var versionCheckCoordinator: VersionCheckCoordinator
     private lateinit var handler: Handler
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        inject()
+        scheduleContentOpening()
+    }
+
+    override fun onDestroy() {
+        loggedInCheckCoordinator.actionCancel()
+        versionCheckCoordinator.actionCancel()
+        super.onDestroy()
+    }
 
     override fun onResume() {
         super.onResume()
-        inject()
-        scheduleContentOpening()
+        versionCheckCoordinator.resume()
+    }
+
+    override fun onPause() {
+        handler.removeCallbacksAndMessages(null)
+        versionCheckCoordinator.pause()
+        super.onPause()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             UserEmailPropertySetterCoordinator.REQUEST_CODE ->
-                userEmailPropertySetter.onActivityResult(resultCode, data)
+                userEmailPropertySetterCoordinator.onActivityResult(resultCode, data)
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
-    override fun onPause() {
-        handler.removeCallbacksAndMessages(null)
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        loggedInCheckCoordinator.actionCancelCheck()
-        super.onDestroy()
-    }
-
-    override fun onUserEmailPropertySet() = loggedInCheckCoordinator.actionDoCheck()
+    override fun onUserEmailPropertySet() { versionCheckCoordinator.actionRun() }
+//    override fun onUserEmailPropertySet() = loggedInCheckCoordinator.actionRun()
 
     override fun onUserEmailAcquisitionFailed() {
         if (!isFinishing) supportFinishAfterTransition()
@@ -73,7 +83,7 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
      */
     private fun fetchUserAccount() {
         if (assertGooglePlayServicesAvailable()) {
-            userEmailPropertySetter.actionDoSet()
+            userEmailPropertySetterCoordinator.actionDoSet()
         }
     }
 
@@ -126,3 +136,4 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
         const val SHOW_TIME_MILLIS = 1000L
     }
 }
+

@@ -13,7 +13,7 @@ internal class UserEmailPropertySetterCoordinator(
         activity: Activity,
         private val splashEventTracker: SplashEventTracker,
         private val resultCallback: ResultCallback) {
-    private val activityWeakRef = WeakReference(activity)
+    private val activityWeakRef by lazy { WeakReference(activity) }
 
     fun actionDoSet() {
         activityWeakRef.get()?.apply {
@@ -41,11 +41,8 @@ internal class UserEmailPropertySetterCoordinator(
 
     fun onActivityResult(resultCode: Int, data: Intent?) {
         when (resultCode) {
-            Activity.RESULT_OK ->
-                saveAndReportSuccess(data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME))
-            else -> {
-                resultCallback.onUserEmailAcquisitionFailed()
-            }
+            Activity.RESULT_OK -> saveAndReportSuccess(data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME))
+            else -> resultCallback.onUserEmailAcquisitionFailed()
         }
     }
 
@@ -53,8 +50,7 @@ internal class UserEmailPropertySetterCoordinator(
         splashEventTracker.apply {
             value.let {
                 activityWeakRef.get()?.apply {
-                    getSharedPreferences(getString(R.string.preferences_file_core),
-                            Context.MODE_PRIVATE)!!
+                    getSharedPreferences(getString(R.string.preferences_file_core), Context.MODE_PRIVATE)!!
                             .edit()
                             .putString(PREFERENCE_KEY_USER_PROVIDED_ACCOUNT, it)
                             .apply()
