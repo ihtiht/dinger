@@ -10,6 +10,16 @@ import javax.inject.Singleton
 internal class NotificationManagerModule {
     @Provides
     @Singleton
-    fun autoSwipeReportHandler(context: Context): NotificationManager =
-            NotificationManagerImpl(context)
+    fun notificationID(): NotificationID = NotificationIDImpl()
+
+    @Provides
+    @Singleton
+    fun groupNotification(): GroupNotification = GroupNotificationImpl()
+
+    @Provides
+    @Singleton
+    fun autoSwipeReportHandler(
+            context: Context, notificationID: NotificationID, groupNotification: GroupNotification)
+            : NotificationManager = NotificationManagerImpl(
+            context, notificationID, groupNotification)
 }

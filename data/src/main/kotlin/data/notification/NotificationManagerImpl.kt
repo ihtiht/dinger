@@ -14,7 +14,10 @@ import org.jetbrains.annotations.Contract
 import org.stoyicker.dinger.data.R
 import java.util.Locale
 
-internal class NotificationManagerImpl(private val context: Context) : NotificationManager {
+internal class NotificationManagerImpl(
+        private val context: Context,
+        private val notificationID: NotificationID,
+        private val groupNotification: GroupNotification) : NotificationManager {
     @Contract(value = "_, _, _, _, null, true, _, _, _ -> fail")
     override fun pop(
             @StringRes channelName: Int,
@@ -26,7 +29,7 @@ internal class NotificationManagerImpl(private val context: Context) : Notificat
             @NotificationPriority priority: Long,
             @NotificationVisibility visibility: Long,
             clickHandler: PendingIntent?) {
-        if (isGroupSummary && GroupNotificationHandler.isGroupShown(context, groupName!!)) {
+        if (isGroupSummary && groupNotification.isGroupShown(context, groupName!!)) {
             return
         }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -38,7 +41,7 @@ internal class NotificationManagerImpl(private val context: Context) : Notificat
         }
         NotificationManagerCompat.from(context).let {
             @Suppress("DEPRECATION") // Deprecated from API 26 on, not before
-            it.notify(NotificationID.next(context), Notification.Builder(context)
+            it.notify(notificationID.next(context), Notification.Builder(context)
                     .setAutoCancel(true)
                     .setContentIntent(clickHandler)
                     .setContentText(body)
