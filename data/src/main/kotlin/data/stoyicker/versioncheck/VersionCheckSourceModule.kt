@@ -15,6 +15,7 @@ import data.stoyicker.StoyickerApi
 import data.stoyicker.StoyickerApiModule
 import okio.BufferedSource
 import reporter.CrashReporter
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
@@ -28,7 +29,12 @@ internal class VersionCheckSourceModule {
                     Fetcher { fetch(api) }) {
                 parsers = listOf(MoshiParserFactory.createSourceParser(
                     moshiBuilder.build(), VersionCheckResponse::class.java))
-                memoryPolicy = FluentMemoryPolicyBuilder.build { memorySize = 0 }
+                memoryPolicy = FluentMemoryPolicyBuilder.build {
+                    expireAfterWrite = 1
+                    expireAfterAccess = 1
+                    expireAfterTimeUnit = TimeUnit.SECONDS
+                    memorySize = 0
+                }
                 stalePolicy = StalePolicy.REFRESH_ON_STALE
             }
 
