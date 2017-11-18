@@ -3,6 +3,7 @@ package data.tinder.like
 import dagger.Module
 import dagger.Provides
 import data.crash.FirebaseCrashReporterModule
+import domain.like.LikeRecommendationProvider
 import reporter.CrashReporter
 import javax.inject.Singleton
 
@@ -11,6 +12,5 @@ internal class LikeRecommendationProviderModule {
     @Provides
     @Singleton
     fun likeRecommendationProvider(likeFacade: LikeFacade, crashReporter: CrashReporter)
-            : LikeRecommendationProviderImpl =
-            LikeRecommendationProviderImpl(likeFacade, crashReporter)
+            : LikeRecommendationProvider = LikeRecommendationProviderImpl(likeFacade, crashReporter)
 }

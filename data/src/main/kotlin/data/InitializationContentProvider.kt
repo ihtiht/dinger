@@ -7,21 +7,21 @@ import data.account.AccountComponentHolder
 import data.account.AccountModule
 import data.account.AppAccountAuthenticator
 import data.account.DaggerAccountComponent
-import data.alarm.AppAlarmManagerImpl
 import data.autoswipe.AutoSwipeComponentHolder
-import data.autoswipe.AutoSwipeLauncherFactoryImpl
 import data.autoswipe.DaggerAutoSwipeComponent
-import data.stoyicker.versioncheck.VersionCheckProviderImpl
-import data.tinder.like.LikeRecommendationProviderImpl
-import data.tinder.login.LoginProviderImpl
-import data.tinder.recommendation.GetRecommendationProviderImpl
 import domain.alarm.AlarmHolder
+import domain.alarm.AppAlarmManager
 import domain.autoswipe.AutoSwipeHolder
+import domain.autoswipe.AutoSwipeLauncherFactory
 import domain.like.LikeRecommendationHolder
+import domain.like.LikeRecommendationProvider
 import domain.loggedincheck.LoggedInCheckHolder
 import domain.login.LoginHolder
+import domain.login.LoginProvider
 import domain.recommendation.GetRecommendationHolder
+import domain.recommendation.GetRecommendationProvider
 import domain.versioncheck.VersionCheckHolder
+import domain.versioncheck.VersionCheckProvider
 import javax.inject.Inject
 
 /**
@@ -30,19 +30,19 @@ import javax.inject.Inject
  */
 internal class InitializationContentProvider : ContentProvider() {
     @Inject
-    lateinit var loginProviderImpl: LoginProviderImpl
+    lateinit var loginProviderImpl: LoginProvider
     @Inject
-    lateinit var getRecommendationProviderImpl: GetRecommendationProviderImpl
+    lateinit var getRecommendationProviderImpl: GetRecommendationProvider
     @Inject
-    lateinit var likeRecommendationProviderImpl: LikeRecommendationProviderImpl
+    lateinit var likeRecommendationProviderImpl: LikeRecommendationProvider
     @Inject
     lateinit var accountManagerImpl: AppAccountAuthenticator
     @Inject
-    lateinit var alarmManagerImpl: AppAlarmManagerImpl
+    lateinit var alarmManagerImpl: AppAlarmManager
     @Inject
-    lateinit var autoSwipeIntentFactoryImpl: AutoSwipeLauncherFactoryImpl
+    lateinit var autoSwipeIntentFactoryImpl: AutoSwipeLauncherFactory
     @Inject
-    lateinit var versionCheckProviderImpl: VersionCheckProviderImpl
+    lateinit var versionCheckProviderImpl: VersionCheckProvider
 
     override fun onCreate(): Boolean {
         val rootModule = RootModule(context)
