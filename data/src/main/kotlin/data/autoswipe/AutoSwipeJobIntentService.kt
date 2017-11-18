@@ -37,7 +37,6 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     override fun onDestroy() {
         super.onDestroy()
         releaseResources()
-        reportHandler.show(this, AutoSwipeReportHandler.RESULT_UNEXPECTED)
     }
 
     abstract class Action<in Callback>(crashReporter: CrashReporter) {

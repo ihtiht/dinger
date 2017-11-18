@@ -15,7 +15,6 @@ import reporter.CrashReporter
 internal class AutoSwipeReportHandler(
         private val notificationManager: NotificationManager,
         private val crashReporter: CrashReporter) {
-    private var consumed = false
     private var likeCounter = 0
     private var matchCounter = 0
 
@@ -36,8 +35,6 @@ internal class AutoSwipeReportHandler(
     fun show(context: Context, @AutoSwipeResult result: Long) {
         // Show nothing on unsupported APIs to avoid spammy notifications
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
-        if (consumed) return
-        consumed = true
         notificationManager.pop(
                 channelName = R.string.autoswipe_notification_channel_name,
                 title = context.getString(R.string.autoswipe_notification_group_title),
