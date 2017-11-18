@@ -37,10 +37,6 @@ internal class AutoSwipeReportHandler constructor(
     fun show(context: Context, @AutoSwipeResult result: Long) {
         // Show nothing on unsupported APIs to avoid spammy notifications
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
-        if (result != RESULT_MORE_AVAILABLE) {
-            groupNotification.markGroupAsNotShown(
-                    context, context.getString(R.string.autoswipe_notification_group_name))
-        }
         notificationManager.pop(
                 channelName = R.string.autoswipe_notification_channel_name,
                 title = context.getString(R.string.autoswipe_notification_group_title),
@@ -57,6 +53,10 @@ internal class AutoSwipeReportHandler constructor(
                 groupName = context.getString(R.string.autoswipe_notification_group_name),
                 isGroupSummary = false,
                 priority = NotificationManager.PRIORITY_LOW)
+        if (result != RESULT_MORE_AVAILABLE) {
+            groupNotification.markGroupAsNotShown(
+                    context, context.getString(R.string.autoswipe_notification_group_name))
+        }
     }
 
     companion object {
