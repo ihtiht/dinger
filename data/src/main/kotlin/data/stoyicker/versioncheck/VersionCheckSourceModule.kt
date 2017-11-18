@@ -31,7 +31,6 @@ internal class VersionCheckSourceModule {
                     moshiBuilder.build(), VersionCheckResponse::class.java))
                 memoryPolicy = FluentMemoryPolicyBuilder.build {
                     expireAfterWrite = 1
-                    expireAfterAccess = 1
                     expireAfterTimeUnit = TimeUnit.SECONDS
                     memorySize = 0
                 }
