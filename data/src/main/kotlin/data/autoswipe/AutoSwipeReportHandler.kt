@@ -1,6 +1,8 @@
 package data.autoswipe
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.support.annotation.IntDef
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_ERROR
@@ -52,7 +54,12 @@ internal class AutoSwipeReportHandler constructor(
                 category = NotificationManager.CATEGORY_SERVICE,
                 groupName = context.getString(R.string.autoswipe_notification_group_name),
                 isGroupSummary = false,
-                priority = NotificationManager.PRIORITY_LOW)
+                priority = NotificationManager.PRIORITY_LOW,
+                clickHandler = PendingIntent.getActivity(
+                        context,
+                        -1,
+                        Intent("org.stoyicker.action.HOME"),
+                        PendingIntent.FLAG_UPDATE_CURRENT))
         if (result != RESULT_MORE_AVAILABLE) {
             groupNotification.markGroupAsNotShown(
                     context, context.getString(R.string.autoswipe_notification_group_name))
