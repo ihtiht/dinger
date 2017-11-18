@@ -1,7 +1,7 @@
 # Dinger [![Build Status](https://travis-ci.org/stoyicker/dinger.svg?branch=master)](https://travis-ci.org/stoyicker/dinger)
 ## What Tinder should have been
 
-__No clue what's going on? [Start here](assets/overview.pdf "Architecture overview")__
+__No clue what's going on? [Start here](_assets/overview.pdf "Architecture overview")__
 
 Tinder is a very trendy thing. It's like clubbing, but without the fun :D
 
