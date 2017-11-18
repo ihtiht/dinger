@@ -5,7 +5,7 @@ import org.stoyicker.dinger.data.R
 
 internal class GroupNotificationImpl : GroupNotification {
     override fun isGroupShown(context: Context, groupName: String): Boolean =
-            "group_$groupName".let { key ->
+            key(groupName).let { key ->
                 context.getSharedPreferences(context.getString(
                 R.string.preferences_file_notifications), Context.MODE_PRIVATE).let {
                     return if (!it.getBoolean(key, false)) {
@@ -16,4 +16,14 @@ internal class GroupNotificationImpl : GroupNotification {
                     }
         }
     }
+
+    override fun markGroupAsNotShown(context: Context, groupName: String) {
+        context.getSharedPreferences(context.getString(
+                R.string.preferences_file_notifications), Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean(key(groupName), false)
+                .apply()
+    }
 }
+
+private fun key(groupName: String) = "group_$groupName"

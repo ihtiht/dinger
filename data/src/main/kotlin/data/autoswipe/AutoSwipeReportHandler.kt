@@ -7,13 +7,15 @@ import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_ERROR
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_MORE_AVAILABLE
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_RATE_LIMITED
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_UNEXPECTED
+import data.notification.GroupNotification
 import data.notification.NotificationManager
 import domain.like.DomainLikedRecommendationAnswer
 import org.stoyicker.dinger.data.R
 import reporter.CrashReporter
 
-internal class AutoSwipeReportHandler(
+internal class AutoSwipeReportHandler constructor(
         private val notificationManager: NotificationManager,
+        private val groupNotification: GroupNotification,
         private val crashReporter: CrashReporter) {
     private var likeCounter = 0
     private var matchCounter = 0
@@ -35,6 +37,10 @@ internal class AutoSwipeReportHandler(
     fun show(context: Context, @AutoSwipeResult result: Long) {
         // Show nothing on unsupported APIs to avoid spammy notifications
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
+        if (result != RESULT_MORE_AVAILABLE) {
+            groupNotification.markGroupAsNotShown(
+                    context, context.getString(R.string.autoswipe_notification_group_name))
+        }
         notificationManager.pop(
                 channelName = R.string.autoswipe_notification_channel_name,
                 title = context.getString(R.string.autoswipe_notification_group_title),
