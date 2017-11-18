@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.versionCode
 import android.net.Uri
 import android.support.v7.app.AlertDialog
+import android.view.WindowManager
 import android.widget.Toast
 import domain.versioncheck.DomainVersionCheckDescription
 import domain.versioncheck.VersionCheckUseCase
@@ -64,6 +65,9 @@ internal class VersionCheckCoordinator(
     private fun showDialog(checkDescription: DomainVersionCheckDescription) =
             activityWeakRef.get()?.let {
                 if (!it.isFinishing) {
+                    it.window.setFlags(
+                            WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
+                            WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
                     dialog = AlertDialog.Builder(it)
                             .setTitle(checkDescription.dialogTitle)
                             .setMessage(checkDescription.dialogBody)
