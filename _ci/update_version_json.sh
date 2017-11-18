@@ -14,6 +14,8 @@ while getopts ":v:" it; do
     esac
 done
 
+OLD_HEAD=$(git rev-parse HEAD)
+
 git config user.name "Jorge Antonio Diaz-Benito Soriano"
 git config user.email "jorge.diazbenitosoriano@gmail.com"
 
@@ -38,3 +40,5 @@ echo "{
 
 git commit -am "Update version check file: ${VERSION}"
 git push git@github.com:stoyicker/dinger.git gh-pages
+
+git checkout ${OLD_HEAD}
