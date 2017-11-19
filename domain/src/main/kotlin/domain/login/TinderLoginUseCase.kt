@@ -1,6 +1,5 @@
 package domain.login
 
-import com.facebook.login.LoginManager
 import domain.interactor.CompletableDisposableUseCase
 import io.reactivex.Completable
 import io.reactivex.Scheduler
@@ -22,6 +21,5 @@ class TinderLoginUseCase(
                         "Failed to add account $facebookId with token $facebookToken")
                 }
             }
-            .doFinally { LoginManager.getInstance().logOut() }
             .toCompletable()
 }
