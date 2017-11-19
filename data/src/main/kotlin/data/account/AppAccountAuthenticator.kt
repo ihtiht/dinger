@@ -54,17 +54,22 @@ internal class AppAccountAuthenticator(context: Context)
     override fun editProperties(p0: AccountAuthenticatorResponse?, p1: String?) =
             throw UnsupportedOperationException("Not supported")
 
-    override fun addAccount(facebookId: String, facebookToken: String, tinderApiKey: String) =
-            Account(facebookId, Companion.ACCOUNT_TYPE).let {
-                if (delegate.addAccountExplicitly(it, tinderApiKey, null)) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        delegate.notifyAccountAuthenticated(it)
-                    }
-                    true
-                } else {
-                    false
+    override fun updateOrAddAccount(
+            facebookId: String,
+            facebookToken: String,
+            tinderApiKey: String): Boolean {
+        removeAccount()
+        return Account(facebookId, Companion.ACCOUNT_TYPE).let {
+            if (delegate.addAccountExplicitly(it, tinderApiKey, null)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    delegate.notifyAccountAuthenticated(it)
                 }
+                true
+            } else {
+                false
             }
+        }
+    }
 
     override fun removeAccount() {
         delegate.getAccountsByType(ACCOUNT_TYPE).forEach {

@@ -13,7 +13,7 @@ class TinderLoginUseCase(
     override fun buildUseCase(): Completable = LoginHolder.loginProvider
             .login(DomainAuthRequestParameters(facebookId, facebookToken))
             .doOnSuccess {
-                if (!LoginHolder.accountManagementProvider.addAccount(
+                if (!LoginHolder.accountManagementProvider.updateOrAddAccount(
                         facebookId = facebookId,
                         facebookToken = facebookToken,
                         tinderApiKey = it.apiKey)) {
