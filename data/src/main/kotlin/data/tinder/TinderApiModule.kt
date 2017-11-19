@@ -6,7 +6,6 @@ import android.content.Intent
 import com.facebook.AccessToken
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import data.RootModule
@@ -17,12 +16,12 @@ import data.network.NetworkClientModule
 import data.network.NetworkModule
 import data.notification.NotificationManager
 import data.notification.NotificationManagerModule
-import data.tinder.login.LoginRequestParameters
+import domain.login.TinderLoginUseCase
 import io.reactivex.Single
-import okhttp3.MediaType
+import io.reactivex.observers.DisposableCompletableObserver
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody
 import org.stoyicker.dinger.data.BuildConfig
 import org.stoyicker.dinger.data.R
 import reporter.CrashReporter
@@ -82,9 +81,24 @@ internal class TinderApiModule {
                                         })
                             }.run {
                                 try {
-                                    blockingGet().let {
-                                        AccessToken.setCurrentAccessToken(it)
-                                        authenticatorRequest(it)
+                                    blockingGet().run {
+                                        AccessToken.setCurrentAccessToken(this)
+                                        var request: Request? = null
+                                        TinderLoginUseCase(
+                                                facebookId = userId,
+                                                facebookToken = token,
+                                                postExecutionScheduler = Schedulers.trampoline())
+                                                .execute(object : DisposableCompletableObserver() {
+                                                    override fun onComplete() {
+                                                        request = response.request().newBuilder()
+                                                                .build()
+                                                    }
+
+                                                    override fun onError(error: Throwable) {
+                                                        crashReporter.report(error)
+                                                    }
+                                                })
+                                        request
                                     }
                                 } catch (exception: FacebookException) {
                                     crashReporter.report(exception)
@@ -107,17 +121,6 @@ internal class TinderApiModule {
             .build()
             .create(TinderApi::class.java)
 }
-
-private fun authenticatorRequest(accessToken: AccessToken) = Request.Builder().post(
-        RequestBody.create(MediaType.parse("application/json; charset=UTF-8"),
-                Moshi.Builder()
-                        .build()
-                        .adapter(LoginRequestParameters::class.java)
-                        .toJson(LoginRequestParameters(
-                                facebookId = accessToken.userId,
-                                facebookToken = accessToken.token))))
-        .url("https://api.gotinder.com/v2/auth/login/facebook")
-        .build()
 
 private fun finishAccount(
         context: Context,
