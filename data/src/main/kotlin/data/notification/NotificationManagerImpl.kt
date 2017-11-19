@@ -19,7 +19,27 @@ internal class NotificationManagerImpl(
         private val notificationID: NotificationID,
         private val groupNotification: GroupNotification) : NotificationManager {
     @Contract(value = "_, _, _, _, null, true, _, _, _ -> fail")
-    override fun pop(
+    override fun notify(
+            @StringRes channelName: Int,
+            @StringRes title: Int,
+            @StringRes body: Int,
+            @NotificationCategory category: String,
+            groupName: String?,
+            isGroupSummary: Boolean,
+            @NotificationPriority priority: Long,
+            @NotificationVisibility visibility: Long,
+            clickHandler: PendingIntent?) = notify(
+            channelName = channelName,
+            title = context.getString(title),
+            body = context.getString(body),
+            category = category,
+            groupName = groupName,
+            isGroupSummary = isGroupSummary,
+            priority = priority,
+            visibility = visibility,
+            clickHandler = clickHandler)
+
+    override fun notify(
             @StringRes channelName: Int,
             title: String,
             body: String,

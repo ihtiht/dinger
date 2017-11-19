@@ -6,15 +6,15 @@
         <item quantity="other">Swept %1$d profiles</item>
     </plurals>
     <plurals name="autoswipe_notification_title_matches">
-        <item quantity="zero">.</item>
-        <item quantity="one">, 1 new match.</item>
-        <item quantity="other">, %1$d new matches.</item>
+        <item quantity="zero" />
+        <item quantity="one">, 1 new match</item>
+        <item quantity="other">, %1$d new matches</item>
     </plurals>
 
-    <string name="autoswipe_notification_body_error">Scheduled after an hour because of an error.</string>
-    <string name="autoswipe_notification_body_more_available">Scheduled to request more profiles immediately.</string>
-    <string name="autoswipe_notification_body_capped">Scheduled for when the cap resets.</string>
-    <string name="autoswipe_notification_body_unexpected">Unexpected result. Reported for diagnosis.</string>
+    <string name="autoswipe_notification_body_error">Scheduled after an hour because of an error</string>
+    <string name="autoswipe_notification_body_more_available">Scheduled to request more profiles immediately</string>
+    <string name="autoswipe_notification_body_capped">Scheduled for when the cap resets</string>
+    <string name="autoswipe_notification_body_unexpected">Unexpected result. Reported for diagnosis</string>
     <string name="autoswipe_notification_channel_name">Autoswipe</string>
     <string name="autoswipe_receiver_description">Swiping for you!</string>
     <string name="autoswipe_notification_group_name">Autoswipe</string>

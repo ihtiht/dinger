@@ -39,15 +39,15 @@ internal class AutoSwipeReportHandler constructor(
     fun show(context: Context, @AutoSwipeResult result: Long) {
         // Show nothing on unsupported APIs to avoid spammy notifications
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
-        notificationManager.pop(
+        notificationManager.notify(
                 channelName = R.string.autoswipe_notification_channel_name,
-                title = context.getString(R.string.autoswipe_notification_group_title),
-                body = context.getString(R.string.autoswipe_notification_group_body),
+                title = R.string.autoswipe_notification_group_title,
+                body = R.string.autoswipe_notification_group_body,
                 category = NotificationManager.CATEGORY_SERVICE,
                 groupName = context.getString(R.string.autoswipe_notification_group_name),
                 isGroupSummary = true,
                 priority = NotificationManager.PRIORITY_LOW)
-        notificationManager.pop(
+        notificationManager.notify(
                 channelName = R.string.autoswipe_notification_channel_name,
                 title = generateTitle(context, likeCounter, matchCounter),
                 body = generateBody(context, crashReporter, result),
@@ -57,7 +57,7 @@ internal class AutoSwipeReportHandler constructor(
                 priority = NotificationManager.PRIORITY_LOW,
                 clickHandler = PendingIntent.getActivity(
                         context,
-                        -1,
+                        1,
                         Intent("org.stoyicker.action.HOME"),
                         PendingIntent.FLAG_UPDATE_CURRENT))
         if (result in arrayOf(RESULT_UNEXPECTED, RESULT_RATE_LIMITED)) {

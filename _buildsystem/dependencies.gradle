@@ -3,6 +3,7 @@ final def daggerVersion = "2.12"
 final def facebookSdkVersion = "4.27.0"
 final def googlePlayServicesVersion = "11.6.0"
 final def jsr250Version = "1.0"
+final def kotlinCoroutinesVersion = "0.19.3"
 final def kotlinVersion = "1.1.60"
 final def lottieVersion = "2.1.0"
 final def moshiVersion = "1.5.0" // TODO When moshi-kotlin requires no kotlin-reflect, include it https://github.com/square/moshi/issues/315 and change @field:Json to @Json
@@ -53,7 +54,8 @@ ext {
             "com.squareup.moshi:moshi-adapters:$moshiVersion",
             "android.arch.persistence.room:runtime:$architectureComponentsVersion",
             "android.arch.lifecycle:runtime:$architectureComponentsVersion",
-            "android.arch.lifecycle:extensions:$architectureComponentsVersion"
+            "android.arch.lifecycle:extensions:$architectureComponentsVersion",
+            "com.facebook.android:facebook-android-sdk:$facebookSdkVersion"
     ]
     providedDataDependencies = [
             "com.android.support:support-annotations:$supportLibraryVersion"

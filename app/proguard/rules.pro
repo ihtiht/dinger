@@ -30,3 +30,6 @@
 -dontwarn android.arch.util.paging.CountedDataSource
 -dontwarn android.arch.persistence.room.paging.LimitOffsetDataSource
 -dontwarn io.reactivex.internal.**
+-keepclassmembernames class kotlinx.** {
+    volatile <fields>;
+}

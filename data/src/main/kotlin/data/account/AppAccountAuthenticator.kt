@@ -17,11 +17,7 @@ internal class AppAccountAuthenticator(context: Context)
     : AccountManagementProvider, LoggedInCheckProvider, AbstractAccountAuthenticator(context) {
     private val delegate by lazy { AccountManager.get(context) }
 
-    init {
-        ACCOUNT_TYPE = context.getString(R.string.account_type)
-        ACCOUNT_DATA_FACEBOOK_ID = context.getString(R.string.account_data_fb_id)
-        ACCOUNT_DATA_FACEBOOK_TOKEN = context.getString(R.string.account_data_fb_token)
-    }
+    init { ACCOUNT_TYPE = context.getString(R.string.account_type) }
 
     override fun addAccount(
             p0: AccountAuthenticatorResponse?,
@@ -60,10 +56,7 @@ internal class AppAccountAuthenticator(context: Context)
 
     override fun addAccount(facebookId: String, facebookToken: String, tinderApiKey: String) =
             Account(facebookId, Companion.ACCOUNT_TYPE).let {
-                if (delegate.addAccountExplicitly(it, tinderApiKey, Bundle().apply {
-                    putString(Companion.ACCOUNT_DATA_FACEBOOK_ID, facebookId)
-                    putString(Companion.ACCOUNT_DATA_FACEBOOK_TOKEN, facebookToken)
-                })) {
+                if (delegate.addAccountExplicitly(it, tinderApiKey, null)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         delegate.notifyAccountAuthenticated(it)
                     }
@@ -73,10 +66,8 @@ internal class AppAccountAuthenticator(context: Context)
                 }
             }
 
-    override fun removeAccount(facebookId: String) {
-        delegate.getAccountsByType(ACCOUNT_TYPE).first {
-            delegate.getUserData(it, Companion.ACCOUNT_DATA_FACEBOOK_ID) == facebookId
-        }.let {
+    override fun removeAccount() {
+        delegate.getAccountsByType(ACCOUNT_TYPE).forEach {
             delegate.apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                     removeAccountExplicitly(it)
@@ -97,25 +88,7 @@ internal class AppAccountAuthenticator(context: Context)
         }
     }
 
-    fun accountFacebookId() =
-            delegate.getAccountsByType(Companion.ACCOUNT_DATA_FACEBOOK_ID).let {
-                when (it.size) {
-                    0 -> null
-                    else -> delegate.getUserData(it.first(), Companion.ACCOUNT_DATA_FACEBOOK_ID)
-                }
-    }
-
-    fun accountFacebookToken() =
-            delegate.getAccountsByType(Companion.ACCOUNT_TYPE).let {
-                when (it.size) {
-                    0 -> null
-                    else -> delegate.getUserData(it.first(), Companion.ACCOUNT_DATA_FACEBOOK_TOKEN)
-                }
-            }
-
     private companion object {
         lateinit var ACCOUNT_TYPE: String
-        lateinit var ACCOUNT_DATA_FACEBOOK_ID: String
-        lateinit var ACCOUNT_DATA_FACEBOOK_TOKEN: String
     }
 }
