@@ -60,7 +60,7 @@ internal class AutoSwipeReportHandler constructor(
                         -1,
                         Intent("org.stoyicker.action.HOME"),
                         PendingIntent.FLAG_UPDATE_CURRENT))
-        if (result != RESULT_MORE_AVAILABLE) {
+        if (result in arrayOf(RESULT_UNEXPECTED, RESULT_RATE_LIMITED)) {
             groupNotification.markGroupAsNotShown(
                     context, context.getString(R.string.autoswipe_notification_group_name))
         }
