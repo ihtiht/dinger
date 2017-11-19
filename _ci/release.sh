@@ -56,7 +56,7 @@ uploadReleaseToGitHub() {
     APK_DOWNLOAD_URL=$(echo ${RESPONSE_BODY} | jq -r .browser_download_url)
 
     # Attach the qr code
-    UPLOAD_URL=$(echo ${UPLOAD_URL} | sed "s/dinger-${ARTIFACT_VERSION}.apk/qrcode.png/")
+    UPLOAD_URL=$(echo ${UPLOAD_URL} | sed "s/dinger-${ARTIFACT_VERSION}.apk/qrcode-${ARTIFACT_VERSION}.png/")
     RESPONSE_BODY=$(curl \
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
