@@ -153,17 +153,17 @@ GitHubService service = dinger.create(GitHubService.class);</pre>
 
             <section id="download">
               <h3>Download</h3>
-              <p><a href="https://github.com/stoyicker/dinger/releases/latest" class="dl">&darr; <span>Latest</span> APK</a></p>
+              <p><a href="https://github.com/stoyicker/dinger/releases/latest" class="dl version-href">&darr; <span>Latest</span> APK</a></p>
               <p>The source code to the Dinger, its samples, and this website is <a href="http://github.com/stoyicker/dinger">available on GitHub</a>.</p>
               <h4>Maven</h4>
               <pre class="prettyprint">&lt;dependency>
   &lt;groupId>com.squareup.dinger2&lt;/groupId>
   &lt;artifactId>dinger&lt;/artifactId>
-  &lt;version><span class="pln"><em>(insert latest version)</em></span>&lt;/version>
+  &lt;version><span class="version pln"><em>(insert latest version)</em></span>&lt;/version>
 &lt;/dependency></pre>
               <h4>Gradle</h4>
               <pre class="prettyprint">
-compile 'com.squareup.dinger2:dinger:<span class="pln"><em>(insert latest version)</em></span>'
+compile 'com.squareup.dinger2:dinger:<span class="version pln"><em>(insert latest version)</em></span>'
 </pre>
               <p>Dinger requires at minimum Java 7 or Android 2.3.</p>
 
@@ -250,6 +250,12 @@ limitations under the License.</pre>
             show: 500,
             hide: 0
           }
+        });
+
+        $.getJSON('https://stoyicker.github.io/dinger/version.json', function(data) {
+          $('.version').text(data.version);
+          $('.version-tag').text('v' + data.version);
+          $('.version-href').attr('href', data.download_url);
         });
       });
 
