@@ -57,67 +57,66 @@ internal class TinderApiModule {
                             }
                         }
                         .build())
-            }.authenticator { _, response ->
-                return@authenticator when (response.code()) {
-                    401 -> appAccountManager.let {
-                        val facebookToken: AccessToken? = AccessToken.getCurrentAccessToken()
-                        if (facebookToken != null) {
-                            Single.create<AccessToken> { emitter ->
-                                if (facebookToken.isExpired) {
-                                    AccessToken.refreshCurrentAccessTokenAsync(
-                                            object : AccessToken.AccessTokenRefreshCallback {
-                                                @Suppress("FunctionName")
-                                                override fun OnTokenRefreshed(
-                                                        accessToken: AccessToken) {
-                                                    emitter.onSuccess(accessToken)
+            }.authenticator { _, response -> when (response.code()) {
+                401 -> appAccountManager.let {
+                    val facebookToken: AccessToken? = AccessToken.getCurrentAccessToken()
+                    if (facebookToken != null) {
+                        Single.create<AccessToken> { emitter ->
+                            if (facebookToken.isExpired) {
+                                AccessToken.refreshCurrentAccessTokenAsync(
+                                        object : AccessToken.AccessTokenRefreshCallback {
+                                            @Suppress("FunctionName")
+                                            override fun OnTokenRefreshed(
+                                                    accessToken: AccessToken) {
+                                                emitter.onSuccess(accessToken)
+                                            }
+
+                                            @Suppress("FunctionName")
+                                            override fun OnTokenRefreshFailed(
+                                                    exception: FacebookException) {
+                                                emitter.onError(exception)
+                                            }
+                                        })
+                            } else {
+                                emitter.onSuccess(facebookToken)
+                            }
+                        }.run {
+                            try {
+                                blockingGet().run {
+                                    AccessToken.setCurrentAccessToken(this)
+                                    var request: Request? = null
+                                    TinderLoginUseCase(
+                                            facebookId = userId,
+                                            facebookToken = token,
+                                            postExecutionScheduler = Schedulers.trampoline())
+                                            .execute(object : DisposableCompletableObserver() {
+                                                override fun onComplete() {
+                                                    request = response.request().newBuilder()
+                                                            .build()
                                                 }
 
-                                                @Suppress("FunctionName")
-                                                override fun OnTokenRefreshFailed(
-                                                        exception: FacebookException) {
-                                                    emitter.onError(exception)
+                                                override fun onError(error: Throwable) {
+                                                    crashReporter.report(error)
                                                 }
                                             })
-                                } else {
-                                    emitter.onSuccess(facebookToken)
+                                    request
                                 }
-                            }.run {
-                                try {
-                                    blockingGet().run {
-                                        AccessToken.setCurrentAccessToken(this)
-                                        var request: Request? = null
-                                        TinderLoginUseCase(
-                                                facebookId = userId,
-                                                facebookToken = token,
-                                                postExecutionScheduler = Schedulers.trampoline())
-                                                .execute(object : DisposableCompletableObserver() {
-                                                    override fun onComplete() {
-                                                        request = response.request().newBuilder()
-                                                                .build()
-                                                    }
-
-                                                    override fun onError(error: Throwable) {
-                                                        crashReporter.report(error)
-                                                    }
-                                                })
-                                        request
-                                    }
-                                } catch (exception: FacebookException) {
-                                    crashReporter.report(exception)
-                                    finishAccount(context, appAccountManager, notificationManager)
-                                    null
-                                }
+                            } catch (exception: FacebookException) {
+                                crashReporter.report(exception)
+                                finishAccount(context, appAccountManager, notificationManager)
+                                null
                             }
-                        } else {
-                            finishAccount(context, appAccountManager, notificationManager)
-                            null
                         }
-                    }
-                    else -> {
+                    } else {
                         finishAccount(context, appAccountManager, notificationManager)
                         null
                     }
                 }
+                else -> {
+                    finishAccount(context, appAccountManager, notificationManager)
+                    null
+                }
+            }
             }.build())
             .baseUrl(TinderApi.BASE_URL)
             .build()
