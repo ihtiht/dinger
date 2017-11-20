@@ -8,17 +8,14 @@ import android.support.annotation.IntDef
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_ERROR
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_MORE_AVAILABLE
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_RATE_LIMITED
-import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_UNEXPECTED
 import data.notification.GroupNotification
 import data.notification.NotificationManager
 import domain.like.DomainLikedRecommendationAnswer
 import org.stoyicker.dinger.data.R
-import reporter.CrashReporter
 
-internal class AutoSwipeReportHandler constructor(
+internal class AutoSwipeReportHandler(
         private val notificationManager: NotificationManager,
-        private val groupNotification: GroupNotification,
-        private val crashReporter: CrashReporter) {
+        private val groupNotification: GroupNotification) {
     private var likeCounter = 0
     private var matchCounter = 0
 
@@ -50,7 +47,7 @@ internal class AutoSwipeReportHandler constructor(
         notificationManager.notify(
                 channelName = R.string.autoswipe_notification_channel_name,
                 title = generateTitle(context, likeCounter, matchCounter),
-                body = generateBody(context, crashReporter, result),
+                body = generateBody(context, result),
                 category = NotificationManager.CATEGORY_SERVICE,
                 groupName = context.getString(R.string.autoswipe_notification_group_name),
                 isGroupSummary = false,
@@ -60,14 +57,13 @@ internal class AutoSwipeReportHandler constructor(
                         1,
                         Intent("org.stoyicker.action.HOME"),
                         PendingIntent.FLAG_UPDATE_CURRENT))
-        if (result in arrayOf(RESULT_UNEXPECTED, RESULT_RATE_LIMITED)) {
+        if (result in arrayOf(RESULT_ERROR, RESULT_RATE_LIMITED)) {
             groupNotification.markGroupAsNotShown(
                     context, context.getString(R.string.autoswipe_notification_group_name))
         }
     }
 
     companion object {
-        const val RESULT_UNEXPECTED = 0L
         const val RESULT_RATE_LIMITED = 1L
         const val RESULT_MORE_AVAILABLE = 2L
         const val RESULT_ERROR = 3L
@@ -75,7 +71,7 @@ internal class AutoSwipeReportHandler constructor(
 }
 
 @Retention(AnnotationRetention.SOURCE)
-@IntDef(RESULT_UNEXPECTED, RESULT_RATE_LIMITED, RESULT_MORE_AVAILABLE, RESULT_ERROR)
+@IntDef(RESULT_RATE_LIMITED, RESULT_MORE_AVAILABLE, RESULT_ERROR)
 internal annotation class AutoSwipeResult
 
 private fun generateTitle(context: Context, likes: Int, matches: Int) = StringBuilder().apply {
@@ -87,15 +83,9 @@ private fun generateTitle(context: Context, likes: Int, matches: Int) = StringBu
 
 private fun generateBody(
         context: Context,
-        crashReporter: CrashReporter,
         @AutoSwipeResult result: Long) = when (result) {
     RESULT_RATE_LIMITED -> context.getString(R.string.autoswipe_notification_body_capped)
     RESULT_MORE_AVAILABLE -> context.getString(R.string.autoswipe_notification_body_more_available)
     RESULT_ERROR -> context.getString(R.string.autoswipe_notification_body_error)
-    RESULT_UNEXPECTED -> {
-        crashReporter.report(IllegalStateException(
-                "Got RESULT_UNEXPECTED in the autoswipe report."))
-        context.getString(R.string.autoswipe_notification_body_unexpected)
-    }
     else -> throw IllegalStateException("Unexpected result $result in the autoswipe report.")
 }

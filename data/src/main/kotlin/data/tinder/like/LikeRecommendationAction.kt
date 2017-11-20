@@ -7,12 +7,9 @@ import domain.like.LikeRecommendationUseCase
 import domain.recommendation.DomainRecommendationUser
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
-import reporter.CrashReporter
 
-internal class LikeRecommendationAction(
-        private val user: DomainRecommendationUser,
-        crashReporter: CrashReporter)
-    : AutoSwipeJobIntentService.Action<LikeRecommendationAction.Callback>(crashReporter)  {
+internal class LikeRecommendationAction(private val user: DomainRecommendationUser)
+    : AutoSwipeJobIntentService.Action<LikeRecommendationAction.Callback>() {
     private var useCaseDelegate: DisposableUseCase? = null
 
     override fun execute(owner: AutoSwipeJobIntentService, callback: Callback) =

@@ -24,51 +24,42 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         AutoSwipeComponentHolder.autoSwipeComponent.inject(this)
     }
 
-    override fun onHandleWork(intent: Intent) {
-        startAutoSwipe()
-    }
+    override fun onHandleWork(intent: Intent) { startAutoSwipe() }
 
-    override fun onStopCurrentWork() = true.also {
-        releaseResources()
-        scheduleBecauseError()
-        reportHandler.show(this, AutoSwipeReportHandler.RESULT_UNEXPECTED)
-    }
+    override fun onStopCurrentWork() = true.also { releaseResources() }
 
     override fun onDestroy() {
         super.onDestroy()
         releaseResources()
     }
 
-    abstract class Action<in Callback>(crashReporter: CrashReporter) {
-        protected val commonDelegate by lazy { CommonResultDelegate(crashReporter, this) }
+    abstract class Action<in Callback> {
+        protected val commonDelegate by lazy { CommonResultDelegate(this) }
 
         abstract fun execute(owner: AutoSwipeJobIntentService, callback: Callback)
 
         abstract fun dispose()
     }
 
-    class CommonResultDelegate(
-            private val crashReporter: CrashReporter,
-            private val action: Action<*>) {
+    class CommonResultDelegate(private val action: Action<*>) {
         fun onComplete(autoSwipeJobIntentService: AutoSwipeJobIntentService) {
             autoSwipeJobIntentService.clearAction(action)
         }
 
         fun onError(error: Throwable, autoSwipeJobIntentService: AutoSwipeJobIntentService) {
-            crashReporter.report(error)
+            autoSwipeJobIntentService.scheduleBecauseError(error)
             autoSwipeJobIntentService.clearAction(action)
-            autoSwipeJobIntentService.scheduleBecauseError()
         }
     }
 
     private fun startAutoSwipe() = Unit.also {
-        GetRecommendationsAction(crashReporter).apply {
+        GetRecommendationsAction().apply {
             ongoingActions += (this)
             execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
                 override fun onRecommendationsReceived(
                         recommendations: List<DomainRecommendationUser>) {
                     if (recommendations.isEmpty()) {
-                        scheduleBecauseError()
+                        scheduleBecauseError(IllegalStateException("Empty recommendation list"))
                     } else {
                         likeRecommendation(
                                 recommendations.first(),
@@ -82,7 +73,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     private fun likeRecommendation(
             recommendation: DomainRecommendationUser,
             remaining: List<DomainRecommendationUser>): Unit = Unit.also {
-        LikeRecommendationAction(recommendation, crashReporter).apply {
+        LikeRecommendationAction(recommendation).apply {
             ongoingActions += (this)
             execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
                 override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) =
@@ -105,10 +96,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                             }
                         }
 
-                override fun onRecommendationLikeFailed() {
+                override fun onRecommendationLikeFailed() =
                     saveRecommendationToDatabase(recommendation, liked = false, matched = false)
-                    scheduleBecauseError()
-                }
             })
         }
     }
@@ -149,7 +138,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     private fun scheduleBecauseLimited(notBeforeMillis: Long) =
-            FromRateLimitedPostAutoSwipeAction(crashReporter, notBeforeMillis).apply {
+            FromRateLimitedPostAutoSwipeAction(notBeforeMillis).apply {
                 ongoingActions += this
                 reportHandler.show(
                         this@AutoSwipeJobIntentService,
@@ -157,12 +146,14 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 execute(this@AutoSwipeJobIntentService, Unit)
     }
 
-    private fun scheduleBecauseError() = FromErrorPostAutoSwipeAction(crashReporter).apply {
-        ongoingActions += this
-        reportHandler.show(
-                this@AutoSwipeJobIntentService,
-                AutoSwipeReportHandler.RESULT_ERROR)
-        execute(this@AutoSwipeJobIntentService, Unit)
+    private fun scheduleBecauseError(error: Throwable) {
+        crashReporter.report(error)
+        FromErrorPostAutoSwipeAction().apply {
+            ongoingActions += this
+            reportHandler.show(
+                    this@AutoSwipeJobIntentService, AutoSwipeReportHandler.RESULT_ERROR)
+            execute(this@AutoSwipeJobIntentService, Unit)
+        }
     }
 
     private fun releaseResources() {

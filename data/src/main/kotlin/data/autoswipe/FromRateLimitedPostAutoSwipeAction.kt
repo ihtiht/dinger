@@ -4,12 +4,9 @@ import domain.autoswipe.FromRateLimitedPostAutoSwipeUseCase
 import domain.interactor.DisposableUseCase
 import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.schedulers.Schedulers
-import reporter.CrashReporter
 
-internal class FromRateLimitedPostAutoSwipeAction(
-        crashReporter: CrashReporter,
-        private val notBeforeMillis: Long)
-    : AutoSwipeJobIntentService.Action<Unit>(crashReporter)  {
+internal class FromRateLimitedPostAutoSwipeAction(private val notBeforeMillis: Long)
+    : AutoSwipeJobIntentService.Action<Unit>() {
     private var useCaseDelegate: DisposableUseCase? = null
 
     override fun execute(owner: AutoSwipeJobIntentService, callback: Unit) =
