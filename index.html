@@ -203,6 +203,7 @@ GitHubService service = dinger.create(GitHubService.class);</pre>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="static/bootstrap.min.js"></script>
     <script src="static/jquery.smooth-scroll.min.js"></script>
+    <script src="static/detect-mobile-browser.js"></script>
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=kotlin&amp;skin=desert"></script>
     <script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.2/dist/showdown.min.js"></script>
     <script type="text/javascript">
@@ -228,7 +229,11 @@ GitHubService service = dinger.create(GitHubService.class);</pre>
           $('.version').text(data.version);
           $('.version-tag').append(' ' + data.version);
           $('.version-href').attr('href', data.download_url);
+          if (/iphone|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase())) { 
+              $('.version-qr').css('display', 'none');
+          } else {
           $('.version-qr').attr('src', 'https://github.com/stoyicker/dinger/releases/download/' + data.version + '/qrcode-' + data.version + '.png');
+          }
         });
 
         $.getJSON('https://api.github.com/repos/stoyicker/dinger/releases/latest', function(data) {
