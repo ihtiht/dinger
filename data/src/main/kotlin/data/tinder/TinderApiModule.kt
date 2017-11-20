@@ -38,7 +38,6 @@ import javax.inject.Singleton
 internal class TinderApiModule {
     @Provides
     @Singleton
-    @Suppress("UNREACHABLE_CODE")
     fun tinderApi(
             context: Context,
             clientBuilder: OkHttpClient.Builder,
