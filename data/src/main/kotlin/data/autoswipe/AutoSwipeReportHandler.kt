@@ -3,7 +3,7 @@ package data.autoswipe
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
+import android.preference.PreferenceManager
 import android.support.annotation.IntDef
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_ERROR
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_MORE_AVAILABLE
@@ -34,8 +34,7 @@ internal class AutoSwipeReportHandler(
     private fun addLike() { ++likeCounter }
 
     fun show(context: Context, @AutoSwipeResult result: Long) {
-        // Show nothing on unsupported APIs to avoid spammy notifications
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
+        if (!areNotificationsEnabled(context)) return
         notificationManager.notify(
                 channelName = R.string.autoswipe_notification_channel_name,
                 title = R.string.autoswipe_notification_group_title,
@@ -89,3 +88,7 @@ private fun generateBody(
     RESULT_ERROR -> context.getString(R.string.autoswipe_notification_body_error)
     else -> throw IllegalStateException("Unexpected result $result in the autoswipe report.")
 }
+
+private fun areNotificationsEnabled(context: Context) =
+        PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                context.getString(R.string.preference_key_autoswipe_notifications_enabled), false)
