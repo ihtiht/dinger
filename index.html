@@ -156,31 +156,17 @@ GitHubService service = dinger.create(GitHubService.class);</pre>
               <p><img src="https://github.com/stoyicker/dinger/releases/latest" alt="QR code" class="dl version-qr" /></p>
               <p>The source code to Dinger, its documentation and this website is <a href="http://github.com/stoyicker/dinger">available on GitHub</a>.</p>
               <h4 class ="version-tag">Changelog</h4>
-              <pre class="changelog"></pre>
+              <p class="changelog"></p>
             </section>
 
             <section id="contributing">
               <h3>Contributing</h3>
-              <p>If you would like to contribute code you can do so through GitHub by forking the repository and sending a pull request.</p>
-              <p>When submitting code, please make every effort to follow existing conventions and style in order to keep the code as readable as possible. Please also make sure your code compiles by running <code>mvn clean verify</code>.</p>
-              <p>Before your code can be accepted into the project you must also sign the <a href="http://squ.re/sign-the-cla">Individual Contributor License Agreement (CLA)</a>.</p>
+              <p class="contributing"/>
             </section>
 
             <section id="license">
               <h3>License</h3>
-              <pre>Copyright 2013 Square, Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</pre>
+              <pre class="license"/>
             </section>
           </div>
           <div class="span3">
@@ -194,8 +180,7 @@ limitations under the License.</pre>
                 <li><a href="#license">License</a></li>
               </ul>
               <ul class="nav nav-pills nav-stacked secondary">
-                <li><a href="2.x/dinger/">Javadoc</a></li>
-                <li><a href="http://stackoverflow.com/questions/tagged/dinger?sort=active">StackOverflow</a></li>
+                <li><a href="https://app.swaggerhub.com/apis/stoyicker/tinder-dinger/none" target="_blank">API documentation</a></li>
               </ul>
             </div>
           </div>
@@ -209,7 +194,9 @@ limitations under the License.</pre>
     </section>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="static/bootstrap.min.js"></script>
-    <script src="static/jquery.smooth-scroll.min.js"></script><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=kotlin&amp;skin=desert"></script>
+    <script src="static/jquery.smooth-scroll.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=kotlin&amp;skin=desert"></script>
+    <script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.2/dist/showdown.min.js"></script>
     <script type="text/javascript">
       $(function() {
         // Spy on scroll position for real-time updating of current section.
@@ -238,6 +225,14 @@ limitations under the License.</pre>
 
         $.getJSON('https://api.github.com/repos/stoyicker/dinger/releases/latest', function(data) {
           $('.changelog').text(data.body.substring(data.body.indexOf("CHANGELOG**:\n\n") + "CHANGELOG**:\n\n".length));
+        });
+
+        $.get('https://raw.githubusercontent.com/stoyicker/dinger/master/LICENSE', function(data) {
+          $('.license').text(data);
+        });
+
+        $.get('https://raw.githubusercontent.com/stoyicker/dinger/master/CONTRIBUTING.md', function(data) {
+          $('.contributing').append(new showdown.Converter().makeHtml(data));
         });
       });
 
