@@ -43,6 +43,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="app.settings.SettingsActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="app.home.HomeActivity"/>
+        </activity>
 
         <!-- BEGIN Facebook -->
         <meta-data
