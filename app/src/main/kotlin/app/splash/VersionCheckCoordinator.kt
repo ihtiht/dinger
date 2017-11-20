@@ -7,12 +7,10 @@ import android.content.versionCode
 import android.net.Uri
 import android.support.v7.app.AlertDialog
 import android.view.WindowManager
-import android.widget.Toast
 import domain.versioncheck.DomainVersionCheckDescription
 import domain.versioncheck.VersionCheckUseCase
 import io.reactivex.Scheduler
 import io.reactivex.observers.DisposableSingleObserver
-import org.stoyicker.dinger.R
 import java.lang.ref.WeakReference
 
 internal class VersionCheckCoordinator(
@@ -74,13 +72,7 @@ internal class VersionCheckCoordinator(
                             .setPositiveButton(checkDescription.positiveButtonText) { _, _ ->
                                 it.startIntent(Intent(
                                         Intent.ACTION_VIEW,
-                                        Uri.parse(checkDescription.downloadUrl))) { intent ->
-                                    Toast.makeText(
-                                            it,
-                                            it.getString(R.string.no_intent_handlers, intent),
-                                            Toast.LENGTH_LONG)
-                                            .show()
-                                }
+                                        Uri.parse(checkDescription.downloadUrl)))
                             }
                             .setOnDismissListener {
                                 wasShowing = false

@@ -17,9 +17,8 @@ internal class HomeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu) = super.onCreateOptionsMenu(menu).also {
         menuInflater.inflate(R.menu.activity_home, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
