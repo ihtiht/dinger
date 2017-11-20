@@ -48,6 +48,7 @@ internal class TinderApiModule {
             .client(clientBuilder.addInterceptor {
                 it.proceed(it.request().newBuilder().addHeaders(appAccountManager).build())
             }.authenticator { _, response -> when {
+                response.request().header(HEADER_AUTH_TRIED).isNullOrBlank() -> null
                 response.code() == 401 -> appAccountManager.let {
                     val facebookToken: AccessToken? = AccessToken.getCurrentAccessToken()
                     if (facebookToken != null) {
@@ -82,6 +83,8 @@ internal class TinderApiModule {
                                             .execute(object : DisposableCompletableObserver() {
                                                 override fun onComplete() {
                                                     request = response.request().newBuilder()
+                                                            .addHeader(
+                                                                    HEADER_AUTH_TRIED, "true")
                                                             .addHeaders(appAccountManager)
                                                             .build()
                                                 }
@@ -112,6 +115,10 @@ internal class TinderApiModule {
             .baseUrl(TinderApi.BASE_URL)
             .build()
             .create(TinderApi::class.java)
+
+    private companion object {
+        const val HEADER_AUTH_TRIED = "auth-tried"
+    }
 }
 
 private fun Request.Builder.addHeaders(appAccountManager: AppAccountAuthenticator) = apply {
