@@ -63,22 +63,25 @@ internal class TinderApiModule {
                     401 -> appAccountManager.let {
                         val facebookToken: AccessToken? = AccessToken.getCurrentAccessToken()
                         if (facebookToken != null) {
-                            AccessToken.setCurrentAccessToken(facebookToken)
                             Single.create<AccessToken> { emitter ->
-                                AccessToken.refreshCurrentAccessTokenAsync(
-                                        object : AccessToken.AccessTokenRefreshCallback {
-                                            @Suppress("FunctionName")
-                                            override fun OnTokenRefreshed(
-                                                    accessToken: AccessToken) {
-                                                emitter.onSuccess(accessToken)
-                                            }
+                                if (facebookToken.isExpired) {
+                                    AccessToken.refreshCurrentAccessTokenAsync(
+                                            object : AccessToken.AccessTokenRefreshCallback {
+                                                @Suppress("FunctionName")
+                                                override fun OnTokenRefreshed(
+                                                        accessToken: AccessToken) {
+                                                    emitter.onSuccess(accessToken)
+                                                }
 
-                                            @Suppress("FunctionName")
-                                            override fun OnTokenRefreshFailed(
-                                                    exception: FacebookException) {
-                                                emitter.onError(exception)
-                                            }
-                                        })
+                                                @Suppress("FunctionName")
+                                                override fun OnTokenRefreshFailed(
+                                                        exception: FacebookException) {
+                                                    emitter.onError(exception)
+                                                }
+                                            })
+                                } else {
+                                    emitter.onSuccess(facebookToken)
+                                }
                             }.run {
                                 try {
                                     blockingGet().run {
