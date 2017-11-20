@@ -225,6 +225,7 @@ GitHubService service = dinger.create(GitHubService.class);</pre>
 
         $.getJSON('https://api.github.com/repos/stoyicker/dinger/releases/latest', function(data) {
           $('.changelog').text(data.body.substring(data.body.indexOf("CHANGELOG**:\n\n") + "CHANGELOG**:\n\n".length));
+          $('.changelog').css('white-space', 'pre-line');
         });
 
         $.get('https://raw.githubusercontent.com/stoyicker/dinger/master/LICENSE', function(data) {
