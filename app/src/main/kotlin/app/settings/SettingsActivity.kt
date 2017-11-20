@@ -17,8 +17,10 @@ internal class SettingsActivity : AppCompatActivity() {
     private fun setupToolbar() {
         toolbar.setTitle(R.string.label_settings)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_left)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_arrow_left)
+        }
     }
 
     companion object {
