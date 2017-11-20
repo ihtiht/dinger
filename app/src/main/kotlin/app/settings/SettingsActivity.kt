@@ -1,5 +1,6 @@
 package app.settings
 
+import android.annotation.SuppressLint
 import android.app.startIntent
 import android.content.Context
 import android.content.Intent
@@ -16,6 +17,7 @@ internal class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         setupToolbar()
+        setupFragment(savedInstanceState)
     }
 
     override fun onCreateOptionsMenu(menu: Menu) = super.onCreateOptionsMenu(menu).also {
@@ -37,6 +39,21 @@ internal class SettingsActivity : AppCompatActivity() {
             setHomeAsUpIndicator(R.drawable.ic_arrow_left)
         }
     }
+
+    @SuppressLint("CommitTransaction")
+    private fun setupFragment(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            val fragment = supportFragmentManager
+                    .findFragmentByTag(SettingsPreferenceFragmentCompat.FRAGMENT_TAG)
+                    ?: SettingsPreferenceFragmentCompat()
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.fragment_container,
+                        fragment, SettingsPreferenceFragmentCompat.FRAGMENT_TAG)
+                commitNowAllowingStateLoss()
+            }
+        }
+    }
+
 
     companion object {
         fun getCallingIntent(context: Context) = Intent(context, SettingsActivity::class.java)
