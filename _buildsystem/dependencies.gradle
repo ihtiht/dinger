@@ -27,7 +27,8 @@ ext {
             "com.google.dagger:dagger:$daggerVersion",
             "com.airbnb.android:lottie:$lottieVersion",
             "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
-            "com.android.support:design:$supportLibraryVersion"
+            "com.android.support:design:$supportLibraryVersion",
+            "com.android.support:preference-v7:$supportLibraryVersion"
     ]
     annotationProcessorDomainDependencies = [
             "javax.annotation:jsr250-api:$jsr250Version"
