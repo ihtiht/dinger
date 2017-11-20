@@ -153,32 +153,10 @@ GitHubService service = dinger.create(GitHubService.class);</pre>
             <section id="download">
               <h3>Download</h3>
               <p><a href="https://github.com/stoyicker/dinger/releases/latest" class="dl version-href">&darr; <span>Latest</span> APK</a></p>
-              <p>The source code to the Dinger, its samples, and this website is <a href="http://github.com/stoyicker/dinger">available on GitHub</a>.</p>
-              <h4>Maven</h4>
-              <pre class="prettyprint">&lt;dependency>
-  &lt;groupId>com.squareup.dinger2&lt;/groupId>
-  &lt;artifactId>dinger&lt;/artifactId>
-  &lt;version><span class="version pln"><em>(insert latest version)</em></span>&lt;/version>
-&lt;/dependency></pre>
-              <h4>Gradle</h4>
-              <pre class="prettyprint">
-compile 'com.squareup.dinger2:dinger:<span class="version pln"><em>(insert latest version)</em></span>'
-</pre>
-              <p>Dinger requires at minimum Java 7 or Android 2.3.</p>
-
-              <h4>ProGuard</h4>
-              <p>If you are using ProGuard in your project add the following lines to your configuration:</p>
-              <pre class="prettyprint">
-# Platform calls Class.forName on types which do not exist on Android to determine platform.
--dontnote dinger2.Platform
-# Platform used when running on Java 8 VMs. Will not be used at runtime.
--dontwarn dinger2.Platform$Java8
-# Retain generic type information for use by reflection by converters and adapters.
--keepattributes Signature
-# Retain declared checked exceptions for use by a Proxy instance.
--keepattributes Exceptions
-</pre>
-            <p>Dinger uses <a href="https://github.com/square/okio">Okio</a> under the hood, so you may want to look at its <a href="https://github.com/square/okio#proguard">ProGuard rules</a> as well.</p>
+              <p><img src="https://github.com/stoyicker/dinger/releases/latest" alt="QR code" class="dl version-qr" /></p>
+              <p>The source code to Dinger, its documentation and this website is <a href="http://github.com/stoyicker/dinger">available on GitHub</a>.</p>
+              <h4 class ="version-tag">Changelog</h4>
+              <pre class="changelog"></pre>
             </section>
 
             <section id="contributing">
@@ -253,8 +231,13 @@ limitations under the License.</pre>
 
         $.getJSON('https://stoyicker.github.io/dinger/version.json', function(data) {
           $('.version').text(data.version);
-          $('.version-tag').text('v' + data.version);
+          $('.version-tag').append(' ' + data.version);
           $('.version-href').attr('href', data.download_url);
+          $('.version-qr').attr('src', 'https://github.com/stoyicker/dinger/releases/download/' + data.version + '/qrcode-' + data.version + '.png');
+        });
+
+        $.getJSON('https://api.github.com/repos/stoyicker/dinger/releases/latest', function(data) {
+          $('.changelog').text(data.body.substring(data.body.indexOf("CHANGELOG**:\n\n") + "CHANGELOG**:\n\n".length));
         });
       });
 
