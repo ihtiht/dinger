@@ -46,19 +46,9 @@ internal class TinderApiModule {
             notificationManager: NotificationManager,
             crashReporter: CrashReporter): TinderApi = retrofitBuilder
             .client(clientBuilder.addInterceptor {
-                it.proceed(it.request().newBuilder()
-                        .apply {
-                            appAccountManager.getTinderAccountToken()?.let {
-                                addHeader(TinderApi.HEADER_AUTH, it)
-                                addHeader(TinderApi.HEADER_CONTENT_TYPE,
-                                        TinderApi.CONTENT_TYPE_JSON)
-                                addHeader(TinderApi.HEADER_PLATFORM,
-                                        BuildConfig.PLATFORM_ANDROID)
-                            }
-                        }
-                        .build())
-            }.authenticator { _, response -> when (response.code()) {
-                401 -> appAccountManager.let {
+                it.proceed(it.request().newBuilder().addHeaders(appAccountManager).build())
+            }.authenticator { _, response -> when {
+                response.code() == 401 -> appAccountManager.let {
                     val facebookToken: AccessToken? = AccessToken.getCurrentAccessToken()
                     if (facebookToken != null) {
                         Single.create<AccessToken> { emitter ->
@@ -92,6 +82,7 @@ internal class TinderApiModule {
                                             .execute(object : DisposableCompletableObserver() {
                                                 override fun onComplete() {
                                                     request = response.request().newBuilder()
+                                                            .addHeaders(appAccountManager)
                                                             .build()
                                                 }
 
@@ -122,6 +113,14 @@ internal class TinderApiModule {
             .build()
             .create(TinderApi::class.java)
 }
+
+private fun Request.Builder.addHeaders(appAccountManager: AppAccountAuthenticator) = apply {
+            appAccountManager.getTinderAccountToken()?.let {
+                addHeader(TinderApi.HEADER_AUTH, it)
+                addHeader(TinderApi.HEADER_CONTENT_TYPE, TinderApi.CONTENT_TYPE_JSON)
+                addHeader(TinderApi.HEADER_PLATFORM, BuildConfig.PLATFORM_ANDROID)
+            }
+        }
 
 private fun finishAccount(
         context: Context,
