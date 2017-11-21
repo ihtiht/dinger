@@ -87,12 +87,10 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                                     scheduleBecauseLimited(answer.rateLimitedUntilMillis!!)
                                 }
                                 remaining.isEmpty() -> scheduleBecauseMoreAvailable()
-                                else -> {
-                                    likeRecommendation(
-                                            remaining.first(),
-                                            remaining.subList(
-                                                    fromIndex = 1, toIndex = remaining.size))
-                                }
+                                else -> likeRecommendation(
+                                        remaining.first(),
+                                        remaining.subList(
+                                                fromIndex = 1, toIndex = remaining.size))
                             }
                         }
 
