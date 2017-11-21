@@ -9,17 +9,13 @@ import java.util.Collections
 
 internal class JsonObjectOrFalseAdapter<T> private constructor(
         private val objectDelegate: JsonAdapter<T>?) : JsonAdapter<T>() {
-    class Factory(private val objectDelegateFactory: JsonAdapter.Factory): JsonAdapter.Factory {
+    class Factory(private val objectDelegateFactory: JsonAdapter.Factory) : JsonAdapter.Factory {
         override fun create(type: Type, annotations: Set<Annotation>?, moshi: Moshi) =
                 when (hasJsonObjectOrFalse(annotations)) {
                     false -> null
                     true -> JsonObjectOrFalseAdapter(
                             objectDelegateFactory.create(type, Collections.emptySet(), moshi))
                 }
-
-        private fun hasJsonObjectOrFalse(annotations: Set<Annotation>?) = annotations?.first {
-            it.annotationClass == JsonObjectOrFalse::class
-        } != null
     }
 
     override fun fromJson(reader: JsonReader) = when (reader.peek()) {
@@ -36,3 +32,7 @@ internal class JsonObjectOrFalseAdapter<T> private constructor(
     override fun toJson(writer: JsonWriter, value: T?) =
             objectDelegate?.toJson(writer, value) ?: Unit
 }
+
+private fun hasJsonObjectOrFalse(annotations: Set<Annotation>?) = annotations?.count {
+    it.annotationClass == JsonObjectOrFalse::class
+} ?: 0 > 0
