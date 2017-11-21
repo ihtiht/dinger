@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "54ae9f26ce7c247bdb72b45612ee4679",
+    "identityHash": "3b7e4bba65d89da92348d9825a33934c",
     "entities": [
       {
         "tableName": "RecommendationUserEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`distanceMiles` INTEGER NOT NULL, `friendCount` INTEGER NOT NULL, `contentHash` TEXT NOT NULL, `id` TEXT NOT NULL, `name` TEXT NOT NULL, `instagram` TEXT, `teaser` TEXT NOT NULL, `sNumber` INTEGER NOT NULL, `spotifyThemeTrack` TEXT, `gender` INTEGER NOT NULL, `birthDateInfo` TEXT NOT NULL, `groupMatched` INTEGER NOT NULL, `liked` INTEGER NOT NULL, `matched` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`instagram`) REFERENCES `RecommendationUserInstagramEntity`(`username`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`teaser`) REFERENCES `RecommendationUserTeaserEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`spotifyThemeTrack`) REFERENCES `RecommendationUserSpotifyThemeTrackEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`distanceMiles` INTEGER NOT NULL, `commonFriendCount` INTEGER NOT NULL, `commonLikeCount` INTEGER NOT NULL, `contentHash` TEXT NOT NULL, `id` TEXT NOT NULL, `name` TEXT NOT NULL, `instagram` TEXT, `teaser` TEXT NOT NULL, `sNumber` INTEGER NOT NULL, `spotifyThemeTrack` TEXT, `gender` INTEGER NOT NULL, `birthDateInfo` TEXT NOT NULL, `groupMatched` INTEGER NOT NULL, `liked` INTEGER NOT NULL, `matched` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`instagram`) REFERENCES `RecommendationUserInstagramEntity`(`username`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`teaser`) REFERENCES `RecommendationUserTeaserEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`spotifyThemeTrack`) REFERENCES `RecommendationUserSpotifyThemeTrackEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "distanceMiles",
@@ -15,8 +15,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "friendCount",
-            "columnName": "friendCount",
+            "fieldPath": "commonFriendCount",
+            "columnName": "commonFriendCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "commonLikeCount",
+            "columnName": "commonLikeCount",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -1114,7 +1120,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"54ae9f26ce7c247bdb72b45612ee4679\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"3b7e4bba65d89da92348d9825a33934c\")"
     ]
   }
 }

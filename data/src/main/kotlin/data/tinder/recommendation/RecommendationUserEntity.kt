@@ -1,10 +1,6 @@
 package data.tinder.recommendation
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
-import android.arch.persistence.room.Index
-import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.*
 import java.util.Date
 
 @Entity(indices = arrayOf(Index("id"),
@@ -24,7 +20,8 @@ import java.util.Date
                         childColumns = arrayOf("spotifyThemeTrack"))))
 internal open class RecommendationUserEntity(
         var distanceMiles: Int,
-        var friendCount: Int,
+        var commonFriendCount: Int,
+        var commonLikeCount: Int,
         var contentHash: String,
         @PrimaryKey
         var id: String,
@@ -45,7 +42,8 @@ internal open class RecommendationUserEntity(
     companion object {
         val NONE = RecommendationUserEntity(
                 distanceMiles = 0,
-                friendCount = 0,
+                commonFriendCount = 0,
+                commonLikeCount = 0,
                 contentHash = "",
                 id = "",
                 birthDate = Date(),

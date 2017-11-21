@@ -31,7 +31,8 @@ internal class RecommendationUserResolver(
                     teaserDaoDelegate.insertResolvedForUserId(id, teasers)
                     userDao.insertUser(RecommendationUserEntity(
                             distanceMiles = distanceMiles,
-                            friendCount = friendCount,
+                            commonFriendCount = commonFriendCount,
+                            commonLikeCount = commonLikeCount,
                             contentHash = contentHash,
                             id = id,
                             birthDate = birthDate,
@@ -70,7 +71,9 @@ internal class RecommendationUserResolver(
             return DomainRecommendationUser(
                     distanceMiles = it.distanceMiles,
                     commonFriends = commonFriends,
-                    friendCount = it.friendCount,
+                    commonFriendCount = it.commonFriendCount,
+                    commonLikes = commonLikes,
+                    commonLikeCount = it.commonLikeCount,
                     contentHash = it.contentHash,
                     id = it.id,
                     birthDate = it.birthDate,
@@ -86,7 +89,6 @@ internal class RecommendationUserResolver(
                     groupMatched = it.groupMatched,
                     liked = it.liked,
                     matched = it.matched,
-                    commonLikes = commonLikes,
                     photos = photos,
                     jobs = jobs,
                     schools = schools,

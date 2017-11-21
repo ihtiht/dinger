@@ -105,7 +105,9 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         recommendationResolver.insert(DomainRecommendationUser(
                 distanceMiles = recommendation.distanceMiles,
                 commonFriends = recommendation.commonFriends,
-                friendCount = recommendation.friendCount,
+                commonFriendCount = recommendation.commonFriendCount,
+                commonLikes = recommendation.commonLikes,
+                commonLikeCount = recommendation.commonLikeCount,
                 id = recommendation.id,
                 birthDate = recommendation.birthDate,
                 name = recommendation.name,
@@ -120,7 +122,6 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 sNumber = recommendation.sNumber,
                 liked = liked,
                 matched = matched,
-                commonLikes = recommendation.commonLikes,
                 photos = recommendation.photos,
                 jobs = recommendation.jobs,
                 schools = recommendation.schools,

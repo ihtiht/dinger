@@ -41,10 +41,14 @@ internal class RecommendationResponseObjectMapper(
 
     private fun transformRecommendation(source: Recommendation) = DomainRecommendationUser(
             distanceMiles = source.distanceMiles,
+            commonFriendCount = source.commonFriendCount,
             commonFriends = source.commonFriends.map {
                 commonFriendDelegate.from(it)
             },
-            friendCount = source.commonFriendCount,
+            commonLikeCount = source.commonLikeCount,
+            commonLikes = source.commonLikes.map {
+                commonLikeDelegate.from(it)
+            },
             id = source.id,
             birthDate = source.birthDate,
             name = source.name,
@@ -57,9 +61,6 @@ internal class RecommendationResponseObjectMapper(
             groupMatched = source.groupMatched,
             pingTime = source.pingTime,
             sNumber = source.sNumber,
-            commonLikes = source.commonLikes.map {
-                commonLikeDelegate.from(it)
-            },
             photos = source.photos.map { photoDelegate.from(it) },
             jobs = source.jobs.map { jobDelegate.from(it) },
             schools = source.schools.map { schoolDelegate.from(it) },
