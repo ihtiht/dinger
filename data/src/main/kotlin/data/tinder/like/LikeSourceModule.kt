@@ -10,6 +10,8 @@ import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import data.crash.FirebaseCrashReporterModule
+import data.network.JsonObjectOrFalseAdapter
+import data.network.JsonObjectOrFalseAdapterModule
 import data.network.ParserModule
 import data.tinder.TinderApi
 import data.tinder.TinderApiModule
@@ -17,16 +19,23 @@ import okio.BufferedSource
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(ParserModule::class, TinderApiModule::class,
+@Module(includes = arrayOf(
+        JsonObjectOrFalseAdapterModule::class,
+        ParserModule::class,
+        TinderApiModule::class,
         FirebaseCrashReporterModule::class))
 internal class LikeSourceModule {
     @Provides
     @Singleton
-    fun store(moshiBuilder: Moshi.Builder, api: TinderApi) =
+    fun store(jsonObjectOrFalseAdapterFactory: JsonObjectOrFalseAdapter.Factory,
+              moshiBuilder: Moshi.Builder,
+              api: TinderApi) =
             FluentStoreBuilder.parsedWithKey<String, BufferedSource, LikeResponse>(
                     Fetcher { fetch(it, api) }) {
                 parsers = listOf(MoshiParserFactory.createSourceParser(
-                        moshiBuilder.build(),
+                        moshiBuilder
+                                .add(jsonObjectOrFalseAdapterFactory)
+                                .build(),
                         LikeResponse::class.java))
                 stalePolicy = StalePolicy.NETWORK_BEFORE_STALE
             }
