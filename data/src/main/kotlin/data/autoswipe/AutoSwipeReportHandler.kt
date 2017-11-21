@@ -3,7 +3,7 @@ package data.autoswipe
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.preference.PreferenceManager
+import android.content.SharedPreferences
 import android.support.annotation.IntDef
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_ERROR
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_MORE_AVAILABLE
@@ -14,6 +14,7 @@ import domain.like.DomainLikedRecommendationAnswer
 import org.stoyicker.dinger.data.R
 
 internal class AutoSwipeReportHandler(
+        private val defaultSharedPreferences: SharedPreferences,
         private val notificationManager: NotificationManager,
         private val groupNotification: GroupNotification) {
     private var likeCounter = 0
@@ -34,7 +35,7 @@ internal class AutoSwipeReportHandler(
     private fun addLike() { ++likeCounter }
 
     fun show(context: Context, @AutoSwipeResult result: Long) {
-        if (!areNotificationsEnabled(context)) return
+        if (!areNotificationsEnabled(context, defaultSharedPreferences)) return
         notificationManager.notify(
                 channelName = R.string.autoswipe_notification_channel_name,
                 title = R.string.autoswipe_notification_group_title,
@@ -89,6 +90,7 @@ private fun generateBody(
     else -> throw IllegalStateException("Unexpected result $result in the autoswipe report.")
 }
 
-private fun areNotificationsEnabled(context: Context) =
-        PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                context.getString(R.string.preference_key_autoswipe_notifications_enabled), false)
+private fun areNotificationsEnabled(context: Context, preferences: SharedPreferences) =
+        preferences.getBoolean(
+                context.getString(R.string.preference_key_autoswipe_notifications_enabled),
+                false)
