@@ -1,7 +1,7 @@
 package app.splash
 
 import android.app.Activity
-import android.app.startIntent
+import android.content.startIntent
 import android.content.Intent
 import android.content.versionCode
 import android.net.Uri

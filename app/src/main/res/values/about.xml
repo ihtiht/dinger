@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about_the_author">About the author</string>
+    <string name="action_share_title">Share…</string>
+    <string name="dinger_website_download" translatable="false">https://stoyicker.github.io/dinger/#download</string>
+    <string name="linkedin_profile_url" translatable="false">http://www.linkedin.com/profile/view?id=jorgediazbenitosoriano</string>
+    <string name="preference_category_about">About</string>
+    <string name="preference_key_share" translatable="false">share</string>
+    <string name="preference_title_share">Tell your friends!</string>
+</resources>
