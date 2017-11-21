@@ -48,7 +48,7 @@ internal class TinderApiModule {
             .client(clientBuilder.addInterceptor {
                 it.proceed(it.request().newBuilder().addHeaders(appAccountManager).build())
             }.authenticator { _, response -> when {
-                response.request().header(HEADER_AUTH_TRIED).isNullOrBlank() -> null
+                !response.request().header(HEADER_AUTH_TRIED).isNullOrBlank() -> null
                 response.code() == 401 -> appAccountManager.let {
                     val facebookToken: AccessToken? = AccessToken.getCurrentAccessToken()
                     if (facebookToken != null) {
