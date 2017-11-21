@@ -129,7 +129,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 teasers = recommendation.teasers))
     }
 
-    private fun scheduleBecauseMoreAvailable() = ImmediatePostAutoSwipeAction(crashReporter).apply {
+    private fun scheduleBecauseMoreAvailable() = ImmediatePostAutoSwipeAction().apply {
         ongoingActions += this
         reportHandler.show(
                 this@AutoSwipeJobIntentService,
