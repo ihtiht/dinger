@@ -25,7 +25,7 @@ Something not working as expected? Missing something you'd like to be able to do
 
 ## API overview
 
-[Click here instead](https://app.swaggerhub.com/apis/stoyicker/tinder-dinger/ "Tinger by Dinger (unofficial) on SwaggerHub").
+[Click here instead](https://app.swaggerhub.com/apis/stoyicker/tinder-dinger/ "Tinger by Dinger (unofficial) on SwaggerHub"). Source [here](https://github.com/stoyicker/dinger-swagger "stoyicker/dinger-swagger")
 
 ## Building
 
