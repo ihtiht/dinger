@@ -82,6 +82,7 @@ internal class TinderApiModule {
                                             postExecutionScheduler = Schedulers.trampoline())
                                             .execute(object : DisposableCompletableObserver() {
                                                 override fun onComplete() {
+                                                    crashReporter.report(Throwable("Trying to authorize via token ${appAccountManager.getTinderAccountToken()}"))
                                                     request = response.request().newBuilder()
                                                             .addHeader(
                                                                     HEADER_AUTH_TRIED, "true")
@@ -102,11 +103,13 @@ internal class TinderApiModule {
                             }
                         }
                     } else {
+                        crashReporter.report(Throwable("Not authorizing because the facebookToken was null"))
                         finishAccount(context, appAccountManager, notificationManager)
                         null
                     }
                 }
                 else -> {
+                    crashReporter.report(Throwable("Not authorizing and finishing account because the code was not 401 and the header was there??!?!"))
                     finishAccount(context, appAccountManager, notificationManager)
                     null
                 }
