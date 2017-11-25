@@ -76,13 +76,14 @@ internal class TinderApiModule {
                                 blockingGet().run {
                                     AccessToken.setCurrentAccessToken(this)
                                     var request: Request? = null
+                                    val oldToken = appAccountManager.getTinderAccountToken()
                                     TinderLoginUseCase(
                                             facebookId = userId,
                                             facebookToken = token,
                                             postExecutionScheduler = Schedulers.trampoline())
                                             .execute(object : DisposableCompletableObserver() {
                                                 override fun onComplete() {
-                                                    crashReporter.report(Throwable("Trying to authorize via token ${appAccountManager.getTinderAccountToken()}"))
+                                                    crashReporter.report(Throwable("Trying to authorize via token ${appAccountManager.getTinderAccountToken()}, old one was $oldToken"))
                                                     request = response.request().newBuilder()
                                                             .addHeader(
                                                                     HEADER_AUTH_TRIED, "true")
