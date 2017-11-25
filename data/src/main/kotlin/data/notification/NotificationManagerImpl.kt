@@ -80,7 +80,7 @@ internal class NotificationManagerImpl(
                                 if (groupName != null) {
                                     setGroup(groupName)
                                 }
-                                setLocalOnly(true)
+                                setLocalOnly(false)
                                 setSortKey("${System.currentTimeMillis()}")
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                     setCategory(NotificationCompat.CATEGORY_SERVICE)
