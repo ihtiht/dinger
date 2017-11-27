@@ -8,6 +8,7 @@ import data.tinder.recommendation.RecommendationUserResolver
 import domain.like.DomainLikedRecommendationAnswer
 import domain.recommendation.DomainRecommendationUser
 import reporter.CrashReporter
+import retrofit2.HttpException
 import javax.inject.Inject
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
@@ -47,8 +48,12 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         }
 
         fun onError(error: Throwable, autoSwipeJobIntentService: AutoSwipeJobIntentService) {
-            autoSwipeJobIntentService.scheduleBecauseError(error)
-            autoSwipeJobIntentService.clearAction(action)
+            if (error is HttpException && error.code() == 401) {
+                onComplete(autoSwipeJobIntentService)
+            } else {
+                autoSwipeJobIntentService.scheduleBecauseError(error)
+                autoSwipeJobIntentService.clearAction(action)
+            }
         }
     }
 
