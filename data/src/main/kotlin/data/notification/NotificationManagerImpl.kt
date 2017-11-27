@@ -16,16 +16,13 @@ import java.util.Locale
 
 internal class NotificationManagerImpl(
         private val context: Context,
-        private val notificationID: NotificationID,
-        private val groupNotification: GroupNotification) : NotificationManager {
+        private val notificationID: NotificationID) : NotificationManager {
     @Contract(value = "_, _, _, _, null, true, _, _, _ -> fail")
     override fun notify(
             @StringRes channelName: Int,
             @StringRes title: Int,
             @StringRes body: Int,
             @NotificationCategory category: String,
-            groupName: String?,
-            isGroupSummary: Boolean,
             @NotificationPriority priority: Long,
             @NotificationVisibility visibility: Long,
             clickHandler: PendingIntent?) = notify(
@@ -33,8 +30,6 @@ internal class NotificationManagerImpl(
             title = context.getString(title),
             body = context.getString(body),
             category = category,
-            groupName = groupName,
-            isGroupSummary = isGroupSummary,
             priority = priority,
             visibility = visibility,
             clickHandler = clickHandler)
@@ -44,14 +39,9 @@ internal class NotificationManagerImpl(
             title: String,
             body: String,
             @NotificationCategory category: String,
-            groupName: String?,
-            isGroupSummary: Boolean,
             @NotificationPriority priority: Long,
             @NotificationVisibility visibility: Long,
             clickHandler: PendingIntent?) {
-        if (isGroupSummary && groupNotification.isGroupShown(context, groupName!!)) {
-            return
-        }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.getSystemService<android.app.NotificationManager>(
                     android.app.NotificationManager::class.java)
@@ -76,10 +66,6 @@ internal class NotificationManagerImpl(
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                             setShowWhen(true)
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-                                setGroupSummary(isGroupSummary)
-                                if (groupName != null) {
-                                    setGroup(groupName)
-                                }
                                 setLocalOnly(false)
                                 setSortKey("${System.currentTimeMillis()}")
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

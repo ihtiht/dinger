@@ -3,7 +3,6 @@ package data.autoswipe
 import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
-import data.notification.GroupNotification
 import data.notification.NotificationManager
 import data.notification.NotificationManagerModule
 import data.preferences.DefaultSharedPreferencesModule
@@ -15,8 +14,7 @@ internal class AutoSwipeReportHandlerModule {
     @Singleton
     fun autoSwipeReportHandler(
             defaultSharedPreferences: SharedPreferences,
-            notificationManager: NotificationManager,
-            groupNotification: GroupNotification) = {
-        AutoSwipeReportHandler(defaultSharedPreferences, notificationManager, groupNotification)
+            notificationManager: NotificationManager) = {
+        AutoSwipeReportHandler(defaultSharedPreferences, notificationManager)
     }
 }

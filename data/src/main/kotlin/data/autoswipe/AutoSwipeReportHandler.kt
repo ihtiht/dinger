@@ -8,15 +8,13 @@ import android.support.annotation.IntDef
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_ERROR
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_MORE_AVAILABLE
 import data.autoswipe.AutoSwipeReportHandler.Companion.RESULT_RATE_LIMITED
-import data.notification.GroupNotification
 import data.notification.NotificationManager
 import domain.like.DomainLikedRecommendationAnswer
 import org.stoyicker.dinger.data.R
 
 internal class AutoSwipeReportHandler(
         private val defaultSharedPreferences: SharedPreferences,
-        private val notificationManager: NotificationManager,
-        private val groupNotification: GroupNotification) {
+        private val notificationManager: NotificationManager) {
     private var likeCounter = 0
     private var matchCounter = 0
 
@@ -38,29 +36,15 @@ internal class AutoSwipeReportHandler(
         if (!areNotificationsEnabled(context, defaultSharedPreferences)) return
         notificationManager.notify(
                 channelName = R.string.autoswipe_notification_channel_name,
-                title = R.string.autoswipe_notification_group_title,
-                body = R.string.autoswipe_notification_group_body,
-                category = NotificationManager.CATEGORY_SERVICE,
-                groupName = context.getString(R.string.autoswipe_notification_group_name),
-                isGroupSummary = true,
-                priority = NotificationManager.PRIORITY_LOW)
-        notificationManager.notify(
-                channelName = R.string.autoswipe_notification_channel_name,
                 title = generateTitle(context, likeCounter, matchCounter),
                 body = generateBody(context, result),
                 category = NotificationManager.CATEGORY_SERVICE,
-                groupName = context.getString(R.string.autoswipe_notification_group_name),
-                isGroupSummary = false,
                 priority = NotificationManager.PRIORITY_LOW,
                 clickHandler = PendingIntent.getActivity(
                         context,
                         1,
                         Intent("org.stoyicker.action.HOME"),
                         PendingIntent.FLAG_UPDATE_CURRENT))
-        if (result in arrayOf(RESULT_ERROR, RESULT_RATE_LIMITED)) {
-            groupNotification.markGroupAsNotShown(
-                    context, context.getString(R.string.autoswipe_notification_group_name))
-        }
     }
 
     companion object {

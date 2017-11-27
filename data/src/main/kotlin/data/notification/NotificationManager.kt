@@ -9,8 +9,6 @@ internal interface NotificationManager {
                @StringRes title: Int,
                @StringRes body: Int,
                @NotificationCategory category: String,
-               groupName: String? = null,
-               isGroupSummary: Boolean = false,
                @NotificationPriority priority: Long = NotificationManager.PRIORITY_MEDIUM,
                @NotificationVisibility visibility: Long = NotificationManager.VISIBILITY_PUBLIC,
                clickHandler: PendingIntent? = null)
@@ -19,8 +17,6 @@ internal interface NotificationManager {
                title: String,
                body: String,
                @NotificationCategory category: String,
-               groupName: String? = null,
-               isGroupSummary: Boolean = false,
                @NotificationPriority priority: Long = NotificationManager.PRIORITY_MEDIUM,
                @NotificationVisibility visibility: Long = NotificationManager.VISIBILITY_PUBLIC,
                clickHandler: PendingIntent? = null)

@@ -14,12 +14,6 @@ internal class NotificationManagerModule {
 
     @Provides
     @Singleton
-    fun groupNotification(): GroupNotification = GroupNotificationImpl()
-
-    @Provides
-    @Singleton
-    fun autoSwipeReportHandler(
-            context: Context, notificationID: NotificationID, groupNotification: GroupNotification)
-            : NotificationManager = NotificationManagerImpl(
-            context, notificationID, groupNotification)
+    fun autoSwipeReportHandler(context: Context, notificationID: NotificationID):
+            NotificationManager = NotificationManagerImpl(context, notificationID)
 }
