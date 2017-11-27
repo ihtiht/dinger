@@ -76,6 +76,22 @@
               <p class="changelog"></p>
             </section>
 
+            <section id="architecture-overview">
+              <h3>Architecture overview</h3>
+              <p>This project features Clean Architecture with split-by-layer, packaged-by-feature modules.</p>
+              <p>When required, library modules attach to the application lifecycle via a ContentProvider, resulting in reduced coupling and easier maintainability when compared to manual event propagation.</p>
+              <h4>crash-reporter</h4>
+              <p>This module contains an interface definition of the requirements for a crash reporter and implementation(s).</p>
+              <h4>event-tracker</h4>
+              <p>This module contains an interface definition of the requirements for an event tracker and implementation(s).</p>
+              <h4>domain</h4>
+              <p>This module contains a set of use cases that can be used to trigger an action that needs to execute either sync- or asynchronously and optionally define as result, as defined by transfer objects that make the result agnostic from its source.</p>
+              <h4>data</h4>
+              <p>This module contains implementations of actions defined in the domain, usually dealing with databases and/or network, plus use case triggers that do not require user interactions (such as background services).</p>
+              <h4>app</h4>
+              <p>This module contains the UI of the application, which maps actions to use cases triggers.</p>
+            </section>
+
             <section id="contributing">
               <h3>Contributing</h3>
               <p class="contributing"/>
@@ -91,6 +107,7 @@
               <ul class="nav nav-tabs nav-stacked primary">
                 <li><a href="#introduction">Introduction</a></li>
                 <li><a href="#download">Download</a></li>
+                <li><a href="#architecture-overview">Architecture overview</a></li>
                 <li><a href="#contributing">Contributing</a></li>
                 <li><a href="#license">License</a></li>
               </ul>
