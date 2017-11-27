@@ -51,7 +51,7 @@ internal class TinderApiModule {
             }.authenticator { _, response -> when {
                 !response.request().header(HEADER_AUTH_TRIED).isNullOrBlank() -> {
                     Thread.sleep(TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES))
-                    response.request()
+                    response.request().newBuilder().build()
                 }
                 response.code() == 401 -> appAccountManager.let {
                     val facebookToken: AccessToken? = AccessToken.getCurrentAccessToken()
@@ -87,7 +87,6 @@ internal class TinderApiModule {
                                             postExecutionScheduler = Schedulers.trampoline())
                                             .execute(object : DisposableCompletableObserver() {
                                                 override fun onComplete() {
-                                                    crashReporter.report(Throwable("Trying to authorize via token ${appAccountManager.getTinderAccountToken()}, old one was $oldToken"))
                                                     request = response.request().newBuilder()
                                                             .addHeader(
                                                                     HEADER_AUTH_TRIED, "true")
@@ -102,19 +101,16 @@ internal class TinderApiModule {
                                     request
                                 }
                             } catch (exception: FacebookException) {
-                                crashReporter.report(exception)
                                 finishAccount(context, appAccountManager, notificationManager)
                                 null
                             }
                         }
                     } else {
-                        crashReporter.report(Throwable("Not authorizing because the facebookToken was null"))
                         finishAccount(context, appAccountManager, notificationManager)
                         null
                     }
                 }
                 else -> {
-                    crashReporter.report(Throwable("Not authorizing and finishing account because the code was not 401 and the header was there??!?!"))
                     finishAccount(context, appAccountManager, notificationManager)
                     null
                 }
