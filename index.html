@@ -82,6 +82,15 @@
               <p>When required, library modules attach to the application lifecycle via a ContentProvider, resulting in reduced coupling and easier maintainability when compared to manual event propagation.</p>
               <h4>crash-reporter</h4>
               <p>This module contains an interface definition of the requirements for a crash reporter and implementation(s).</p>
+              <pre class="prettyprint"><p>internal sealed class CrashReporterImpl : CrashReporter {
+    /**
+     * Firebase is a singleton, but other crash reporters which can be instantiated with different
+     * ids would not be.
+     */
+     object Firebase : CrashReporterImpl() {
+        override fun report(throwable: Throwable) = FirebaseCrash.report(throwable)
+     }
+}</p></pre>
               <h4>event-tracker</h4>
               <p>This module contains an interface definition of the requirements for an event tracker and implementation(s).</p>
               <h4>domain</h4>
