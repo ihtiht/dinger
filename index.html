@@ -93,6 +93,31 @@
 }</p></pre>
               <h4>event-tracker</h4>
               <p>This module contains an interface definition of the requirements for an event tracker and implementation(s).</p>
+              <pre class="prettyprint"><p>internal sealed class EventTrackerImpl : EventTracker {
+    /**
+     * Firebase is a singleton, but other event trackers which can be instantiated with different
+     * ids would not be.
+     */
+    object Firebase : EventTrackerImpl() {
+        private lateinit var delegate: FirebaseAnalytics
+
+        override fun init(context: Context) {
+            delegate = FirebaseAnalytics.getInstance(context)
+        }
+
+        override fun trackRecommendationResponse(data: Bundle) =
+                delegate.logEvent(Event.RESPONSE_RECOMMENDATION.key, data)
+
+        override fun trackLikeResponse(data: Bundle) =
+                delegate.logEvent(Event.RESPONSE_LIKE.key, data)
+
+        override fun trackUserProvidedAccount() =
+                delegate.logEvent(Event.USER_ACCOUNT_PROVIDED.key, null)
+
+        override fun setUserProvidedAccount(value: String?) =
+                delegate.setUserProperty(Property.USER_PROVIDED_ACCOUNT.key, value)
+    }
+}</p></pre>
               <h4>domain</h4>
               <p>This module contains a set of use cases that can be used to trigger an action that needs to execute either sync- or asynchronously and optionally define as result, as defined by transfer objects that make the result agnostic from its source.</p>
               <h4>data</h4>
