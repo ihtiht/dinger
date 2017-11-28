@@ -22,7 +22,7 @@ android {
         minSdkVersion project.ext.androidMinSdkVersion
         targetSdkVersion project.ext.androidTargetSdkVersion
         buildConfigField "String", "PLATFORM_ANDROID", "\"android\""
-        buildConfigField "String", "TINDER_VERSION_NAME", "\"8.1.1\""
+        buildConfigField "String", "TINDER_VERSION_NAME", "\"8.2.0\""
         buildConfigField "String", "TINDER_API_LOCALE", "\"en\""
         javaCompileOptions {
             annotationProcessorOptions {
