@@ -120,6 +120,58 @@
 }</p></pre>
               <h4>domain</h4>
               <p>This module contains a set of use cases that can be used to trigger an action that needs to execute either sync- or asynchronously and optionally define as result, as defined by transfer objects that make the result agnostic from its source.</p>
+              <pre class="prettyprint"><p>abstract class DisposableUseCase protected constructor() {
+    protected var assembledSubscriber: Disposable = Disposables.empty()
+
+    /**
+     * Tears down the use case if required.
+     */
+    fun dispose() {
+        if (!assembledSubscriber.isDisposed) {
+            assembledSubscriber.dispose()
+        }
+    }
+}</p></pre>
+              <pre class="prettyprint"><p>abstract class SingleDisposableUseCase<T> protected constructor(
+        /**
+         * Send null for in-place synchronous execution
+         */
+        private val asyncExecutionScheduler: Scheduler? = null,
+        private val postExecutionScheduler: Scheduler)
+    : DisposableUseCase(), UseCase<Single<T>> {
+    fun execute(subscriber: DisposableSingleObserver<T>) {
+        assembledSubscriber = buildUseCase().let {
+            val completeSetup = { x: Single<T> ->
+                x.observeOn(postExecutionScheduler).subscribeWith(subscriber)
+            }
+            if (asyncExecutionScheduler != null) {
+                completeSetup(it.subscribeOn(asyncExecutionScheduler))
+            } else {
+                completeSetup(it)
+            }
+        }
+    }
+}</p></pre>
+              <pre class="prettyprint"><p>abstract class CompletableDisposableUseCase protected constructor(
+        /**
+         * Send null for in-place synchronous execution
+         */
+        private val asyncExecutionScheduler: Scheduler? = null,
+        private val postExecutionScheduler: Scheduler)
+    : DisposableUseCase(), UseCase<Completable> {
+    fun execute(subscriber: DisposableCompletableObserver) {
+        assembledSubscriber = buildUseCase().let {
+            val completeSetup = { x: Completable ->
+                x.observeOn(postExecutionScheduler).subscribeWith(subscriber)
+            }
+            if (asyncExecutionScheduler != null) {
+                completeSetup(it.subscribeOn(asyncExecutionScheduler))
+            } else {
+                completeSetup(it)
+            }
+        }
+    }
+}</p></pre>
               <h4>data</h4>
               <p>This module contains implementations of actions defined in the domain, usually dealing with databases and/or network, plus use case triggers that do not require user interactions (such as background services).</p>
               <h4>app</h4>
