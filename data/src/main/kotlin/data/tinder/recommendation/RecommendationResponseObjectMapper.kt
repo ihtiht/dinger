@@ -40,6 +40,7 @@ internal class RecommendationResponseObjectMapper(
 
 
     private fun transformRecommendation(source: Recommendation) = DomainRecommendationUser(
+            bio = source.bio,
             distanceMiles = source.distanceMiles,
             commonFriendCount = source.commonFriendCount,
             commonFriends = source.commonFriends.map {

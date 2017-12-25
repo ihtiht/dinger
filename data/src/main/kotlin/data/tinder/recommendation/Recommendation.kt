@@ -4,6 +4,8 @@ import com.squareup.moshi.Json
 import java.util.Date
 
 internal class Recommendation private constructor(
+        @field:Json(name = "bio")
+        val bio: String?,
         @field:Json(name = "distance_mi")
         val distanceMiles: Int,
         @field:Json(name = "common_friends")

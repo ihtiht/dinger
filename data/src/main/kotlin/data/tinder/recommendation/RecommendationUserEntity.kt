@@ -19,6 +19,7 @@ import java.util.Date
                         parentColumns = ["id"],
                         childColumns = ["spotifyThemeTrack"])])
 internal open class RecommendationUserEntity(
+        var bio: String?,
         var distanceMiles: Int,
         var commonFriendCount: Int,
         var commonLikeCount: Int,
@@ -41,6 +42,7 @@ internal open class RecommendationUserEntity(
         var matched: Boolean = false) {
     companion object {
         val NONE = RecommendationUserEntity(
+                bio = null,
                 distanceMiles = 0,
                 commonFriendCount = 0,
                 commonLikeCount = 0,

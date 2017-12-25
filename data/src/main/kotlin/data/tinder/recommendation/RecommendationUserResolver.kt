@@ -30,6 +30,7 @@ internal class RecommendationUserResolver(
                     schoolDaoDelegate.insertResolvedForUserId(id, schools)
                     teaserDaoDelegate.insertResolvedForUserId(id, teasers)
                     userDao.insertUser(RecommendationUserEntity(
+                            bio = bio,
                             distanceMiles = distanceMiles,
                             commonFriendCount = commonFriendCount,
                             commonLikeCount = commonLikeCount,
@@ -69,6 +70,7 @@ internal class RecommendationUserResolver(
         val teasers = teaserDaoDelegate.collectByPrimaryKeys(source.teasers)
         source.recommendationUserEntity.let {
             return DomainRecommendationUser(
+                    bio = it.bio,
                     distanceMiles = it.distanceMiles,
                     commonFriends = commonFriends,
                     commonFriendCount = it.commonFriendCount,

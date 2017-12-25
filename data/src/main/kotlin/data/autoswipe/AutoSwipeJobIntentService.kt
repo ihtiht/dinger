@@ -114,6 +114,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     private fun saveRecommendationToDatabase(
             recommendation: DomainRecommendationUser, liked: Boolean, matched: Boolean) {
         recommendationResolver.insert(DomainRecommendationUser(
+                bio = recommendation.bio,
                 distanceMiles = recommendation.distanceMiles,
                 commonFriends = recommendation.commonFriends,
                 commonFriendCount = recommendation.commonFriendCount,

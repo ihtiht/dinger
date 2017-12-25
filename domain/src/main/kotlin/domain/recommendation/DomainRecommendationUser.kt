@@ -3,6 +3,7 @@ package domain.recommendation
 import java.util.Date
 
 data class DomainRecommendationUser(
+        val bio: String?,
         val distanceMiles: Int,
         val commonFriends: Iterable<DomainRecommendationCommonFriend>,
         val commonFriendCount: Int,
