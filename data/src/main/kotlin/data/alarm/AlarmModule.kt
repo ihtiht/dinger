@@ -7,7 +7,7 @@ import data.RootModule
 import domain.alarm.AppAlarmManager
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(RootModule::class))
+@Module(includes = [RootModule::class])
 internal class AlarmModule {
     @Provides
     @Singleton

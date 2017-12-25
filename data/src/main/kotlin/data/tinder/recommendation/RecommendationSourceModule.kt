@@ -19,8 +19,8 @@ import java.util.Date
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
-@Module(includes = arrayOf(ParserModule::class, TinderApiModule::class,
-        FirebaseCrashReporterModule::class))
+@Module(includes = [
+    ParserModule::class, TinderApiModule::class, FirebaseCrashReporterModule::class])
 internal class RecommendationSourceModule {
     @Provides
     @Singleton

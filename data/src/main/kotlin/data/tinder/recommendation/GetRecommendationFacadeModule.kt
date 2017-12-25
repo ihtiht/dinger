@@ -5,8 +5,7 @@ import dagger.Provides
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
-@Module(includes = arrayOf(RecommendationSourceModule::class,
-        RecommendationEventTrackerModule::class))
+@Module(includes = [RecommendationSourceModule::class, RecommendationEventTrackerModule::class])
 internal class GetRecommendationFacadeModule {
     @Provides
     @Singleton

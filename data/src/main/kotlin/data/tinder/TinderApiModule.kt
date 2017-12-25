@@ -29,13 +29,13 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(
-        AccountModule::class,
-        FirebaseCrashReporterModule::class,
-        NetworkClientModule::class,
-        NetworkModule::class,
-        NotificationManagerModule::class,
-        RootModule::class))
+@Module(includes = [
+    AccountModule::class,
+    FirebaseCrashReporterModule::class,
+    NetworkClientModule::class,
+    NetworkModule::class,
+    NotificationManagerModule::class,
+    RootModule::class])
 internal class TinderApiModule {
     @Provides
     @Singleton

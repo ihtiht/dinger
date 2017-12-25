@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
-@Entity(indices = arrayOf(Index("small")))
+@Entity(indices = [Index("small")])
 internal class RecommendationUserCommonFriendPhotoEntity(
         @PrimaryKey
         var small: String,

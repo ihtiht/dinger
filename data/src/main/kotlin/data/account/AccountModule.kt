@@ -6,7 +6,7 @@ import dagger.Provides
 import data.RootModule
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(RootModule::class))
+@Module(includes = [RootModule::class])
 internal class AccountModule {
     @Provides
     @Singleton

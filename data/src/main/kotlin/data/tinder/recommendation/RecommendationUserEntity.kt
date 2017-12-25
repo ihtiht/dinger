@@ -3,21 +3,21 @@ package data.tinder.recommendation
 import android.arch.persistence.room.*
 import java.util.Date
 
-@Entity(indices = arrayOf(Index("id"),
+@Entity(indices = [Index("id"),
         Index("name"),
         Index("instagram"),
         Index("teaser"),
-        Index("spotifyThemeTrack")),
-        foreignKeys = arrayOf(
+        Index("spotifyThemeTrack")],
+        foreignKeys = [
                 ForeignKey(entity = RecommendationUserInstagramEntity::class,
-                        parentColumns = arrayOf("username"),
-                        childColumns = arrayOf("instagram")),
+                        parentColumns = ["username"],
+                        childColumns = ["instagram"]),
                 ForeignKey(entity = RecommendationUserTeaserEntity::class,
-                        parentColumns = arrayOf("id"),
-                        childColumns = arrayOf("teaser")),
+                        parentColumns = ["id"],
+                        childColumns = ["teaser"]),
                 ForeignKey(entity = RecommendationUserSpotifyThemeTrackEntity::class,
-                        parentColumns = arrayOf("id"),
-                        childColumns = arrayOf("spotifyThemeTrack"))))
+                        parentColumns = ["id"],
+                        childColumns = ["spotifyThemeTrack"])])
 internal open class RecommendationUserEntity(
         var distanceMiles: Int,
         var commonFriendCount: Int,

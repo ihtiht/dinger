@@ -9,7 +9,7 @@ internal class RecommendationUserSpotifyThemeTrackAlbumWithRelatives(
         @Relation(parentColumn = "id",
                 entityColumn = "recommendationUserSpotifyThemeTrackAlbumEntityId",
                 entity = RecommendationUserSpotifyThemeTrackAlbumEntity_RecommendationUserPhotoProcessedFileEntity::class,
-                projection = arrayOf("recommendationUserPhotoProcessedFileEntityUrl"))
+                projection = ["recommendationUserPhotoProcessedFileEntityUrl"])
         var images: Set<String>) {
     constructor() : this(RecommendationUserSpotifyThemeTrackAlbumEntity.NONE, emptySet())
 }

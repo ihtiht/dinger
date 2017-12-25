@@ -19,11 +19,11 @@ import okio.BufferedSource
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(
-        JsonObjectOrFalseAdapterModule::class,
-        ParserModule::class,
-        TinderApiModule::class,
-        FirebaseCrashReporterModule::class))
+@Module(includes = [
+    JsonObjectOrFalseAdapterModule::class,
+    ParserModule::class,
+    TinderApiModule::class,
+    FirebaseCrashReporterModule::class])
 internal class LikeSourceModule {
     @Provides
     @Singleton

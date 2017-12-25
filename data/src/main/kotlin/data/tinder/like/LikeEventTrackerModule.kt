@@ -5,12 +5,10 @@ import dagger.Module
 import dagger.Provides
 import data.RootModule
 import data.event.FirebaseEventTrackerModule
-import data.tinder.recommendation.RecommendationEventTracker
-import data.tinder.recommendation.RecommendationResponseTrackedDataMarshaller
 import tracker.EventTracker
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(RootModule::class, FirebaseEventTrackerModule::class))
+@Module(includes = [RootModule::class, FirebaseEventTrackerModule::class])
 internal class LikeEventTrackerModule {
     @Provides
     @Singleton

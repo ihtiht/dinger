@@ -7,7 +7,7 @@ import domain.versioncheck.VersionCheckProvider
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(VersionCheckFacadeModule::class, FirebaseCrashReporterModule::class))
+@Module(includes = [VersionCheckFacadeModule::class, FirebaseCrashReporterModule::class])
 internal class VersionCheckProviderModule {
     @Provides
     @Singleton

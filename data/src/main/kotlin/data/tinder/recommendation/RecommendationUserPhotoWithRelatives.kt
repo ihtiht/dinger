@@ -8,7 +8,7 @@ internal class RecommendationUserPhotoWithRelatives(
         var recommendationUserPhotoEntity: RecommendationUserPhotoEntity,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserPhotoEntityId",
                 entity = RecommendationUserPhotoEntity_RecommendationUserPhotoProcessedFileEntity::class,
-                projection = arrayOf("recommendationUserPhotoProcessedFileEntityUrl"))
+                projection = ["recommendationUserPhotoProcessedFileEntityUrl"])
         var processedFiles: Set<String>) {
     constructor() : this(RecommendationUserPhotoEntity.NONE, emptySet())
 }

@@ -5,11 +5,11 @@ import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
-@Entity(indices = arrayOf(Index("id"), Index("album")),
-        foreignKeys = arrayOf(ForeignKey(
+@Entity(indices = [Index("id"), Index("album")],
+        foreignKeys = [ForeignKey(
                 entity = RecommendationUserSpotifyThemeTrackAlbumEntity::class,
-                parentColumns = arrayOf("id"),
-                childColumns = arrayOf("album"))))
+                parentColumns = ["id"],
+                childColumns = ["album"])])
 internal class RecommendationUserSpotifyThemeTrackEntity(
         var album: String,
         var previewUrl: String?,

@@ -8,7 +8,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(NetworkClientModule::class, NetworkModule::class))
+@Module(includes = [NetworkClientModule::class, NetworkModule::class])
 internal class StoyickerApiModule {
     @Provides
     @Singleton

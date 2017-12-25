@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 
-@Entity(indices = arrayOf(Index("link")))
+@Entity(indices = [Index("link")])
 internal class RecommendationUserInstagramPhotoEntity(
         @PrimaryKey
         var link: String,

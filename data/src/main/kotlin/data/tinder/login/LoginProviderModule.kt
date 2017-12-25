@@ -7,7 +7,7 @@ import domain.login.LoginProvider
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(LoginFacadeModule::class, FirebaseCrashReporterModule::class))
+@Module(includes = [LoginFacadeModule::class, FirebaseCrashReporterModule::class])
 internal class LoginProviderModule {
     @Provides
     @Singleton

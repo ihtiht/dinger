@@ -8,7 +8,9 @@ import data.notification.NotificationManagerModule
 import data.preferences.DefaultSharedPreferencesModule
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(NotificationManagerModule::class, DefaultSharedPreferencesModule::class))
+@Module(includes = [
+    NotificationManagerModule::class,
+    DefaultSharedPreferencesModule::class])
 internal class AutoSwipeReportHandlerModule {
     @Provides
     @Singleton

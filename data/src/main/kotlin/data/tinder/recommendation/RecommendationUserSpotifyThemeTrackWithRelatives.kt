@@ -9,7 +9,7 @@ internal class RecommendationUserSpotifyThemeTrackWithRelatives(
         @Relation(parentColumn = "id", entityColumn = "recommendationUserSpotifyThemeTrackEntityId",
                 entity =
                 RecommendationUserSpotifyThemeTrackEntity_RecommendationUserSpotifyThemeTrackArtistEntity::class,
-                projection = arrayOf("recommendationUserSpotifyThemeTrackArtistEntityId"))
+                projection = ["recommendationUserSpotifyThemeTrackArtistEntityId"])
         var artists: Set<String>) {
     constructor() : this(RecommendationUserSpotifyThemeTrackEntity.NONE, emptySet())
 }

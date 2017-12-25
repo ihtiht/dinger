@@ -8,27 +8,27 @@ internal class RecommendationUserWithRelatives(
         var recommendationUserEntity: RecommendationUserEntity,
         @Relation(parentColumn = "id", entityColumn ="recommendationUserEntityId",
                 entity = RecommendationUserEntity_RecommendationUserCommonFriendEntity::class,
-                projection = arrayOf("recommendationUserCommonFriendEntityId"))
+                projection = ["recommendationUserCommonFriendEntityId"])
         var commonFriends: Set<String>,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserEntityId",
                 entity = RecommendationUserEntity_RecommendationLikeEntity::class,
-                projection = arrayOf("recommendationLikeEntityId"))
+                projection = ["recommendationLikeEntityId"])
         var commonLikes: Set<String>,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserEntityId",
                 entity = RecommendationUserEntity_RecommendationUserPhotoEntity::class,
-                projection = arrayOf("recommendationUserPhotoEntityId"))
+                projection = ["recommendationUserPhotoEntityId"])
         var photos: Set<String>,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserEntityId",
                 entity = RecommendationUserEntity_RecommendationUserJobEntity::class,
-                projection = arrayOf("recommendationUserJobEntityId"))
+                projection = ["recommendationUserJobEntityId"])
         var jobs: Set<String>,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserEntityId",
                 entity = RecommendationUserEntity_RecommendationUserSchoolEntity::class,
-                projection = arrayOf("recommendationUserSchoolEntityName"))
+                projection = ["recommendationUserSchoolEntityName"])
         var schools: Set<String>,
         @Relation(parentColumn = "id", entityColumn = "recommendationUserEntityId",
                 entity = RecommendationUserEntity_RecommendationUserTeaserEntity::class,
-                projection = arrayOf("recommendationUserTeaserEntityId"))
+                projection = ["recommendationUserTeaserEntityId"])
         var teasers: Set<String>) {
     constructor() : this(
             RecommendationUserEntity.NONE,

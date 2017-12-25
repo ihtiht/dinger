@@ -12,10 +12,10 @@ import app.splash.SplashModule
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(modules = arrayOf(
-        ApplicationModule::class,
-        FirebaseCrashReporterModule::class,
-        FirebaseEventTrackerModule::class))
+@Component(modules = [
+    ApplicationModule::class,
+    FirebaseCrashReporterModule::class,
+    FirebaseEventTrackerModule::class])
 @Singleton
 internal interface ApplicationComponent {
     fun newSplashComponent(splashModule: SplashModule): SplashComponent

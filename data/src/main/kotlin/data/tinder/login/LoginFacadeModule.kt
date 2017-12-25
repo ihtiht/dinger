@@ -5,7 +5,7 @@ import dagger.Provides
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
-@Module(includes = arrayOf(LoginSourceModule::class))
+@Module(includes = [LoginSourceModule::class])
 internal class LoginFacadeModule {
     @Provides
     @Singleton

@@ -6,7 +6,7 @@ import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 import java.util.Date
 
-@Entity(indices = arrayOf(Index("username")))
+@Entity(indices = [Index("username")])
 internal open class RecommendationUserInstagramEntity(
         var profilePictureUrl: String,
         @Embedded

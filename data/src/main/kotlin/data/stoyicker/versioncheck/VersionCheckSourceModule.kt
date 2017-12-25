@@ -19,8 +19,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
-@Module(includes = arrayOf(
-        ParserModule::class, StoyickerApiModule::class, FirebaseCrashReporterModule::class))
+@Module(includes = [
+    ParserModule::class, StoyickerApiModule::class, FirebaseCrashReporterModule::class])
 internal class VersionCheckSourceModule {
     @Provides
     @Singleton

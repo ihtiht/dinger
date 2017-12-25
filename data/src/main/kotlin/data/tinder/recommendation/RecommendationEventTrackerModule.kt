@@ -8,7 +8,7 @@ import data.event.FirebaseEventTrackerModule
 import tracker.EventTracker
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(RootModule::class, FirebaseEventTrackerModule::class))
+@Module(includes = [RootModule::class, FirebaseEventTrackerModule::class])
 internal class RecommendationEventTrackerModule {
     @Provides
     @Singleton

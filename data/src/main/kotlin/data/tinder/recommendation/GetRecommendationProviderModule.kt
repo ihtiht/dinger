@@ -7,7 +7,7 @@ import domain.recommendation.GetRecommendationProvider
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(GetRecommendationFacadeModule::class, FirebaseCrashReporterModule::class))
+@Module(includes = [GetRecommendationFacadeModule::class, FirebaseCrashReporterModule::class])
 internal class GetRecommendationProviderModule {
     @Provides
     @Singleton

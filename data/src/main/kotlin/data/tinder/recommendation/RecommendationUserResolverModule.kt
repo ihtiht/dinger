@@ -8,7 +8,7 @@ import data.database.AppDatabase
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(RootModule::class, FirebaseCrashReporterModule::class))
+@Module(includes = [RootModule::class, FirebaseCrashReporterModule::class])
 internal class RecommendationUserResolverModule {
     @Provides
     @Singleton

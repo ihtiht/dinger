@@ -7,7 +7,7 @@ import domain.like.LikeRecommendationProvider
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(LikeFacadeModule::class, FirebaseCrashReporterModule::class))
+@Module(includes = [LikeFacadeModule::class, FirebaseCrashReporterModule::class])
 internal class LikeRecommendationProviderModule {
     @Provides
     @Singleton

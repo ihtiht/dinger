@@ -5,7 +5,7 @@ import dagger.Provides
 import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
-@Module(includes = arrayOf(VersionCheckSourceModule::class))
+@Module(includes = [VersionCheckSourceModule::class])
 internal class VersionCheckFacadeModule {
     @Provides
     @Singleton

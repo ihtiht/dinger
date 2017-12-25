@@ -9,7 +9,7 @@ internal class RecommendationUserCommonFriendWithRelatives(
         @Relation(parentColumn = "id",
                 entityColumn = "recommendationUserCommonFriendEntityId",
                 entity = RecommendationUserCommonFriendEntity_PhotoEntity::class,
-                projection = arrayOf("recommendationUserCommonFriendPhotoEntitySmall"))
+                projection = ["recommendationUserCommonFriendPhotoEntitySmall"])
         var photos: Set<String>) {
     constructor() : this(RecommendationUserCommonFriendEntity.NONE, emptySet())
 }

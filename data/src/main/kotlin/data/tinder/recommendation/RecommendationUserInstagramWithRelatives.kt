@@ -10,7 +10,7 @@ internal class RecommendationUserInstagramWithRelatives(
                 entityColumn = "recommendationUserInstagramEntityUsername",
                 entity =
                 RecommendationUserInstagramEntity_RecommendationUserInstagramPhotoEntity::class,
-                projection = arrayOf("recommendationUserInstagramPhotoEntityLink"))
+                projection = ["recommendationUserInstagramPhotoEntityLink"])
         var photos: Set<String>) {
     constructor() : this(RecommendationUserInstagramEntity.NONE, emptySet())
 }
