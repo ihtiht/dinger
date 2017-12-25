@@ -16,6 +16,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     @Inject
     lateinit var crashReporter: CrashReporter
     @Inject
+    lateinit var getRecommendationsAction: GetRecommendationsAction
+    @Inject
     lateinit var recommendationResolver: RecommendationUserResolver
     @Inject
     lateinit var reportHandlerFactory: () -> AutoSwipeReportHandler
@@ -58,7 +60,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     private fun startAutoSwipe() = Unit.also {
-        GetRecommendationsAction().apply {
+        getRecommendationsAction.apply {
             ongoingActions += (this)
             execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
                 override fun onRecommendationsReceived(

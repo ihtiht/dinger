@@ -8,6 +8,7 @@ import javax.inject.Singleton
 @Component(modules = [
     AutoSwipeReportHandlerModule::class,
     FirebaseCrashReporterModule::class,
+    GetRecommendationsActionModule::class,
     RecommendationUserResolverModule::class])
 @Singleton
 internal interface AutoSwipeComponent {
