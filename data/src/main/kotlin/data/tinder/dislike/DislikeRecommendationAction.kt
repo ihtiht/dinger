@@ -21,7 +21,7 @@ internal class DislikeRecommendationAction(private val user: DomainRecommendatio
                     }
 
                     override fun onError(error: Throwable) {
-                        callback.onRecommendationLikeFailed()
+                        callback.onRecommendationDislikeFailed()
                     }
                 })
             }
@@ -33,6 +33,6 @@ internal class DislikeRecommendationAction(private val user: DomainRecommendatio
     interface Callback {
         fun onRecommendationDisliked(answer: DomainDislikedRecommendationAnswer)
 
-        fun onRecommendationLikeFailed()
+        fun onRecommendationDislikeFailed()
     }
 }
