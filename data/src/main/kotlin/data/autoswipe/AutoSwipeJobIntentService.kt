@@ -21,8 +21,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     @Inject
     lateinit var recommendationResolver: RecommendationUserResolver
     @Inject
-    lateinit var reportHandlerFactory: () -> AutoSwipeReportHandler
-    private val reportHandler by lazy { reportHandlerFactory() }
+    lateinit var reportHandler: AutoSwipeReportHandler
 
     init {
         AutoSwipeComponentHolder.autoSwipeComponent.inject(this)
