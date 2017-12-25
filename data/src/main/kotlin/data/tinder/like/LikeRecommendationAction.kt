@@ -17,13 +17,11 @@ internal class LikeRecommendationAction(private val user: DomainRecommendationUs
                 useCaseDelegate = it
                 it.execute(object : DisposableSingleObserver<DomainLikedRecommendationAnswer>() {
                     override fun onSuccess(payload: DomainLikedRecommendationAnswer) {
-                        commonDelegate.onComplete(owner)
                         callback.onRecommendationLiked(payload)
                     }
 
                     override fun onError(error: Throwable) {
-                        commonDelegate.onError(error, owner)
-                        callback.onRecommendationLikeFailed()
+                        callback.onRecommendationLikeFailed(error)
                     }
                 })
             }
@@ -35,6 +33,6 @@ internal class LikeRecommendationAction(private val user: DomainRecommendationUs
     interface Callback {
         fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer)
 
-        fun onRecommendationLikeFailed()
+        fun onRecommendationLikeFailed(error: Throwable)
     }
 }

@@ -10,6 +10,7 @@ import javax.inject.Singleton
     AutoSwipeReportHandlerModule::class,
     FirebaseCrashReporterModule::class,
     GetRecommendationsActionModule::class,
+    ProcessRecommendationActionFactoryModule::class,
     RecommendationUserResolverModule::class])
 @Singleton
 internal interface AutoSwipeComponent {

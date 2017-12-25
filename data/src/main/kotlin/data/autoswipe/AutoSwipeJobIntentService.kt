@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.JobIntentService
 import data.tinder.recommendation.GetRecommendationsAction
-import data.tinder.like.LikeRecommendationAction
 import data.tinder.recommendation.RecommendationUserResolver
 import domain.like.DomainLikedRecommendationAnswer
 import domain.recommendation.DomainRecommendationUser
@@ -18,6 +17,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     lateinit var crashReporter: CrashReporter
     @Inject
     lateinit var getRecommendationsAction: GetRecommendationsAction
+    @Inject
+    lateinit var processRecommendationActionFactory: ProcessRecommendationActionFactoryWrapper
     @Inject
     lateinit var recommendationResolver: RecommendationUserResolver
     @Inject
@@ -62,7 +63,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     private fun startAutoSwipe() = Unit.also {
         getRecommendationsAction.apply {
             ongoingActions += (this)
-            execute(this@AutoSwipeJobIntentService, object : GetRecommendationsAction.Callback {
+            execute(this@AutoSwipeJobIntentService,
+                    object : GetRecommendationsAction.Callback {
                 override fun onRecommendationsReceived(
                         recommendations: List<DomainRecommendationUser>) {
                     if (recommendations.isEmpty()) {
@@ -70,7 +72,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                     } else {
                         likeRecommendation(
                                 recommendations.first(),
-                                recommendations.subList(fromIndex = 1, toIndex = recommendations.size))
+                                recommendations.subList(
+                                        fromIndex = 1, toIndex = recommendations.size))
                     }
                 }
             })
@@ -80,10 +83,11 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     private fun likeRecommendation(
             recommendation: DomainRecommendationUser,
             remaining: List<DomainRecommendationUser>): Unit = Unit.also {
-        LikeRecommendationAction(recommendation).apply {
+        processRecommendationActionFactory.delegate(recommendation).apply {
             ongoingActions += (this)
-            execute(this@AutoSwipeJobIntentService, object : LikeRecommendationAction.Callback {
-                override fun onRecommendationLiked(answer: DomainLikedRecommendationAnswer) =
+            execute(this@AutoSwipeJobIntentService,
+                    object : ProcessRecommendationAction.Callback {
+                override fun onRecommendationProcessed(answer: DomainLikedRecommendationAnswer) =
                         saveRecommendationToDatabase(
                                 recommendation = recommendation,
                                 liked = answer.rateLimitedUntilMillis != null,
@@ -101,7 +105,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                             }
                         }
 
-                override fun onRecommendationLikeFailed() =
+                override fun onRecommendationProcessingFailed() =
                     saveRecommendationToDatabase(recommendation, liked = false, matched = false)
             })
         }

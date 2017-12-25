@@ -17,12 +17,10 @@ internal class DislikeRecommendationAction(private val user: DomainRecommendatio
                 useCaseDelegate = it
                 it.execute(object : DisposableSingleObserver<DomainDislikedRecommendationAnswer>() {
                     override fun onSuccess(payload: DomainDislikedRecommendationAnswer) {
-                        commonDelegate.onComplete(owner)
                         callback.onRecommendationDisliked(payload)
                     }
 
                     override fun onError(error: Throwable) {
-                        commonDelegate.onError(error, owner)
                         callback.onRecommendationLikeFailed()
                     }
                 })
