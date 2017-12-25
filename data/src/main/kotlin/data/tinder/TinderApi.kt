@@ -19,6 +19,9 @@ internal interface TinderApi {
     @GET("/like/{targetId}")
     fun like(@Path("targetId") targetId: String): Single<ResponseBody>
 
+    @GET("/pass/{targetId}")
+    fun dislike(@Path("targetId") targetId: String): Single<ResponseBody>
+
     companion object {
         const val BASE_URL = "https://api.gotinder.com"
         const val CONTENT_TYPE_JSON = "application/json"
