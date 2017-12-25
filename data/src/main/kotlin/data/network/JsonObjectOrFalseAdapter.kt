@@ -11,7 +11,7 @@ internal class JsonObjectOrFalseAdapter<T> private constructor(
         private val objectDelegate: JsonAdapter<T>?) : JsonAdapter<T>() {
     class Factory(private val objectDelegateFactory: JsonAdapter.Factory) : JsonAdapter.Factory {
         override fun create(type: Type, annotations: Set<Annotation>?, moshi: Moshi) =
-                when (hasJsonObjectOrFalse(annotations)) {
+                when (hasJsonObjectOrFalseAnnotation(annotations)) {
                     false -> null
                     true -> JsonObjectOrFalseAdapter(
                             objectDelegateFactory.create(type, Collections.emptySet(), moshi))
@@ -33,6 +33,5 @@ internal class JsonObjectOrFalseAdapter<T> private constructor(
             objectDelegate?.toJson(writer, value) ?: Unit
 }
 
-private fun hasJsonObjectOrFalse(annotations: Set<Annotation>?) = annotations?.count {
-    it.annotationClass == JsonObjectOrFalse::class
-} ?: 0 > 0
+private fun hasJsonObjectOrFalseAnnotation(annotations: Set<Annotation>?) =
+        annotations?.firstOrNull { it.annotationClass == JsonObjectOrFalse::class } != null
