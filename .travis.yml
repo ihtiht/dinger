@@ -13,7 +13,7 @@ before_install:
       echo "Do not open PRs against master; merge dev into master locally and push instead."
       exit 1
     fi
-  - export DOCKER_IMAGE_TAG=813887a0f178479bf06a68a858a2ddf44ea7e3ea
+  - export DOCKER_IMAGE_TAG=8964b03561271efcdf5de2bf039fd9c3bd8809a5
   - export ARTIFACT_VERSION=$(git rev-list --count HEAD)
   - openssl aes-256-cbc -K $encrypted_13d4b12ffe60_key -iv $encrypted_13d4b12ffe60_iv -in secrets.tar.enc -out secrets.tar -d
   - tar xvf secrets.tar
