@@ -3,6 +3,7 @@ package data.autoswipe
 import android.content.Context
 import android.content.Intent
 import android.support.v4.app.JobIntentService
+import data.tinder.recommendation.GetRecommendationsAction
 import data.tinder.like.LikeRecommendationAction
 import data.tinder.recommendation.RecommendationUserResolver
 import domain.like.DomainLikedRecommendationAnswer

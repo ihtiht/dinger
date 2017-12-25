@@ -1,4 +1,4 @@
-package data.autoswipe
+package data.tinder.recommendation
 
 import dagger.Module
 import dagger.Provides

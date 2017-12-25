@@ -1,5 +1,6 @@
-package data.autoswipe
+package data.tinder.recommendation
 
+import data.autoswipe.AutoSwipeJobIntentService
 import domain.interactor.DisposableUseCase
 import domain.recommendation.DomainRecommendationUser
 import domain.recommendation.GetRecommendationsUseCase
