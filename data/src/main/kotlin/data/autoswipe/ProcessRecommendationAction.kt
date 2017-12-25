@@ -8,7 +8,8 @@ import domain.recommendation.DomainRecommendationUser
 
 internal class ProcessRecommendationAction(
         private val user: DomainRecommendationUser,
-        private val likeRecommendationActionFactory: dagger.Lazy<LikeRecommendationActionFactoryWrapper>,
+        private val likeRecommendationActionFactory
+        : dagger.Lazy<LikeRecommendationActionFactoryWrapper>,
         private val dislikeRecommendationActionFactory
         : dagger.Lazy<DislikeRecommendationActionFactoryWrapper>)
     : AutoSwipeJobIntentService.Action<ProcessRecommendationAction.Callback>() {
