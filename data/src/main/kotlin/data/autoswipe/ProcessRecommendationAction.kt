@@ -26,8 +26,8 @@ internal class ProcessRecommendationAction(
         when {
             sharedPreferences.getBoolean(
                     context.getString(
-                            R.string.preference_key_dislike_empty_profiles), false) ->
-                // TODO Only do this if the recommendation body of user is empty
+                            R.string.preference_key_dislike_empty_profiles), false) &&
+                    user.bio.isNullOrBlank() ->
                 dislikeRecommendation(owner, callback)
             else -> likeRecommendation(owner, callback)
         }
