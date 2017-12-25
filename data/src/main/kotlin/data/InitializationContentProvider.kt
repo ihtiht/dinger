@@ -13,6 +13,8 @@ import domain.alarm.AlarmHolder
 import domain.alarm.AppAlarmManager
 import domain.autoswipe.AutoSwipeHolder
 import domain.autoswipe.AutoSwipeLauncherFactory
+import domain.dislike.DislikeRecommendationHolder
+import domain.dislike.DislikeRecommendationProvider
 import domain.like.LikeRecommendationHolder
 import domain.like.LikeRecommendationProvider
 import domain.loggedincheck.LoggedInCheckHolder
@@ -35,6 +37,8 @@ internal class InitializationContentProvider : ContentProvider() {
     lateinit var getRecommendationProviderImpl: GetRecommendationProvider
     @Inject
     lateinit var likeRecommendationProviderImpl: LikeRecommendationProvider
+    @Inject
+    lateinit var dislikeRecommendationProviderImpl: DislikeRecommendationProvider
     @Inject
     lateinit var accountManagerImpl: AppAccountAuthenticator
     @Inject
@@ -64,6 +68,7 @@ internal class InitializationContentProvider : ContentProvider() {
         LoggedInCheckHolder.loggedInCheckProvider(accountManagerImpl)
         GetRecommendationHolder.getRecommendationProvider(getRecommendationProviderImpl)
         LikeRecommendationHolder.likeRecommendationProvider(likeRecommendationProviderImpl)
+        DislikeRecommendationHolder.dislikeRecommendationProvider(dislikeRecommendationProviderImpl)
         AlarmHolder.alarmManager(alarmManagerImpl)
         AutoSwipeHolder.autoSwipeIntentFactory(autoSwipeIntentFactoryImpl)
         VersionCheckHolder.versionCheckProvider(versionCheckProviderImpl)

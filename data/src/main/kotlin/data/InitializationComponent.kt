@@ -6,20 +6,22 @@ import data.alarm.AlarmModule
 import data.autoswipe.AutoSwipeModule
 import data.network.NetworkModule
 import data.stoyicker.versioncheck.VersionCheckProviderModule
+import data.tinder.dislike.DislikeRecommendationProviderModule
 import data.tinder.like.LikeRecommendationProviderModule
 import data.tinder.login.LoginProviderModule
 import data.tinder.recommendation.GetRecommendationProviderModule
 import javax.inject.Singleton
 
-@Component(modules = arrayOf(
+@Component(modules = [
         NetworkModule::class,
         LoginProviderModule::class,
         GetRecommendationProviderModule::class,
         LikeRecommendationProviderModule::class,
+        DislikeRecommendationProviderModule::class,
         AccountModule::class,
         AlarmModule::class,
         AutoSwipeModule::class,
-        VersionCheckProviderModule::class))
+        VersionCheckProviderModule::class])
 @Singleton
 internal interface InitializationComponent {
     fun inject(initializationContentProvider: InitializationContentProvider)
