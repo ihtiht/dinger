@@ -72,12 +72,14 @@ uploadReleaseToGitHub() {
         \"body\": \"${RELEASE_BODY}\"
     }"
 
+    echo ${BODY} > body-file
+
     curl -s \
         -u ${REPO_USER}:${GITHUB_TOKEN} \
         --header "Accept: application/vnd.github.v3+json" \
         --header "Content-Type: application/json; charset=utf-8" \
         --request PATCH \
-        --data "${BODY}" \
+        --data @body-file \
         https://api.github.com/repos/"${TRAVIS_REPO_SLUG}"/releases/${RELEASE_ID}
 
     ./_ci/update_version_json.sh -v ${ARTIFACT_VERSION}
