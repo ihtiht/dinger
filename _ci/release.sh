@@ -21,7 +21,7 @@ uploadReleaseToGitHub() {
     }"
 
     # Create the release in GitHub and extract its id from the response
-    RESPONSE_BODY=$(curl -vs \
+    RESPONSE_BODY=$(curl -s \
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
             --header "Content-Type: application/json; charset=utf-8" \
@@ -39,7 +39,7 @@ uploadReleaseToGitHub() {
     # Attach the artifact
     UPLOAD_URL=$(echo ${UPLOAD_URL} | sed "s/{?name,label}/?name=dinger-${ARTIFACT_VERSION}.apk/")
     echo ${UPLOAD_URL}
-    RESPONSE_BODY=$(curl -vs \
+    RESPONSE_BODY=$(curl -s \
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
             --header "Content-Type: application/zip" \
@@ -48,7 +48,7 @@ uploadReleaseToGitHub() {
             ${UPLOAD_URL})
 
     # Get the APK download link
-    RESPOSE_BODY=$(curl -vs \
+    RESPOSE_BODY=$(curl -s \
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
             --request GET \
@@ -57,7 +57,7 @@ uploadReleaseToGitHub() {
 
     # Attach the qr code
     UPLOAD_URL=$(echo ${UPLOAD_URL} | sed "s/dinger-${ARTIFACT_VERSION}.apk/qrcode-${ARTIFACT_VERSION}.png/")
-    RESPONSE_BODY=$(curl -vs \
+    RESPONSE_BODY=$(curl -s \
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
             --header "Content-Type: image/png" \
@@ -72,7 +72,7 @@ uploadReleaseToGitHub() {
         \"body\": \"${RELEASE_BODY}\"
     }"
 
-    curl -vs \
+    curl -s \
         -u ${REPO_USER}:${GITHUB_TOKEN} \
         --header "Accept: application/vnd.github.v3+json" \
         --header "Content-Type: application/json; charset=utf-8" \
