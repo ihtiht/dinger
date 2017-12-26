@@ -2,17 +2,17 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6f0ada3855fcfb8a835372ef1c35b058",
+    "identityHash": "c1e5e3f8dec43032ce7cfc47b62764c1",
     "entities": [
       {
         "tableName": "RecommendationUserEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bio` TEXT NOT NULL, `distanceMiles` INTEGER NOT NULL, `commonFriendCount` INTEGER NOT NULL, `commonLikeCount` INTEGER NOT NULL, `contentHash` TEXT NOT NULL, `id` TEXT NOT NULL, `name` TEXT NOT NULL, `instagram` TEXT, `teaser` TEXT NOT NULL, `sNumber` INTEGER NOT NULL, `spotifyThemeTrack` TEXT, `gender` INTEGER NOT NULL, `birthDateInfo` TEXT NOT NULL, `groupMatched` INTEGER NOT NULL, `liked` INTEGER NOT NULL, `matched` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`instagram`) REFERENCES `RecommendationUserInstagramEntity`(`username`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`teaser`) REFERENCES `RecommendationUserTeaserEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`spotifyThemeTrack`) REFERENCES `RecommendationUserSpotifyThemeTrackEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bio` TEXT, `distanceMiles` INTEGER NOT NULL, `commonFriendCount` INTEGER NOT NULL, `commonLikeCount` INTEGER NOT NULL, `contentHash` TEXT NOT NULL, `id` TEXT NOT NULL, `name` TEXT NOT NULL, `instagram` TEXT, `teaser` TEXT NOT NULL, `sNumber` INTEGER NOT NULL, `spotifyThemeTrack` TEXT, `gender` INTEGER NOT NULL, `birthDateInfo` TEXT NOT NULL, `groupMatched` INTEGER NOT NULL, `liked` INTEGER NOT NULL, `matched` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`instagram`) REFERENCES `RecommendationUserInstagramEntity`(`username`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`teaser`) REFERENCES `RecommendationUserTeaserEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`spotifyThemeTrack`) REFERENCES `RecommendationUserSpotifyThemeTrackEntity`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
           {
             "fieldPath": "bio",
             "columnName": "bio",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "distanceMiles",
@@ -1126,7 +1126,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6f0ada3855fcfb8a835372ef1c35b058\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c1e5e3f8dec43032ce7cfc47b62764c1\")"
     ]
   }
 }
