@@ -27,6 +27,7 @@ uploadReleaseToGitHub() {
             --header "Content-Type: application/json; charset=utf-8" \
             --request POST \
             --data "${BODY}" \
+            --trace-ascii /dev/stdout \
             https://api.github.com/repos/"${TRAVIS_REPO_SLUG}"/releases)
 
     # Extract the upload_url value
@@ -45,6 +46,7 @@ uploadReleaseToGitHub() {
             --header "Content-Type: application/zip" \
             --data-binary "@app-release.apk" \
             --request POST \
+            --trace-ascii /dev/stdout \
             ${UPLOAD_URL})
 
     # Get the APK download link
@@ -52,6 +54,7 @@ uploadReleaseToGitHub() {
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
             --request GET \
+            --trace-ascii /dev/stdout \
             https://api.github.com/repos/"${TRAVIS_REPO_SLUG}"/releases/${RELEASE_ID})
     APK_DOWNLOAD_URL=$(echo ${RESPONSE_BODY} | jq -r .browser_download_url)
 
@@ -63,6 +66,7 @@ uploadReleaseToGitHub() {
             --header "Content-Type: image/png" \
             --data-binary @${ARTIFACT_VERSION}.png $(bash _ci/generate_qr.sh -d ${APK_DOWNLOAD_URL} -o ${ARTIFACT_VERSION}.png) \
             --request POST \
+            --trace-ascii /dev/stdout \
             ${UPLOAD_URL})
     QR_DOWNLOAD_URL=$(echo ${RESPONSE_BODY} | jq -r .browser_download_url)
 
@@ -78,6 +82,7 @@ uploadReleaseToGitHub() {
         --header "Content-Type: application/json; charset=utf-8" \
         --request PATCH \
         --data "${BODY}" \
+        --trace-ascii /dev/stdout \
         https://api.github.com/repos/"${TRAVIS_REPO_SLUG}"/releases/${RELEASE_ID}
 
     ./_ci/update_version_json.sh -v ${ARTIFACT_VERSION}
