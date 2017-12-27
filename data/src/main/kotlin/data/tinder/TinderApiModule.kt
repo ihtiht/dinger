@@ -80,7 +80,6 @@ internal class TinderApiModule {
                                 blockingGet().run {
                                     AccessToken.setCurrentAccessToken(this)
                                     var request: Request? = null
-                                    val oldToken = appAccountManager.getTinderAccountToken()
                                     TinderLoginUseCase(
                                             facebookId = userId,
                                             facebookToken = token,
