@@ -14,3 +14,4 @@ project.ext.classpathDependencies = {
     classpath "com.google.firebase:firebase-plugins:$firebasePluginsVersion"
     classpath "gradle.plugin.org.jmailen.gradle:kotlinter-gradle:$kotlinterPluginVersion"
 }
+
