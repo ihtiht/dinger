@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+json_escape () {
+    printf '%s' $1 | python -c 'import json,sys; print(json.dumps(sys.stdin.read()))'
+}
+
 uploadReleaseToGitHub() {
     git fetch --tags
     LAST_TAG=$(git describe --tags --abbrev=0)
@@ -69,7 +73,7 @@ uploadReleaseToGitHub() {
     RELEASE_BODY="**APK DOWNLOAD**: Scan the QR code below or click [here](${APK_DOWNLOAD_URL} \\\"Direct APK download\\\").\\n\\n![QR code](${QR_DOWNLOAD_URL}?raw=true)\\n\\n**CHANGELOG**:\\n$RELEASE_NOTES"
 
     BODY="{
-        \"body\": \"${RELEASE_BODY}\"
+        \"body\": \"$(json_escape ${RELEASE_BODY})\"
     }"
 
     echo ${BODY} > body-file
