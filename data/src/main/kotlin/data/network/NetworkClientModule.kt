@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit
 internal class NetworkClientModule {
     @Provides
     fun client(): OkHttpClient.Builder = OkHttpClient.Builder()
-            .retryOnConnectionFailure(false)
             .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .writeTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
