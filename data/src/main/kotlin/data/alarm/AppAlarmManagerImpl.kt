@@ -16,5 +16,6 @@ internal class AppAlarmManagerImpl(private val context: Context)
                             context,
                             requestCode,
                             task,
-                            PendingIntent.FLAG_ONE_SHOT))
+                            PendingIntent.FLAG_ONE_SHOT or
+                                    PendingIntent.FLAG_CANCEL_CURRENT))
 }
