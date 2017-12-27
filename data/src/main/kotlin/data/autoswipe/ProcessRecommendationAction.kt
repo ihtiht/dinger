@@ -26,8 +26,12 @@ internal class ProcessRecommendationAction(
         when {
             sharedPreferences.getBoolean(
                     context.getString(
-                            R.string.preference_key_dislike_empty_profiles), false) &&
-                    user.bio.isNullOrBlank() ->
+                            R.string.preference_key_dislike_empty_profiles), false) && user.bio.isNullOrBlank() ->
+                dislikeRecommendation(owner, callback)
+            sharedPreferences.getBoolean(
+                    context.getString(
+                            R.string.preference_key_dislike_if_friends_in_common), false) &&
+                    user.commonFriends.any() ->
                 dislikeRecommendation(owner, callback)
             else -> likeRecommendation(owner, callback)
         }
