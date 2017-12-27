@@ -28,7 +28,9 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
         AutoSwipeComponentHolder.autoSwipeComponent.inject(this)
     }
 
-    override fun onHandleWork(intent: Intent) { startAutoSwipe() }
+    override fun onHandleWork(intent: Intent) {
+        startAutoSwipe()
+    }
 
     override fun onStopCurrentWork() = true.also { releaseResources() }
 
@@ -65,50 +67,43 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
             ongoingActions += (this)
             execute(this@AutoSwipeJobIntentService,
                     object : GetRecommendationsAction.Callback {
-                override fun onRecommendationsReceived(
-                        recommendations: List<DomainRecommendationUser>) {
-                    if (recommendations.isEmpty()) {
-                        scheduleBecauseError(IllegalStateException("Empty recommendation list"))
-                    } else {
-                        likeRecommendation(
-                                recommendations.first(),
-                                recommendations.subList(
-                                        fromIndex = 1, toIndex = recommendations.size))
-                    }
-                }
-            })
+                        override fun onRecommendationsReceived(
+                                recommendations: List<DomainRecommendationUser>) {
+                            if (recommendations.isEmpty()) {
+                                scheduleBecauseError(IllegalStateException("Empty recommendation list"))
+                            } else {
+                                processRecommendations(recommendations)
+                            }
+                        }
+                    })
         }
     }
 
-    private fun likeRecommendation(
-            recommendation: DomainRecommendationUser,
-            remaining: List<DomainRecommendationUser>): Unit = Unit.also {
-        processRecommendationActionFactory.delegate(recommendation).apply {
-            ongoingActions += (this)
-            execute(this@AutoSwipeJobIntentService,
-                    object : ProcessRecommendationAction.Callback {
-                override fun onRecommendationProcessed(answer: DomainLikedRecommendationAnswer) =
-                        saveRecommendationToDatabase(
-                                recommendation = recommendation,
-                                liked = answer.rateLimitedUntilMillis != null,
-                                matched = answer.matched).also {
-                            reportHandler.addLikeAnswer(answer)
-                            when {
-                                answer.rateLimitedUntilMillis != null -> {
-                                    scheduleBecauseLimited(answer.rateLimitedUntilMillis!!)
-                                }
-                                remaining.isEmpty() -> scheduleBecauseMoreAvailable()
-                                else -> likeRecommendation(
-                                        remaining.first(),
-                                        remaining.subList(
-                                                fromIndex = 1, toIndex = remaining.size))
-                            }
-                        }
+    private fun processRecommendations(recommendations: List<DomainRecommendationUser>) {
+        recommendations.forEach {
+            processRecommendationActionFactory.delegate(it).apply {
+                ongoingActions += (this)
+                execute(this@AutoSwipeJobIntentService,
+                        object : ProcessRecommendationAction.Callback {
+                            override fun onRecommendationProcessed(
+                                    answer: DomainLikedRecommendationAnswer) =
+                                    saveRecommendationToDatabase(
+                                            recommendation = it,
+                                            liked = answer.rateLimitedUntilMillis != null,
+                                            matched = answer.matched).also {
+                                        reportHandler.addLikeAnswer(answer)
+                                        answer.rateLimitedUntilMillis?.let {
+                                            scheduleBecauseLimited(it)
+                                            return
+                                        }
+                                    }
 
-                override fun onRecommendationProcessingFailed() =
-                    saveRecommendationToDatabase(recommendation, liked = false, matched = false)
-            })
+                            override fun onRecommendationProcessingFailed() =
+                                    saveRecommendationToDatabase(it, liked = false, matched = false)
+                        })
+            }
         }
+        scheduleBecauseMoreAvailable()
     }
 
     private fun saveRecommendationToDatabase(
