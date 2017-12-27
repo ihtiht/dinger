@@ -19,7 +19,6 @@ data class DomainRecommendationUser(
         val birthDateInfo: String,
         val contentHash: String,
         val groupMatched: Boolean,
-        val pingTime: Date,
         val sNumber: Int,
         val liked: Boolean = false, // Recommendations are not liked by default
         var matched: Boolean = false, // Nor matched by default

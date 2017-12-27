@@ -60,7 +60,6 @@ internal class RecommendationResponseObjectMapper(
             birthDateInfo = source.birthDateInfo,
             contentHash = source.contentHash,
             groupMatched = source.groupMatched,
-            pingTime = source.pingTime,
             sNumber = source.sNumber,
             photos = source.photos.map { photoDelegate.from(it) },
             jobs = source.jobs.map { jobDelegate.from(it) },

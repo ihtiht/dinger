@@ -131,7 +131,6 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 birthDateInfo = recommendation.birthDateInfo,
                 contentHash = recommendation.contentHash,
                 groupMatched = recommendation.groupMatched,
-                pingTime = recommendation.pingTime,
                 sNumber = recommendation.sNumber,
                 liked = liked,
                 matched = matched,

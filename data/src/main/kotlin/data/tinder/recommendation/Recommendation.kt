@@ -24,8 +24,6 @@ internal class Recommendation private constructor(
         val birthDate: Date,
         @field:Json(name = "name")
         val name: String,
-        @field:Json(name = "ping_time")
-        val pingTime: Date,
         @field:Json(name = "photos")
         val photos: Array<RecommendationUserPhoto>,
         @field:Json(name = "instagram")

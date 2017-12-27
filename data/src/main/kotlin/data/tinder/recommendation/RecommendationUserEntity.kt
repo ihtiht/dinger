@@ -29,8 +29,6 @@ internal open class RecommendationUserEntity(
         @Embedded
         var birthDate: Date,
         var name: String,
-        @Embedded
-        var pingTime: Date,
         var instagram: String?,
         var teaser: String,
         var sNumber: Int,
@@ -50,7 +48,6 @@ internal open class RecommendationUserEntity(
                 id = "",
                 birthDate = Date(),
                 name = "",
-                pingTime = Date(),
                 instagram = null,
                 teaser = "",
                 sNumber = 0,
