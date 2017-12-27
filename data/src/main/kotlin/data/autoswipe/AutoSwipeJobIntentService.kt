@@ -9,10 +9,10 @@ import domain.like.DomainLikedRecommendationAnswer
 import domain.recommendation.DomainRecommendationUser
 import reporter.CrashReporter
 import retrofit2.HttpException
+import java.util.Date
 import javax.inject.Inject
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
-    private var ongoingActions = emptySet<Action<*>>()
     @Inject
     lateinit var crashReporter: CrashReporter
     @Inject
@@ -23,6 +23,8 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     lateinit var recommendationResolver: RecommendationUserResolver
     @Inject
     lateinit var reportHandler: AutoSwipeReportHandler
+    private var reScheduled = false
+    private var ongoingActions = emptySet<Action<*>>()
 
     init {
         AutoSwipeComponentHolder.autoSwipeComponent.inject(this)
@@ -37,6 +39,10 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     override fun onDestroy() {
         super.onDestroy()
         releaseResources()
+        if (!reScheduled) {
+            scheduleBecauseError(IllegalStateException(
+                    "OS-killed or uncaught exception? Check logs for a timestamp near ${Date()}"))
+        }
     }
 
     abstract class Action<in Callback> {
@@ -141,6 +147,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 this@AutoSwipeJobIntentService,
                 AutoSwipeReportHandler.RESULT_MORE_AVAILABLE)
         execute(this@AutoSwipeJobIntentService, Unit)
+        reScheduled = true
     }
 
     private fun scheduleBecauseLimited(notBeforeMillis: Long) =
@@ -150,6 +157,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                         this@AutoSwipeJobIntentService,
                         AutoSwipeReportHandler.RESULT_RATE_LIMITED)
                 execute(this@AutoSwipeJobIntentService, Unit)
+                reScheduled = true
     }
 
     private fun scheduleBecauseError(error: Throwable) {
@@ -159,6 +167,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
             reportHandler.show(
                     this@AutoSwipeJobIntentService, AutoSwipeReportHandler.RESULT_ERROR)
             execute(this@AutoSwipeJobIntentService, Unit)
+            reScheduled = true
         }
     }
 
