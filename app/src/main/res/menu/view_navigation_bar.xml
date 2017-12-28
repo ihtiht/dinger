@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_search"
+    <item
+        android:id="@+id/navigation_item_matches"
         android:title="@string/navigation_bar_matches"
         android:icon="@drawable/ic_chat_bubble" />
-    <item android:id="@+id/action_settings"
+    <item
+        android:id="@+id/navigation_item_seen"
         android:title="@string/navigation_bar_seen"
         android:icon="@drawable/ic_eye" />
-    <item android:id="@+id/action_navigation"
+    <item
+        android:id="@+id/navigation_item_me"
         android:title="@string/navigation_bar_me"
         android:icon="@drawable/ic_user_in_circle" />
 </menu>
