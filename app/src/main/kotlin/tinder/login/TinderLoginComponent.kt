@@ -1,4 +1,4 @@
-package app.login
+package tinder.login
 
 import app.di.PerActivity
 import dagger.Subcomponent

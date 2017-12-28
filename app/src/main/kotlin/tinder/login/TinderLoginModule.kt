@@ -1,4 +1,4 @@
-package app.login
+package tinder.login
 
 import android.support.v4.widget.ContentLoadingProgressBar
 import app.di.PerActivity

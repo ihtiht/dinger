@@ -5,8 +5,8 @@ import app.alarmbanner.AutoSwipeTriggerModule
 import app.alarmbanner.ContinueModule
 import app.crash.FirebaseCrashReporterModule
 import app.event.FirebaseEventTrackerModule
-import app.login.TinderLoginComponent
-import app.login.TinderLoginModule
+import tinder.login.TinderLoginComponent
+import tinder.login.TinderLoginModule
 import app.splash.SplashComponent
 import app.splash.SplashModule
 import dagger.Component

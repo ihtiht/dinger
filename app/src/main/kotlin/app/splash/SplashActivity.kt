@@ -6,7 +6,7 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import app.MainApplication
 import app.home.HomeActivity
-import app.login.TinderLoginActivity
+import tinder.login.TinderLoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import javax.inject.Inject

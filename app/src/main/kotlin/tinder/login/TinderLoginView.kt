@@ -1,4 +1,4 @@
-package app.login
+package tinder.login
 
 internal interface TinderLoginView {
     fun setRunning()

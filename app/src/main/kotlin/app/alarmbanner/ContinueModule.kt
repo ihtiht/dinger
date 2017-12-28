@@ -2,8 +2,6 @@ package app.alarmbanner
 
 import android.view.View
 import app.di.PerActivity
-import app.login.TinderLoginView
-import app.login.TinderLoginViewImpl
 import dagger.Module
 import dagger.Provides
 

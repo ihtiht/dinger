@@ -1,4 +1,4 @@
-package app.login
+package tinder.login
 
 import domain.login.TinderLoginUseCase
 import io.reactivex.Scheduler

@@ -1,4 +1,4 @@
-package app.login
+package tinder.login
 
 import android.content.Context
 import android.content.Intent
