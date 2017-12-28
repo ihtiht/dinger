@@ -1,4 +1,5 @@
 final def architectureComponentsVersion = "1.0.0"
+final def constraintLayoutVersion = "1.0.2"
 final def daggerVersion = "2.12"
 final def facebookSdkVersion = "4.27.0"
 final def googlePlayServicesVersion = "11.6.0"
@@ -27,7 +28,8 @@ ext {
             "com.airbnb.android:lottie:$lottieVersion",
             "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
             "com.android.support:design:$supportLibraryVersion",
-            "com.android.support:preference-v7:$supportLibraryVersion"
+            "com.android.support:preference-v7:$supportLibraryVersion",
+            "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
     ]
     annotationProcessorDomainDependencies = [
             "javax.annotation:jsr250-api:$jsr250Version"
