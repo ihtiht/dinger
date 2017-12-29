@@ -10,16 +10,19 @@ class TinderLoginUseCase(
         asyncExecutionScheduler: Scheduler? = null,
         postExecutionScheduler: Scheduler)
     : CompletableDisposableUseCase(asyncExecutionScheduler, postExecutionScheduler) {
-    override fun buildUseCase(): Completable = LoginHolder.loginProvider
-            .login(DomainAuthRequestParameters(facebookId, facebookToken))
-            .doOnSuccess {
-                if (!LoginHolder.accountManagementProvider.updateOrAddAccount(
-                        facebookId = facebookId,
-                        facebookToken = facebookToken,
-                        tinderApiKey = it.apiKey)) {
-                    throw FailedLoginException(
-                        "Failed to add account $facebookId with token $facebookToken")
+    override fun buildUseCase(): Completable {
+        dispose()
+        return LoginHolder.loginProvider
+                .login(DomainAuthRequestParameters(facebookId, facebookToken))
+                .doOnSuccess {
+                    if (!LoginHolder.accountManagementProvider.updateOrAddAccount(
+                            facebookId = facebookId,
+                            facebookToken = facebookToken,
+                            tinderApiKey = it.apiKey)) {
+                        throw FailedLoginException(
+                                "Failed to add account $facebookId with token $facebookToken")
+                    }
                 }
-            }
-            .toCompletable()
+                .toCompletable()
+    }
 }
