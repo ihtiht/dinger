@@ -2,19 +2,22 @@ package data.autoswipe
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.support.v4.app.JobIntentService
 import data.tinder.recommendation.GetRecommendationsAction
 import data.tinder.recommendation.RecommendationUserResolver
 import domain.like.DomainLikedRecommendationAnswer
 import domain.recommendation.DomainRecommendationUser
+import org.stoyicker.dinger.data.R
 import reporter.CrashReporter
 import retrofit2.HttpException
-import java.util.Date
 import javax.inject.Inject
 
 internal class AutoSwipeJobIntentService : JobIntentService() {
     @Inject
     lateinit var crashReporter: CrashReporter
+    @Inject
+    lateinit var defaultSharedPreferences: SharedPreferences
     @Inject
     lateinit var getRecommendationsAction: GetRecommendationsAction
     @Inject
@@ -31,7 +34,12 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     }
 
     override fun onHandleWork(intent: Intent) {
-        startAutoSwipe()
+        if (defaultSharedPreferences.getBoolean(
+                getString(R.string.preference_key_autoswipe_enabled), false)) {
+            startAutoSwipe()
+        } else {
+            scheduleBecauseError()
+        }
     }
 
     override fun onStopCurrentWork() = true.also { releaseResources() }
@@ -39,10 +47,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
     override fun onDestroy() {
         super.onDestroy()
         releaseResources()
-        if (!reScheduled) {
-            scheduleBecauseError(IllegalStateException(
-                    "OS-killed or uncaught exception? Check logs for a timestamp near ${Date()}"))
-        }
+        if (!reScheduled) { scheduleBecauseError() }
     }
 
     abstract class Action<in Callback> {
@@ -159,8 +164,10 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
                 reScheduled = true
     }
 
-    private fun scheduleBecauseError(error: Throwable) {
-        crashReporter.report(error)
+    private fun scheduleBecauseError(error: Throwable? = null) {
+        if (error != null) {
+            crashReporter.report(error)
+        }
         FromErrorPostAutoSwipeAction().apply {
             ongoingActions += this
             reportHandler.show(
