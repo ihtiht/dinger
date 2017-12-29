@@ -6,8 +6,9 @@ Tinder is a very trendy thing. It's like clubbing, but without the fun :D
 From a technical standpoint however, the Android app has some... 'shortcomings':
 * It requires you to periodically perform a monkey task (swiping), which is cumbersome and inefficient, and could be easily automated.
 * It performs a very aggressive polling to check for changes that may affect your experience (in other words, it continuously asks the server 'did anyone message me?' instead of letting the server notify the device when a message came). This results in unnecessary battery and data consumption plus, when implemented poorly, buggy behavior too.
-* Its token refresh technique is slightly unreliable.
 * It does not support landscape mode.
+* It requires Internet access to even enter the app.
+* It does not support multi-window mode.
 
 This app exists to show that these and other pain points are easily addressed nowadays if things are done correctly. And for my and every other Tinder user's joy too, of course :)
 
