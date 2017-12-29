@@ -14,16 +14,19 @@ import domain.alarm.AppAlarmManager
 import domain.autoswipe.AutoSwipeHolder
 import domain.autoswipe.AutoSwipeLauncherFactory
 import domain.dislike.DislikeRecommendationHolder
-import domain.dislike.DislikeRecommendationProvider
+import domain.dislike.DislikeRecommendation
 import domain.like.LikeRecommendationHolder
-import domain.like.LikeRecommendationProvider
+import domain.like.LikeRecommendation
 import domain.loggedincheck.LoggedInCheckHolder
 import domain.login.LoginHolder
-import domain.login.LoginProvider
+import domain.login.Login
+import domain.logout.AutoSwipeServiceDestructor
+import domain.logout.LogoutHolder
+import domain.logout.StorageClear
 import domain.recommendation.GetRecommendationHolder
-import domain.recommendation.GetRecommendationProvider
+import domain.recommendation.GetRecommendation
 import domain.versioncheck.VersionCheckHolder
-import domain.versioncheck.VersionCheckProvider
+import domain.versioncheck.VersionCheck
 import javax.inject.Inject
 
 /**
@@ -32,13 +35,13 @@ import javax.inject.Inject
  */
 internal class InitializationContentProvider : ContentProvider() {
     @Inject
-    lateinit var loginProviderImpl: LoginProvider
+    lateinit var loginImpl: Login
     @Inject
-    lateinit var getRecommendationProviderImpl: GetRecommendationProvider
+    lateinit var getRecommendationImpl: GetRecommendation
     @Inject
-    lateinit var likeRecommendationProviderImpl: LikeRecommendationProvider
+    lateinit var likeRecommendationImpl: LikeRecommendation
     @Inject
-    lateinit var dislikeRecommendationProviderImpl: DislikeRecommendationProvider
+    lateinit var dislikeRecommendationImpl: DislikeRecommendation
     @Inject
     lateinit var accountManagerImpl: AppAccountAuthenticator
     @Inject
@@ -46,7 +49,11 @@ internal class InitializationContentProvider : ContentProvider() {
     @Inject
     lateinit var autoSwipeIntentFactoryImpl: AutoSwipeLauncherFactory
     @Inject
-    lateinit var versionCheckProviderImpl: VersionCheckProvider
+    lateinit var versionCheckImpl: VersionCheck
+    @Inject
+    lateinit var storageClearImpl: StorageClear
+    @Inject
+    lateinit var autoswipeServiceDestructor: AutoSwipeServiceDestructor
 
     override fun onCreate(): Boolean {
         val rootModule = RootModule(context)
@@ -63,15 +70,19 @@ internal class InitializationContentProvider : ContentProvider() {
                 .accountModule(accountModule)
                 .build()
                 .inject(this)
-        LoginHolder.loginProvider(loginProviderImpl)
-        LoginHolder.addAccountProvider(accountManagerImpl)
-        LoggedInCheckHolder.loggedInCheckProvider(accountManagerImpl)
-        GetRecommendationHolder.getRecommendationProvider(getRecommendationProviderImpl)
-        LikeRecommendationHolder.likeRecommendationProvider(likeRecommendationProviderImpl)
-        DislikeRecommendationHolder.dislikeRecommendationProvider(dislikeRecommendationProviderImpl)
+        LoginHolder.login(loginImpl)
+        LoginHolder.addAccount(accountManagerImpl)
+        LoggedInCheckHolder.loggedInCheck(accountManagerImpl)
+        GetRecommendationHolder.getRecommendation(getRecommendationImpl)
+        LikeRecommendationHolder.likeRecommendation(likeRecommendationImpl)
+        DislikeRecommendationHolder.dislikeRecommendation(dislikeRecommendationImpl)
         AlarmHolder.alarmManager(alarmManagerImpl)
         AutoSwipeHolder.autoSwipeIntentFactory(autoSwipeIntentFactoryImpl)
-        VersionCheckHolder.versionCheckProvider(versionCheckProviderImpl)
+        VersionCheckHolder.versionCheck(versionCheckImpl)
+        LogoutHolder.alarmManager(alarmManagerImpl)
+        LogoutHolder.autoswipeDestructor(autoswipeServiceDestructor)
+        LogoutHolder.removeAccount(accountManagerImpl)
+        LogoutHolder.storageClear(storageClearImpl)
         return true
     }
 

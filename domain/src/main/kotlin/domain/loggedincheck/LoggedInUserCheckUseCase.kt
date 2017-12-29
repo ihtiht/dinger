@@ -9,5 +9,5 @@ class LoggedInUserCheckUseCase(
         postExecutionScheduler: Scheduler)
     : SingleDisposableUseCase<Boolean>(asyncExecutionScheduler, postExecutionScheduler) {
     override fun buildUseCase(): Single<Boolean> =
-            Single.just(LoggedInCheckHolder.loggedInCheckProvider.isThereALoggedInUser())
+            Single.just(LoggedInCheckHolder.loggedInCheck.isThereALoggedInUser())
 }

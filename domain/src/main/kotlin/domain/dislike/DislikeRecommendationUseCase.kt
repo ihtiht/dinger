@@ -11,6 +11,5 @@ class DislikeRecommendationUseCase(
     : SingleDisposableUseCase<DomainDislikedRecommendationAnswer>(
         postExecutionScheduler = postExecutionScheduler) {
     override fun buildUseCase(): Single<DomainDislikedRecommendationAnswer> =
-            DislikeRecommendationHolder.likeRecommendationProvider
-                    .dislikeRecommendation(recommendation)
+            DislikeRecommendationHolder.dislikeRecommendation.dislikeRecommendation(recommendation)
 }

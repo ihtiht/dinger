@@ -9,12 +9,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import domain.loggedincheck.LoggedInCheckProvider
-import domain.login.AccountManagementProvider
+import domain.loggedincheck.LoggedInCheck
+import domain.login.AccountManagement
 import org.stoyicker.dinger.data.R
 
 internal class AppAccountAuthenticator(context: Context)
-    : AccountManagementProvider, LoggedInCheckProvider, AbstractAccountAuthenticator(context) {
+    : AccountManagement, LoggedInCheck, AbstractAccountAuthenticator(context) {
     private val delegate by lazy { AccountManager.get(context) }
 
     init { ACCOUNT_TYPE = context.getString(R.string.account_type) }

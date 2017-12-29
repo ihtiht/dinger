@@ -11,5 +11,5 @@ class LikeRecommendationUseCase(
     : SingleDisposableUseCase<DomainLikedRecommendationAnswer>(
         postExecutionScheduler = postExecutionScheduler) {
     override fun buildUseCase(): Single<DomainLikedRecommendationAnswer> =
-            LikeRecommendationHolder.likeRecommendationProvider.likeRecommendation(recommendation)
+            LikeRecommendationHolder.likeRecommendation.likeRecommendation(recommendation)
 }

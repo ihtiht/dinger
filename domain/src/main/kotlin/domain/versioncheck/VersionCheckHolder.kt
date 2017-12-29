@@ -1,9 +1,9 @@
 package domain.versioncheck
 
 object VersionCheckHolder {
-    internal lateinit var versionCheckProvider: VersionCheckProvider
+    internal lateinit var versionCheck: VersionCheck
 
-    fun versionCheckProvider(it: VersionCheckProvider) {
-        versionCheckProvider = it
+    fun versionCheck(it: VersionCheck) {
+        versionCheck = it
     }
 }

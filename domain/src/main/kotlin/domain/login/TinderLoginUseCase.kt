@@ -11,11 +11,10 @@ class TinderLoginUseCase(
         postExecutionScheduler: Scheduler)
     : CompletableDisposableUseCase(asyncExecutionScheduler, postExecutionScheduler) {
     override fun buildUseCase(): Completable {
-        dispose()
-        return LoginHolder.loginProvider
+        return LoginHolder.login
                 .login(DomainAuthRequestParameters(facebookId, facebookToken))
                 .doOnSuccess {
-                    if (!LoginHolder.accountManagementProvider.updateOrAddAccount(
+                    if (!LoginHolder.addAccount.updateOrAddAccount(
                             facebookId = facebookId,
                             facebookToken = facebookToken,
                             tinderApiKey = it.apiKey)) {

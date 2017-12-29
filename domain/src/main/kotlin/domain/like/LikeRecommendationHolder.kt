@@ -1,9 +1,9 @@
 package domain.like
 
 object LikeRecommendationHolder {
-    internal lateinit var likeRecommendationProvider: LikeRecommendationProvider
+    internal lateinit var likeRecommendation: LikeRecommendation
 
-    fun likeRecommendationProvider(it: LikeRecommendationProvider) {
-        likeRecommendationProvider = it
+    fun likeRecommendation(it: LikeRecommendation) {
+        likeRecommendation = it
     }
 }

@@ -11,7 +11,7 @@ class VersionCheckUseCase(
     : SingleDisposableUseCase<DomainVersionCheckDescription>(
         asyncExecutionScheduler, postExecutionScheduler) {
     override fun buildUseCase(): Single<DomainVersionCheckDescription> =
-            VersionCheckHolder.versionCheckProvider.versionCheck().map { it.run {
+            VersionCheckHolder.versionCheck.versionCheck().map { it.run {
                 DomainVersionCheckDescription(
                         dialogTitle = dialogTitle,
                         dialogBody = dialogBody,

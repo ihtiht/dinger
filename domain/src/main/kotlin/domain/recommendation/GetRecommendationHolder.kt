@@ -1,9 +1,9 @@
 package domain.recommendation
 
 object GetRecommendationHolder {
-    internal lateinit var getRecommendationProvider: GetRecommendationProvider
+    internal lateinit var getRecommendation: GetRecommendation
 
-    fun getRecommendationProvider(it: GetRecommendationProvider) {
-        getRecommendationProvider = it
+    fun getRecommendation(it: GetRecommendation) {
+        getRecommendation = it
     }
 }

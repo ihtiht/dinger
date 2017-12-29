@@ -15,13 +15,13 @@ abstract class PostAutoSwipeUseCase internal constructor(
     internal abstract fun notBeforeMillis(context: Context): Long
 
     override fun buildUseCase(): Completable = Completable.fromCallable {
-        AlarmHolder.alarmManager.setBroadcastOneShotFor(
+        AlarmHolder.alarmManager.setOneShotBroadcastFor(
                 REQUEST_CODE,
                 notBeforeMillis(context),
                 AutoSwipeHolder.autoSwipeLauncherFactory.newFromBroadcast(context))
     }
 
-    private companion object {
-        const val REQUEST_CODE = 0
+    companion object {
+        internal const val REQUEST_CODE = 0
     }
 }

@@ -1,14 +1,14 @@
 package domain.login
 
 object LoginHolder {
-    internal lateinit var loginProvider: LoginProvider
-    internal lateinit var accountManagementProvider: AccountManagementProvider
+    internal lateinit var login: Login
+    internal lateinit var addAccount: AccountManagement
 
-    fun loginProvider(it: LoginProvider) {
-        loginProvider = it
+    fun login(it: Login) {
+        login = it
     }
 
-    fun addAccountProvider(it: AccountManagementProvider) {
-        accountManagementProvider = it
+    fun addAccount(it: AccountManagement) {
+        addAccount = it
     }
 }

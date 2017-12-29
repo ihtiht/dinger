@@ -5,15 +5,15 @@ import app.alarmbanner.AutoSwipeTriggerModule
 import app.alarmbanner.ContinueModule
 import app.crash.FirebaseCrashReporterModule
 import app.event.FirebaseEventTrackerModule
-import tinder.login.TinderLoginComponent
-import tinder.login.TinderLoginModule
+import app.tinder.login.TinderLoginComponent
+import app.tinder.login.TinderLoginModule
 import app.splash.SplashComponent
 import app.splash.SplashModule
 import dagger.Component
 import javax.inject.Singleton
 
 @Component(modules = [
-    ApplicationModule::class,
+    SchedulerModule::class,
     FirebaseCrashReporterModule::class,
     FirebaseEventTrackerModule::class])
 @Singleton
