@@ -14,6 +14,7 @@ abstract class CompletableDisposableUseCase protected constructor(
     fun execute(subscriber: DisposableCompletableObserver) {
         assembledSubscriber = buildUseCase().let {
             val completeSetup = { x: Completable ->
+                // noinspection CheckResult - False positive
                 x.observeOn(postExecutionScheduler).subscribeWith(subscriber)
             }
             if (asyncExecutionScheduler != null) {

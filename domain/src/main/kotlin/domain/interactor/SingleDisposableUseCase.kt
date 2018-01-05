@@ -14,6 +14,7 @@ abstract class SingleDisposableUseCase<T> protected constructor(
     fun execute(subscriber: DisposableSingleObserver<T>) {
         assembledSubscriber = buildUseCase().let {
             val completeSetup = { x: Single<T> ->
+                // noinspection CheckResult - False positive
                 x.observeOn(postExecutionScheduler).subscribeWith(subscriber)
             }
             if (asyncExecutionScheduler != null) {

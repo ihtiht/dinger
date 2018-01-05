@@ -9,6 +9,7 @@ internal abstract class RequestSource<in RequestModel, ResponseModel>(
         private val crashReporter: CrashReporter)
     : Gettable<RequestModel, ResponseModel> {
     override fun fetch(parameters: RequestModel): Single<ResponseModel> =
+            // noinspection CheckResult - False positive
             operate(store.fetch(parameters).onErrorResumeNext { error ->
                 get(parameters).onErrorResumeNext(Single.error(error))
             })
