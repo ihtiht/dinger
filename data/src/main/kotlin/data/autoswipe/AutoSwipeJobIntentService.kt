@@ -35,7 +35,7 @@ internal class AutoSwipeJobIntentService : JobIntentService() {
 
     override fun onHandleWork(intent: Intent) {
         if (defaultSharedPreferences.getBoolean(
-                getString(R.string.preference_key_autoswipe_enabled), false)) {
+                getString(R.string.preference_key_autoswipe_enabled), true)) {
             startAutoSwipe()
         } else {
             scheduleBecauseError()
