@@ -14,6 +14,6 @@ internal class NetworkClientModule {
             .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
 
     private companion object {
-        const val TIMEOUT_SECONDS = 60L * 60L * 24L //24 hours
+        const val TIMEOUT_SECONDS = 45L
     }
 }
