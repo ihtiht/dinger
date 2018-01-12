@@ -26,7 +26,6 @@ import org.stoyicker.dinger.data.BuildConfig
 import org.stoyicker.dinger.data.R
 import reporter.CrashReporter
 import retrofit2.Retrofit
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module(includes = [
@@ -49,10 +48,7 @@ internal class TinderApiModule {
             .client(clientBuilder.addInterceptor {
                 it.proceed(it.request().newBuilder().addHeaders(appAccountManager).build())
             }.authenticator { _, response -> when {
-                !response.request().header(HEADER_AUTH_TRIED).isNullOrBlank() -> {
-                    Thread.sleep(TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES))
-                    response.request().newBuilder().build()
-                }
+                !response.request().header(HEADER_AUTH_TRIED).isNullOrBlank() -> null
                 response.code() == 401 -> appAccountManager.let {
                     val facebookToken: AccessToken? = AccessToken.getCurrentAccessToken()
                     if (facebookToken != null) {
