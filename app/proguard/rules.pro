@@ -33,3 +33,4 @@
 -keepclassmembernames class kotlinx.** {
     volatile <fields>;
 }
+-dontwarn javax.annotation.**
