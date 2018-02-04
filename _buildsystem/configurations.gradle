@@ -1,5 +1,5 @@
 final def archRuntimeVersion = "1.0.3"
-final def kotlinVersion = "1.2.10"
+final def kotlinVersion = "1.2.21"
 final def supportLibraryVersion = "27.0.2"
 configurations.all {
     resolutionStrategy {
