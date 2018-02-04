@@ -1,6 +1,6 @@
 final def architectureComponentsVersion = "1.0.0"
 final def constraintLayoutVersion = "1.0.2"
-final def daggerVersion = "2.12"
+final def daggerVersion = "2.14.1"
 final def facebookSdkVersion = "4.27.0"
 final def googlePlayServicesVersion = "11.6.0"
 final def jsr250Version = "1.0"
