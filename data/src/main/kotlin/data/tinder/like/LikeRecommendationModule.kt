@@ -2,12 +2,12 @@ package data.tinder.like
 
 import dagger.Module
 import dagger.Provides
-import data.crash.FirebaseCrashReporterModule
+import data.crash.CrashReporterModule
 import domain.like.LikeRecommendation
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = [LikeFacadeModule::class, FirebaseCrashReporterModule::class])
+@Module(includes = [LikeFacadeModule::class, CrashReporterModule::class])
 internal class LikeRecommendationModule {
     @Provides
     @Singleton

@@ -7,8 +7,8 @@ import reporter.CrashReporters
 import javax.inject.Singleton
 
 @Module
-internal class FirebaseCrashReporterModule {
+internal class CrashReporterModule {
     @Provides
     @Singleton
-    fun instance(): CrashReporter = CrashReporters.firebase()
+    fun instance(): CrashReporter = CrashReporters.crashlytics()
 }

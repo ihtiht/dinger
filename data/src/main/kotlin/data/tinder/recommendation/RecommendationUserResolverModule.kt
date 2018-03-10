@@ -3,12 +3,12 @@ package data.tinder.recommendation
 import dagger.Module
 import dagger.Provides
 import data.RootModule
-import data.crash.FirebaseCrashReporterModule
+import data.crash.CrashReporterModule
 import data.database.AppDatabase
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = [RootModule::class, FirebaseCrashReporterModule::class])
+@Module(includes = [RootModule::class, CrashReporterModule::class])
 internal class RecommendationUserResolverModule {
     @Provides
     @Singleton
