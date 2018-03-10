@@ -2,12 +2,12 @@ package data.stoyicker.versioncheck
 
 import dagger.Module
 import dagger.Provides
-import data.crash.CrashReporterModule
+import data.crash.FirebaseCrashReporterModule
 import domain.versioncheck.VersionCheck
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = [VersionCheckFacadeModule::class, CrashReporterModule::class])
+@Module(includes = [VersionCheckFacadeModule::class, FirebaseCrashReporterModule::class])
 internal class VersionCheckModule {
     @Provides
     @Singleton

@@ -11,7 +11,7 @@ import dagger.Provides
 import data.RootModule
 import data.account.AccountModule
 import data.account.AppAccountAuthenticator
-import data.crash.CrashReporterModule
+import data.crash.FirebaseCrashReporterModule
 import data.network.NetworkClientModule
 import data.network.NetworkModule
 import data.notification.NotificationManager
@@ -30,7 +30,7 @@ import javax.inject.Singleton
 
 @Module(includes = [
     AccountModule::class,
-    CrashReporterModule::class,
+    FirebaseCrashReporterModule::class,
     NetworkClientModule::class,
     NetworkModule::class,
     NotificationManagerModule::class,

@@ -40,7 +40,4 @@ android {
 dependencies {
     implementation project.ext.compileDependencies
     implementation project.ext.compileCrashReporterDependencies
-    implementation ("com.crashlytics.sdk.android:crashlytics:2.9.1@aar") {
-        transitive = true
-    }
 }

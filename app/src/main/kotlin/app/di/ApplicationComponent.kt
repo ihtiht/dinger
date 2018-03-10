@@ -3,7 +3,7 @@ package app.di
 import app.alarmbanner.AlarmBannerComponent
 import app.alarmbanner.AutoSwipeTriggerModule
 import app.alarmbanner.ContinueModule
-import app.crash.CrashReporterModule
+import app.crash.FirebaseCrashReporterModule
 import app.event.FirebaseEventTrackerModule
 import app.tinder.login.TinderLoginComponent
 import app.tinder.login.TinderLoginModule
@@ -14,7 +14,7 @@ import javax.inject.Singleton
 
 @Component(modules = [
     SchedulerModule::class,
-    CrashReporterModule::class,
+    FirebaseCrashReporterModule::class,
     FirebaseEventTrackerModule::class])
 @Singleton
 internal interface ApplicationComponent {

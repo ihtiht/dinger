@@ -9,7 +9,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Rfc3339DateJsonAdapter
 import dagger.Module
 import dagger.Provides
-import data.crash.CrashReporterModule
+import data.crash.FirebaseCrashReporterModule
 import data.network.ParserModule
 import data.tinder.TinderApi
 import data.tinder.TinderApiModule
@@ -20,7 +20,7 @@ import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
 @Module(includes = [
-    ParserModule::class, TinderApiModule::class, CrashReporterModule::class])
+    ParserModule::class, TinderApiModule::class, FirebaseCrashReporterModule::class])
 internal class RecommendationSourceModule {
     @Provides
     @Singleton

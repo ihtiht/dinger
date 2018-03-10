@@ -3,11 +3,9 @@ final def kotlinPluginVersion = "1.2.0"
 final def googleServicesPluginVersion = "3.1.0"
 final def firebasePluginsVersion = "1.1.0-alpha1"
 final def kotlinterPluginVersion = "1.5.0"
-final def crashlyticsPluginVersion = "1.25.1"
 project.ext.classpathRepositories = {
     google()
     maven { url "https://plugins.gradle.org/m2/" }
-    maven { url "https://maven.fabric.io/public" }
 }
 project.ext.classpathDependencies = {
     classpath "com.android.tools.build:gradle:$androidPluginVersion"
@@ -15,6 +13,5 @@ project.ext.classpathDependencies = {
     classpath "com.google.gms:google-services:$googleServicesPluginVersion"
     classpath "com.google.firebase:firebase-plugins:$firebasePluginsVersion"
     classpath "gradle.plugin.org.jmailen.gradle:kotlinter-gradle:$kotlinterPluginVersion"
-    classpath "io.fabric.tools:gradle:$crashlyticsPluginVersion"
 }
 
