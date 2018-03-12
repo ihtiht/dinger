@@ -1,6 +1,6 @@
 # Dinger [![Build Status](https://travis-ci.org/stoyicker/dinger.svg?branch=master)](https://travis-ci.org/stoyicker/dinger "stoyicker/dinger - Travis CI")
 ## Maintenance notice
-This project is in maintenance-mode only. I won't be adding any new features, although I will continue to maintain auto-swiping for the foreseeable future, and I'm open to anyone else who wants to add features and contribute.
+This project is in maintenance-only status. I won't be adding any new features, although I will continue to maintain auto-swiping for the foreseeable future, and I'm open to anyone else who wants to add features and contribute.
 
 ## What Tinder should have been
 
