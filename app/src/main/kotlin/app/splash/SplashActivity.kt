@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import app.MainApplication
-import app.home.HomeActivity
+import app.alarmbanner.AlarmBannerActivity
 import app.tinder.login.TinderLoginActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import javax.inject.Inject
+
 /**
  * A simple activity that acts as a splash screen.
  *
@@ -126,7 +127,7 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
     }
 
     private fun continueLoggedIn() {
-        HomeActivity.getCallingIntent(this).apply {
+        AlarmBannerActivity.getCallingIntent(this).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(this)
         }
