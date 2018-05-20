@@ -1,8 +1,8 @@
-final def androidPluginVersion = "3.1.0-alpha06"
-final def kotlinPluginVersion = "1.2.0"
+final def androidPluginVersion = "3.1.2"
+final def kotlinPluginVersion = "1.2.40"
 final def googleServicesPluginVersion = "3.1.0"
 final def firebasePluginsVersion = "1.1.0-alpha1"
-final def kotlinterPluginVersion = "1.5.0"
+final def kotlinterPluginVersion = "1.12.0"
 project.ext.classpathRepositories = {
     google()
     maven { url "https://plugins.gradle.org/m2/" }
