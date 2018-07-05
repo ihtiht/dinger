@@ -55,7 +55,7 @@ android {
         javaMaxHeapSize "8g"
     }
     lintOptions {
-        abortOnError false // TODO Change abortOnError to true when Lint works with Kotlin
+        abortOnError true
         absolutePaths true
         checkAllWarnings true
         htmlOutput = new File("$project.ext.staticAnalysisReportTarget/$project.name/lint.html")

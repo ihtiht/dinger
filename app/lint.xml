@@ -13,4 +13,6 @@
         <!-- Lint does not seem to work too well with adaptive icons just yet -->
         <ignore regexp="ic_launcher_adaptive" />
     </issue>
+    <issue id="UnusedIds" severity="ignore" />
+    <issue id="MissingRegistered" severity="ignore" />
 </lint>

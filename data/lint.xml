@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <lint>
-    <issue id="NewApi">
-        <!-- This is Kotlin's, not java.lang's Iterable -->
-        <ignore regexp="forEach" />
+    <issue id="UnusedResources">
+        <!-- False positive -->
+        <ignore regexp="ic_notification" />
     </issue>
 </lint>
