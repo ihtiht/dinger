@@ -23,8 +23,8 @@ internal class NotificationManagerImpl(
             @StringRes title: Int,
             @StringRes body: Int,
             @NotificationCategory category: String,
-            @NotificationPriority priority: Long,
-            @NotificationVisibility visibility: Long,
+            @NotificationPriority priority: Int,
+            @NotificationVisibility visibility: Int,
             clickHandler: PendingIntent?) = notify(
             channelName = channelName,
             title = context.getString(title),
@@ -39,8 +39,8 @@ internal class NotificationManagerImpl(
             title: String,
             body: String,
             @NotificationCategory category: String,
-            @NotificationPriority priority: Long,
-            @NotificationVisibility visibility: Long,
+            @NotificationPriority priority: Int,
+            @NotificationVisibility visibility: Int,
             clickHandler: PendingIntent?) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.getSystemService<android.app.NotificationManager>(
@@ -59,7 +59,7 @@ internal class NotificationManagerImpl(
                     .setDefaults(NotificationCompat.DEFAULT_ALL)
                     .setOngoing(false)
                     .setOnlyAlertOnce(true)
-                    .setPriority(priority.toInt())
+                    .setPriority(priority)
                     .setSmallIcon(R.drawable.ic_notification)
                     .setTicker(body)
                     .apply {
@@ -76,7 +76,7 @@ internal class NotificationManagerImpl(
                                         setGroupAlertBehavior(
                                                 NotificationCompat.GROUP_ALERT_SUMMARY)
                                     }
-                                    setVisibility(visibility.toInt())
+                                    setVisibility(visibility)
                                 }
                             }
                         }
@@ -87,7 +87,7 @@ internal class NotificationManagerImpl(
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-private fun getChannelImportance(@NotificationPriority priority: Long) = when (priority) {
+private fun getChannelImportance(@NotificationPriority priority: Int) = when (priority) {
     NotificationManager.PRIORITY_LOW -> android.app.NotificationManager.IMPORTANCE_LOW
     NotificationManager.PRIORITY_MEDIUM -> android.app.NotificationManager.IMPORTANCE_DEFAULT
     NotificationManager.PRIORITY_HIGH -> android.app.NotificationManager.IMPORTANCE_HIGH

@@ -6,12 +6,9 @@
     <color name="primary_dark">#000A12</color>
     <color name="text_primary">#FFAB40</color>
     <color name="text_secondary">#FAE7AF</color>
-    <color name="secondary">#FFAB40</color>
     <color name="window_background">#273339</color>
 
     <dimen name="layout_content_padding">16dp</dimen>
-
-    <integer name="anim_duration">@android:integer/config_mediumAnimTime</integer>
 
     <string name="app_label" translatable="false">Dinger</string>
     <string name="no_intent_handlers">No handlers found for %s, ignored</string>

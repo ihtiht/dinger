@@ -32,7 +32,7 @@ internal class AutoSwipeReportHandler(
 
     private fun addLike() { ++likeCounter }
 
-    fun show(context: Context, @AutoSwipeResult result: Long) {
+    fun show(context: Context, @AutoSwipeResult result: Int) {
         if (!areNotificationsEnabled(context, defaultSharedPreferences)) return
         notificationManager.notify(
                 channelName = R.string.autoswipe_notification_channel_name,
@@ -48,9 +48,9 @@ internal class AutoSwipeReportHandler(
     }
 
     companion object {
-        const val RESULT_RATE_LIMITED = 1L
-        const val RESULT_MORE_AVAILABLE = 2L
-        const val RESULT_ERROR = 3L
+        const val RESULT_RATE_LIMITED = 1
+        const val RESULT_MORE_AVAILABLE = 2
+        const val RESULT_ERROR = 3
     }
 }
 
@@ -67,7 +67,7 @@ private fun generateTitle(context: Context, likes: Int, matches: Int) = StringBu
 
 private fun generateBody(
         context: Context,
-        @AutoSwipeResult result: Long) = when (result) {
+        @AutoSwipeResult result: Int) = when (result) {
     RESULT_RATE_LIMITED -> context.getString(R.string.autoswipe_notification_body_capped)
     RESULT_MORE_AVAILABLE -> context.getString(R.string.autoswipe_notification_body_more_available)
     RESULT_ERROR -> context.getString(R.string.autoswipe_notification_body_error)

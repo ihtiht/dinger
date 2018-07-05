@@ -5,7 +5,7 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 
 class VersionCheckUseCase(
-        private val appVersion: Int,
+        private val appVersion: Long,
         asyncExecutionScheduler: Scheduler,
         postExecutionScheduler: Scheduler)
     : SingleDisposableUseCase<DomainVersionCheckDescription>(

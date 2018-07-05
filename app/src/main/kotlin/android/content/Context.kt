@@ -1,5 +1,6 @@
 package android.content
 
+import android.os.Build
 import android.widget.Toast
 import org.stoyicker.dinger.R
 
@@ -15,4 +16,11 @@ internal fun Context.startIntent(intent: Intent, noHandlersFallback: (Intent) ->
     noHandlersFallback(intent)
 }
 
-internal fun Context.versionCode() = packageManager.getPackageInfo(packageName, 0).versionCode
+internal fun Context.versionCode(): Long = with (packageManager.getPackageInfo(packageName, 0)) {
+    if (Build.VERSION.SDK_INT >= 28) {
+        longVersionCode
+    } else {
+        @Suppress("DEPRECATION") // Required on API < 28
+        versionCode.toLong()
+    }
+}
