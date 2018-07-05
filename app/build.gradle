@@ -18,7 +18,6 @@ apply plugin: 'com.google.firebase.firebase-crash'
 
 android {
     compileSdkVersion project.ext.androidCompileSdkVersion
-    buildToolsVersion project.ext.androidBuildToolsVersion
     signingConfigs {
         dummy1 {
             storeFile new File("dummy1.keystore")
@@ -72,9 +71,9 @@ dependencies {
     implementation project(':domain')
     implementation project(':crash-reporter')
     implementation project(':event-tracker') // Required by the ContentProvider
-    implementation project.ext.compileDependencies
+    implementation project.ext.implementationDependencies
     kapt project.ext.annotationProcessorAppDependencies
-    implementation project.ext.compileAppDependencies
+    implementation project.ext.implementationAppDependencies
 }
 
 apply plugin: 'com.google.gms.google-services'

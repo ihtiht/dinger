@@ -14,7 +14,6 @@ apply plugin: 'org.jmailen.kotlinter'
 
 android {
     compileSdkVersion project.ext.androidCompileSdkVersion
-    buildToolsVersion project.ext.androidBuildToolsVersion
     defaultConfig {
         versionCode project.ext.androidVersionCode
         versionName project.ext.androidVersionName
@@ -38,6 +37,6 @@ android {
     }
 }
 dependencies {
-    implementation project.ext.compileDependencies
-    implementation project.ext.compileEventTrackerDependencies
+    implementation project.ext.implementationDependencies
+    implementation project.ext.implementationEventTrackerDependencies
 }

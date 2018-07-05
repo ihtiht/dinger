@@ -15,7 +15,6 @@ apply plugin: 'org.jmailen.kotlinter'
 
 android {
     compileSdkVersion project.ext.androidCompileSdkVersion
-    buildToolsVersion project.ext.androidBuildToolsVersion
     defaultConfig {
         versionCode project.ext.androidVersionCode
         versionName project.ext.androidVersionName
@@ -56,7 +55,7 @@ dependencies {
     implementation project(':crash-reporter')
     implementation project(':event-tracker')
     kapt project.ext.annotationProcessorDataDependencies
-    implementation project.ext.compileDependencies
-    implementation project.ext.compileDataDependencies
+    implementation project.ext.implementationDependencies
+    implementation project.ext.implementationDataDependencies
     compileOnly project.ext.providedDataDependencies
 }

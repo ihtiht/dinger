@@ -4,7 +4,7 @@ final def daggerVersion = "2.14.1"
 final def facebookSdkVersion = "4.30.0"
 final def googlePlayServicesVersion = "11.8.0"
 final def jsr250Version = "1.0"
-final def kotlinVersion = "1.2.21"
+final def kotlinVersion = "1.2.50"
 final def lottieVersion = "2.1.0"
 final def moshiVersion = "1.5.0" // TODO When moshi-kotlin requires no kotlin-reflect, include it https://github.com/square/moshi/issues/315 and change @field:Json to @Json
 final def multidexVersion = "1.0.2"
@@ -12,16 +12,16 @@ final def retrofitVersion = "2.3.0"
 final def rxAndroid2Version = "2.0.1"
 final def rxJava2Version = "2.1.9"
 final def storeVersion = "3.0.0"
-final def supportLibraryVersion = "27.0.2"
+final def supportLibraryVersion = "28.0.0-alpha3"
 ext {
-    compileDependencies = [
+    implementationDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
             "com.google.firebase:firebase-perf:$googlePlayServicesVersion"
     ]
     annotationProcessorAppDependencies = [
             "com.google.dagger:dagger-compiler:$daggerVersion"
     ]
-    compileAppDependencies = [
+    implementationAppDependencies = [
             "com.facebook.android:facebook-android-sdk:$facebookSdkVersion",
             "com.google.android.gms:play-services-auth-base:$googlePlayServicesVersion",
             "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
@@ -36,7 +36,7 @@ ext {
     annotationProcessorDomainDependencies = [
             "javax.annotation:jsr250-api:$jsr250Version"
     ]
-    compileDomainDependencies = [
+    implementationDomainDependencies = [
             "io.reactivex.rxjava2:rxjava:$rxJava2Version",
             "com.facebook.android:facebook-android-sdk:$facebookSdkVersion"
     ]
@@ -47,7 +47,7 @@ ext {
             "com.google.dagger:dagger-compiler:$daggerVersion",
             "android.arch.persistence.room:compiler:$architectureComponentsVersion"
     ]
-    compileDataDependencies = [
+    implementationDataDependencies = [
             "com.squareup.retrofit2:retrofit:$retrofitVersion",
             "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
             "com.squareup.retrofit2:converter-moshi:$retrofitVersion",
@@ -64,10 +64,10 @@ ext {
     providedDataDependencies = [
             "com.android.support:support-annotations:$supportLibraryVersion"
     ]
-    compileCrashReporterDependencies = [
+    implementationCrashReporterDependencies = [
             "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
     ]
-    compileEventTrackerDependencies = [
+    implementationEventTrackerDependencies = [
             "com.google.firebase:firebase-core:$googlePlayServicesVersion",
     ]
 }
