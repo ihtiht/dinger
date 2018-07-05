@@ -42,12 +42,16 @@ internal class NotificationManagerImpl(
             @NotificationPriority priority: Int,
             @NotificationVisibility visibility: Int,
             clickHandler: PendingIntent?) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.getSystemService<android.app.NotificationManager>(
                     android.app.NotificationManager::class.java)
                     .createNotificationChannel(NotificationChannel(
                             getChannelId(context, channelName),
-                            context.getString(channelName), getChannelImportance(priority)))
+                            context.getString(channelName), getChannelImportance(priority)).apply {
+                        enableVibration(true)
+                        enableLights(true)
+                        setSound(null, null) // No sound
+                    })
         }
         NotificationManagerCompat.from(context).let {
             @Suppress("DEPRECATION") // Deprecated from API 26 on, not before
@@ -62,22 +66,20 @@ internal class NotificationManagerImpl(
                     .setPriority(priority)
                     .setSmallIcon(R.drawable.ic_notification)
                     .setTicker(body)
+                    .setShowWhen(true)
                     .apply {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                            setShowWhen(true)
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-                                setLocalOnly(false)
-                                setSortKey("${System.currentTimeMillis()}")
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                    setCategory(NotificationCompat.CATEGORY_SERVICE)
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                        setBadgeIconType(NotificationCompat.BADGE_ICON_NONE)
-                                        setChannelId(getChannelId(context, channelName))
-                                        setGroupAlertBehavior(
-                                                NotificationCompat.GROUP_ALERT_SUMMARY)
-                                    }
-                                    setVisibility(visibility)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+                            setLocalOnly(false)
+                            setSortKey("${System.currentTimeMillis()}")
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                setCategory(NotificationCompat.CATEGORY_SERVICE)
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    setBadgeIconType(NotificationCompat.BADGE_ICON_NONE)
+                                    setChannelId(getChannelId(context, channelName))
+                                    setGroupAlertBehavior(
+                                            NotificationCompat.GROUP_ALERT_SUMMARY)
                                 }
+                                setVisibility(visibility)
                             }
                         }
                     }
