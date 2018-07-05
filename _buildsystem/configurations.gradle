@@ -1,4 +1,4 @@
-final def archRuntimeVersion = "1.0.3"
+final def archRuntimeVersion = "1.1.1"
 final def kotlinVersion = "1.2.51"
 final def supportLibraryVersion = "28.0.0-alpha3"
 configurations.all {
