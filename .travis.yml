@@ -41,8 +41,4 @@ after_success:
       docker exec -t $CONTAINER /bin/sh -c "cd root/${TRAVIS_REPO_SLUG}; ./gradlew :app:firebaseUploadReleaseProguardMapping"
     fi
 notifications:
-  email:
-    recipients:
-      - jorge.diazbenitosoriano@gmail.com
-    on_success: change
-    on_failure: always
+  email: false
