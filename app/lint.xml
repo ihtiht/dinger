@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <lint>
     <issue id="GoogleAppIndexingWarning" severity="ignore" />
-    <!-- Used by Firebase -->
-    <issue id="UnusedResources">
-        <ignore path="build/generated/res/google-services" />
-    </issue>
     <issue id="IconLauncherFormat,IconExpectedSize">
         <!-- Not a launcher icon -->
         <ignore regexp="ic_launcher_big" />

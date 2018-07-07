@@ -27,7 +27,7 @@ internal open class MainApplication : Application() {
                     .getString(
                             UserEmailPropertySetterCoordinator.PREFERENCE_KEY_USER_PROVIDED_ACCOUNT,
                             null)?.let {
-                SplashEventTracker(this, EventTrackers.firebase())
+                SplashEventTracker(this, EventTrackers.void())
                         .setUserProvidedAccount(it)
             }
 }

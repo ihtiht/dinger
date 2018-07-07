@@ -6,5 +6,4 @@ build
 captures
 dependencyReport
 staticAnalysisReport/
-firebase-crashreporting-private-key.json
 local.properties

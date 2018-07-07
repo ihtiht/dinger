@@ -8,5 +8,4 @@ ext {
     androidApplicationIdBase = "org.stoyicker.dinger"
     staticAnalysisReportTarget = project.buildDir.absolutePath + "/staticAnalysisReport"
     javaVersion = JavaVersion.VERSION_1_8
-    firebaseServiceAccountFileName = "firebase-crashreporting-private-key.json"
 }

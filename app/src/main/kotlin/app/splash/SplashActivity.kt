@@ -7,8 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import app.MainApplication
 import app.alarmbanner.AlarmBannerActivity
 import app.tinder.login.TinderLoginActivity
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
 import javax.inject.Inject
 
 /**
@@ -84,9 +82,7 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
      * Closes the splash and introduces the actual content of the app.
      */
     private fun fetchUserAccount() {
-        if (assertGooglePlayServicesAvailable()) {
-            userEmailPropertySetterCoordinator.actionDoSet()
-        }
+        userEmailPropertySetterCoordinator.actionDoSet()
     }
 
     private fun inject() = (application as MainApplication).applicationComponent
@@ -96,27 +92,6 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
                     userEmailPropertySetterCoordinatorResultCallback = this,
                     versionCheckCoordinatorResultCallback = this))
             .inject(this)
-
-    /**
-     * Checks for Play Services availability (required for Firebase). On failure, shows a dialog
-     * that closes the app when dismissed.
-     * @return <code>true</code> if Google Play Services are all nice and good, <code>false</code>
-     *         otherwise.
-     */
-    private fun assertGooglePlayServicesAvailable(): Boolean {
-        GoogleApiAvailability.getInstance().also {
-            val status = it.isGooglePlayServicesAvailable(this)
-            if (status != ConnectionResult.SUCCESS) {
-                it.getErrorDialog(this, status, 0).apply {
-                    setCancelable(false)
-                    setOnDismissListener { System.exit(status) }
-                    show()
-                    return false
-                }
-            }
-        }
-        return true
-    }
 
     private fun requestToken() {
         TinderLoginActivity.getCallingIntent(this).apply {

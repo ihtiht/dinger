@@ -21,7 +21,7 @@ Once you have the app installed, and you have an accout registered in Tinder usi
 
 ## Distribution
 
-This app does not meet the terms to make it to F-Droid since it uses both Firebase and Google Play Services, and I don't want to risk a strike on my Google Play account, so the default way to install it is by going to the [website](https://stoyicker.github.io/dinger/#download "Dinger APK download"). Whenever you open the app, you will get notified if newer versions are available.
+This app does not meet the terms to make it to F-Droid since it uses Google Play Services, and I don't want to risk a strike on my Google Play account, so the default way to install it is by going to the [website](https://stoyicker.github.io/dinger/#download "Dinger APK download"). Whenever you open the app, you will get notified if newer versions are available.
 
 ## Feature requests & bug reports
 

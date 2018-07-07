@@ -15,7 +15,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jmailen.kotlinter'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.google.firebase.firebase-crash'
 
 android {
     compileSdkVersion project.ext.androidCompileSdkVersion
@@ -29,7 +28,7 @@ android {
     }
     buildTypes {
         debug {
-            applicationIdSuffix ".debug" // Do not change as Firebase depends on this
+            applicationIdSuffix ".debug" // Do not change
         }
         release {
             signingConfig signingConfigs.dummy1
@@ -76,7 +75,3 @@ dependencies {
     kapt project.ext.annotationProcessorAppDependencies
     implementation project.ext.implementationAppDependencies
 }
-
-apply plugin: 'com.google.gms.google-services'
-setProperty("FirebaseServiceAccountFilePath", project.rootDir.absolutePath + "/" +
-        project.ext.firebaseServiceAccountFileName)

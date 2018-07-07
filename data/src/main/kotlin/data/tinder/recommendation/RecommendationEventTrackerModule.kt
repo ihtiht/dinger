@@ -4,11 +4,11 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 import data.RootModule
-import data.event.FirebaseEventTrackerModule
+import data.event.VoidEventTrackerModule
 import tracker.EventTracker
 import javax.inject.Singleton
 
-@Module(includes = [RootModule::class, FirebaseEventTrackerModule::class])
+@Module(includes = [RootModule::class, VoidEventTrackerModule::class])
 internal class RecommendationEventTrackerModule {
     @Provides
     @Singleton

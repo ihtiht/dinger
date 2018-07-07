@@ -13,25 +13,25 @@ import domain.alarm.AlarmHolder
 import domain.alarm.AppAlarmManager
 import domain.autoswipe.AutoSwipeHolder
 import domain.autoswipe.AutoSwipeLauncherFactory
-import domain.dislike.DislikeRecommendationHolder
 import domain.dislike.DislikeRecommendation
-import domain.like.LikeRecommendationHolder
+import domain.dislike.DislikeRecommendationHolder
 import domain.like.LikeRecommendation
+import domain.like.LikeRecommendationHolder
 import domain.loggedincheck.LoggedInCheckHolder
-import domain.login.LoginHolder
 import domain.login.Login
+import domain.login.LoginHolder
 import domain.logout.AutoSwipeServiceDestructor
 import domain.logout.LogoutHolder
 import domain.logout.StorageClear
-import domain.recommendation.GetRecommendationHolder
 import domain.recommendation.GetRecommendation
-import domain.versioncheck.VersionCheckHolder
+import domain.recommendation.GetRecommendationHolder
 import domain.versioncheck.VersionCheck
+import domain.versioncheck.VersionCheckHolder
 import javax.inject.Inject
 
 /**
  * @see <a href="https://firebase.googleblog.com/2016/12/how-does-firebase-initialize-on-android.html">
- *     The Firebase Blog: How does Firebase initialize on Android</a>
+ *     The Firebase Blog: How does Void initialize on Android</a>
  */
 internal class InitializationContentProvider : ContentProvider() {
     @Inject

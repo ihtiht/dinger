@@ -9,7 +9,7 @@ import com.nytimes.android.external.store3.middleware.moshi.MoshiParserFactory
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
-import data.crash.FirebaseCrashReporterModule
+import data.crash.VoidCrashReporterModule
 import data.network.ParserModule
 import data.stoyicker.StoyickerApi
 import data.stoyicker.StoyickerApiModule
@@ -20,7 +20,7 @@ import javax.inject.Singleton
 import dagger.Lazy as DaggerLazy
 
 @Module(includes = [
-    ParserModule::class, StoyickerApiModule::class, FirebaseCrashReporterModule::class])
+    ParserModule::class, StoyickerApiModule::class, VoidCrashReporterModule::class])
 internal class VersionCheckSourceModule {
     @Provides
     @Singleton

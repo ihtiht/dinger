@@ -7,8 +7,8 @@ import tracker.EventTrackers
 import javax.inject.Singleton
 
 @Module
-internal class FirebaseEventTrackerModule {
+internal class VoidEventTrackerModule {
     @Provides
     @Singleton
-    fun instance(): EventTracker = EventTrackers.firebase()
+    fun instance(): EventTracker = EventTrackers.void()
 }

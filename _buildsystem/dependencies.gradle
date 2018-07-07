@@ -15,8 +15,7 @@ final def storeVersion = "3.0.0" // Frozen
 final def supportLibraryVersion = "28.0.0-alpha3"
 ext {
     implementationDependencies = [
-            "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
-            "com.google.firebase:firebase-perf:$googlePlayServicesVersion"
+            "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     ]
     annotationProcessorAppDependencies = [
             "com.google.dagger:dagger-compiler:$daggerVersion"
@@ -27,7 +26,6 @@ ext {
             "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
             "com.google.dagger:dagger:$daggerVersion",
             "com.airbnb.android:lottie:$lottieVersion",
-            "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
             "com.android.support:design:$supportLibraryVersion",
             "com.android.support:preference-v7:$supportLibraryVersion",
             "com.android.support.constraint:constraint-layout:$constraintLayoutVersion",
@@ -65,10 +63,8 @@ ext {
             "com.android.support:support-annotations:$supportLibraryVersion"
     ]
     implementationCrashReporterDependencies = [
-            "com.google.firebase:firebase-crash:$googlePlayServicesVersion",
     ]
     implementationEventTrackerDependencies = [
-            "com.google.firebase:firebase-core:$googlePlayServicesVersion",
     ]
 }
 repositories {

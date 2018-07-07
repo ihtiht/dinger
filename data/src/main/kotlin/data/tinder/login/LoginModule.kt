@@ -2,12 +2,12 @@ package data.tinder.login
 
 import dagger.Module
 import dagger.Provides
-import data.crash.FirebaseCrashReporterModule
+import data.crash.VoidCrashReporterModule
 import domain.login.Login
 import reporter.CrashReporter
 import javax.inject.Singleton
 
-@Module(includes = [LoginFacadeModule::class, FirebaseCrashReporterModule::class])
+@Module(includes = [LoginFacadeModule::class, VoidCrashReporterModule::class])
 internal class LoginModule {
     @Provides
     @Singleton
