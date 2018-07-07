@@ -38,7 +38,6 @@ uploadReleaseToGitHub() {
 
     # Attach the artifact
     UPLOAD_URL=$(echo ${UPLOAD_URL} | sed "s/{?name,label}/?name=dinger-${ARTIFACT_VERSION}.apk/")
-    echo ${UPLOAD_URL}
     RESPONSE_BODY=$(curl -s \
             -u ${REPO_USER}:${GITHUB_TOKEN} \
             --header "Accept: application/vnd.github.v3+json" \
