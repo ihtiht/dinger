@@ -7,6 +7,7 @@ buildscript {
 apply from: '../_buildsystem/configurations.gradle'
 apply from: '../_buildsystem/dependencies.gradle'
 apply from: '../_buildsystem/properties.gradle'
+apply from: '../_buildsystem/optimizations.gradle'
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'

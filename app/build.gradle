@@ -8,6 +8,7 @@ apply from: '../_buildsystem/buildscript.gradle'
 apply from: '../_buildsystem/configurations.gradle'
 apply from: '../_buildsystem/dependencies.gradle'
 apply from: '../_buildsystem/properties.gradle'
+apply from: '../_buildsystem/optimizations.gradle'
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
