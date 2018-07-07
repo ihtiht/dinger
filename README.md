@@ -17,11 +17,11 @@ This app exists to show that these and other pain points are easily addressed no
 
 ## Usage instructions
 
-Once you have the app installed, and you have an accout registered in Tinder using Facebook (that is, you log in onto Tinder using your Facebook account), just open Dinger and log in with your Facebook account so it can have your Tinder credentials. After that, it will work on its own.
+Once you have the app installed, and you have an account registered in Tinder using Facebook (that is, you log in onto Tinder using your Facebook account), just open Dinger and log in with your Facebook account so it can have your Tinder credentials. After that, it will work on its own.
 
 ## Distribution
 
-This app does not meet the terms to make it to F-Droid since it uses Google Play Services, and I don't want to risk a strike on my Google Play account, so the default way to install it is by going to the [website](https://stoyicker.github.io/dinger/#download "Dinger APK download"). Whenever you open the app, you will get notified if newer versions are available.
+If you have F-Droid, this app can be updated by it. In addition, In any case, whenever you open the app, you will get notified if newer versions are available and can download them via the [website](https://stoyicker.github.io/dinger/#download "Dinger APK download").
 
 ## Feature requests & bug reports
 
