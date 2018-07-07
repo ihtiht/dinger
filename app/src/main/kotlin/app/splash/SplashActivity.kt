@@ -16,13 +16,12 @@ import javax.inject.Inject
  * background in the theme. This allows it to be shown without having to wait for the content view
  * to be drawn.
  */
-internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
-        UserEmailPropertySetterCoordinator.ResultCallback, VersionCheckCoordinator.ResultCallback,
+internal class SplashActivity :
+        LoggedInCheckCoordinator.ResultCallback,
+        VersionCheckCoordinator.ResultCallback,
         AppCompatActivity() {
     @Inject
     lateinit var loggedInCheckCoordinator: LoggedInCheckCoordinator
-    @Inject
-    lateinit var userEmailPropertySetterCoordinator: UserEmailPropertySetterCoordinator
     @Inject
     lateinit var versionCheckCoordinator: VersionCheckCoordinator
     private lateinit var handler: Handler
@@ -50,20 +49,6 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
         super.onPause()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            UserEmailPropertySetterCoordinator.REQUEST_CODE ->
-                userEmailPropertySetterCoordinator.onActivityResult(resultCode, data)
-            else -> super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
-
-    override fun onUserEmailPropertySet() = versionCheckCoordinator.actionRun()
-
-    override fun onUserEmailAcquisitionFailed() {
-        if (!isFinishing) supportFinishAfterTransition()
-    }
-
     override fun onVersionCheckCompleted() { loggedInCheckCoordinator.actionRun() }
 
     override fun onLoggedInUserFound() = continueLoggedIn()
@@ -75,21 +60,13 @@ internal class SplashActivity : LoggedInCheckCoordinator.ResultCallback,
      */
     private fun scheduleContentOpening() {
         handler = Handler()
-        handler.postDelayed({ fetchUserAccount() }, SHOW_TIME_MILLIS)
-    }
-
-    /**
-     * Closes the splash and introduces the actual content of the app.
-     */
-    private fun fetchUserAccount() {
-        userEmailPropertySetterCoordinator.actionDoSet()
+        handler.postDelayed({ versionCheckCoordinator.actionRun() }, SHOW_TIME_MILLIS)
     }
 
     private fun inject() = (application as MainApplication).applicationComponent
             .newSplashComponent(SplashModule(
                     activity = this,
                     loggedInCheckResultCallback = this,
-                    userEmailPropertySetterCoordinatorResultCallback = this,
                     versionCheckCoordinatorResultCallback = this))
             .inject(this)
 

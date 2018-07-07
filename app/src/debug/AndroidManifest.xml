@@ -5,7 +5,6 @@
     package="org.stoyicker.dinger">
     <application
         android:name="app.DebugApplication"
-        tools:ignore="AllowBackup">
-    </application>
+        tools:ignore="AllowBackup" />
     <!-- The main manifest takes care of AllowBackup -->
 </manifest>

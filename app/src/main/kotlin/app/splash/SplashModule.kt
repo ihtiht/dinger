@@ -6,7 +6,6 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
 import reporter.CrashReporter
-import tracker.EventTracker
 import javax.inject.Named
 
 @Module
@@ -14,10 +13,7 @@ import javax.inject.Named
 internal class SplashModule(
         private val activity: Activity,
         private val loggedInCheckResultCallback: LoggedInCheckCoordinator.ResultCallback,
-        private val userEmailPropertySetterCoordinatorResultCallback
-        : UserEmailPropertySetterCoordinator.ResultCallback,
-        private val versionCheckCoordinatorResultCallback
-        : VersionCheckCoordinator.ResultCallback) {
+        private val versionCheckCoordinatorResultCallback: VersionCheckCoordinator.ResultCallback) {
     @Provides
     fun loggedInCheckCoordinator(
             @Named("io") asyncExecutionScheduler: Scheduler,
@@ -27,14 +23,6 @@ internal class SplashModule(
             postExecutionScheduler,
             loggedInCheckResultCallback,
             crashReporter)
-
-    @Provides
-    fun splashEventTracker(eventTracker: EventTracker) = SplashEventTracker(activity, eventTracker)
-
-    @Provides
-    fun userEmailPropertySetterCoordinator(splashEventTracker: SplashEventTracker) =
-            UserEmailPropertySetterCoordinator(
-            activity, splashEventTracker, userEmailPropertySetterCoordinatorResultCallback)
 
     @Provides
     fun versionCheckCoordinator(

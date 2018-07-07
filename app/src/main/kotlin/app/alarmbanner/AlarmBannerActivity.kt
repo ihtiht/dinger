@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import app.MainApplication
 import app.home.HomeActivity
-import kotlinx.android.synthetic.main.activity_alarm_banner.continue_button
+import kotlinx.android.synthetic.main.activity_alarm_banner.*
 import org.stoyicker.dinger.R
 import javax.inject.Inject
 

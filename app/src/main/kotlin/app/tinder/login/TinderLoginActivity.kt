@@ -6,8 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import app.MainApplication
 import app.alarmbanner.AlarmBannerActivity
-import kotlinx.android.synthetic.main.activity_login.login_button
-import kotlinx.android.synthetic.main.activity_login.progress
+import kotlinx.android.synthetic.main.activity_login.*
 import org.stoyicker.dinger.R
 import javax.inject.Inject
 
