@@ -1,18 +1,19 @@
 buildscript {
-    apply from: '../_buildsystem/buildscript.gradle'
+    apply from: "${rootProject.rootDir}/_buildsystem/buildscript.gradle"
     repositories project.ext.classpathRepositories
     dependencies project.ext.classpathDependencies
 }
 
-apply from: '../_buildsystem/configurations.gradle'
-apply from: '../_buildsystem/dependencies.gradle'
-apply from: '../_buildsystem/properties.gradle'
-apply from: '../_buildsystem/optimizations.gradle'
+apply from: "${rootProject.rootDir}/_buildsystem/configurations.gradle"
+apply from: "${rootProject.rootDir}/_buildsystem/dependencies.gradle"
+apply from: "${rootProject.rootDir}/_buildsystem/properties.gradle"
+apply from: "${rootProject.rootDir}/_buildsystem/optimizations.gradle"
+apply from: "${rootProject.rootDir}/_buildsystem/test_options.gradle"
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'org.jmailen.kotlinter'
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-kapt"
+apply plugin: "org.jmailen.kotlinter"
 
 android {
     compileSdkVersion project.ext.androidCompileSdkVersion
@@ -45,18 +46,22 @@ android {
         warningsAsErrors true
     }
     packagingOptions {
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude "META-INF/services/javax.annotation.processing.Processor"
     }
     sourceSets.forEach {
         it.java.srcDirs = ["src/$it.name/kotlin"]
     }
+    testOptions project.ext.testOptions
 }
 dependencies {
-    implementation project(':domain')
-    implementation project(':crash-reporter')
-    implementation project(':event-tracker')
+    implementation project(":domain")
+    implementation project(":crash-reporter")
+    implementation project(":event-tracker")
     kapt project.ext.annotationProcessorDataDependencies
     implementation project.ext.implementationDependencies
     implementation project.ext.implementationDataDependencies
     compileOnly project.ext.providedDataDependencies
+    testImplementation project.ext.testImplementationDependencies
+    androidTestImplementation project.ext.androidTestImplementationDependencies
+    androidTestUtil project.ext.androidTestUtilDependencies
 }
