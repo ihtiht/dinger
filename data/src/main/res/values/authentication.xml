@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="account_label">Dinger</string>
+    <string name="account_label">dinger</string>
     <string name="account_type">org.stoyicker.dinger</string>
     <string name="authentication_notification_title">Manual authentication required</string>
     <string name="authentication_notification_body">Tap here to proceed</string>
