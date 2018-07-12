@@ -10,7 +10,7 @@
 
     <dimen name="layout_content_padding">16dp</dimen>
 
-    <string name="app_label" translatable="false">Dinger</string>
+    <string name="app_label" translatable="false">dinger</string>
     <string name="no_intent_handlers">No handlers found for %s, ignored</string>
 
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
