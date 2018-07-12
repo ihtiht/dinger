@@ -16,5 +16,5 @@
     <string name="autoswipe_notification_body_capped">Scheduled for when the cap resets</string>
     <string name="autoswipe_notification_channel_name">Autoswipe</string>
     <string name="autoswipe_receiver_description">Swiping for you!</string>
-    <string name="autoswipe_receiver_label">Dinger</string>
+    <string name="autoswipe_receiver_label">dinger</string>
 </resources>
