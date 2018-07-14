@@ -1,4 +1,4 @@
-<h1 align="center"> <br><img src="_assets/img/logo/logotype_horizontal.png?raw=true" alt="dinger" width="512"> <br>
+<h1 align="center"> <br><img src="_assets/images/logo/logotype_horizontal.png?raw=true" alt="dinger" width="512"> <br>
 
 # Dinger [![Build Status](https://travis-ci.org/stoyicker/dinger.svg?branch=master)](https://travis-ci.org/stoyicker/dinger "stoyicker/dinger - Travis CI")
 ## Maintenance notice
